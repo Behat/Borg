@@ -5,6 +5,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\InMemory\InMemoryDocumentationProvider;
 use Behat\Borg\DocumentationBuilder\InMemory\InMemoryBuiltDocumentationRepository;
+use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
