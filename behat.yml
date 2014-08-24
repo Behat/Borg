@@ -1,0 +1,5 @@
+default:
+    suites:
+        documentation:
+            contexts: [ 'DocumentationManagerContext' ]
+            filters:  { role: 'Documentation manager' }
