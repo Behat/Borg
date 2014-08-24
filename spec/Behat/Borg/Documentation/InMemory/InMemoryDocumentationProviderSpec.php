@@ -18,4 +18,9 @@ class InMemoryDocumentationProviderSpec extends ObjectBehavior
 
         $this->registerDocumentation($documentation);
     }
+
+    function it_has_no_documentation_by_default()
+    {
+        $this->getAllDocumentation()->shouldReturn([]);
+    }
 }

@@ -14,6 +14,6 @@ final class InMemoryDocumentationProvider implements DocumentationProvider
 
     public function getAllDocumentation()
     {
-        // TODO: Implement getAllDocumentation() method.
+        return [];
     }
 }
