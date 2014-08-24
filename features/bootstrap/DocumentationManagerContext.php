@@ -10,6 +10,7 @@ use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
+use Behat\Borg\SphinxDoc\DocumentationBuilder\SphinxDocumentationBuilder;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -27,9 +28,14 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     {
         $this->documentationProvider = new InMemoryDocumentationProvider();
         $this->builtDocumentationRepository = new InMemoryBuiltDocumentationRepository();
+
+        $sphinxBuilder = new SphinxDocumentationBuilder();
+        $documentationBuilder = new RegisteringDocumentationBuilder(
+            $sphinxBuilder, $this->builtDocumentationRepository
+        );
+
         $this->documentationManager = new DocumentationManager(
-            $this->documentationProvider,
-            $this->builtDocumentationRepository
+            $this->documentationProvider, $documentationBuilder
         );
     }
 
