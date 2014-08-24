@@ -6,15 +6,19 @@ use Behat\Borg\Documentation\Documentation;
 
 final class RegisteringDocumentationBuilder implements DocumentationBuilder
 {
+    private $actualBuilder;
+    private $repository;
+
     public function __construct(
         DocumentationBuilder $actualBuilder,
         BuiltDocumentationRepository $repository
     ) {
-        // TODO: write logic here
+        $this->actualBuilder = $actualBuilder;
+        $this->repository = $repository;
     }
 
     public function build(Documentation $documentation)
     {
-        // TODO: Implement build() method.
+        $this->actualBuilder->build($documentation);
     }
 }
