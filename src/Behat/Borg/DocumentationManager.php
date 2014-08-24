@@ -11,4 +11,9 @@ final class DocumentationManager
     {
         // TODO: write logic here
     }
+
+    public function buildDocumentation()
+    {
+        // TODO: write logic here
+    }
 }

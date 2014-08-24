@@ -13,4 +13,9 @@ class DocumentationManagerSpec extends ObjectBehavior
     {
         $this->beConstructedWith($provider, $repository);
     }
+
+    function it_can_build_the_documentation()
+    {
+        $this->buildDocumentation();
+    }
 }
