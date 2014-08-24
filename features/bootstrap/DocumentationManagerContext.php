@@ -2,6 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Documentation\InMemory\InMemoryDocumentationProvider;
 
 /**
  * Describes documentation-related features from the documentation manager context.
