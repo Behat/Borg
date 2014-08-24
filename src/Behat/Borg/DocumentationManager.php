@@ -7,13 +7,19 @@ use Behat\Borg\DocumentationBuilder\DocumentationBuilder;
 
 final class DocumentationManager
 {
+    private $provider;
+    private $builder;
+
     public function __construct(DocumentationProvider $provider, DocumentationBuilder $builder)
     {
-        // TODO: write logic here
+        $this->provider = $provider;
+        $this->builder = $builder;
     }
 
     public function buildDocumentation()
     {
-        // TODO: write logic here
+        foreach ($this->provider->getAllDocumentation() as $documentation) {
+            $this->builder->build($documentation);
+        }
     }
 }
