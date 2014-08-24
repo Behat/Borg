@@ -3,6 +3,7 @@
 namespace Behat\Borg\DocumentationBuilder;
 
 use Behat\Borg\Documentation\Documentation;
+use InvalidArgumentException;
 
 final class RegisteringDocumentationBuilder implements DocumentationBuilder
 {
@@ -19,6 +20,12 @@ final class RegisteringDocumentationBuilder implements DocumentationBuilder
 
     public function build(Documentation $documentation)
     {
-        $this->actualBuilder->build($documentation);
+        $builtDocumentation = $this->actualBuilder->build($documentation);
+
+        if (!$builtDocumentation) {
+            throw new InvalidArgumentException('Documentation can not be built.');
+        }
+
+        return $builtDocumentation;
     }
 }
