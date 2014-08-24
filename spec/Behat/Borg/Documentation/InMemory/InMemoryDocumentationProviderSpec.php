@@ -10,6 +10,11 @@ use Prophecy\Argument;
 
 class InMemoryDocumentationProviderSpec extends ObjectBehavior
 {
+    function it_has_no_documentation_by_default()
+    {
+        $this->getAllDocumentation()->shouldReturn([]);
+    }
+
     function it_allows_dynamic_registration_of_documentation(
         DocumentationId $anId,
         DocumentationSource $source
@@ -17,10 +22,7 @@ class InMemoryDocumentationProviderSpec extends ObjectBehavior
         $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
 
         $this->registerDocumentation($documentation);
-    }
 
-    function it_has_no_documentation_by_default()
-    {
-        $this->getAllDocumentation()->shouldReturn([]);
+        $this->getAllDocumentation()->shouldReturn([$documentation]);
     }
 }

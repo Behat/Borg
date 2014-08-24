@@ -7,13 +7,15 @@ use Behat\Borg\Documentation\DocumentationProvider;
 
 final class InMemoryDocumentationProvider implements DocumentationProvider
 {
+    private $documentation = [];
+
     public function registerDocumentation(Documentation $documentation)
     {
-        // TODO: write logic here
+        $this->documentation[] = $documentation;
     }
 
     public function getAllDocumentation()
     {
-        return [];
+        return $this->documentation;
     }
 }
