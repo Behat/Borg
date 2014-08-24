@@ -3,11 +3,11 @@
 namespace Behat\Borg;
 
 use Behat\Borg\Documentation\DocumentationProvider;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentationRepository;
+use Behat\Borg\DocumentationBuilder\DocumentationBuilder;
 
 final class DocumentationManager
 {
-    public function __construct(DocumentationProvider $provider, BuiltDocumentationRepository $repo)
+    public function __construct(DocumentationProvider $provider, DocumentationBuilder $builder)
     {
         // TODO: write logic here
     }
