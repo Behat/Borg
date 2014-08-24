@@ -9,7 +9,7 @@ use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Version;
-use Behat\Borg\ReStructuredText\Documentation\RstDocumentationSource;
+use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 
 /**
  * Describes documentation-related features from the documentation manager context.

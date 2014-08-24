@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\ReStructuredText\Documentation;
+namespace spec\Behat\Borg\SphinxDoc\Documentation;
 
 use Behat\Borg\Documentation\DocumentationSource;
 use PhpSpec\ObjectBehavior;
