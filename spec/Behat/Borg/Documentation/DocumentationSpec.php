@@ -21,12 +21,12 @@ class DocumentationSpec extends ObjectBehavior
         $this->shouldHaveType(Documentation::class);
     }
 
-    function it_exposes_id(DocumentationId $anId)
+    function it_has_an_id(DocumentationId $anId)
     {
         $this->getId()->shouldReturn($anId);
     }
 
-    function it_exposes_source(DocumentationSource $source)
+    function it_has_a_source(DocumentationSource $source)
     {
         $this->getSource()->shouldReturn($source);
     }

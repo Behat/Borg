@@ -25,12 +25,12 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
         $this->beConstructedWith($specification, $generator, $repository);
     }
 
-    function it_is_documentation_builder()
+    function it_is_a_documentation_builder()
     {
         $this->shouldHaveType(DocumentationBuilder::class);
     }
 
-    function it_does_not_generate_documentation_if_it_does_not_satisfy_specification(
+    function it_does_not_generate_documentation_if_one_does_not_satisfy_specification(
         DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
@@ -46,7 +46,7 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
         $this->build($documentation);
     }
 
-    function it_generates_documentation_using_generator_if_it_satisfies_specification(
+    function it_generates_documentation_using_generator_if_it_does_satisfy_specification(
         DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
@@ -62,7 +62,7 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
         $this->build($documentation);
     }
 
-    function it_throws_an_exception_if_generator_does_not_produce_result(
+    function it_throws_an_exception_if_generator_does_not_produce_any_result(
         DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
@@ -77,7 +77,7 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
         $this->shouldThrow(InvalidArgumentException::class)->duringBuild($documentation);
     }
 
-    function it_adds_built_documentation_into_the_repository(
+    function it_adds_just_built_documentation_into_the_repository(
         DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,

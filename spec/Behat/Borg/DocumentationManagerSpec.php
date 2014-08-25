@@ -17,7 +17,7 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->beConstructedWith($provider, $builder);
     }
 
-    function it_builds_documentation_from_provider_using_the_builder(
+    function it_builds_all_documentation_from_the_provider_using_any_builder(
         DocumentationProvider $provider,
         DocumentationBuilder $builder,
         DocumentationId $doc1Id,

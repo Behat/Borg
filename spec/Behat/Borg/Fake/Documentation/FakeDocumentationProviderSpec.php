@@ -15,7 +15,7 @@ class FakeDocumentationProviderSpec extends ObjectBehavior
         $this->getAllDocumentation()->shouldReturn([]);
     }
 
-    function it_allows_dynamic_registration_of_documentation(
+    function it_allows_dynamic_registration_of_new_documentation(
         DocumentationId $anId,
         DocumentationSource $source
     ) {

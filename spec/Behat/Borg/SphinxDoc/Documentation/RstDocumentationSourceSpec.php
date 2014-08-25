@@ -13,12 +13,12 @@ class RstDocumentationSourceSpec extends ObjectBehavior
         $this->beConstructedThrough('atPath', [__DIR__]);
     }
 
-    function it_is_documentation_source()
+    function it_is_a_documentation_source()
     {
         $this->shouldHaveType(DocumentationSource::class);
     }
 
-    function it_exposes_path()
+    function it_has_path_to_all_its_RST_documents()
     {
         $this->getPath()->shouldReturn(__DIR__);
     }

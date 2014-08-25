@@ -11,12 +11,12 @@ use Prophecy\Argument;
 
 class FakeBuiltDocumentationRepositorySpec extends ObjectBehavior
 {
-    function it_is_built_documentation_repository()
+    function it_is_a_built_documentation_repository()
     {
         $this->shouldHaveType(BuiltDocumentationRepository::class);
     }
 
-    function it_can_find_built_documentation_by_an_id(
+    function it_can_find_built_documentation_by_its_documentation_id(
         DocumentationId $anId,
         BuiltDocumentation $builtDocumentation
     ) {
@@ -28,7 +28,7 @@ class FakeBuiltDocumentationRepositorySpec extends ObjectBehavior
         $this->getBuiltDocumentation($anId)->shouldReturn($builtDocumentation);
     }
 
-    function it_can_tell_if_documentation_was_built(
+    function it_can_tell_if_documentation_with_specified_id_was_actually_built(
         DocumentationId $anId1,
         DocumentationId $anId2,
         BuiltDocumentation $builtDocumentation
@@ -43,7 +43,7 @@ class FakeBuiltDocumentationRepositorySpec extends ObjectBehavior
         $this->shouldNotHaveBuiltDocumentation($anId2);
     }
 
-    function it_overwrites_documentation_with_same_id(
+    function it_overwrites_documentation_with_the_same_id(
         DocumentationId $anId,
         BuiltDocumentation $builtDocumentation1,
         BuiltDocumentation $builtDocumentation2
@@ -58,7 +58,7 @@ class FakeBuiltDocumentationRepositorySpec extends ObjectBehavior
         $this->getBuiltDocumentation($anId)->shouldReturn($builtDocumentation2);
     }
 
-    function it_throws_an_exception_on_attempt_to_retrieve_unexisting_documentation(
+    function it_throws_an_exception_on_attempt_to_retrieve_documentation_that_was_not_built(
         DocumentationId $anId
     ) {
         $anId->__toString()->willReturn('doc');

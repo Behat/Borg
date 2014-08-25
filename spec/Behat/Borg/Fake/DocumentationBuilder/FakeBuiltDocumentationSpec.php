@@ -26,12 +26,12 @@ class FakeBuiltDocumentationSpec extends ObjectBehavior
         );
     }
 
-    function it_is_built_documentation()
+    function it_is_a_built_documentation()
     {
         $this->shouldHaveType(BuiltDocumentation::class);
     }
 
-    function its_id_is_the_same_as_the_documentation_id(DocumentationId $anId)
+    function it_has_an_id_which_is_the_same_as_documentation_id(DocumentationId $anId)
     {
         $this->getId()->shouldReturn($anId);
     }
@@ -46,12 +46,12 @@ class FakeBuiltDocumentationSpec extends ObjectBehavior
         $this->getIndexPath()->shouldReturn('/tmp/index.html');
     }
 
-    function it_exposes_a_build_time(DateTimeImmutable $buildTime)
+    function it_stores_a_build_time_it_was_constructed_with(DateTimeImmutable $buildTime)
     {
         $this->getBuildTime()->shouldReturn($buildTime);
     }
 
-    function it_exposes_documentation_time(DateTimeImmutable $docTime)
+    function it_exposes_documentation_time_from_documentation(DateTimeImmutable $docTime)
     {
         $this->getDocumentationTime()->shouldReturn($docTime);
     }

@@ -19,12 +19,12 @@ class UpdateableBuildSpecificationSpec extends ObjectBehavior
         $this->beConstructedWith($repository);
     }
 
-    function it_is_build_specification()
+    function it_is_a_build_specification()
     {
         $this->shouldHaveType(DocumentationBuildSpecification::class);
     }
 
-    function it_is_satisfied_by_documentation_that_was_not_built_yet(
+    function it_is_satisfied_by_documentation_that_was_not_yet_built(
         BuiltDocumentationRepository $repository,
         DocumentationId $anId,
         DocumentationSource $source
@@ -37,7 +37,7 @@ class UpdateableBuildSpecificationSpec extends ObjectBehavior
         $this->shouldBeSatisfiedByDocumentation($documentation);
     }
 
-    function it_is_satisfied_by_documentation_that_is_updated_version_of_one_built_previously(
+    function it_is_satisfied_by_documentation_that_is_updated_version_of_the_one_built_previously(
         BuiltDocumentationRepository $repository,
         DocumentationId $anId,
         DocumentationSource $source,
@@ -57,7 +57,7 @@ class UpdateableBuildSpecificationSpec extends ObjectBehavior
         $this->shouldBeSatisfiedByDocumentation($documentation);
     }
 
-    function it_is_not_satisfied_by_documentation_that_is_exactly_the_same_version_built_previously(
+    function it_is_not_satisfied_by_documentation_that_is_exactly_the_same_one_built_previously(
         BuiltDocumentationRepository $repository,
         DocumentationId $anId,
         DocumentationSource $source,

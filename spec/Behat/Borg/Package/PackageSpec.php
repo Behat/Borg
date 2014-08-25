@@ -13,12 +13,12 @@ class PackageSpec extends ObjectBehavior
         $this->beConstructedThrough('fromName', ['behat']);
     }
 
-    function it_can_be_constructed_from_name()
+    function it_can_be_constructed_from_a_package_name()
     {
         $this->fromName('behat')->shouldHaveType(Package::class);
     }
 
-    function it_exposes_name()
+    function it_stores_that_name()
     {
         $this->getName()->shouldReturn('behat');
     }
