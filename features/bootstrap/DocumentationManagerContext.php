@@ -24,7 +24,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     private $documentationProvider;
     private $builtDocumentationRepository;
     private $documentationManager;
-    private $buildTimes = [];
+    private $lastBuildTime;
 
     /**
      * Initializes context.
@@ -89,13 +89,20 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 
     /**
      * @When I build the documentation
-     * @When I build the documentation again
      */
     public function iBuildTheDocumentation()
     {
-        $this->buildTimes[] = new \DateTimeImmutable();
+        $this->lastBuildTime = new DateTimeImmutable();
         $this->documentationManager->buildDocumentation();
+    }
+
+    /**
+     * @When I build the documentation again
+     */
+    public function iBuildTheDocumentationAgain()
+    {
         sleep(1);
+        $this->iBuildTheDocumentation();
     }
 
     /**
@@ -115,9 +122,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     {
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
-        $lastBuildTime = end($this->buildTimes);
 
-        PHPUnit_Framework_Assert::assertGreaterThanOrEqual($lastBuildTime, $documentationBuildTime);
+        PHPUnit_Framework_Assert::assertGreaterThanOrEqual($this->lastBuildTime, $documentationBuildTime);
     }
 
     /**
@@ -127,9 +133,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     {
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
-        $lastBuildTime = end($this->buildTimes);
 
-        PHPUnit_Framework_Assert::assertLessThan($lastBuildTime, $documentationBuildTime);
+        PHPUnit_Framework_Assert::assertLessThan($this->lastBuildTime, $documentationBuildTime);
     }
 
     /**
