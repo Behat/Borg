@@ -12,6 +12,7 @@ use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 use Behat\Borg\SphinxDoc\DocumentationBuilder\SphinxDocumentationBuilder;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -30,9 +31,10 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $this->documentationProvider = new InMemoryDocumentationProvider();
         $this->builtDocumentationRepository = new InMemoryBuiltDocumentationRepository();
 
-        $sphinxBuilder = new SphinxDocumentationBuilder();
+        (new Filesystem())->remove($tempPath = __DIR__ . '/../../test_temp/behat_output');
+
         $documentationBuilder = new RegisteringDocumentationBuilder(
-            $sphinxBuilder, $this->builtDocumentationRepository
+            new SphinxDocumentationBuilder($tempPath), $this->builtDocumentationRepository
         );
 
         $this->documentationManager = new DocumentationManager(
