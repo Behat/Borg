@@ -7,12 +7,20 @@ use Behat\Borg\DocumentationBuilder\BuildSpecification\DocumentationBuildSpecifi
 use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use InvalidArgumentException;
 
+/**
+ * Builds documentation using generator based on specification and writes result into repository.
+ */
 final class RepositoryDocumentationBuilder implements DocumentationBuilder
 {
     private $specification;
     private $generator;
     private $repository;
 
+    /**
+     * @param DocumentationBuildSpecification $specification
+     * @param DocumentationGenerator          $generator
+     * @param BuiltDocumentationRepository    $repository
+     */
     public function __construct(
         DocumentationBuildSpecification $specification,
         DocumentationGenerator $generator,
