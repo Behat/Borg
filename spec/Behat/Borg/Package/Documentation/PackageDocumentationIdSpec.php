@@ -19,4 +19,9 @@ class PackageDocumentationIdSpec extends ObjectBehavior
     {
         $this->shouldHaveType(DocumentationId::class);
     }
+
+    function it_can_be_converted_to_string_including_package_name_and_version()
+    {
+        $this->__toString()->shouldReturn('behat/v1.0.0');
+    }
 }

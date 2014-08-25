@@ -17,4 +17,9 @@ class RstDocumentationSourceSpec extends ObjectBehavior
     {
         $this->shouldHaveType(DocumentationSource::class);
     }
+
+    function it_exposes_path()
+    {
+        $this->getPath()->shouldReturn(__DIR__);
+    }
 }

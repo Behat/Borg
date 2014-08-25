@@ -4,8 +4,22 @@ namespace Behat\Borg\Documentation;
 
 final class Documentation
 {
+    private $anId;
+    private $source;
+
     public function __construct(DocumentationId $anId, DocumentationSource $source)
     {
-        // TODO: write logic here
+        $this->anId = $anId;
+        $this->source = $source;
+    }
+
+    public function getId()
+    {
+        return $this->anId;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
     }
 }

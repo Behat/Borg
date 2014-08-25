@@ -17,4 +17,9 @@ class VersionSpec extends ObjectBehavior
     {
         $this->fromString('1.0.0')->shouldHaveType(Version::class);
     }
+
+    function it_can_be_converted_to_string()
+    {
+        $this->__toString()->shouldReturn('1.0.0');
+    }
 }

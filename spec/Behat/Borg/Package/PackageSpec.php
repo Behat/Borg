@@ -17,4 +17,9 @@ class PackageSpec extends ObjectBehavior
     {
         $this->fromName('behat')->shouldHaveType(Package::class);
     }
+
+    function it_exposes_name()
+    {
+        $this->getName()->shouldReturn('behat');
+    }
 }
