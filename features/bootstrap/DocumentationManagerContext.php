@@ -4,6 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\InMemory\InMemoryDocumentationProvider;
+use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use Behat\Borg\DocumentationBuilder\InMemory\InMemoryBuiltDocumentationRepository;
 use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
@@ -22,6 +23,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     private $documentationProvider;
     private $builtDocumentationRepository;
     private $documentationManager;
+    private $buildTimes = [];
 
     /**
      * Initializes context.
@@ -60,6 +62,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 
     /**
      * @Given :package version :version was documented
+     * @When :package version :version documentation is updated
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
@@ -71,11 +74,23 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given :package version :version documentation was built
+     */
+    public function behatVersionDocumentationWasBuilt(Package $package, Version $version)
+    {
+        $this->packageWasDocumented($package, $version);
+        $this->iBuildTheDocumentation();
+    }
+
+    /**
      * @When I build the documentation
+     * @When I build the documentation again
      */
     public function iBuildTheDocumentation()
     {
+        $this->buildTimes[] = new \DateTimeImmutable();
         $this->documentationManager->buildDocumentation();
+        sleep(1);
     }
 
     /**
@@ -83,9 +98,46 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
+        $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
+
+        PHPUnit_Framework_Assert::assertFileExists($builtDocumentation->getIndexPath());
+    }
+
+    /**
+     * @Then the documentation for :package version :version should have been rebuilt
+     */
+    public function thePackageDocumentationShouldHaveBeenRebuilt(Package $package, Version $version)
+    {
+        $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
+        $documentationBuildTime = $builtDocumentation->getBuildTime();
+        $lastBuildTime = end($this->buildTimes);
+
+        PHPUnit_Framework_Assert::assertGreaterThan($lastBuildTime, $documentationBuildTime);
+    }
+
+    /**
+     * @Then the documentation for :package version :version should not have been rebuilt
+     */
+    public function thePackageDocumentationShouldNotHaveBeenRebuilt(Package $package, Version $version)
+    {
+        $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
+        $documentationBuildTime = $builtDocumentation->getBuildTime();
+        $lastBuildTime = end($this->buildTimes);
+
+        PHPUnit_Framework_Assert::assertLessThan($lastBuildTime, $documentationBuildTime);
+    }
+
+    /**
+     * @param Package $package
+     * @param Version $version
+     *
+     * @return BuiltDocumentation
+     */
+    private function getBuiltDocumentationForPackageVersion(Package $package, Version $version)
+    {
         $id = new PackageDocumentationId($package, $version);
         $builtDocumentation = $this->builtDocumentationRepository->getBuiltDocumentation($id);
 
-        PHPUnit_Framework_Assert::assertFileExists($builtDocumentation->getIndexPath());
+        return $builtDocumentation;
     }
 }
