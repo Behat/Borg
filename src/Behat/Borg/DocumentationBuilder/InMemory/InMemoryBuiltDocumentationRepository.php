@@ -9,13 +9,19 @@ use InvalidArgumentException;
 
 final class InMemoryBuiltDocumentationRepository implements BuiltDocumentationRepository
 {
+    private $documentation;
+
     public function addBuiltDocumentation(BuiltDocumentation $builtDocumentation)
     {
-        // TODO: Implement addBuiltDocumentation() method.
+        $this->documentation['' . $builtDocumentation->getId()] = $builtDocumentation;
     }
 
     public function getBuiltDocumentation(DocumentationId $anId)
     {
-        throw new InvalidArgumentException('Built documentation was not found');
+        if (!isset($this->documentation['' . $anId])) {
+            throw new InvalidArgumentException('Built documentation was not found');
+        }
+
+        return $this->documentation['' . $anId];
     }
 }

@@ -16,6 +16,11 @@ final class BuiltSphinxDocumentation implements BuiltDocumentation
         $this->buildPath = $buildPath;
     }
 
+    public function getId()
+    {
+        // TODO: Implement getId() method.
+    }
+
     public function getBuildPath()
     {
         return $this->buildPath;
