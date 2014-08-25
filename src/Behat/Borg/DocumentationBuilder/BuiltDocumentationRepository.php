@@ -18,6 +18,15 @@ interface BuiltDocumentationRepository
     public function addBuiltDocumentation(BuiltDocumentation $builtDocumentation);
 
     /**
+     * Checks if repository already has built documentation with an id.
+     *
+     * @param DocumentationId $anId
+     *
+     * @return Boolean
+     */
+    public function hasBuiltDocumentation(DocumentationId $anId);
+
+    /**
      * Gets built documentation by its unique ID.
      *
      * @param DocumentationId $anId

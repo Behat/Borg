@@ -35,4 +35,11 @@ interface BuiltDocumentation
      * @return DateTimeImmutable
      */
     public function getBuildTime();
+
+    /**
+     * Returns time documentation was created/updated.
+     *
+     * @return DateTimeImmutable
+     */
+    public function getDocumentationTime();
 }

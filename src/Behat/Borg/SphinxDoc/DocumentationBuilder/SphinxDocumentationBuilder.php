@@ -46,7 +46,9 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
 
         $this->executeCommand($commandLine);
 
-        return new BuiltSphinxDocumentation($documentation->getId(), $buildPath);
+        return new BuiltSphinxDocumentation(
+            $documentation->getId(), $documentation->getTime(), $buildPath
+        );
     }
 
     private function getWritableBuildPath(Documentation $documentation)

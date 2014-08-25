@@ -25,6 +25,14 @@ final class InMemoryBuiltDocumentationRepository implements BuiltDocumentationRe
     /**
      * {@inheritdoc}
      */
+    public function hasBuiltDocumentation(DocumentationId $anId)
+    {
+        // TODO: Implement hasBuiltDocumentation() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getBuiltDocumentation(DocumentationId $anId)
     {
         if (!isset($this->documentation['' . $anId])) {
