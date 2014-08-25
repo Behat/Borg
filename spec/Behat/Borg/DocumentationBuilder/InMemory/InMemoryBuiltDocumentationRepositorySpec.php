@@ -28,6 +28,36 @@ class InMemoryBuiltDocumentationRepositorySpec extends ObjectBehavior
         $this->getBuiltDocumentation($anId)->shouldReturn($builtDocumentation);
     }
 
+    function it_can_tell_if_documentation_was_built(
+        DocumentationId $anId1,
+        DocumentationId $anId2,
+        BuiltDocumentation $builtDocumentation
+    ) {
+        $builtDocumentation->getId()->willReturn($anId1);
+        $anId1->__toString()->willReturn('doc1');
+        $anId2->__toString()->willReturn('doc2');
+
+        $this->addBuiltDocumentation($builtDocumentation);
+
+        $this->shouldHaveBuiltDocumentation($anId1);
+        $this->shouldNotHaveBuiltDocumentation($anId2);
+    }
+
+    function it_overwrites_documentation_with_same_id(
+        DocumentationId $anId,
+        BuiltDocumentation $builtDocumentation1,
+        BuiltDocumentation $builtDocumentation2
+    ) {
+        $builtDocumentation1->getId()->willReturn($anId);
+        $builtDocumentation2->getId()->willReturn($anId);
+        $anId->__toString()->willReturn('doc');
+
+        $this->addBuiltDocumentation($builtDocumentation1);
+        $this->addBuiltDocumentation($builtDocumentation2);
+
+        $this->getBuiltDocumentation($anId)->shouldReturn($builtDocumentation2);
+    }
+
     function it_throws_an_exception_on_attempt_to_retrieve_unexisting_documentation(
         DocumentationId $anId
     ) {

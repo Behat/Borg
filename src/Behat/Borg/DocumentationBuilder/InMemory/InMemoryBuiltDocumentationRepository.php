@@ -27,7 +27,7 @@ final class InMemoryBuiltDocumentationRepository implements BuiltDocumentationRe
      */
     public function hasBuiltDocumentation(DocumentationId $anId)
     {
-        // TODO: Implement hasBuiltDocumentation() method.
+        return isset($this->documentation['' . $anId]);
     }
 
     /**
@@ -35,7 +35,7 @@ final class InMemoryBuiltDocumentationRepository implements BuiltDocumentationRe
      */
     public function getBuiltDocumentation(DocumentationId $anId)
     {
-        if (!isset($this->documentation['' . $anId])) {
+        if (!$this->hasBuiltDocumentation($anId)) {
             throw new InvalidArgumentException('Built documentation was not found');
         }
 

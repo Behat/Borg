@@ -7,6 +7,7 @@ use Behat\Borg\Documentation\InMemory\InMemoryDocumentationProvider;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use Behat\Borg\DocumentationBuilder\InMemory\InMemoryBuiltDocumentationRepository;
 use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
+use Behat\Borg\DocumentationBuilder\UpdatingDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
@@ -35,8 +36,12 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 
         (new Filesystem())->remove($tempPath = __DIR__ . '/../../test_temp/behat_output');
 
-        $documentationBuilder = new RegisteringDocumentationBuilder(
-            new SphinxDocumentationBuilder($tempPath), $this->builtDocumentationRepository
+        $documentationBuilder = new UpdatingDocumentationBuilder(
+            new RegisteringDocumentationBuilder(
+                new SphinxDocumentationBuilder($tempPath),
+                $this->builtDocumentationRepository
+            ),
+            $this->builtDocumentationRepository
         );
 
         $this->documentationManager = new DocumentationManager(
@@ -112,7 +117,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $documentationBuildTime = $builtDocumentation->getBuildTime();
         $lastBuildTime = end($this->buildTimes);
 
-        PHPUnit_Framework_Assert::assertGreaterThan($lastBuildTime, $documentationBuildTime);
+        PHPUnit_Framework_Assert::assertGreaterThanOrEqual($lastBuildTime, $documentationBuildTime);
     }
 
     /**
