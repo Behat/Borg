@@ -21,7 +21,7 @@ class InMemoryDocumentationProviderSpec extends ObjectBehavior
     ) {
         $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
 
-        $this->registerDocumentation($documentation);
+        $this->addDocumentation($documentation);
 
         $this->getAllDocumentation()->shouldReturn([$documentation]);
     }

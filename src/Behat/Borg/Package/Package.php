@@ -2,22 +2,35 @@
 
 namespace Behat\Borg\Package;
 
+/**
+ * Represents software package.
+ */
 final class Package
 {
     private $name;
 
-    private function __construct($name)
-    {
-        $this->name = $name;
-    }
-
+    /**
+     * Constructs software package from name.
+     *
+     * @param string $name
+     *
+     * @return Package
+     */
     public static function fromName($name)
     {
         return new self($name);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
+    }
+
+    private function __construct($name)
+    {
+        $this->name = $name;
     }
 }

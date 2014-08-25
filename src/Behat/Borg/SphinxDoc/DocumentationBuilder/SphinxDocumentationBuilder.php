@@ -8,6 +8,11 @@ use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
+/**
+ * Builds *.rst documentation using Sphinx.
+ *
+ * @see http://sphinx-doc.org
+ */
 final class SphinxDocumentationBuilder implements DocumentationBuilder
 {
     const COMMAND_LINE = 'sphinx-build';
@@ -15,12 +20,18 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
     private $buildPath;
     private $filesystem;
 
-    public function __construct($path)
+    /**
+     * @param string $buildPath
+     */
+    public function __construct($buildPath)
     {
-        $this->buildPath = $path;
+        $this->buildPath = $buildPath;
         $this->filesystem = new Filesystem();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function build(Documentation $documentation)
     {
         $source = $documentation->getSource();

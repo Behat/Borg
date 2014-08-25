@@ -2,22 +2,35 @@
 
 namespace Behat\Borg\Package;
 
+/**
+ * Represents software package version.
+ */
 final class Version
 {
     private $versionString;
 
-    private function __construct($versionString)
-    {
-        $this->versionString = $versionString;
-    }
-
+    /**
+     * Constructs version from a string.
+     *
+     * @param string $string
+     *
+     * @return Version
+     */
     public static function fromString($string)
     {
         return new self($string);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->versionString;
+    }
+
+    private function __construct($versionString)
+    {
+        $this->versionString = $versionString;
     }
 }

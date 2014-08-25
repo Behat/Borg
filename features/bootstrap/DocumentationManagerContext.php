@@ -67,7 +67,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $source = RstDocumentationSource::atPath(__DIR__ . '/fixtures');
         $documentation = new Documentation($id, $source);
 
-        $this->documentationProvider->registerDocumentation($documentation);
+        $this->documentationProvider->addDocumentation($documentation);
     }
 
     /**
