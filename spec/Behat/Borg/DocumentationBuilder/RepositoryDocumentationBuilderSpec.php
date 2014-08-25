@@ -57,9 +57,9 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
             $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
         );
         $specification->isSatisfiedByDocumentation($documentation)->willReturn(true);
-        $generator->generate($documentation)->willReturn($builtDocumentation);
+        $generator->generate($documentation)->willReturn($builtDocumentation)->shouldBeCalled();
 
-        $this->build($documentation)->shouldReturn($builtDocumentation);
+        $this->build($documentation);
     }
 
     function it_throws_an_exception_if_generator_does_not_produce_result(

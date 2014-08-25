@@ -47,7 +47,5 @@ final class RepositoryDocumentationBuilder implements DocumentationBuilder
         }
 
         $this->repository->addBuiltDocumentation($builtDocumentation);
-
-        return $builtDocumentation;
     }
 }
