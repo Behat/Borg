@@ -6,20 +6,20 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\DocumentationBuilder\BuildSpecification\DocumentationBuildSpecification;
 use InvalidArgumentException;
 
-final class UpdatingDocumentationBuilder implements DocumentationBuilder
+final class RepositoryDocumentationBuilder implements DocumentationBuilder
 {
+    private $specification;
     private $actualBuilder;
     private $repository;
-    private $specification;
 
     public function __construct(
+        DocumentationBuildSpecification $specification,
         DocumentationBuilder $actualBuilder,
-        BuiltDocumentationRepository $repository,
-        DocumentationBuildSpecification $specification
+        BuiltDocumentationRepository $repository
     ) {
+        $this->specification = $specification;
         $this->actualBuilder = $actualBuilder;
         $this->repository = $repository;
-        $this->specification = $specification;
     }
 
     /**

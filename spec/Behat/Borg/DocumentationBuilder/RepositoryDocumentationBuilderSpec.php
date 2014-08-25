@@ -14,14 +14,14 @@ use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class UpdatingDocumentationBuilderSpec extends ObjectBehavior
+class RepositoryDocumentationBuilderSpec extends ObjectBehavior
 {
     function let(
+        DocumentationBuildSpecification $specification,
         DocumentationBuilder $actualBuilder,
-        BuiltDocumentationRepository $repository,
-        DocumentationBuildSpecification $specification
+        BuiltDocumentationRepository $repository
     ) {
-        $this->beConstructedWith($actualBuilder, $repository, $specification);
+        $this->beConstructedWith($specification, $actualBuilder, $repository);
     }
 
     function it_is_documentation_builder()

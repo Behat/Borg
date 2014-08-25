@@ -8,7 +8,7 @@ use Behat\Borg\DocumentationBuilder\BuildSpecification\UpdateableBuildSpecificat
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use Behat\Borg\DocumentationBuilder\InMemory\InMemoryBuiltDocumentationRepository;
 use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
-use Behat\Borg\DocumentationBuilder\UpdatingDocumentationBuilder;
+use Behat\Borg\DocumentationBuilder\RepositoryDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
@@ -37,10 +37,10 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 
         (new Filesystem())->remove($tempPath = __DIR__ . '/../../test_temp/behat_output');
 
-        $documentationBuilder = new UpdatingDocumentationBuilder(
+        $documentationBuilder = new RepositoryDocumentationBuilder(
+            new UpdateableBuildSpecification($this->builtDocumentationRepository),
             new SphinxDocumentationBuilder($tempPath),
-            $this->builtDocumentationRepository,
-            new UpdateableBuildSpecification($this->builtDocumentationRepository)
+            $this->builtDocumentationRepository
         );
 
         $this->documentationManager = new DocumentationManager(
@@ -100,7 +100,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function iBuildTheDocumentationAgain()
     {
-        sleep(1);
+        usleep(1500000);
         $this->iBuildTheDocumentation();
     }
 
