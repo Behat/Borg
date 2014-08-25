@@ -45,9 +45,10 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
         $commandLine = $this->getCommandLine($sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
+        $buildTime = new \DateTimeImmutable();
 
         return new BuiltSphinxDocumentation(
-            $documentation->getId(), $documentation->getTime(), $buildPath
+            $documentation->getId(), $documentation->getTime(), $buildTime, $buildPath
         );
     }
 

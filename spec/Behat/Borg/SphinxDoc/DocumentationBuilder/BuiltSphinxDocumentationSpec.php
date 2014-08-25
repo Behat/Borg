@@ -10,9 +10,12 @@ use Prophecy\Argument;
 
 class BuiltSphinxDocumentationSpec extends ObjectBehavior
 {
-    function let(DocumentationId $anId, DateTimeImmutable $documentationTime)
-    {
-        $this->beConstructedWith($anId, $documentationTime, __DIR__);
+    function let(
+        DocumentationId $anId,
+        DateTimeImmutable $documentationTime,
+        DateTimeImmutable $buildTime
+    ) {
+        $this->beConstructedWith($anId, $documentationTime, $buildTime, __DIR__);
     }
 
     function it_is_built_documentation()
@@ -35,14 +38,9 @@ class BuiltSphinxDocumentationSpec extends ObjectBehavior
         $this->getIndexPath()->shouldReturn(__DIR__ . '/index.html');
     }
 
-    function it_exposes_time_it_was_built_at()
+    function it_exposes_time_it_was_built_at(DateTimeImmutable $buildTime)
     {
-        $this->getBuildTime()->shouldHaveType(DateTimeImmutable::class);
-    }
-
-    function its_build_time_does_not_change_over_time()
-    {
-        $this->getBuildTime()->shouldReturn($this->getBuildTime());
+        $this->getBuildTime()->shouldHaveType($buildTime);
     }
 
     function it_exposes_time_documentation_was_created_or_updated_at(

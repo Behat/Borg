@@ -13,25 +13,25 @@ final class BuiltSphinxDocumentation implements BuiltDocumentation
 {
     private $anId;
     private $buildPath;
-    /**
-     * @var \DateTimeImmutable
-     */
+    private $buildTime;
     private $documentationTime;
 
     /**
      * @param DocumentationId   $anId
      * @param DateTimeImmutable $documentationTime
+     * @param DateTimeImmutable $buildTime
      * @param string            $buildPath
      */
     public function __construct(
         DocumentationId $anId,
         DateTimeImmutable $documentationTime,
+        DateTimeImmutable $buildTime,
         $buildPath
     ) {
         $this->anId = $anId;
         $this->documentationTime = $documentationTime;
+        $this->buildTime = $buildTime;
         $this->buildPath = $buildPath;
-        $this->buildTime = new DateTimeImmutable();
     }
 
     /**
