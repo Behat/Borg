@@ -1,10 +1,15 @@
 <?php
 
+namespace tests\Behat\Borg\SphinxDoc;
+
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 use Behat\Borg\SphinxDoc\DocumentationBuilder\Generator\SphinxDocumentationGenerator;
+use DateTimeImmutable;
+use PHPUnit_Framework_TestCase;
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
@@ -15,8 +20,8 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->tempInputPath = __DIR__ . '/../test_temp/phpunit_input';
-        $this->tempOutputPath = __DIR__ . '/../test_temp/phpunit_output';
+        $this->tempInputPath = getenv('TEMP_PATH') . '/sphinx/input';
+        $this->tempOutputPath = getenv('TEMP_PATH') . '/sphinx/output';
 
         $this->generator = new SphinxDocumentationGenerator($this->tempOutputPath);
 

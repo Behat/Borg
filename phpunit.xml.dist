@@ -12,4 +12,8 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <php>
+        <env name="TEMP_PATH" value="/tmp/behat_borg_tests"/>
+    </php>
 </phpunit>
