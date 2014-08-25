@@ -1,4 +1,10 @@
 {
+    "require": {
+        "php": "~5.5",
+        "symfony/filesystem": "~2.5.3",
+        "symfony/process": "~2.5.3"
+    },
+
     "require-dev": {
         "behat/behat": "~3.0.12",
         "phpunit/phpunit": "~4.2.0",
