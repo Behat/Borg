@@ -4,6 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\InMemory\InMemoryDocumentationProvider;
+use Behat\Borg\DocumentationBuilder\BuildSpecification\UpdateableBuildSpecification;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use Behat\Borg\DocumentationBuilder\InMemory\InMemoryBuiltDocumentationRepository;
 use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
@@ -41,7 +42,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
                 new SphinxDocumentationBuilder($tempPath),
                 $this->builtDocumentationRepository
             ),
-            $this->builtDocumentationRepository
+            $this->builtDocumentationRepository,
+            new UpdateableBuildSpecification($this->builtDocumentationRepository)
         );
 
         $this->documentationManager = new DocumentationManager(
