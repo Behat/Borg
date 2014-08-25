@@ -38,10 +38,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         (new Filesystem())->remove($tempPath = __DIR__ . '/../../test_temp/behat_output');
 
         $documentationBuilder = new UpdatingDocumentationBuilder(
-            new RegisteringDocumentationBuilder(
-                new SphinxDocumentationBuilder($tempPath),
-                $this->builtDocumentationRepository
-            ),
+            new SphinxDocumentationBuilder($tempPath),
             $this->builtDocumentationRepository,
             new UpdateableBuildSpecification($this->builtDocumentationRepository)
         );

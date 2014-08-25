@@ -4,6 +4,7 @@ namespace Behat\Borg\DocumentationBuilder;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\DocumentationBuilder\BuildSpecification\DocumentationBuildSpecification;
+use InvalidArgumentException;
 
 final class UpdatingDocumentationBuilder implements DocumentationBuilder
 {
@@ -30,6 +31,14 @@ final class UpdatingDocumentationBuilder implements DocumentationBuilder
             return null;
         }
 
-        $this->actualBuilder->build($documentation);
+        $builtDocumentation = $this->actualBuilder->build($documentation);
+
+        if (!$builtDocumentation) {
+            throw new InvalidArgumentException('Documentation can not be built.');
+        }
+
+        $this->repository->addBuiltDocumentation($builtDocumentation);
+
+        return $builtDocumentation;
     }
 }
