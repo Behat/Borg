@@ -73,7 +73,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     {
         $id = new PackageDocumentationId($package, $version);
         $source = RstDocumentationSource::atPath(__DIR__ . '/fixtures/' . $id);
-        $documentation = new Documentation($id, $source);
+        $documentation = new Documentation($id, $source, new DateTimeImmutable());
 
         $this->documentationProvider->addDocumentation($documentation);
     }

@@ -24,8 +24,12 @@ class DocumentationManagerSpec extends ObjectBehavior
         DocumentationId $doc2Id,
         DocumentationSource $src
     ) {
-        $documentation1 = new Documentation($doc1Id->getWrappedObject(), $src->getWrappedObject());
-        $documentation2 = new Documentation($doc2Id->getWrappedObject(), $src->getWrappedObject());
+        $documentation1 = new Documentation(
+            $doc1Id->getWrappedObject(), $src->getWrappedObject(), new \DateTimeImmutable()
+        );
+        $documentation2 = new Documentation(
+            $doc2Id->getWrappedObject(), $src->getWrappedObject(), new \DateTimeImmutable()
+        );
         $provider->getAllDocumentation()->willReturn([$documentation1, $documentation2]);
 
         $builder->build($documentation1)->shouldBeCalled();

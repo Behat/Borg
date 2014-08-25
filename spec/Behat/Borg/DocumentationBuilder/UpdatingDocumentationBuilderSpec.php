@@ -30,7 +30,9 @@ class UpdatingDocumentationBuilderSpec extends ObjectBehavior
         DocumentationId $anId,
         DocumentationSource $source
     ) {
-        $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new \DateTimeImmutable()
+        );
         $repository->hasBuiltDocumentation($anId)->willReturn(false);
 
         $actualBuilder->build($documentation)->shouldBeCalled();

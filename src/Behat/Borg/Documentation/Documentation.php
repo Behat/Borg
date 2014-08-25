@@ -21,11 +21,11 @@ final class Documentation
     public function __construct(
         DocumentationId $anId,
         DocumentationSource $source,
-        DateTimeImmutable $time = null
+        DateTimeImmutable $time
     ) {
         $this->anId = $anId;
         $this->source = $source;
-        $this->time = $time ?: new DateTimeImmutable();
+        $this->time = $time;
     }
 
     /**

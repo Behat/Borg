@@ -13,7 +13,7 @@ class DocumentationSpec extends ObjectBehavior
 {
     function let(DocumentationId $anId, DocumentationSource $source)
     {
-        $this->beConstructedWith($anId, $source);
+        $this->beConstructedWith($anId, $source, new DateTimeImmutable());
     }
 
     function it_represents_documentation()

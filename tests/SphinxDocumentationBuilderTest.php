@@ -28,7 +28,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     {
         $anId = $this->createDocumentationId('myDoc');
         $source = $this->createDocumentationSource();
-        $documentation = new Documentation($anId, $source);
+        $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
         $builtDocumentation = $this->builder->build($documentation);
 
@@ -40,7 +40,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     {
         $anId = $this->createDocumentationId('myDoc');
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
-        $documentation = new Documentation($anId, $source);
+        $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
         $built = $this->builder->build($documentation);
 
@@ -57,7 +57,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     {
         $anId = $this->createDocumentationId('myDoc');
         $source = $this->createRstDocumentationSourceWithoutIndex();
-        $documentation = new Documentation($anId, $source);
+        $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
         $this->builder->build($documentation);
     }

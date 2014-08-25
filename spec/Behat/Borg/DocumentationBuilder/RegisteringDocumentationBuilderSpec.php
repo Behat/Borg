@@ -30,7 +30,9 @@ class RegisteringDocumentationBuilderSpec extends ObjectBehavior
         DocumentationBuilder $actualBuilder,
         BuiltDocumentation $builtDocumentation
     ) {
-        $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new \DateTimeImmutable()
+        );
 
         $actualBuilder->build($documentation)->willReturn($builtDocumentation);
 
@@ -42,7 +44,9 @@ class RegisteringDocumentationBuilderSpec extends ObjectBehavior
         DocumentationSource $source,
         DocumentationBuilder $actualBuilder
     ) {
-        $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new \DateTimeImmutable()
+        );
 
         $actualBuilder->build($documentation)->willReturn(null);
 
@@ -56,7 +60,9 @@ class RegisteringDocumentationBuilderSpec extends ObjectBehavior
         BuiltDocumentation $builtDocumentation,
         BuiltDocumentationRepository $repository
     ) {
-        $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new \DateTimeImmutable()
+        );
         $actualBuilder->build($documentation)->willReturn($builtDocumentation);
 
         $repository->addBuiltDocumentation($builtDocumentation)->shouldBeCalled();
