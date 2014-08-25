@@ -72,6 +72,15 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given :package version :version documentation was built
+     */
+    public function packageDocumentationWasBuilt(Package $package, Version $version)
+    {
+        $this->packageWasDocumented($package, $version);
+        $this->iBuildTheDocumentation();
+    }
+
+    /**
      * @When  :package version :version documentation is updated
      */
     public function packageDocumentationWasUpdated(Package $package, Version $version)
@@ -81,15 +90,6 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
 
         $this->documentationProvider->addDocumentation($documentation);
-    }
-
-    /**
-     * @Given :package version :version documentation was built
-     */
-    public function behatVersionDocumentationWasBuilt(Package $package, Version $version)
-    {
-        $this->packageWasDocumented($package, $version);
-        $this->iBuildTheDocumentation();
     }
 
     /**
