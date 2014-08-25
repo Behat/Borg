@@ -4,21 +4,21 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
-use Behat\Borg\SphinxDoc\DocumentationBuilder\SphinxDocumentationBuilder;
+use Behat\Borg\SphinxDoc\DocumentationBuilder\Generator\SphinxDocumentationGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 
-class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
+class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
 {
     private $tempInputPath;
     private $tempOutputPath;
-    private $builder;
+    private $generator;
 
     protected function setUp()
     {
         $this->tempInputPath = __DIR__ . '/../test_temp/phpunit_input';
         $this->tempOutputPath = __DIR__ . '/../test_temp/phpunit_output';
 
-        $this->builder = new SphinxDocumentationBuilder($this->tempOutputPath);
+        $this->generator = new SphinxDocumentationGenerator($this->tempOutputPath);
 
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
     }
@@ -30,7 +30,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createDocumentationSource();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $builtDocumentation = $this->builder->build($documentation);
+        $builtDocumentation = $this->generator->generate($documentation);
 
         $this->assertNull($builtDocumentation);
     }
@@ -42,7 +42,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $built = $this->builder->build($documentation);
+        $built = $this->generator->generate($documentation);
 
         $this->assertFileExists($this->tempOutputPath . '/myDoc/index.html');
         $this->assertEquals($this->tempOutputPath . '/myDoc/index.html', $built->getIndexPath());
@@ -59,7 +59,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createRstDocumentationSourceWithoutIndex();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $this->builder->build($documentation);
+        $this->generator->generate($documentation);
     }
 
     /**

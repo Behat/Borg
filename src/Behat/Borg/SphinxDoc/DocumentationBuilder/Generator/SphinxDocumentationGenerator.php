@@ -1,19 +1,21 @@
 <?php
 
-namespace Behat\Borg\SphinxDoc\DocumentationBuilder;
+namespace Behat\Borg\SphinxDoc\DocumentationBuilder\Generator;
 
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\DocumentationBuilder\DocumentationBuilder;
+use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
+use Behat\Borg\SphinxDoc\DocumentationBuilder\BuiltSphinxDocumentation;
+use DateTimeImmutable;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 /**
- * Builds *.rst documentation using Sphinx.
+ * Generates *.rst documentation using Sphinx.
  *
  * @see http://sphinx-doc.org
  */
-final class SphinxDocumentationBuilder implements DocumentationBuilder
+final class SphinxDocumentationGenerator implements DocumentationGenerator
 {
     const COMMAND_LINE = 'sphinx-build';
 
@@ -32,7 +34,7 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
     /**
      * {@inheritdoc}
      */
-    public function build(Documentation $documentation)
+    public function generate(Documentation $documentation)
     {
         $source = $documentation->getSource();
 
@@ -45,7 +47,7 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
         $commandLine = $this->getCommandLine($sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
-        $buildTime = new \DateTimeImmutable();
+        $buildTime = new DateTimeImmutable();
 
         return new BuiltSphinxDocumentation(
             $documentation->getId(), $documentation->getTime(), $buildTime, $buildPath
@@ -73,7 +75,7 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
 
     private function getConfigPath()
     {
-        return realpath(__DIR__ . '/../config');
+        return realpath(__DIR__ . '/../../config');
     }
 
     private function executeCommand($commandLine)

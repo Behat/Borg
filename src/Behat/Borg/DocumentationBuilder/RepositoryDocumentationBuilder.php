@@ -4,21 +4,22 @@ namespace Behat\Borg\DocumentationBuilder;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\DocumentationBuilder\BuildSpecification\DocumentationBuildSpecification;
+use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use InvalidArgumentException;
 
 final class RepositoryDocumentationBuilder implements DocumentationBuilder
 {
     private $specification;
-    private $actualBuilder;
+    private $generator;
     private $repository;
 
     public function __construct(
         DocumentationBuildSpecification $specification,
-        DocumentationBuilder $actualBuilder,
+        DocumentationGenerator $generator,
         BuiltDocumentationRepository $repository
     ) {
         $this->specification = $specification;
-        $this->actualBuilder = $actualBuilder;
+        $this->generator = $generator;
         $this->repository = $repository;
     }
 
@@ -31,7 +32,7 @@ final class RepositoryDocumentationBuilder implements DocumentationBuilder
             return null;
         }
 
-        $builtDocumentation = $this->actualBuilder->build($documentation);
+        $builtDocumentation = $this->generator->generate($documentation);
 
         if (!$builtDocumentation) {
             throw new InvalidArgumentException('Documentation can not be built.');

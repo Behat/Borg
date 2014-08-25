@@ -14,7 +14,7 @@ use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
-use Behat\Borg\SphinxDoc\DocumentationBuilder\SphinxDocumentationBuilder;
+use Behat\Borg\SphinxDoc\DocumentationBuilder\Generator\SphinxDocumentationGenerator;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -39,7 +39,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 
         $documentationBuilder = new RepositoryDocumentationBuilder(
             new UpdateableBuildSpecification($this->builtDocumentationRepository),
-            new SphinxDocumentationBuilder($tempPath),
+            new SphinxDocumentationGenerator($tempPath),
             $this->builtDocumentationRepository
         );
 

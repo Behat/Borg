@@ -9,6 +9,7 @@ use Behat\Borg\DocumentationBuilder\BuildSpecification\DocumentationBuildSpecifi
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentationRepository;
 use Behat\Borg\DocumentationBuilder\DocumentationBuilder;
+use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
@@ -18,10 +19,10 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
 {
     function let(
         DocumentationBuildSpecification $specification,
-        DocumentationBuilder $actualBuilder,
+        DocumentationGenerator $generator,
         BuiltDocumentationRepository $repository
     ) {
-        $this->beConstructedWith($specification, $actualBuilder, $repository);
+        $this->beConstructedWith($specification, $generator, $repository);
     }
 
     function it_is_documentation_builder()
@@ -29,8 +30,8 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(DocumentationBuilder::class);
     }
 
-    function it_does_not_build_documentation_if_it_does_not_satisfy_specification(
-        DocumentationBuilder $actualBuilder,
+    function it_does_not_generate_documentation_if_it_does_not_satisfy_specification(
+        DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
         DocumentationSource $source
@@ -40,13 +41,13 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
         );
         $specification->isSatisfiedByDocumentation($documentation)->willReturn(false);
 
-        $actualBuilder->build($documentation)->shouldNotBeCalled();
+        $generator->generate($documentation)->shouldNotBeCalled();
 
         $this->build($documentation);
     }
 
-    function it_builds_documentation_using_actual_builder_if_it_satisfies_specification(
-        DocumentationBuilder $actualBuilder,
+    function it_generates_documentation_using_generator_if_it_satisfies_specification(
+        DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
         DocumentationSource $source,
@@ -56,13 +57,13 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
             $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
         );
         $specification->isSatisfiedByDocumentation($documentation)->willReturn(true);
-        $actualBuilder->build($documentation)->willReturn($builtDocumentation);
+        $generator->generate($documentation)->willReturn($builtDocumentation);
 
         $this->build($documentation)->shouldReturn($builtDocumentation);
     }
 
-    function it_throws_an_exception_if_original_builder_does_not_produce_result(
-        DocumentationBuilder $actualBuilder,
+    function it_throws_an_exception_if_generator_does_not_produce_result(
+        DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
         DocumentationSource $source
@@ -71,13 +72,13 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
             $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
         );
         $specification->isSatisfiedByDocumentation($documentation)->willReturn(true);
-        $actualBuilder->build($documentation)->willReturn(null);
+        $generator->generate($documentation)->willReturn(null);
 
         $this->shouldThrow(InvalidArgumentException::class)->duringBuild($documentation);
     }
 
     function it_adds_built_documentation_into_the_repository(
-        DocumentationBuilder $actualBuilder,
+        DocumentationGenerator $generator,
         DocumentationBuildSpecification $specification,
         DocumentationId $anId,
         DocumentationSource $source,
@@ -88,7 +89,7 @@ class RepositoryDocumentationBuilderSpec extends ObjectBehavior
             $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
         );
         $specification->isSatisfiedByDocumentation($documentation)->willReturn(true);
-        $actualBuilder->build($documentation)->willReturn($builtDocumentation);
+        $generator->generate($documentation)->willReturn($builtDocumentation);
 
         $repository->addBuiltDocumentation($builtDocumentation)->shouldBeCalled();
 
