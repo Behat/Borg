@@ -48,4 +48,19 @@ class RegisteringDocumentationBuilderSpec extends ObjectBehavior
 
         $this->shouldThrow(InvalidArgumentException::class)->duringBuild($documentation);
     }
+
+    function it_adds_built_documentation_into_the_repository(
+        DocumentationId $anId,
+        DocumentationSource $source,
+        DocumentationBuilder $actualBuilder,
+        BuiltDocumentation $builtDocumentation,
+        BuiltDocumentationRepository $repository
+    ) {
+        $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject());
+        $actualBuilder->build($documentation)->willReturn($builtDocumentation);
+
+        $repository->addBuiltDocumentation($builtDocumentation)->shouldBeCalled();
+
+        $this->build($documentation);
+    }
 }

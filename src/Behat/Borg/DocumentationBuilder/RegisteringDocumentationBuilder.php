@@ -26,6 +26,8 @@ final class RegisteringDocumentationBuilder implements DocumentationBuilder
             throw new InvalidArgumentException('Documentation can not be built.');
         }
 
+        $this->repository->addBuiltDocumentation($builtDocumentation);
+
         return $builtDocumentation;
     }
 }
