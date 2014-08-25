@@ -3,19 +3,17 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
 use Behat\Borg\DocumentationBuilder\BuildSpecification\UpdateableBuildSpecification;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
-use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentationRepository;
-use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
 use Behat\Borg\DocumentationBuilder\RepositoryDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
+use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
+use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentationRepository;
+use Behat\Borg\Fake\DocumentationBuilder\Generator\FakeDocumentationGenerator;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
-use Behat\Borg\SphinxDoc\DocumentationBuilder\Generator\SphinxDocumentationGenerator;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -25,7 +23,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     private $documentationProvider;
     private $builtDocumentationRepository;
     private $documentationManager;
-    private $lastBuildTime;
+    private $generator;
 
     /**
      * Initializes context.
@@ -34,15 +32,12 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     {
         $this->documentationProvider = new FakeDocumentationProvider();
         $this->builtDocumentationRepository = new FakeBuiltDocumentationRepository();
-
-        (new Filesystem())->remove($tempPath = __DIR__ . '/../../test_temp/behat_output');
+        $this->generator = new FakeDocumentationGenerator();
+        $specification = new UpdateableBuildSpecification($this->builtDocumentationRepository);
 
         $documentationBuilder = new RepositoryDocumentationBuilder(
-            new UpdateableBuildSpecification($this->builtDocumentationRepository),
-            new SphinxDocumentationGenerator($tempPath),
-            $this->builtDocumentationRepository
+            $specification, $this->generator, $this->builtDocumentationRepository
         );
-
         $this->documentationManager = new DocumentationManager(
             $this->documentationProvider, $documentationBuilder
         );
@@ -66,13 +61,24 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 
     /**
      * @Given :package version :version was documented
-     * @When :package version :version documentation is updated
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
         $id = new PackageDocumentationId($package, $version);
         $source = RstDocumentationSource::atPath(__DIR__ . '/fixtures/' . $id);
-        $documentation = new Documentation($id, $source, new DateTimeImmutable());
+        $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
+
+        $this->documentationProvider->addDocumentation($documentation);
+    }
+
+    /**
+     * @When  :package version :version documentation is updated
+     */
+    public function packageDocumentationWasUpdated(Package $package, Version $version)
+    {
+        $id = new PackageDocumentationId($package, $version);
+        $source = RstDocumentationSource::atPath(__DIR__ . '/fixtures/' . $id);
+        $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
 
         $this->documentationProvider->addDocumentation($documentation);
     }
@@ -91,7 +97,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function iBuildTheDocumentation()
     {
-        $this->lastBuildTime = new DateTimeImmutable();
+        $this->generator->changeBuildTime($this->createTime('19.01.1988 20:00'));
         $this->documentationManager->buildDocumentation();
     }
 
@@ -100,8 +106,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function iBuildTheDocumentationAgain()
     {
-        usleep(1500000);
-        $this->iBuildTheDocumentation();
+        $this->generator->changeBuildTime($this->createTime('20.01.1988 20:00'));
+        $this->documentationManager->buildDocumentation();
     }
 
     /**
@@ -109,9 +115,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
-
-        PHPUnit_Framework_Assert::assertFileExists($builtDocumentation->getIndexPath());
+        $this->getBuiltDocumentationForPackageVersion($package, $version);
     }
 
     /**
@@ -122,7 +126,9 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
-        PHPUnit_Framework_Assert::assertGreaterThanOrEqual($this->lastBuildTime, $documentationBuildTime);
+        PHPUnit_Framework_Assert::assertGreaterThanOrEqual(
+            $this->generator->getLastBuildTime(), $documentationBuildTime
+        );
     }
 
     /**
@@ -133,7 +139,9 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
-        PHPUnit_Framework_Assert::assertLessThan($this->lastBuildTime, $documentationBuildTime);
+        PHPUnit_Framework_Assert::assertLessThan(
+            $this->generator->getLastBuildTime(), $documentationBuildTime
+        );
     }
 
     /**
@@ -148,5 +156,15 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $builtDocumentation = $this->builtDocumentationRepository->getBuiltDocumentation($id);
 
         return $builtDocumentation;
+    }
+
+    /**
+     * @param string $time
+     *
+     * @return DateTimeImmutable
+     */
+    private function createTime($time)
+    {
+        return DateTimeImmutable::createFromFormat('d.m.Y H:i', $time);
     }
 }

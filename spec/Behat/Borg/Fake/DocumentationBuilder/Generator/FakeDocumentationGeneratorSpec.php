@@ -1,0 +1,66 @@
+<?php
+
+namespace spec\Behat\Borg\Fake\DocumentationBuilder\Generator;
+
+use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
+use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentation;
+use DateTimeImmutable;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+
+class FakeDocumentationGeneratorSpec extends ObjectBehavior
+{
+    function it_is_documentation_generator()
+    {
+        $this->shouldHaveType(DocumentationGenerator::class);
+    }
+
+    function it_creates_fake_built_documentation_based_on_documentation(
+        DocumentationId $anId,
+        DocumentationSource $source
+    ) {
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
+        );
+
+        $this->generate($documentation)->shouldHaveType(FakeBuiltDocumentation::class);
+    }
+
+    function it_uses_default_time_as_build_time(DocumentationId $anId, DocumentationSource $source)
+    {
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
+        );
+
+        $built = $this->generate($documentation);
+
+        $built->getBuildTime()->shouldHaveType(DateTimeImmutable::class);
+    }
+
+    function it_allows_to_change_build_time(
+        DocumentationId $anId,
+        DocumentationSource $source,
+        DateTimeImmutable $buildTime,
+        DateTimeImmutable $newBuildTime
+    ) {
+        $documentation = new Documentation(
+            $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()
+        );
+
+        $this->changeBuildTime($newBuildTime);
+        $built = $this->generate($documentation);
+
+        $built->getBuildTime()->shouldNotReturn($buildTime);
+        $built->getBuildTime()->shouldReturn($newBuildTime);
+    }
+
+    function it_exposes_last_build_time(DateTimeImmutable $buildTime)
+    {
+        $this->changeBuildTime($buildTime);
+
+        $this->getLastBuildTime()->shouldReturn($buildTime);
+    }
+}
