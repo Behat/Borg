@@ -14,3 +14,11 @@ Feature: Documentation
     When I build the documentation
     Then the documentation for behat version 2.5 should have been built
     And the documentation for behat version 3.0 should have been built
+
+  Scenario: Regenerating updated documentation
+    Given behat version 2.5 documentation was built
+    And behat version 3.0 documentation was built
+    When behat version 2.5 documentation is updated
+    And I build the documentation again
+    Then the documentation for behat version 2.5 should have been rebuilt
+    But the documentation for behat version 3.0 should not have been rebuilt
