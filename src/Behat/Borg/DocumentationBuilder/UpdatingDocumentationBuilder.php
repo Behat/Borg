@@ -22,16 +22,25 @@ final class UpdatingDocumentationBuilder implements DocumentationBuilder
      */
     public function build(Documentation $documentation)
     {
-        $anId = $documentation->getId();
-
-        if ($this->repository->hasBuiltDocumentation($anId)) {
-            $builtDocumentation = $this->repository->getBuiltDocumentation($anId);
-
-            if ($builtDocumentation->getDocumentationTime() >= $documentation->getTime()) {
-                return null;
-            }
+        if ($this->isDocumentationAlreadyBuiltAndUpToDate($documentation)) {
+            return null;
         }
 
         $this->actualBuilder->build($documentation);
+    }
+
+    private function isDocumentationAlreadyBuiltAndUpToDate(Documentation $documentation)
+    {
+        $anId = $documentation->getId();
+        if (!$this->repository->hasBuiltDocumentation($anId)) {
+            return false;
+        }
+
+        $builtDocumentation = $this->repository->getBuiltDocumentation($anId);
+        if ($builtDocumentation->getDocumentationTime() < $documentation->getTime()) {
+            return false;
+        }
+
+        return true;
     }
 }
