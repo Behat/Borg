@@ -12,52 +12,69 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
 {
     const COMMAND_LINE = 'sphinx-build';
 
-    private $path;
-    private $process;
+    private $buildPath;
     private $filesystem;
 
-    private $baseCommandLine;
-    private $configPath;
-
-    public function __construct($path, Process $process = null, Filesystem $filesystem = null)
+    public function __construct($path)
     {
-        $this->path = $path;
-        $this->process = $process ?: new Process(self::COMMAND_LINE);
-        $this->filesystem = $filesystem ?: new Filesystem();
-
-        $this->baseCommandLine = $this->process->getCommandLine();
-        $this->configPath = realpath(__DIR__ . '/../config');
+        $this->buildPath = $path;
+        $this->filesystem = new Filesystem();
     }
 
     public function build(Documentation $documentation)
     {
-        if (!$documentation->getSource() instanceof RstDocumentationSource) {
+        $source = $documentation->getSource();
+
+        if (!$source instanceof RstDocumentationSource) {
             return null;
         }
 
-        $inputPath = $documentation->getSource()->getPath();
-        $buildPath = $this->path . '/' . $documentation->getId();
+        $sourcePath = $source->getPath();
+        $buildPath = $this->getWritableBuildPath($documentation);
+        $commandLine = $this->getCommandLine($sourcePath, $buildPath);
 
-        $this->filesystem->mkdir($buildPath);
-        $commandLine = sprintf(
-            '%s -b html -c %s %s %s',
-            $this->baseCommandLine,
-            $this->configPath,
-            $inputPath,
-            $buildPath
-        );
-
-        $this->process->setCommandLine($commandLine);
-        $this->process->run();
-
-        if (!$this->process->isSuccessful()) {
-            throw new \RuntimeException(sprintf(
-                "%s\n%s",
-                $this->process->getOutput(),
-                $this->process->getErrorOutput()
-            ));
-        }
+        $this->executeCommand($commandLine);
 
         return new BuiltSphinxDocumentation($documentation->getId(), $buildPath);
+    }
+
+    private function getWritableBuildPath(Documentation $documentation)
+    {
+        $buildPath = $this->buildPath . '/' . $documentation->getId();
+        $this->filesystem->mkdir($buildPath);
+
+        return $buildPath;
+    }
+
+    private function getCommandLine($sourcePath, $buildPath)
+    {
+        return sprintf(
+            '%s -b html -c %s %s %s',
+            self::COMMAND_LINE,
+            $this->getConfigPath(),
+            $sourcePath,
+            $buildPath
+        );
+    }
+
+    private function getConfigPath()
+    {
+        return realpath(__DIR__ . '/../config');
+    }
+
+    private function executeCommand($commandLine)
+    {
+        $process = new Process(self::COMMAND_LINE);
+
+        $process->setCommandLine($commandLine);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException(sprintf(
+                "%s\n%s",
+                $process->getOutput(),
+                $process->getErrorOutput()
+            ));
+        }
     }
 }
