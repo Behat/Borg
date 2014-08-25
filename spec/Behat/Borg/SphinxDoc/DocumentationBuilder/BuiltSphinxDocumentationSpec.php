@@ -4,6 +4,7 @@ namespace spec\Behat\Borg\SphinxDoc\DocumentationBuilder;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
+use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -32,5 +33,15 @@ class BuiltSphinxDocumentationSpec extends ObjectBehavior
     function its_index_path_is_the_index_html_in_the_built_path()
     {
         $this->getIndexPath()->shouldReturn(__DIR__ . '/index.html');
+    }
+
+    function it_exposes_time_it_was_built_at()
+    {
+        $this->getBuildTime()->shouldHaveType(DateTimeImmutable::class);
+    }
+
+    function its_build_time_does_not_change_over_time()
+    {
+        $this->getBuildTime()->shouldReturn($this->getBuildTime());
     }
 }

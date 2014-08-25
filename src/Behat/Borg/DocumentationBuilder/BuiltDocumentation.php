@@ -3,6 +3,7 @@
 namespace Behat\Borg\DocumentationBuilder;
 
 use Behat\Borg\Documentation\DocumentationId;
+use DateTimeImmutable;
 
 /**
  * Represents built documentation.
@@ -27,4 +28,11 @@ interface BuiltDocumentation
      * @return string
      */
     public function getIndexPath();
+
+    /**
+     * Returns time documentation was built at.
+     *
+     * @return DateTimeImmutable
+     */
+    public function getBuildTime();
 }

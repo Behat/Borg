@@ -4,6 +4,7 @@ namespace Behat\Borg\SphinxDoc\DocumentationBuilder;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
+use DateTimeImmutable;
 
 /**
  * Represents built Sphinx (*.rst) documentation.
@@ -21,6 +22,7 @@ final class BuiltSphinxDocumentation implements BuiltDocumentation
     {
         $this->anId = $anId;
         $this->buildPath = $buildPath;
+        $this->buildTime = new DateTimeImmutable();
     }
 
     /**
@@ -45,5 +47,13 @@ final class BuiltSphinxDocumentation implements BuiltDocumentation
     public function getIndexPath()
     {
         return $this->getBuildPath() . '/index.html';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBuildTime()
+    {
+        return $this->buildTime;
     }
 }
