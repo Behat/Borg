@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\DocumentationBuilder\InMemory;
+namespace spec\Behat\Borg\Fake\DocumentationBuilder;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class InMemoryBuiltDocumentationRepositorySpec extends ObjectBehavior
+class FakeBuiltDocumentationRepositorySpec extends ObjectBehavior
 {
     function it_is_built_documentation_repository()
     {

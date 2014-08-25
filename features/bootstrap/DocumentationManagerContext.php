@@ -3,10 +3,10 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\InMemory\InMemoryDocumentationProvider;
+use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
 use Behat\Borg\DocumentationBuilder\BuildSpecification\UpdateableBuildSpecification;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
-use Behat\Borg\DocumentationBuilder\InMemory\InMemoryBuiltDocumentationRepository;
+use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentationRepository;
 use Behat\Borg\DocumentationBuilder\RegisteringDocumentationBuilder;
 use Behat\Borg\DocumentationBuilder\RepositoryDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
@@ -32,8 +32,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-        $this->documentationProvider = new InMemoryDocumentationProvider();
-        $this->builtDocumentationRepository = new InMemoryBuiltDocumentationRepository();
+        $this->documentationProvider = new FakeDocumentationProvider();
+        $this->builtDocumentationRepository = new FakeBuiltDocumentationRepository();
 
         (new Filesystem())->remove($tempPath = __DIR__ . '/../../test_temp/behat_output');
 

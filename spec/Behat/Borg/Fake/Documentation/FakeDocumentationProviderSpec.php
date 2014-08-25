@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\InMemory;
+namespace spec\Behat\Borg\Fake\Documentation;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
@@ -8,7 +8,7 @@ use Behat\Borg\Documentation\DocumentationSource;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class InMemoryDocumentationProviderSpec extends ObjectBehavior
+class FakeDocumentationProviderSpec extends ObjectBehavior
 {
     function it_has_no_documentation_by_default()
     {

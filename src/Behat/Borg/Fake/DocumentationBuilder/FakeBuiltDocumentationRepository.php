@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\DocumentationBuilder\InMemory;
+namespace Behat\Borg\Fake\DocumentationBuilder;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
@@ -10,7 +10,7 @@ use InvalidArgumentException;
 /**
  * Stores and exposes built documentation in memory.
  */
-final class InMemoryBuiltDocumentationRepository implements BuiltDocumentationRepository
+final class FakeBuiltDocumentationRepository implements BuiltDocumentationRepository
 {
     private $documentation;
 
