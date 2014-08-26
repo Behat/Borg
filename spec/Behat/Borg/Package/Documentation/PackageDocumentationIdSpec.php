@@ -24,4 +24,14 @@ class PackageDocumentationIdSpec extends ObjectBehavior
     {
         $this->__toString()->shouldReturn('behat/v1.0.0');
     }
+
+    function it_uses_package_name_as_a_project_name()
+    {
+        $this->getProjectName()->shouldReturn('behat');
+    }
+
+    function it_uses_version_as_a_version_string()
+    {
+        $this->getVersionString()->shouldReturn('1.0.0');
+    }
 }

@@ -27,6 +27,22 @@ final class PackageDocumentationId implements DocumentationId
     /**
      * {@inheritdoc}
      */
+    public function getProjectName()
+    {
+        return $this->package->getName();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getVersionString()
+    {
+        return (string)$this->version;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function __toString()
     {
         return $this->package->getName() . '/v' . $this->version;

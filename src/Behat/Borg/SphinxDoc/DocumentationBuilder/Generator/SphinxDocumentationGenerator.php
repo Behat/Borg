@@ -3,6 +3,7 @@
 namespace Behat\Borg\SphinxDoc\DocumentationBuilder\Generator;
 
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 use Behat\Borg\SphinxDoc\DocumentationBuilder\BuiltSphinxDocumentation;
@@ -44,7 +45,7 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
 
         $sourcePath = $source->getPath();
         $buildPath = $this->getWritableBuildPath($documentation);
-        $commandLine = $this->getCommandLine($sourcePath, $buildPath);
+        $commandLine = $this->getCommandLine($documentation->getId(), $sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
         $buildTime = new DateTimeImmutable();
@@ -62,12 +63,15 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
         return $buildPath;
     }
 
-    private function getCommandLine($sourcePath, $buildPath)
+    private function getCommandLine(DocumentationId $anId, $sourcePath, $buildPath)
     {
         return sprintf(
-            '%s -b html -c %s %s %s',
+            '%s -b html -c %s -D project="%s" -D version="%s" -D release="%s" %s %s',
             self::COMMAND_LINE,
             $this->getConfigPath(),
+            $anId->getProjectName(),
+            $anId->getVersionString(),
+            $anId->getVersionString(),
             $sourcePath,
             $buildPath
         );
