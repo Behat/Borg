@@ -8,12 +8,12 @@ use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use Behat\Borg\DocumentationBuilder\RepositoryDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
+use Behat\Borg\Fake\Documentation\FakeDocumentationSource;
 use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentationRepository;
 use Behat\Borg\Fake\DocumentationBuilder\Generator\FakeDocumentationGenerator;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Version;
-use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -65,7 +65,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     public function packageWasDocumented(Package $package, Version $version)
     {
         $id = new PackageDocumentationId($package, $version);
-        $source = RstDocumentationSource::atPath(__DIR__ . '/fixtures/' . $id);
+        $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
 
         $this->documentationProvider->addDocumentation($documentation);
@@ -86,7 +86,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     public function packageDocumentationWasUpdated(Package $package, Version $version)
     {
         $id = new PackageDocumentationId($package, $version);
-        $source = RstDocumentationSource::atPath(__DIR__ . '/fixtures/' . $id);
+        $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
 
         $this->documentationProvider->addDocumentation($documentation);
@@ -121,26 +121,32 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     /**
      * @Then the documentation for :package version :version should have been rebuilt
      */
-    public function thePackageDocumentationShouldHaveBeenRebuilt(Package $package, Version $version)
-    {
+    public function thePackageDocumentationShouldHaveBeenRebuilt(
+        Package $package,
+        Version $version
+    ) {
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
         PHPUnit_Framework_Assert::assertGreaterThanOrEqual(
-            $this->generator->getLastBuildTime(), $documentationBuildTime
+            $this->generator->getLastBuildTime(),
+            $documentationBuildTime
         );
     }
 
     /**
      * @Then the documentation for :package version :version should not have been rebuilt
      */
-    public function thePackageDocumentationShouldNotHaveBeenRebuilt(Package $package, Version $version)
-    {
+    public function thePackageDocumentationShouldNotHaveBeenRebuilt(
+        Package $package,
+        Version $version
+    ) {
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
         PHPUnit_Framework_Assert::assertLessThan(
-            $this->generator->getLastBuildTime(), $documentationBuildTime
+            $this->generator->getLastBuildTime(),
+            $documentationBuildTime
         );
     }
 
