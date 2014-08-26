@@ -1,4 +1,4 @@
-Feature: Documentation
+Feature: Manager can generate documentation
   In order to help newcomers start using behat
   As a documentation manager
   I want documentation to be generated from the source
