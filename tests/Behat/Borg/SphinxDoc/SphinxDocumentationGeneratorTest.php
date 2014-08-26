@@ -31,7 +31,7 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_does_not_build_non_RST_documentation()
     {
-        $anId = $this->createDocumentationId('myDoc');
+        $anId = $this->createDocumentationId('myDoc', '1.3.5');
         $source = $this->createDocumentationSource();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
@@ -43,7 +43,7 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_builds_RST_documentation_into_the_output_path()
     {
-        $anId = $this->createDocumentationId('myDoc');
+        $anId = $this->createDocumentationId('myDoc', 'v1.3.5');
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
@@ -51,7 +51,10 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
 
         $this->assertFileExists($this->tempOutputPath . '/myDoc/index.html');
         $this->assertEquals($this->tempOutputPath . '/myDoc/index.html', $built->getIndexPath());
+
         $this->assertContains('<h1>Docs', file_get_contents($built->getIndexPath()));
+        $this->assertContains('myDoc', file_get_contents($built->getIndexPath()));
+        $this->assertContains('v1.3.5', file_get_contents($built->getIndexPath()));
     }
 
     /**
@@ -60,7 +63,7 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
      */
     function it_throws_an_exception_if_sphinx_can_not_build_documents()
     {
-        $anId = $this->createDocumentationId('myDoc');
+        $anId = $this->createDocumentationId('myDoc', '1.3.5');
         $source = $this->createRstDocumentationSourceWithoutIndex();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
@@ -69,13 +72,16 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param string $id
+     * @param string $version
      *
      * @return DocumentationId
      */
-    private function createDocumentationId($id)
+    private function createDocumentationId($id, $version)
     {
         $anId = $this->getMock(DocumentationId::class);
         $anId->method('__toString')->willReturn($id);
+        $anId->method('getProjectName')->willReturn($id);
+        $anId->method('getVersionString')->willReturn($version);
 
         return $anId;
     }

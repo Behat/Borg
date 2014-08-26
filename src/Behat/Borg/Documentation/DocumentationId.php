@@ -8,6 +8,20 @@ namespace Behat\Borg\Documentation;
 interface DocumentationId
 {
     /**
+     * Returns documented project name.
+     *
+     * @return string
+     */
+    public function getProjectName();
+
+    /**
+     * Returns documentation version string.
+     *
+     * @return string
+     */
+    public function getVersionString();
+
+    /**
      * Returns unique documentation ID string.
      *
      * @return string
