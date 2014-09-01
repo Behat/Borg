@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\SphinxDoc\Documentation;
+namespace spec\Behat\Borg\Documentation\Sphinx;
 
 use Behat\Borg\Documentation\DocumentationSource;
 use PhpSpec\ObjectBehavior;

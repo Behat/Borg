@@ -1,10 +1,10 @@
 <?php
 
-namespace Behat\Borg\Fake\DocumentationBuilder\Generator;
+namespace Behat\Borg\Fake\Documentation\Builder\Generator;
 
 use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentation;
+use Behat\Borg\Fake\Documentation\Builder\FakeBuiltDocumentation;
 use DateTimeImmutable;
 
 /**

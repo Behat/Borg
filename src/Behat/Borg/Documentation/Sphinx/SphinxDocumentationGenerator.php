@@ -1,12 +1,11 @@
 <?php
 
-namespace Behat\Borg\SphinxDoc\DocumentationBuilder\Generator;
+namespace Behat\Borg\Documentation\Sphinx;
 
 use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
-use Behat\Borg\SphinxDoc\DocumentationBuilder\BuiltSphinxDocumentation;
+use Behat\Borg\Documentation\Sphinx\RstDocumentationSource;
 use DateTimeImmutable;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
@@ -79,7 +78,7 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
 
     private function getConfigPath()
     {
-        return realpath(__DIR__ . '/../../config');
+        return realpath(__DIR__ . '/config');
     }
 
     private function executeCommand($commandLine)

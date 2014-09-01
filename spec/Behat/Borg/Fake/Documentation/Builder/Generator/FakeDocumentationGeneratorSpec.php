@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Behat\Borg\Fake\DocumentationBuilder\Generator;
+namespace spec\Behat\Borg\Fake\Documentation\Builder\Generator;
 
 use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\Fake\DocumentationBuilder\FakeBuiltDocumentation;
+use Behat\Borg\Fake\Documentation\Builder\FakeBuiltDocumentation;
 use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

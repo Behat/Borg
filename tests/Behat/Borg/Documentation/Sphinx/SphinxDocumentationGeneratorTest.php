@@ -1,12 +1,12 @@
 <?php
 
-namespace tests\Behat\Borg\SphinxDoc;
+namespace tests\Behat\Borg\Documentation\Sphinx;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
-use Behat\Borg\SphinxDoc\DocumentationBuilder\Generator\SphinxDocumentationGenerator;
+use Behat\Borg\Documentation\Sphinx\RstDocumentationSource;
+use Behat\Borg\Documentation\Sphinx\SphinxDocumentationGenerator;
 use DateTimeImmutable;
 use PHPUnit_Framework_TestCase;
 use RuntimeException;

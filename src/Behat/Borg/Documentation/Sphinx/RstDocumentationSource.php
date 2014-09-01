@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\SphinxDoc\Documentation;
+namespace Behat\Borg\Documentation\Sphinx;
 
 use Behat\Borg\Documentation\DocumentationSource;
 
