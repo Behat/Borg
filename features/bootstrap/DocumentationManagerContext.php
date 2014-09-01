@@ -35,11 +35,9 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $this->generator = new FakeDocumentationGenerator();
         $specification = new UpdateableBuildSpecification($this->builtDocumentationRepository);
 
-        $documentationBuilder = new RepositoryDocumentationBuilder(
-            $specification, $this->generator, $this->builtDocumentationRepository
-        );
+        $documentationBuilder = new RepositoryDocumentationBuilder($specification, $this->generator);
         $this->documentationManager = new DocumentationManager(
-            $this->documentationProvider, $documentationBuilder
+            $this->documentationProvider, $documentationBuilder, $this->builtDocumentationRepository
         );
     }
 

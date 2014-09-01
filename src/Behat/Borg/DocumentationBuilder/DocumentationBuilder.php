@@ -13,6 +13,8 @@ interface DocumentationBuilder
      * Builds provided documentation.
      *
      * @param Documentation $documentation
+     *
+     * @return null|BuiltDocumentation
      */
     public function build(Documentation $documentation);
 }

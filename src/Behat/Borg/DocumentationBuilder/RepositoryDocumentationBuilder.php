@@ -14,21 +14,17 @@ final class RepositoryDocumentationBuilder implements DocumentationBuilder
 {
     private $specification;
     private $generator;
-    private $repository;
 
     /**
      * @param DocumentationBuildSpecification $specification
      * @param DocumentationGenerator          $generator
-     * @param BuiltDocumentationRepository    $repository
      */
     public function __construct(
         DocumentationBuildSpecification $specification,
-        DocumentationGenerator $generator,
-        BuiltDocumentationRepository $repository
+        DocumentationGenerator $generator
     ) {
         $this->specification = $specification;
         $this->generator = $generator;
-        $this->repository = $repository;
     }
 
     /**
@@ -46,6 +42,6 @@ final class RepositoryDocumentationBuilder implements DocumentationBuilder
             throw new InvalidArgumentException('Documentation can not be built.');
         }
 
-        $this->repository->addBuiltDocumentation($builtDocumentation);
+        return $builtDocumentation;
     }
 }
