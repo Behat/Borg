@@ -80,4 +80,14 @@ class DocumentationManagerSpec extends ObjectBehavior
 
         $this->buildDocumentation();
     }
+
+    function it_can_provide_all_currently_built_documentation_from_repository(
+        BuiltDocumentationRepository $repository,
+        DocumentationId $docId,
+        BuiltDocumentation $builtDocumentation
+    ) {
+        $repository->getBuiltDocumentation($docId)->willReturn($builtDocumentation);
+
+        $this->getBuiltDocumentation($docId)->shouldReturn($builtDocumentation);
+    }
 }

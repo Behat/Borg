@@ -21,7 +21,6 @@ use Behat\Borg\Package\Version;
 class DocumentationManagerContext implements Context, SnippetAcceptingContext
 {
     private $documentationProvider;
-    private $builtDocumentationRepository;
     private $documentationManager;
     private $generator;
 
@@ -31,13 +30,16 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->documentationProvider = new FakeDocumentationProvider();
-        $this->builtDocumentationRepository = new FakeBuiltDocumentationRepository();
         $this->generator = new FakeDocumentationGenerator();
-        $specification = new UpdateableBuildSpecification($this->builtDocumentationRepository);
+        $builtDocumentationRepository = new FakeBuiltDocumentationRepository();
+        $specification = new UpdateableBuildSpecification($builtDocumentationRepository);
 
-        $documentationBuilder = new SpecificationBasedDocumentationBuilder($specification, $this->generator);
+        $documentationBuilder = new SpecificationBasedDocumentationBuilder(
+            $specification, $this->generator
+        );
+
         $this->documentationManager = new DocumentationManager(
-            $this->documentationProvider, $documentationBuilder, $this->builtDocumentationRepository
+            $this->documentationProvider, $documentationBuilder, $builtDocumentationRepository
         );
     }
 
@@ -157,7 +159,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     private function getBuiltDocumentationForPackageVersion(Package $package, Version $version)
     {
         $id = new PackageDocumentationId($package, $version);
-        $builtDocumentation = $this->builtDocumentationRepository->getBuiltDocumentation($id);
+        $builtDocumentation = $this->documentationManager->getBuiltDocumentation($id);
 
         return $builtDocumentation;
     }
