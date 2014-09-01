@@ -2,11 +2,11 @@
 
 namespace Behat\Borg;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
+use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationProvider;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentationRepository;
-use Behat\Borg\DocumentationBuilder\DocumentationBuilder;
 
 /**
  * Manages documentation.
@@ -18,8 +18,8 @@ final class DocumentationManager
     private $repository;
 
     /**
-     * @param DocumentationProvider $provider
-     * @param DocumentationBuilder $builder
+     * @param DocumentationProvider        $provider
+     * @param DocumentationBuilder         $builder
      * @param BuiltDocumentationRepository $repository
      */
     public function __construct(

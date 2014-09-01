@@ -2,10 +2,10 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Documentation\Builder\BuildSpecification\UpdateableBuildSpecification;
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\SpecificationBasedDocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\DocumentationBuilder\BuildSpecification\UpdateableBuildSpecification;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
-use Behat\Borg\DocumentationBuilder\SpecificationBasedDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
 use Behat\Borg\Fake\Documentation\FakeDocumentationSource;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Behat\Borg\DocumentationBuilder;
+namespace Behat\Borg\Documentation\Builder;
 
+use Behat\Borg\Documentation\Builder\BuildSpecification\DocumentationBuildSpecification;
+use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\DocumentationBuilder\BuildSpecification\DocumentationBuildSpecification;
-use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use InvalidArgumentException;
 
 /**

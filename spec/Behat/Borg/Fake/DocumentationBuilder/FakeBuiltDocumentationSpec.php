@@ -2,10 +2,10 @@
 
 namespace spec\Behat\Borg\Fake\DocumentationBuilder;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

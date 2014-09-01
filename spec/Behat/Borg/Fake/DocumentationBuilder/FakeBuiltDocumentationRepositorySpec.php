@@ -2,9 +2,9 @@
 
 namespace spec\Behat\Borg\Fake\DocumentationBuilder;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentationRepository;
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

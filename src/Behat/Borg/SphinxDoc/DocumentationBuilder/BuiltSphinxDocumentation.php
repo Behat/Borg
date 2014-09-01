@@ -2,8 +2,8 @@
 
 namespace Behat\Borg\SphinxDoc\DocumentationBuilder;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 use DateTimeImmutable;
 
 /**

@@ -2,13 +2,13 @@
 
 namespace spec\Behat\Borg;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
+use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationProvider;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentationRepository;
-use Behat\Borg\DocumentationBuilder\DocumentationBuilder;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

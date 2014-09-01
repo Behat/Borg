@@ -1,9 +1,9 @@
 <?php
 
-namespace Behat\Borg\DocumentationBuilder\Generator;
+namespace Behat\Borg\Documentation\Builder\Generator;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentation;
 
 /**
  * Generates documentation using some generator.

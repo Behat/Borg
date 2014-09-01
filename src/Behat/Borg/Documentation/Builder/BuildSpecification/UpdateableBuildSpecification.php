@@ -1,9 +1,9 @@
 <?php
 
-namespace Behat\Borg\DocumentationBuilder\BuildSpecification;
+namespace Behat\Borg\Documentation\Builder\BuildSpecification;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\DocumentationBuilder\BuiltDocumentationRepository;
 
 /**
  * Allows builds of new or outdated documentation only.

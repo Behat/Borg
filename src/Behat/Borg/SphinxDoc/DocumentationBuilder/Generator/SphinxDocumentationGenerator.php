@@ -2,9 +2,9 @@
 
 namespace Behat\Borg\SphinxDoc\DocumentationBuilder\Generator;
 
+use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\DocumentationBuilder\Generator\DocumentationGenerator;
 use Behat\Borg\SphinxDoc\Documentation\RstDocumentationSource;
 use Behat\Borg\SphinxDoc\DocumentationBuilder\BuiltSphinxDocumentation;
 use DateTimeImmutable;

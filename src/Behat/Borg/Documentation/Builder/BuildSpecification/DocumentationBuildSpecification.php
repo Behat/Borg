@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\DocumentationBuilder\BuildSpecification;
+namespace Behat\Borg\Documentation\Builder\BuildSpecification;
 
 use Behat\Borg\Documentation\Documentation;
 
