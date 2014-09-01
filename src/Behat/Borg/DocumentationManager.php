@@ -2,6 +2,7 @@
 
 namespace Behat\Borg;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
 use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
@@ -58,6 +59,13 @@ final class DocumentationManager
         $this->repository->addBuiltDocumentation($builtDocumentation);
     }
 
+    /**
+     * Returns already built documentation using documentation identity.
+     *
+     * @param DocumentationId $anId
+     *
+     * @return BuiltDocumentation
+     */
     public function getBuiltDocumentation(DocumentationId $anId)
     {
         return $this->repository->getBuiltDocumentation($anId);
