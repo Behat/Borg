@@ -48,7 +48,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function transformStringToPackage($string)
     {
-        return Package::fromName($string);
+        return Package::named($string);
     }
 
     /**
@@ -56,7 +56,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function transformStringToVersion($string)
     {
-        return Version::fromString($string);
+        return Version::string($string);
     }
 
     /**

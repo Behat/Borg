@@ -10,12 +10,7 @@ class VersionSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedThrough('fromString', ['1.0.0']);
-    }
-
-    function it_can_be_constructed_from_a_version_string()
-    {
-        $this->fromString('1.0.0')->shouldHaveType(Version::class);
+        $this->beConstructedThrough('string', ['1.0.0']);
     }
 
     function it_can_be_converted_to_that_string_later()

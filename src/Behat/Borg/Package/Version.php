@@ -16,7 +16,7 @@ final class Version
      *
      * @return Version
      */
-    public static function fromString($string)
+    public static function string($string)
     {
         return new self($string);
     }

@@ -12,7 +12,7 @@ class PackageDocumentationIdSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith(Package::fromName('behat'), Version::fromString('1.0.0'));
+        $this->beConstructedWith(Package::named('behat'), Version::string('1.0.0'));
     }
 
     function it_is_a_documentation_identifier()

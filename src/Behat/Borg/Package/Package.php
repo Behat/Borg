@@ -16,7 +16,7 @@ final class Package
      *
      * @return Package
      */
-    public static function fromName($name)
+    public static function named($name)
     {
         return new self($name);
     }

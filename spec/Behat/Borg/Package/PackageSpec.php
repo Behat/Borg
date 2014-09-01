@@ -10,12 +10,7 @@ class PackageSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedThrough('fromName', ['behat']);
-    }
-
-    function it_can_be_constructed_from_a_package_name()
-    {
-        $this->fromName('behat')->shouldHaveType(Package::class);
+        $this->beConstructedThrough('named', ['behat']);
     }
 
     function it_stores_that_name()
