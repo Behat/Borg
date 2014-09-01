@@ -10,7 +10,7 @@ use InvalidArgumentException;
 /**
  * Builds documentation using generator based on specification and writes result into repository.
  */
-final class RepositoryDocumentationBuilder implements DocumentationBuilder
+final class SpecificationBasedDocumentationBuilder implements DocumentationBuilder
 {
     private $specification;
     private $generator;

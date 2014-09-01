@@ -14,7 +14,7 @@ use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class RepositoryDocumentationBuilderSpec extends ObjectBehavior
+class SpecificationBasedDocumentationBuilderSpec extends ObjectBehavior
 {
     function let(
         DocumentationBuildSpecification $specification,
