@@ -68,7 +68,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
 
-        $this->documentationProvider->addDocumentation($documentation);
+        $this->documentationProvider->wasDocumented($documentation);
     }
 
     /**
@@ -89,7 +89,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
 
-        $this->documentationProvider->addDocumentation($documentation);
+        $this->documentationProvider->wasDocumented($documentation);
     }
 
     /**

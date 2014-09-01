@@ -15,7 +15,7 @@ final class FakeDocumentationProvider implements DocumentationProvider
     /**
      * {@inheritdoc}
      */
-    public function addDocumentation(Documentation $documentation)
+    public function wasDocumented(Documentation $documentation)
     {
         $this->documentation[] = $documentation;
     }

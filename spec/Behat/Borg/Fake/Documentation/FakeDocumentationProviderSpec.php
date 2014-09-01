@@ -22,7 +22,7 @@ class FakeDocumentationProviderSpec extends ObjectBehavior
         $documentation = new Documentation($anId->getWrappedObject(), $source->getWrappedObject(
         ), new \DateTimeImmutable());
 
-        $this->addDocumentation($documentation);
+        $this->wasDocumented($documentation);
 
         $this->getAllDocumentation()->shouldReturn([$documentation]);
     }
