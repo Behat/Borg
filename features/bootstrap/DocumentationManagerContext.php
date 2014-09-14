@@ -11,6 +11,7 @@ use Behat\Borg\Fake\Documentation\Builder\FakeBuiltDocumentationRepository;
 use Behat\Borg\Fake\Documentation\Builder\Generator\FakeDocumentationGenerator;
 use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
 use Behat\Borg\Fake\Documentation\FakeDocumentationSource;
+use Behat\Borg\Fake\Package\FakePackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
@@ -49,7 +50,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function transformStringToPackage($string)
     {
-        return Package::named($string);
+        return FakePackage::named($string);
     }
 
     /**

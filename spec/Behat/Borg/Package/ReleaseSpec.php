@@ -9,9 +9,13 @@ use Prophecy\Argument;
 
 class ReleaseSpec extends ObjectBehavior
 {
-    function it_is_a_combination_of_package_and_specific_version()
+    function let(Package $package)
     {
-        $package = Package::named('my_package');
+        $package->__toString()->willReturn('my_package');
+    }
+
+    function it_is_a_combination_of_package_and_specific_version(Package $package)
+    {
         $version = Version::string('1.0.0');
         $this->beConstructedWith($package, $version);
 
@@ -19,9 +23,9 @@ class ReleaseSpec extends ObjectBehavior
         $this->getVersion()->shouldReturn($version);
     }
 
-    function it_can_be_represented_as_a_string()
+    function it_can_be_represented_as_a_string(Package $package)
     {
-        $this->beConstructedWith(Package::named('my_package'), Version::string('1.0.0'));
+        $this->beConstructedWith($package, Version::string('1.0.0'));
 
         $this->__toString()->shouldReturn('my_package/1.0.0');
     }

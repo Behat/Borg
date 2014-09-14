@@ -11,9 +11,11 @@ use Prophecy\Argument;
 
 class ReleaseDocumentationIdSpec extends ObjectBehavior
 {
-    function let()
+    function let(Package $package)
     {
-        $this->beConstructedWith(new Release(Package::named('behat'), Version::string('1.0.0')));
+        $package->__toString()->willReturn('behat');
+
+        $this->beConstructedWith(new Release($package->getWrappedObject(), Version::string('1.0.0')));
     }
 
     function it_is_a_documentation_identifier()
