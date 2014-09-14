@@ -24,7 +24,7 @@ final class Package
     /**
      * @return string
      */
-    public function getName()
+    public function __toString()
     {
         return $this->name;
     }

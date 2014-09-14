@@ -13,8 +13,8 @@ class PackageSpec extends ObjectBehavior
         $this->beConstructedThrough('named', ['behat']);
     }
 
-    function it_stores_that_name()
+    function it_can_be_converted_to_string()
     {
-        $this->getName()->shouldReturn('behat');
+        $this->__toString()->shouldReturn('behat');
     }
 }

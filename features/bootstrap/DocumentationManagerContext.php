@@ -11,8 +11,9 @@ use Behat\Borg\Fake\Documentation\Builder\FakeBuiltDocumentationRepository;
 use Behat\Borg\Fake\Documentation\Builder\Generator\FakeDocumentationGenerator;
 use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
 use Behat\Borg\Fake\Documentation\FakeDocumentationSource;
-use Behat\Borg\Package\Documentation\PackageDocumentationId;
+use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
+use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 
 /**
@@ -64,7 +65,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
-        $id = new PackageDocumentationId($package, $version);
+        $id = new ReleaseDocumentationId(new Release($package, $version));
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
 
@@ -85,7 +86,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function packageDocumentationWasUpdated(Package $package, Version $version)
     {
-        $id = new PackageDocumentationId($package, $version);
+        $id = new ReleaseDocumentationId(new Release($package, $version));
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
 
@@ -121,10 +122,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     /**
      * @Then the documentation for :package version :version should have been rebuilt
      */
-    public function thePackageDocumentationShouldHaveBeenRebuilt(
-        Package $package,
-        Version $version
-    ) {
+    public function thePackageDocumentationShouldHaveBeenRebuilt(Package $package, Version $version)
+    {
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
@@ -137,10 +136,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     /**
      * @Then the documentation for :package version :version should not have been rebuilt
      */
-    public function thePackageDocumentationShouldNotHaveBeenRebuilt(
-        Package $package,
-        Version $version
-    ) {
+    public function thePackageDocumentationShouldNotHaveBeenRebuilt(Package $package, Version $version)
+    {
         $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
@@ -158,7 +155,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     private function getBuiltDocumentationForPackageVersion(Package $package, Version $version)
     {
-        $id = new PackageDocumentationId($package, $version);
+        $id = new ReleaseDocumentationId(new Release($package, $version));
         $builtDocumentation = $this->documentationManager->getBuiltDocumentation($id);
 
         return $builtDocumentation;
