@@ -17,5 +17,9 @@
             "spec\\Behat\\Borg\\": ".",
             "tests\\Behat\\Borg\\": "."
         }
+    },
+
+    "scripts": {
+        "test": "phpspec run && behat && phpunit"
     }
 }
