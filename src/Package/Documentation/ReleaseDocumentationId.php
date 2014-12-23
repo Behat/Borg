@@ -37,6 +37,14 @@ final class ReleaseDocumentationId implements DocumentationId
     }
 
     /**
+     * @return Release
+     */
+    public function getRelease()
+    {
+        return $this->release;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function __toString()
