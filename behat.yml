@@ -5,5 +5,9 @@ default:
             filters:  { role: 'documentation manager' }
 
         documentation_manager_cli:
-            contexts: [ 'DocumentationManagerCliContext' ]
+            contexts:
+                - DocumentationManagerCliContext
             filters:  { role: 'documentation manager', tags: 'critical' }
+
+    extensions:
+        Behat\Symfony2Extension: ~
