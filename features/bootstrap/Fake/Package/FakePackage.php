@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Fake\Package;
+namespace Fake\Package;
 
 use Behat\Borg\Package\Package;
 

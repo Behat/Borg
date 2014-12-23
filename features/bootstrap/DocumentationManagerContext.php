@@ -7,15 +7,15 @@ use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Builder\SpecificationBasedDocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\DocumentationManager;
-use Behat\Borg\Fake\Documentation\Builder\FakeBuiltDocumentationRepository;
-use Behat\Borg\Fake\Documentation\Builder\Generator\FakeDocumentationGenerator;
-use Behat\Borg\Fake\Documentation\FakeDocumentationProvider;
-use Behat\Borg\Fake\Documentation\FakeDocumentationSource;
-use Behat\Borg\Fake\Package\FakePackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Fake\Documentation\Builder\FakeBuiltDocumentationRepository;
+use Fake\Documentation\Builder\Generator\FakeDocumentationGenerator;
+use Fake\Documentation\FakeDocumentationProvider;
+use Fake\Documentation\FakeDocumentationSource;
+use Fake\Package\FakePackage;
 
 /**
  * Describes documentation-related features from the documentation manager context.
