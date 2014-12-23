@@ -6,9 +6,7 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationProvider;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
-use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;
 use Github\Client;
 
@@ -47,7 +45,7 @@ final class GitHubDocumentationProvider implements DocumentationProvider
             );
         }
 
-        return $this->getReleaseDocumentation($anId->getRelease());
+        return $this->getReleaseDocumentation($this->getCommittedRelease($anId));
     }
 
     /**
@@ -58,23 +56,30 @@ final class GitHubDocumentationProvider implements DocumentationProvider
         // TODO: Implement getAllDocumentation() method.
     }
 
-    private function getReleaseDocumentation(Release $release)
+    private function getReleaseDocumentation(CommittedRelease $committedRelease)
     {
         return new Documentation(
-            new ReleaseDocumentationId($release),
+            new ReleaseDocumentationId($committedRelease->getRelease()),
             RstDocumentationSource::atPath('_NO_FILE'),
-            $this->getCommitDate($release->getPackage(), $release->getVersion())
+            $committedRelease->getCommit()->getTime()
         );
     }
 
-    private function getCommitDate(Package $package, Version $version)
+    private function getCommittedRelease(ReleaseDocumentationId $anId)
     {
-        return new \DateTimeImmutable(
-            $this->client->api('repo')->commits()->all(
-                $package->getOrganisation(),
-                $package->getName(),
-                array('sha' => (string)$version)
-            )[0]['commit']['author']['date']
-        );
+        return new CommittedRelease($anId->getRelease(), $this->getCommit($anId->getRelease()));
+    }
+
+    private function getCommit(Release $release)
+    {
+        $commit = $this->client->api('repo')->commits()->all(
+            $release->getPackage()->getOrganisation(),
+            $release->getPackage()->getName(),
+            array('sha' => (string)$release->getVersion())
+        )[0];
+
+        $date = new \DateTimeImmutable($commit['commit']['author']['date']);
+
+        return Commit::committedWithShaAt($commit['sha'], $date);
     }
 }
