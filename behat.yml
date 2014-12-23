@@ -3,3 +3,7 @@ default:
         documentation_manager:
             contexts: [ 'DocumentationManagerContext' ]
             filters:  { role: 'documentation manager' }
+
+        documentation_manager_cli:
+            contexts: [ 'DocumentationManagerCliContext' ]
+            filters:  { role: 'documentation manager', tags: 'critical' }

@@ -8,6 +8,7 @@ Feature: Manager can generate documentation
     - If documentation gets updated, we should regenerate it
     - If documentation wasn't updated, we should keep the old version
 
+  @critical
   Scenario: Generating behat 3.0 documentation
     Given "behat/docs" version 3.0 was documented
     When I build the documentation
