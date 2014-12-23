@@ -6,6 +6,18 @@
 
     <services>
 
+        <service
+                class="Behat\Borg\Application\DocumentationBundle\Command\GenerateDocumentationCommand">
+            <tag name="console.command"/>
+        </service>
+
+        <service id="documentation.provider.github" class="Behat\Borg\GitHub\GitHubDocumentationProvider">
+            <argument type="service" id="github.client"/>
+            <argument type="collection">
+                <argument>behat/docs</argument>
+            </argument>
+        </service>
+
         <service id="github.cache" class="Github\HttpClient\CachedHttpClient">
             <argument type="collection">
                 <argument key="cache_dir">%kernel.cache_dir%/github-api-cache</argument>
@@ -14,13 +26,6 @@
 
         <service id="github.client" class="Github\Client">
             <argument type="service" id="github.cache"/>
-        </service>
-
-        <service id="documentation.provider.github" class="Behat\Borg\GitHub\GitHubDocumentationProvider">
-            <argument type="service" id="github.client"/>
-            <argument type="collection">
-                <argument>behat/docs</argument>
-            </argument>
         </service>
 
     </services>
