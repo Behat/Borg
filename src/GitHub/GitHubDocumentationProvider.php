@@ -45,7 +45,7 @@ final class GitHubDocumentationProvider implements DocumentationProvider
             );
         }
 
-        return $this->getReleaseDocumentation($this->getCommittedRelease($anId));
+        return $this->getReleaseDocumentation($this->getCommittedRelease($anId->getRelease()));
     }
 
     /**
@@ -65,9 +65,9 @@ final class GitHubDocumentationProvider implements DocumentationProvider
         );
     }
 
-    private function getCommittedRelease(ReleaseDocumentationId $anId)
+    private function getCommittedRelease(Release $release)
     {
-        return new CommittedRelease($anId->getRelease(), $this->getCommit($anId->getRelease()));
+        return new CommittedRelease($release, $this->getCommit($release));
     }
 
     private function getCommit(Release $release)
