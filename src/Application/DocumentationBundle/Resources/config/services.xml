@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="github.cache" class="Github\HttpClient\CachedHttpClient">
+            <argument type="collection">
+                <argument key="cache_dir">
+                    %kernel.cache_dir%/github-api-cache
+                </argument>
+            </argument>
+        </service>
+
+        <service id="github.client" class="Github\Client">
+            <argument type="service" id="github.cache"/>
+        </service>
+
+        <service id="documentation.provider.github" class="Behat\Borg\GitHub\GitHubDocumentationProvider">
+            <argument type="service" id="github.client"/>
+            <argument type="collection">
+                <argument>behat/docs</argument>
+            </argument>
+        </service>
+
+    </services>
+
+</container>

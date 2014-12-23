@@ -2,18 +2,4 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters: {}
 
-services:
-    github.cache:
-        class: 'Github\HttpClient\CachedHttpClient'
-        arguments:
-            - { 'cache_dir': '%kernel.cache_dir%/github-api-cache' }
-
-    github.client:
-        class: 'Github\Client'
-        arguments: [ '@github.cache' ]
-
-    documentation.provider.github:
-        class: 'Behat\Borg\GitHub\GitHubDocumentationProvider'
-        arguments:
-            - '@github.client'
-            - [ 'behat/docs' ]
+services: {}
