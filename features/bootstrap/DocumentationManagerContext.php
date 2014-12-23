@@ -2,9 +2,9 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Builder\BuildSpecification\UpdateableBuildSpecification;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\SpecificationBasedDocumentationBuilder;
+use Behat\Borg\Documentation\Builder\StrategicDocumentationBuilder;
+use Behat\Borg\Documentation\Builder\Strategy\RefreshableBuildStrategy;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
@@ -34,12 +34,10 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $this->documentationProvider = new FakeDocumentationProvider();
         $this->generator = new FakeDocumentationGenerator();
         $builtDocumentationRepository = new FakeBuiltDocumentationRepository();
-        $specification = new UpdateableBuildSpecification($builtDocumentationRepository);
 
-        $documentationBuilder = new SpecificationBasedDocumentationBuilder(
-            $specification, $this->generator
+        $documentationBuilder = new StrategicDocumentationBuilder(
+            new RefreshableBuildStrategy($builtDocumentationRepository), $this->generator
         );
-
         $this->documentationManager = new DocumentationManager(
             $this->documentationProvider, $documentationBuilder, $builtDocumentationRepository
         );

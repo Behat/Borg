@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Builder\BuildSpecification;
+namespace spec\Behat\Borg\Documentation\Builder\Strategy;
 
-use Behat\Borg\Documentation\Builder\BuildSpecification\DocumentationBuildSpecification;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
+use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
@@ -12,16 +12,16 @@ use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class UpdateableBuildSpecificationSpec extends ObjectBehavior
+class RefreshableBuildStrategySpec extends ObjectBehavior
 {
     function let(BuiltDocumentationRepository $repository)
     {
         $this->beConstructedWith($repository);
     }
 
-    function it_is_a_build_specification()
+    function it_is_a_build_strategy()
     {
-        $this->shouldHaveType(DocumentationBuildSpecification::class);
+        $this->shouldHaveType(BuildStrategy::class);
     }
 
     function it_is_satisfied_by_documentation_that_was_not_yet_built(

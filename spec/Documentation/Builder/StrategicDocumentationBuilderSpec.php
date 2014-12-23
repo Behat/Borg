@@ -2,10 +2,10 @@
 
 namespace spec\Behat\Borg\Documentation\Builder;
 
-use Behat\Borg\Documentation\Builder\BuildSpecification\DocumentationBuildSpecification;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
+use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
@@ -14,10 +14,10 @@ use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class SpecificationBasedDocumentationBuilderSpec extends ObjectBehavior
+class StrategicDocumentationBuilderSpec extends ObjectBehavior
 {
     function let(
-        DocumentationBuildSpecification $specification,
+        BuildStrategy $specification,
         DocumentationGenerator $generator
     ) {
         $this->beConstructedWith($specification, $generator);
@@ -30,7 +30,7 @@ class SpecificationBasedDocumentationBuilderSpec extends ObjectBehavior
 
     function it_does_not_generate_documentation_if_one_does_not_satisfy_specification(
         DocumentationGenerator $generator,
-        DocumentationBuildSpecification $specification,
+        BuildStrategy $specification,
         DocumentationId $anId,
         DocumentationSource $source
     ) {
@@ -46,7 +46,7 @@ class SpecificationBasedDocumentationBuilderSpec extends ObjectBehavior
 
     function it_generates_documentation_using_generator_if_it_does_satisfy_specification(
         DocumentationGenerator $generator,
-        DocumentationBuildSpecification $specification,
+        BuildStrategy $specification,
         DocumentationId $anId,
         DocumentationSource $source,
         BuiltDocumentation $builtDocumentation
@@ -62,7 +62,7 @@ class SpecificationBasedDocumentationBuilderSpec extends ObjectBehavior
 
     function it_throws_an_exception_if_generator_does_not_produce_any_result(
         DocumentationGenerator $generator,
-        DocumentationBuildSpecification $specification,
+        BuildStrategy $specification,
         DocumentationId $anId,
         DocumentationSource $source
     ) {
