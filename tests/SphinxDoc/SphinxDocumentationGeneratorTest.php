@@ -33,7 +33,7 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_does_not_build_non_RST_documentation()
     {
-        $anId = $this->createDocumentationId('myDoc', '1.3.5');
+        $anId = $this->createDocumentationId('my/doc', '1.3.5');
         $source = $this->createDocumentationSource();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
@@ -45,17 +45,17 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_builds_RST_documentation_into_the_output_path()
     {
-        $anId = $this->createDocumentationId('myDoc', 'v1.3.5');
+        $anId = $this->createDocumentationId('my/doc', 'v1.3.5');
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
         $built = $this->generator->generate($documentation);
 
-        $this->assertFileExists($this->tempOutputPath . '/myDoc/index.html');
-        $this->assertEquals($this->tempOutputPath . '/myDoc/index.html', $built->getIndexPath());
+        $this->assertFileExists($this->tempOutputPath . '/my/doc/index.html');
+        $this->assertEquals($this->tempOutputPath . '/my/doc/index.html', $built->getIndexPath());
 
         $this->assertContains('<h1>Docs', file_get_contents($built->getIndexPath()));
-        $this->assertContains('myDoc', file_get_contents($built->getIndexPath()));
+        $this->assertContains('my/doc', file_get_contents($built->getIndexPath()));
         $this->assertContains('v1.3.5', file_get_contents($built->getIndexPath()));
     }
 
