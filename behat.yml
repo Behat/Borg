@@ -6,7 +6,8 @@ default:
 
         documentation_manager_cli:
             contexts:
-                - DocumentationManagerCliContext
+                - DocumentationManagerCliContext:
+                    provider: @documentation.provider.github
             filters:  { role: 'documentation manager', tags: 'critical' }
 
     extensions:
