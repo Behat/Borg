@@ -20,6 +20,6 @@
     },
 
     "scripts": {
-        "test": "phpspec run && behat && phpunit"
+        "test": "phpspec run && behat --format progress && phpunit"
     }
 }
