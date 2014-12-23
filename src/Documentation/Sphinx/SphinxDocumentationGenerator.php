@@ -19,15 +19,18 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
     const COMMAND_LINE = 'sphinx-build';
 
     private $buildPath;
+    private $configPath;
     private $filesystem;
 
     /**
      * @param string     $buildPath
+     * @param string     $configPath
      * @param Filesystem $filesystem
      */
-    public function __construct($buildPath, Filesystem $filesystem)
+    public function __construct($buildPath, $configPath, Filesystem $filesystem)
     {
         $this->buildPath = $buildPath;
+        $this->configPath = $configPath;
         $this->filesystem = $filesystem;
     }
 
@@ -47,10 +50,9 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
         $commandLine = $this->getCommandLine($documentation->getId(), $sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
-        $buildTime = new DateTimeImmutable();
 
         return new BuiltSphinxDocumentation(
-            $documentation->getId(), $documentation->getTime(), $buildTime, $buildPath
+            $documentation->getId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
         );
     }
 
@@ -67,18 +69,13 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
         return sprintf(
             '%s -b html -c %s -D project="%s" -D version="%s" -D release="%s" %s %s',
             self::COMMAND_LINE,
-            $this->getConfigPath(),
+            $this->configPath,
             $anId->getProjectName(),
             $anId->getVersionString(),
             $anId->getVersionString(),
             $sourcePath,
             $buildPath
         );
-    }
-
-    private function getConfigPath()
-    {
-        return realpath(__DIR__ . '/config');
     }
 
     private function executeCommand($commandLine)
