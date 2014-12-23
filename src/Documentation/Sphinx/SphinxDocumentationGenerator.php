@@ -5,7 +5,6 @@ namespace Behat\Borg\Documentation\Sphinx;
 use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Sphinx\RstDocumentationSource;
 use DateTimeImmutable;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
@@ -23,12 +22,13 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
     private $filesystem;
 
     /**
-     * @param string $buildPath
+     * @param string     $buildPath
+     * @param Filesystem $filesystem
      */
-    public function __construct($buildPath)
+    public function __construct($buildPath, Filesystem $filesystem)
     {
         $this->buildPath = $buildPath;
-        $this->filesystem = new Filesystem();
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -89,11 +89,13 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf(
-                "%s\n%s",
-                $process->getOutput(),
-                $process->getErrorOutput()
-            ));
+            throw new \RuntimeException(
+                sprintf(
+                    "%s\n%s",
+                    $process->getOutput(),
+                    $process->getErrorOutput()
+                )
+            );
         }
     }
 }

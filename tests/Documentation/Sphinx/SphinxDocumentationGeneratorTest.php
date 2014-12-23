@@ -23,7 +23,7 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
         $this->tempInputPath = getenv('TEMP_PATH') . '/sphinx/input';
         $this->tempOutputPath = getenv('TEMP_PATH') . '/sphinx/output';
 
-        $this->generator = new SphinxDocumentationGenerator($this->tempOutputPath);
+        $this->generator = new SphinxDocumentationGenerator($this->tempOutputPath, new Filesystem());
 
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
     }

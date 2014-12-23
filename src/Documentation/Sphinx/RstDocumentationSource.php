@@ -22,7 +22,10 @@ final class RstDocumentationSource implements DocumentationSource
      */
     public static function atPath($path)
     {
-        return new self($path);
+        $source = new RstDocumentationSource();
+        $source->path = $path;
+
+        return $source;
     }
 
     /**
@@ -33,8 +36,5 @@ final class RstDocumentationSource implements DocumentationSource
         return $this->path;
     }
 
-    private function __construct($path)
-    {
-        $this->path = $path;
-    }
+    private function __construct() { }
 }
