@@ -4,6 +4,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\DocumentationProvider;
+use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
