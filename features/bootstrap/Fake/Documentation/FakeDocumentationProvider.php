@@ -3,6 +3,7 @@
 namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationProvider;
 
 /**
@@ -10,14 +11,33 @@ use Behat\Borg\Documentation\DocumentationProvider;
  */
 final class FakeDocumentationProvider implements DocumentationProvider
 {
-    private $documentation = [];
+    /**
+     * @var Documentation[]
+     */
+    private $docs = [];
 
     /**
      * {@inheritdoc}
      */
     public function wasDocumented(Documentation $documentation)
     {
-        $this->documentation[] = $documentation;
+        $this->docs[] = $documentation;
+    }
+
+    /**
+     * @param DocumentationId $anId
+     *
+     * @return null|Documentation
+     */
+    public function findDocumentationById(DocumentationId $anId)
+    {
+        foreach ($this->docs as $documentation) {
+            if ($documentation->getId() == $anId) {
+                return $documentation;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -25,6 +45,6 @@ final class FakeDocumentationProvider implements DocumentationProvider
      */
     public function getAllDocumentation()
     {
-        return $this->documentation;
+        return $this->docs;
     }
 }
