@@ -8,9 +8,7 @@
 
         <service id="github.cache" class="Github\HttpClient\CachedHttpClient">
             <argument type="collection">
-                <argument key="cache_dir">
-                    %kernel.cache_dir%/github-api-cache
-                </argument>
+                <argument key="cache_dir">%kernel.cache_dir%/github-api-cache</argument>
             </argument>
         </service>
 
