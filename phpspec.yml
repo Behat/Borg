@@ -1,0 +1,4 @@
+suites:
+    default:
+        namespace: Behat\Borg
+        psr4_prefix: Behat\Borg

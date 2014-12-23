@@ -8,14 +8,14 @@
     "require-dev": {
         "behat/behat": "~3.0.12",
         "phpunit/phpunit": "~4.2.0",
-        "phpspec/phpspec": "~2.1.0@dev"
+        "phpspec/phpspec": "~2.1.0"
     },
 
     "autoload": {
-        "psr-0": {
-            "Behat\\Borg": "src/",
-            "spec\\Behat\\Borg": ".",
-            "tests\\Behat\\Borg": "."
+        "psr-4": {
+            "Behat\\Borg\\": "src/",
+            "spec\\Behat\\Borg\\": ".",
+            "tests\\Behat\\Borg\\": "."
         }
     }
 }
