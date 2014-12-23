@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Sphinx;
+namespace spec\Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;

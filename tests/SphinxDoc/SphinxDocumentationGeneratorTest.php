@@ -1,12 +1,12 @@
 <?php
 
-namespace tests\Behat\Borg\Documentation\Sphinx;
+namespace tests\Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\Documentation\Sphinx\RstDocumentationSource;
-use Behat\Borg\Documentation\Sphinx\SphinxDocumentationGenerator;
+use Behat\Borg\SphinxDoc\RstDocumentationSource;
+use Behat\Borg\SphinxDoc\SphinxDocumentationGenerator;
 use DateTimeImmutable;
 use PHPUnit_Framework_TestCase;
 use RuntimeException;
@@ -24,7 +24,7 @@ class SphinxDocumentationGeneratorTest extends PHPUnit_Framework_TestCase
         $this->tempOutputPath = getenv('TEMP_PATH') . '/sphinx/output';
 
         $this->generator = new SphinxDocumentationGenerator(
-            $this->tempOutputPath, realpath(__DIR__ . '/../../../sphinx'), new Filesystem()
+            $this->tempOutputPath, realpath(__DIR__ . '/../../sphinx'), new Filesystem()
         );
 
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
