@@ -9,6 +9,7 @@ use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Symfony\Component\Process\Process;
 
 /**
  * Defines application features from the specific context.
@@ -59,7 +60,14 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
      */
     public function iBuildTheDocumentation()
     {
-        throw new PendingException();
+        $process = new Process(__DIR__ . '/../../app/console doc:build -e=test');
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException(
+                sprintf("%s\n%s", $process->getOutput(), $process->getErrorOutput())
+            );
+        }
     }
 
     /**
