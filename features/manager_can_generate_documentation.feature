@@ -3,6 +3,11 @@ Feature: Manager can generate documentation
   As a documentation manager
   I want documentation to be generated from the source
 
+  Rules:
+    - Documentation for both 2.5 and 3.0 should be generated
+    - If documentation gets updated, we should regenerate it
+    - If documentation wasn't updated, we should keep the old version
+
   Scenario: Generating behat 3.0 documentation
     Given behat version 3.0 was documented
     When I build the documentation
