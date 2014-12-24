@@ -7,6 +7,7 @@ use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Provider\DocumentationProvider;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Release;
+use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;
 use Github\Client;
 
@@ -53,7 +54,17 @@ final class GitHubDocumentationProvider implements DocumentationProvider
      */
     public function getAllDocumentation()
     {
-        return [];
+        $documentation = [];
+
+        foreach ($this->watchedRepositories as $repositoryName) {
+            list($organisation, $repository) = explode('/', $repositoryName);
+
+            foreach ($this->getCommittedReleases($organisation, $repository) as $release) {
+                $documentation[] = $this->getReleaseDocumentation($release);
+            }
+        }
+
+        return $documentation;
     }
 
     private function getReleaseDocumentation(CommittedRelease $committedRelease)
@@ -63,6 +74,22 @@ final class GitHubDocumentationProvider implements DocumentationProvider
             RstDocumentationSource::atPath('_NO_FILE'),
             $committedRelease->getCommit()->getTime()
         );
+    }
+
+    private function getCommittedReleases($organisation, $repository)
+    {
+        $branches = $this->client->api('repo')->branches($organisation, $repository);
+        $releases = [];
+
+        foreach ($branches as $branch) {
+            $package = GitHubPackage::named($organisation . '/' . $repository);
+            $version = Version::string($branch['name']);
+            $release = new Release($package, $version);
+
+            $releases[] = $this->getCommittedRelease($release);
+        }
+
+        return $releases;
     }
 
     private function getCommittedRelease(Release $release)
