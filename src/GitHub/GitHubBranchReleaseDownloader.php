@@ -5,7 +5,9 @@ namespace Behat\Borg\GitHub;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\ReleaseDownloader;
+use Behat\Borg\Package\Version;
 use Github\Client;
+use Github\HttpClient\Message\ResponseMediator;
 use Symfony\Component\Filesystem\Filesystem;
 
 final class GitHubBranchReleaseDownloader implements ReleaseDownloader
@@ -32,7 +34,7 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
             throw new \InvalidArgumentException("Trying to download untracked package.");
         }
 
-        $commit = $this->getLatestCommit($release);
+        $commit = $this->fetchLatestCommit($release);
         $committedRelease = new CommittedRelease($release, $commit);
 
         if ($this->releaseIsAlreadyAtCommit($release, $commit)) {
@@ -49,10 +51,35 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
      */
     public function downloadAllReleases()
     {
-        // TODO: Implement downloadAllReleases() method.
+        $documentation = [];
+
+        foreach ($this->trackedRepositories as $repositoryName) {
+            $package = GitHubPackage::named($repositoryName);
+
+            foreach ($this->fetchPackageReleases($package) as $release) {
+                $documentation[] = $this->downloadRelease($release);
+            }
+        }
+
+        return $documentation;
     }
 
-    private function getLatestCommit(Release $release)
+    private function fetchPackageReleases(Package $package)
+    {
+        $releases = [];
+
+        $organisation = $package->getOrganisation();
+        $repository = $package->getName();
+        $branches = $this->client->api('repo')->branches($organisation, $repository);
+
+        foreach ($branches as $branch) {
+            $releases[] = new Release($package, Version::string($branch['name']));
+        }
+
+        return $releases;
+    }
+
+    private function fetchLatestCommit(Release $release)
     {
         $commit = $this->client->api('repo')->commits()->all(
             $release->getPackage()->getOrganisation(),
@@ -80,36 +107,6 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
         return false;
     }
 
-    private function getReleasePath(Release $release)
-    {
-        return "{$this->downloadPath}/{$release}";
-    }
-
-    private function getCommitMetaPath(Release $release)
-    {
-        return "{$this->getReleasePath($release)}/commit.meta";
-    }
-
-    private function getArchiveUrl(Package $package, Commit $commit)
-    {
-        return "https://github.com/{$package}/archive/{$commit->getSha()}.zip";
-    }
-
-    private function getArchivePath(Package $package, Commit $commit)
-    {
-        return "{$this->downloadPath}/{$package}/{$commit->getSha()}.zip";
-    }
-
-    private function getOrganisationPath(Package $package)
-    {
-        return "{$this->downloadPath}/{$package->getOrganisation()}";
-    }
-
-    private function getUnzippedCommitPath(Package $package, Commit $commit)
-    {
-        return "{$this->getOrganisationPath($package)}/{$package->getName()}-{$commit->getSha()}";
-    }
-
     private function downloadReleaseAtCommit(Release $release, Commit $commit)
     {
         $path = $this->getReleasePath($release);
@@ -125,9 +122,16 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
 
     private function downloadArchive(Release $release, Commit $commit, $releasePath)
     {
-        $archiveUrl = $this->getArchiveUrl($release->getPackage(), $commit);
         $archivePath = $this->getArchivePath($release->getPackage(), $commit);
-        file_put_contents($archivePath, file_get_contents($archiveUrl));
+        $content = ResponseMediator::getContent($this->client->getHttpClient()->get(
+            'repos/' .
+            rawurlencode($release->getPackage()->getOrganisation()) .
+            '/' .
+            rawurlencode($release->getPackage()->getName()) .
+            '/zipball/' .
+            $commit->getSha()
+        ));
+        file_put_contents($archivePath, $content);
 
         $archive = new \ZipArchive();
         $archive->open($archivePath);
@@ -137,5 +141,34 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
         $unzippedPath = $this->getUnzippedCommitPath($release->getPackage(), $commit);
         $this->filesystem->rename($unzippedPath, $releasePath, true);
         $this->filesystem->remove($archivePath);
+    }
+
+    private function getReleasePath(Release $release)
+    {
+        return "{$this->downloadPath}/{$release}";
+    }
+
+    private function getCommitMetaPath(Release $release)
+    {
+        return "{$this->getReleasePath($release)}/commit.meta";
+    }
+
+    private function getArchivePath(Package $package, Commit $commit)
+    {
+        return "{$this->downloadPath}/{$package}/{$commit->getSha()}.zip";
+    }
+
+    private function getOrganisationPath(Package $package)
+    {
+        return "{$this->downloadPath}/{$package->getOrganisation()}";
+    }
+
+    private function getUnzippedCommitPath(Package $package, Commit $commit)
+    {
+        $shortSha = mb_substr($commit->getSha(), 0, 7);
+        $organisation = $package->getOrganisation();
+        $repository = $package->getName();
+
+        return "{$this->getOrganisationPath($package)}/{$organisation}-{$repository}-{$shortSha}";
     }
 }
