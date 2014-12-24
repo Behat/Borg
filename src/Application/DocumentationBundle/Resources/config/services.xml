@@ -49,16 +49,15 @@
                  class="Behat\Borg\Documentation\Publisher\DocumentationDirectoryPublisher">
         </service>
 
-        <service id="github.cache"
-                 class="Github\HttpClient\CachedHttpClient">
-            <argument type="collection">
-                <argument key="cache_dir">%kernel.cache_dir%/github-api-cache</argument>
-            </argument>
-        </service>
-
         <service id="github.client"
                  class="Github\Client">
-            <argument type="service" id="github.cache"/>
+            <argument type="service">
+                <service class="Github\HttpClient\CachedHttpClient">
+                    <argument type="collection">
+                        <argument key="cache_dir">%kernel.cache_dir%/github-api-cache</argument>
+                    </argument>
+                </service>
+            </argument>
         </service>
 
     </services>
