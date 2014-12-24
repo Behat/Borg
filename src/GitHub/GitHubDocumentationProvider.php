@@ -6,6 +6,7 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Provider\DocumentationProvider;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
+use Behat\Borg\Package\DownloadedRelease;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;
@@ -67,12 +68,12 @@ final class GitHubDocumentationProvider implements DocumentationProvider
         return $documentation;
     }
 
-    private function getReleaseDocumentation(CommittedRelease $committedRelease)
+    private function getReleaseDocumentation(DownloadedRelease $downloadedRelease)
     {
         return new Documentation(
-            new ReleaseDocumentationId($committedRelease->getRelease()),
+            new ReleaseDocumentationId($downloadedRelease->getRelease()),
             RstDocumentationSource::atPath('_NO_FILE'),
-            $committedRelease->getCommit()->getTime()
+            $downloadedRelease->getReleaseTime()
         );
     }
 

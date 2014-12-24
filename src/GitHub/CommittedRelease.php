@@ -2,12 +2,14 @@
 
 namespace Behat\Borg\GitHub;
 
+use Behat\Borg\Package\DownloadedRelease;
 use Behat\Borg\Package\Release;
+use DateTimeImmutable;
 
 /**
  * Represents GitHub committed release.
  */
-final class CommittedRelease
+final class CommittedRelease implements DownloadedRelease
 {
     private $release;
     private $commit;
@@ -32,5 +34,13 @@ final class CommittedRelease
     public function getCommit()
     {
         return $this->commit;
+    }
+
+    /**
+     * @return DateTimeImmutable
+     */
+    public function getReleaseTime()
+    {
+        return $this->commit->getTime();
     }
 }

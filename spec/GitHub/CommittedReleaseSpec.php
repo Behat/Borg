@@ -4,6 +4,7 @@ namespace spec\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubPackage;
+use Behat\Borg\Package\DownloadedRelease;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use PhpSpec\ObjectBehavior;
@@ -25,6 +26,11 @@ class CommittedReleaseSpec extends ObjectBehavior
         );
     }
 
+    function it_is_downloaded_release()
+    {
+        $this->shouldHaveType(DownloadedRelease::class);
+    }
+
     function it_holds_a_release()
     {
         $this->getRelease()->shouldBeLike(
@@ -43,5 +49,10 @@ class CommittedReleaseSpec extends ObjectBehavior
                 new \DateTimeImmutable('2011-04-14T16:00:49Z')
             )
         );
+    }
+
+    function its_release_time_is_a_time_of_commit()
+    {
+        $this->getReleaseTime()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
     }
 }
