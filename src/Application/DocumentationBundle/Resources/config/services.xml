@@ -8,23 +8,56 @@
 
         <service
                 class="Behat\Borg\Application\DocumentationBundle\Command\GenerateDocumentationCommand">
+            <argument type="service" id="documentation.manager"/>
             <tag name="console.command"/>
         </service>
 
-        <service id="documentation.provider.github" class="Behat\Borg\GitHub\GitHubDocumentationProvider">
+        <service id="documentation.manager"
+                 class="Behat\Borg\DocumentationManager">
+            <argument type="service" id="documentation.provider.github"/>
+            <argument type="service" id="documentation.builder"/>
+            <argument type="service" id="documentation.publisher"/>
+        </service>
+
+        <service id="documentation.provider.github"
+                 class="Behat\Borg\GitHub\GitHubDocumentationProvider">
             <argument type="service" id="github.client"/>
             <argument type="collection">
                 <argument>behat/docs</argument>
             </argument>
         </service>
 
-        <service id="github.cache" class="Github\HttpClient\CachedHttpClient">
+        <service id="documentation.builder"
+                 class="Behat\Borg\Documentation\Builder\StrategicDocumentationBuilder">
+            <argument type="service">
+                <service class="Behat\Borg\Documentation\Builder\Strategy\RefreshableBuildStrategy">
+                    <argument type="service" id="documentation.publisher"/>
+                </service>
+            </argument>
+            <argument type="service">
+                <service class="Behat\Borg\SphinxDoc\SphinxDocumentationGenerator">
+                    <argument>%kernel.root_dir%/../build</argument>
+                    <argument>%kernel.root_dir%/../sphinx</argument>
+                    <argument type="service">
+                        <service class="Symfony\Component\Filesystem\Filesystem"/>
+                    </argument>
+                </service>
+            </argument>
+        </service>
+
+        <service id="documentation.publisher"
+                 class="Behat\Borg\Documentation\Publisher\DocumentationDirectoryPublisher">
+        </service>
+
+        <service id="github.cache"
+                 class="Github\HttpClient\CachedHttpClient">
             <argument type="collection">
                 <argument key="cache_dir">%kernel.cache_dir%/github-api-cache</argument>
             </argument>
         </service>
 
-        <service id="github.client" class="Github\Client">
+        <service id="github.client"
+                 class="Github\Client">
             <argument type="service" id="github.cache"/>
         </service>
 

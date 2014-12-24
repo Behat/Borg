@@ -53,7 +53,7 @@ final class GitHubDocumentationProvider implements DocumentationProvider
      */
     public function getAllDocumentation()
     {
-        // TODO: Implement getAllDocumentation() method.
+        return [];
     }
 
     private function getReleaseDocumentation(CommittedRelease $committedRelease)
