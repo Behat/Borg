@@ -1,8 +1,7 @@
 <?php
 
-namespace Behat\Borg\Documentation\Builder;
+namespace Behat\Borg\Documentation;
 
-use Behat\Borg\Documentation\DocumentationId;
 use DateTimeImmutable;
 
 /**

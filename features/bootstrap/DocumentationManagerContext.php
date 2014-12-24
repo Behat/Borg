@@ -2,19 +2,19 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\StrategicDocumentationBuilder;
-use Behat\Borg\Documentation\Builder\Strategy\RefreshableBuildStrategy;
+use Behat\Borg\Documentation\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\StrategicDocumentationBuilder;
+use Behat\Borg\Documentation\Strategy\RefreshableBuildStrategy;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
-use Fake\Documentation\Builder\FakeBuiltDocumentationRepository;
-use Fake\Documentation\Builder\Generator\FakeDocumentationGenerator;
 use Fake\Documentation\FakeDocumentationProvider;
+use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
+use Fake\Documentation\Generator\FakeDocumentationGenerator;
 use Fake\Package\FakePackage;
 
 /**
@@ -22,8 +22,8 @@ use Fake\Package\FakePackage;
  */
 class DocumentationManagerContext implements Context, SnippetAcceptingContext
 {
-    private $documentationProvider;
-    private $documentationManager;
+    private $provider;
+    private $manager;
     private $generator;
 
     /**
@@ -31,16 +31,13 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-        $this->documentationProvider = new FakeDocumentationProvider();
+        $this->provider = new FakeDocumentationProvider();
         $this->generator = new FakeDocumentationGenerator();
-        $builtDocumentationRepository = new FakeBuiltDocumentationRepository();
+        $publisher = new FakeDocumentationPublisher();
 
-        $documentationBuilder = new StrategicDocumentationBuilder(
-            new RefreshableBuildStrategy($builtDocumentationRepository), $this->generator
-        );
-        $this->documentationManager = new DocumentationManager(
-            $this->documentationProvider, $documentationBuilder, $builtDocumentationRepository
-        );
+        $buildStrategy = new RefreshableBuildStrategy($publisher);
+        $builder = new StrategicDocumentationBuilder($buildStrategy, $this->generator);
+        $this->manager = new DocumentationManager($this->provider, $builder, $publisher);
     }
 
     /**
@@ -68,7 +65,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
 
-        $this->documentationProvider->wasDocumented($documentation);
+        $this->provider->wasDocumented($documentation);
     }
 
     /**
@@ -89,7 +86,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
 
-        $this->documentationProvider->wasDocumented($documentation);
+        $this->provider->wasDocumented($documentation);
     }
 
     /**
@@ -98,7 +95,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     public function iBuildTheDocumentation()
     {
         $this->generator->changeBuildTime($this->createTime('19.01.1988 20:00'));
-        $this->documentationManager->buildDocumentation();
+        $this->manager->buildAndPublishDocumentation();
     }
 
     /**
@@ -107,11 +104,11 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     public function iBuildTheDocumentationAgain()
     {
         $this->generator->changeBuildTime($this->createTime('20.01.1988 20:00'));
-        $this->documentationManager->buildDocumentation();
+        $this->manager->buildAndPublishDocumentation();
     }
 
     /**
-     * @Then the documentation for :package version :version should have been built
+     * @Then the documentation for :package version :version should have been published
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
@@ -119,7 +116,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then the documentation for :package version :version should have been rebuilt
+     * @Then the documentation for :package version :version should have been republished
      */
     public function thePackageDocumentationShouldHaveBeenRebuilt(Package $package, Version $version)
     {
@@ -133,7 +130,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then the documentation for :package version :version should not have been rebuilt
+     * @Then the documentation for :package version :version should not have been republished
      */
     public function thePackageDocumentationShouldNotHaveBeenRebuilt(Package $package, Version $version)
     {
@@ -155,7 +152,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     private function getBuiltDocumentationForPackageVersion(Package $package, Version $version)
     {
         $id = new ReleaseDocumentationId(new Release($package, $version));
-        $builtDocumentation = $this->documentationManager->getBuiltDocumentation($id);
+        $builtDocumentation = $this->manager->getPublishedDocumentation($id);
 
         return $builtDocumentation;
     }

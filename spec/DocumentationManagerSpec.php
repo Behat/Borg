@@ -2,12 +2,12 @@
 
 namespace spec\Behat\Borg;
 
-use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
-use Behat\Borg\Documentation\Builder\DocumentationBuilder;
+use Behat\Borg\Documentation\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationBuilder;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationProvider;
+use Behat\Borg\Documentation\DocumentationPublisher;
 use Behat\Borg\Documentation\DocumentationSource;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -17,7 +17,7 @@ class DocumentationManagerSpec extends ObjectBehavior
     function let(
         DocumentationProvider $provider,
         DocumentationBuilder $builder,
-        BuiltDocumentationRepository $repository
+        DocumentationPublisher $repository
     ) {
         $this->beConstructedWith($provider, $builder, $repository);
     }
@@ -41,13 +41,13 @@ class DocumentationManagerSpec extends ObjectBehavior
         $builder->build($documentation1)->shouldBeCalled()->willReturn($built);
         $builder->build($documentation2)->shouldBeCalled()->willReturn($built);
 
-        $this->buildDocumentation();
+        $this->buildAndPublishDocumentation();
     }
 
     function it_registers_built_documentation_into_repository(
         DocumentationProvider $provider,
         DocumentationBuilder $builder,
-        BuiltDocumentationRepository $repository,
+        DocumentationPublisher $repository,
         DocumentationId $docId,
         DocumentationSource $src,
         BuiltDocumentation $built
@@ -58,15 +58,15 @@ class DocumentationManagerSpec extends ObjectBehavior
         $provider->getAllDocumentation()->willReturn([$documentation]);
 
         $builder->build($documentation)->willReturn($built);
-        $repository->addBuiltDocumentation($built)->shouldBeCalled();
+        $repository->publishDocumentation($built)->shouldBeCalled();
 
-        $this->buildDocumentation();
+        $this->buildAndPublishDocumentation();
     }
 
     function it_skips_documentation_if_builder_does_not_build_any(
         DocumentationProvider $provider,
         DocumentationBuilder $builder,
-        BuiltDocumentationRepository $repository,
+        DocumentationPublisher $repository,
         DocumentationId $docId,
         DocumentationSource $src
     ) {
@@ -76,18 +76,18 @@ class DocumentationManagerSpec extends ObjectBehavior
         $provider->getAllDocumentation()->willReturn([$documentation]);
 
         $builder->build($documentation)->willReturn(null);
-        $repository->addBuiltDocumentation(Argument::any())->shouldNotBeCalled();
+        $repository->publishDocumentation(Argument::any())->shouldNotBeCalled();
 
-        $this->buildDocumentation();
+        $this->buildAndPublishDocumentation();
     }
 
     function it_can_provide_all_currently_built_documentation_from_repository(
-        BuiltDocumentationRepository $repository,
+        DocumentationPublisher $repository,
         DocumentationId $docId,
         BuiltDocumentation $builtDocumentation
     ) {
-        $repository->getBuiltDocumentation($docId)->willReturn($builtDocumentation);
+        $repository->getPublishedDocumentation($docId)->willReturn($builtDocumentation);
 
-        $this->getBuiltDocumentation($docId)->shouldReturn($builtDocumentation);
+        $this->getPublishedDocumentation($docId)->shouldReturn($builtDocumentation);
     }
 }

@@ -27,6 +27,6 @@ final class GenerateDocumentationCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->manager->buildDocumentation();
+        $this->manager->buildAndPublishDocumentation();
     }
 }

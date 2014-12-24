@@ -1,14 +1,14 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Builder;
+namespace spec\Behat\Borg\Documentation;
 
-use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\DocumentationBuilder;
-use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
-use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
+use Behat\Borg\Documentation\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationBuilder;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Documentation\Generator\DocumentationGenerator;
+use Behat\Borg\Documentation\Strategy\BuildStrategy;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;

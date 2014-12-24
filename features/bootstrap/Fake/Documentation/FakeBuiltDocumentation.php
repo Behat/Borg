@@ -1,8 +1,8 @@
 <?php
 
-namespace Fake\Documentation\Builder;
+namespace Fake\Documentation;
 
-use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use DateTimeImmutable;
 

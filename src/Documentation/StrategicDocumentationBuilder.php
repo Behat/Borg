@@ -1,10 +1,9 @@
 <?php
 
-namespace Behat\Borg\Documentation\Builder;
+namespace Behat\Borg\Documentation;
 
-use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
-use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\Generator\DocumentationGenerator;
+use Behat\Borg\Documentation\Strategy\BuildStrategy;
 use InvalidArgumentException;
 
 /**

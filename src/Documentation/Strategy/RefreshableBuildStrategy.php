@@ -1,23 +1,23 @@
 <?php
 
-namespace Behat\Borg\Documentation\Builder\Strategy;
+namespace Behat\Borg\Documentation\Strategy;
 
-use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationPublisher;
 
 /**
  * Allows builds of new or outdated documentation only.
  */
 final class RefreshableBuildStrategy implements BuildStrategy
 {
-    private $repository;
+    private $publisher;
 
     /**
-     * @param BuiltDocumentationRepository $repository
+     * @param DocumentationPublisher $publisher
      */
-    public function __construct(BuiltDocumentationRepository $repository)
+    public function __construct(DocumentationPublisher $publisher)
     {
-        $this->repository = $repository;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -26,11 +26,12 @@ final class RefreshableBuildStrategy implements BuildStrategy
     public function isSatisfiedByDocumentation(Documentation $documentation)
     {
         $anId = $documentation->getId();
-        if (!$this->repository->hasBuiltDocumentation($anId)) {
+
+        if (!$this->publisher->hasPublishedDocumentation($anId)) {
             return true;
         }
 
-        $builtDocumentation = $this->repository->getBuiltDocumentation($anId);
+        $builtDocumentation = $this->publisher->getPublishedDocumentation($anId);
         if ($builtDocumentation->getDocumentationTime() < $documentation->getTime()) {
             return true;
         }

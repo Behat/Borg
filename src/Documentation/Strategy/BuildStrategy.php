@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Documentation\Builder\Strategy;
+namespace Behat\Borg\Documentation\Strategy;
 
 use Behat\Borg\Documentation\Documentation;
 

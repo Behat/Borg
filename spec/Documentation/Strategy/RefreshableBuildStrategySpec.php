@@ -1,20 +1,20 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Builder\Strategy;
+namespace spec\Behat\Borg\Documentation\Strategy;
 
-use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\BuiltDocumentationRepository;
-use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
+use Behat\Borg\Documentation\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\DocumentationPublisher;
 use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Documentation\Strategy\BuildStrategy;
 use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class RefreshableBuildStrategySpec extends ObjectBehavior
 {
-    function let(BuiltDocumentationRepository $repository)
+    function let(DocumentationPublisher $repository)
     {
         $this->beConstructedWith($repository);
     }
@@ -25,20 +25,20 @@ class RefreshableBuildStrategySpec extends ObjectBehavior
     }
 
     function it_is_satisfied_by_documentation_that_was_not_yet_built(
-        BuiltDocumentationRepository $repository,
+        DocumentationPublisher $repository,
         DocumentationId $anId,
         DocumentationSource $source
     ) {
         $documentation = new Documentation(
             $anId->getWrappedObject(), $source->getWrappedObject(), new \DateTimeImmutable()
         );
-        $repository->hasBuiltDocumentation($anId)->willReturn(false);
+        $repository->hasPublishedDocumentation($anId)->willReturn(false);
 
         $this->shouldBeSatisfiedByDocumentation($documentation);
     }
 
     function it_is_satisfied_by_documentation_that_is_updated_version_of_the_one_built_previously(
-        BuiltDocumentationRepository $repository,
+        DocumentationPublisher $repository,
         DocumentationId $anId,
         DocumentationSource $source,
         BuiltDocumentation $builtDocumentation
@@ -51,14 +51,14 @@ class RefreshableBuildStrategySpec extends ObjectBehavior
         );
         $builtDocumentation->getDocumentationTime()->willReturn($yesterday);
 
-        $repository->hasBuiltDocumentation($anId)->willReturn(true);
-        $repository->getBuiltDocumentation($anId)->willReturn($builtDocumentation);
+        $repository->hasPublishedDocumentation($anId)->willReturn(true);
+        $repository->getPublishedDocumentation($anId)->willReturn($builtDocumentation);
 
         $this->shouldBeSatisfiedByDocumentation($documentation);
     }
 
     function it_is_not_satisfied_by_documentation_that_is_exactly_the_same_one_built_previously(
-        BuiltDocumentationRepository $repository,
+        DocumentationPublisher $repository,
         DocumentationId $anId,
         DocumentationSource $source,
         BuiltDocumentation $builtDocumentation
@@ -69,8 +69,8 @@ class RefreshableBuildStrategySpec extends ObjectBehavior
         );
         $builtDocumentation->getDocumentationTime()->willReturn($today);
 
-        $repository->hasBuiltDocumentation($anId)->willReturn(true);
-        $repository->getBuiltDocumentation($anId)->willReturn($builtDocumentation);
+        $repository->hasPublishedDocumentation($anId)->willReturn(true);
+        $repository->getPublishedDocumentation($anId)->willReturn($builtDocumentation);
 
         $this->shouldNotBeSatisfiedByDocumentation($documentation);
     }

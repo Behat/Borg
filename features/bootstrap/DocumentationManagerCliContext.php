@@ -71,7 +71,7 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then the documentation for :arg1 version :arg2 should have been built
+     * @Then the documentation for :arg1 version :arg2 should have been published
      */
     public function theDocumentationForVersionShouldHaveBeenBuilt($arg1, $arg2)
     {
