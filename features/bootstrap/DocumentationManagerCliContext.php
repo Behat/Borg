@@ -4,6 +4,8 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Borg\Documentation\Provider\DocumentationProvider;
+use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
+use Behat\Borg\DocumentationManager;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
@@ -16,13 +18,18 @@ use Symfony\Component\Process\Process;
  */
 class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
 {
+    private $manager;
     private $provider;
 
     /**
      * Initializes context.
+     *
+     * @param DocumentationManager  $manager
+     * @param DocumentationProvider $provider
      */
-    public function __construct(DocumentationProvider $provider)
+    public function __construct(DocumentationManager $manager, DocumentationProvider $provider)
     {
+        $this->manager = $manager;
         $this->provider = $provider;
     }
 
@@ -71,10 +78,15 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then the documentation for :arg1 version :arg2 should have been published
+     * @Then the documentation for :package version :version should have been published
      */
-    public function theDocumentationForVersionShouldHaveBeenBuilt($arg1, $arg2)
+    public function theDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        throw new PendingException();
+        $id = new ReleaseDocumentationId(new Release($package, $version));
+        $publishedDocumentation = $this->manager->getPublishedDocumentation($id);
+
+        PHPUnit_Framework_Assert::assertNotNull(
+            $publishedDocumentation, 'Documentation is not published.'
+        );
     }
 }
