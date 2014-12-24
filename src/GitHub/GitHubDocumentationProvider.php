@@ -4,7 +4,7 @@ namespace Behat\Borg\GitHub;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\DocumentationProvider;
+use Behat\Borg\Documentation\Provider\DocumentationProvider;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Release;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;

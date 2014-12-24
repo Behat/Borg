@@ -2,8 +2,8 @@
 
 namespace Fake\Documentation\Generator;
 
+use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\Generator\DocumentationGenerator;
 use DateTimeImmutable;
 use Fake\Documentation\FakeBuiltDocumentation;
 

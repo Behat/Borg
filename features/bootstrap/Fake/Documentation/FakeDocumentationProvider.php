@@ -4,7 +4,7 @@ namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\DocumentationProvider;
+use Behat\Borg\Documentation\Provider\DocumentationProvider;
 
 /**
  * Stores and exposes documentation from the process memory.

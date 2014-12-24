@@ -1,6 +1,9 @@
 <?php
 
-namespace Behat\Borg\Documentation;
+namespace Behat\Borg\Documentation\Provider;
+
+use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Documentation;
 
 /**
  * Provides all available documentation.

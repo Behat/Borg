@@ -2,9 +2,8 @@
 
 namespace Fake\Documentation;
 
-use Behat\Borg\Documentation\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 use InvalidArgumentException;
 
 /**
@@ -17,7 +16,7 @@ final class FakeDocumentationPublisher implements DocumentationPublisher
     /**
      * {@inheritdoc}
      */
-    public function publishDocumentation(BuiltDocumentation $builtDocumentation)
+    public function publishDocumentation(\Behat\Borg\Documentation\Builder\BuiltDocumentation $builtDocumentation)
     {
         $this->documentation['' . $builtDocumentation->getId()] = $builtDocumentation;
     }

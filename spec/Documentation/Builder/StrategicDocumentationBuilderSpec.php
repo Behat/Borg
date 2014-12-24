@@ -1,14 +1,12 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation;
+namespace spec\Behat\Borg\Documentation\Builder;
 
-use Behat\Borg\Documentation\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
+use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\DocumentationBuilder;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\Documentation\Generator\DocumentationGenerator;
-use Behat\Borg\Documentation\Strategy\BuildStrategy;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
@@ -25,7 +23,7 @@ class StrategicDocumentationBuilderSpec extends ObjectBehavior
 
     function it_is_a_documentation_builder()
     {
-        $this->shouldHaveType(DocumentationBuilder::class);
+        $this->shouldHaveType(\Behat\Borg\Documentation\Builder\DocumentationBuilder::class);
     }
 
     function it_does_not_generate_documentation_if_one_does_not_satisfy_specification(
@@ -49,7 +47,7 @@ class StrategicDocumentationBuilderSpec extends ObjectBehavior
         BuildStrategy $specification,
         DocumentationId $anId,
         DocumentationSource $source,
-        BuiltDocumentation $builtDocumentation
+        \Behat\Borg\Documentation\Builder\BuiltDocumentation $builtDocumentation
     ) {
         $documentation = new Documentation(
             $anId->getWrappedObject(), $source->getWrappedObject(), new DateTimeImmutable()

@@ -1,6 +1,8 @@
 <?php
 
-namespace Behat\Borg\Documentation;
+namespace Behat\Borg\Documentation\Builder;
+
+use Behat\Borg\Documentation\Documentation;
 
 /**
  * Builds raw documentation into built documentation.

@@ -2,10 +2,10 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\StrategicDocumentationBuilder;
+use Behat\Borg\Documentation\Builder\Strategy\RefreshableBuildStrategy;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\StrategicDocumentationBuilder;
-use Behat\Borg\Documentation\Strategy\RefreshableBuildStrategy;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;

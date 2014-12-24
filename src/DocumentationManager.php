@@ -2,12 +2,12 @@
 
 namespace Behat\Borg;
 
-use Behat\Borg\Documentation\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\DocumentationBuilder;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\DocumentationProvider;
-use Behat\Borg\Documentation\DocumentationPublisher;
+use Behat\Borg\Documentation\Provider\DocumentationProvider;
+use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 
 /**
  * Manages documentation.
@@ -19,8 +19,8 @@ final class DocumentationManager
     private $publisher;
 
     /**
-     * @param DocumentationProvider  $provider
-     * @param DocumentationBuilder   $builder
+     * @param \Behat\Borg\Documentation\Provider\DocumentationProvider  $provider
+     * @param \Behat\Borg\Documentation\Builder\DocumentationBuilder   $builder
      * @param DocumentationPublisher $publisher
      */
     public function __construct(
@@ -48,7 +48,7 @@ final class DocumentationManager
      *
      * @param DocumentationId $anId
      *
-     * @return BuiltDocumentation
+     * @return \Behat\Borg\Documentation\Builder\BuiltDocumentation
      */
     public function getPublishedDocumentation(DocumentationId $anId)
     {

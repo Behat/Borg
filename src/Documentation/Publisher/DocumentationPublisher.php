@@ -1,7 +1,9 @@
 <?php
 
-namespace Behat\Borg\Documentation;
+namespace Behat\Borg\Documentation\Publisher;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\DocumentationId;
 use InvalidArgumentException;
 
 /**

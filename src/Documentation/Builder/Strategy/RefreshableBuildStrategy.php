@@ -1,9 +1,9 @@
 <?php
 
-namespace Behat\Borg\Documentation\Strategy;
+namespace Behat\Borg\Documentation\Builder\Strategy;
 
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 
 /**
  * Allows builds of new or outdated documentation only.

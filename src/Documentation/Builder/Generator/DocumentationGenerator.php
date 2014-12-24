@@ -1,8 +1,8 @@
 <?php
 
-namespace Behat\Borg\Documentation\Generator;
+namespace Behat\Borg\Documentation\Builder\Generator;
 
-use Behat\Borg\Documentation\BuiltDocumentation;
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 
 /**
