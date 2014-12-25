@@ -4,15 +4,29 @@ namespace Behat\Borg\Documentation\Publisher;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class DocumentationDirectoryPublisher implements DocumentationPublisher
 {
+    private $publishPath;
+
+    public function __construct($publishPath)
+    {
+        $this->publishPath = $publishPath;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function publishDocumentation(BuiltDocumentation $builtDocumentation)
     {
-        // TODO: Implement publishDocumentation() method.
+        $path = "{$this->publishPath}/{$builtDocumentation->getId()}";
+        (new Filesystem())->mirror($builtDocumentation->getBuildPath(), $path);
+
+        $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, $path);
+        file_put_contents("{$path}/publish.meta", serialize($publishedDocumentation));
+
+        return $publishedDocumentation;
     }
 
     /**
@@ -20,7 +34,7 @@ final class DocumentationDirectoryPublisher implements DocumentationPublisher
      */
     public function hasPublishedDocumentation(DocumentationId $anId)
     {
-        // TODO: Implement hasPublishedDocumentation() method.
+        return file_exists("{$this->publishPath}/{$anId}/publish.meta");
     }
 
     /**
@@ -28,6 +42,10 @@ final class DocumentationDirectoryPublisher implements DocumentationPublisher
      */
     public function getPublishedDocumentation(DocumentationId $anId)
     {
-        // TODO: Implement getPublishedDocumentation() method.
+        if (!$this->hasPublishedDocumentation($anId)) {
+            throw new \InvalidArgumentException("Documentation {$anId} was not published.");
+        }
+
+        return unserialize(file_get_contents("{$this->publishPath}/{$anId}/publish.meta"));
     }
 }

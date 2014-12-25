@@ -1,5 +1,6 @@
 vendor/
 web/bundles/
+web/docs/
 app/cache/*
 app/logs/*
 build/repositories/*

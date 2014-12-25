@@ -45,6 +45,7 @@
 
         <service id="documentation.publisher"
                  class="Behat\Borg\Documentation\Publisher\DocumentationDirectoryPublisher">
+            <argument>%kernel.root_dir%/../web/docs</argument>
         </service>
 
         <service id="package.release_downloader.github"
