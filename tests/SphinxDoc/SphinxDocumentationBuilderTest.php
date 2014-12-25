@@ -30,16 +30,14 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
     }
 
-    /** @test */
-    function it_does_not_build_non_RST_documentation()
+    /** @test @expectedException InvalidArgumentException */
+    function it_throws_an_exception_if_non_RST_documentation_provided()
     {
         $anId = $this->createDocumentationId('my/doc', '1.3.5');
         $source = $this->createDocumentationSource();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $builtDocumentation = $this->builder->build($documentation);
-
-        $this->assertNull($builtDocumentation);
+        $this->builder->build($documentation);
     }
 
     /** @test */

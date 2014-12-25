@@ -42,7 +42,9 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
         $source = $documentation->getSource();
 
         if (!$source instanceof RstDocumentationSource) {
-            return null;
+            throw new \InvalidArgumentException(
+                'Sphinx documentation builder can only build RST docs'
+            );
         }
 
         $sourcePath = $source->getPath();
