@@ -33,9 +33,9 @@ final class RefreshablePublishingStrategy implements PublishingStrategy
             return true;
         }
 
-        $builtDocumentation = $this->publisher->getPublishedDocumentation($anId);
+        $publishedDocumentation = $this->publisher->getPublishedDocumentation($anId);
 
-        if ($builtDocumentation->getDocumentationTime() < $documentation->getTime()) {
+        if ($publishedDocumentation->getDocumentationTime() < $documentation->getTime()) {
             return true;
         }
 

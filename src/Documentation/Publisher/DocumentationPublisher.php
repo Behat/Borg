@@ -32,7 +32,7 @@ interface DocumentationPublisher
      *
      * @param DocumentationId $anId
      *
-     * @return BuiltDocumentation
+     * @return PublishedDocumentation
      *
      * @throws InvalidArgumentException If documentation was not published
      */
