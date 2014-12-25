@@ -2,13 +2,14 @@
 
 namespace Fake\Documentation;
 
+use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use DateTimeImmutable;
 
 /**
  * Fake implementation of built documentation.
  */
-final class FakeBuiltDocumentation implements \Behat\Borg\Documentation\Builder\BuiltDocumentation
+final class FakeBuiltDocumentation implements BuiltDocumentation
 {
     private $documentation;
     private $buildTime;
