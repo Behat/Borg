@@ -57,7 +57,13 @@
         </service>
 
         <service id="github.client"
-                 class="Github\Client"/>
+                 class="Github\Client">
+            <call method="authenticate">
+                <argument>%github_token%</argument>
+                <argument>null</argument>
+                <argument>url_token</argument>
+            </call>
+        </service>
 
     </services>
 

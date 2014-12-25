@@ -5,6 +5,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    github_token:      YouMustProvideToken
+
     locale:            en
 
     # A secret key that's used to generate certain security-related tokens
