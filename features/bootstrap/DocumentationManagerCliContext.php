@@ -11,6 +11,7 @@ use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 /**
@@ -31,6 +32,18 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
     {
         $this->manager = $manager;
         $this->provider = $provider;
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function cleanBuildAndWebFolders()
+    {
+        (new Filesystem())->remove([
+            __DIR__ . '/../../build/repositories/behat',
+            __DIR__ . '/../../build/docs/behat',
+            __DIR__ . '/../../web/docs/behat'
+        ]);
     }
 
     /**
