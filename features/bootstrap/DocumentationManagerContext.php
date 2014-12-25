@@ -3,15 +3,14 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\StrategicDocumentationBuilder;
-use Behat\Borg\Documentation\Builder\Strategy\RefreshableBuildStrategy;
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\Publisher\Strategy\RefreshablePublishingStrategy;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
-use Fake\Documentation\FakeDocumentationGenerator;
+use Fake\Documentation\FakeDocumentationBuilder;
 use Fake\Documentation\FakeDocumentationProvider;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
@@ -24,7 +23,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
 {
     private $provider;
     private $manager;
-    private $generator;
+    private $builder;
 
     /**
      * Initializes context.
@@ -32,12 +31,13 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->provider = new FakeDocumentationProvider();
-        $this->generator = new FakeDocumentationGenerator();
+        $this->builder = new FakeDocumentationBuilder();
         $publisher = new FakeDocumentationPublisher();
 
-        $buildStrategy = new RefreshableBuildStrategy($publisher);
-        $builder = new StrategicDocumentationBuilder($buildStrategy, $this->generator);
-        $this->manager = new DocumentationManager($this->provider, $builder, $publisher);
+        $publishingStrategy = new RefreshablePublishingStrategy($publisher);
+        $this->manager = new DocumentationManager(
+            $this->provider, $this->builder, $publisher, $publishingStrategy
+        );
     }
 
     /**
@@ -94,8 +94,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function iBuildTheDocumentation()
     {
-        $this->generator->changeBuildTime($this->createTime('19.01.1988 20:00'));
-        $this->manager->buildAndPublishDocumentation();
+        $this->builder->changeBuildTime($this->createTime('19.01.1988 20:00'));
+        $this->manager->publishAllDocumentation();
     }
 
     /**
@@ -103,8 +103,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function iBuildTheDocumentationAgain()
     {
-        $this->generator->changeBuildTime($this->createTime('20.01.1988 20:00'));
-        $this->manager->buildAndPublishDocumentation();
+        $this->builder->changeBuildTime($this->createTime('20.01.1988 20:00'));
+        $this->manager->publishAllDocumentation();
     }
 
     /**
@@ -124,7 +124,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
         PHPUnit_Framework_Assert::assertGreaterThanOrEqual(
-            $this->generator->getLastBuildTime(),
+            $this->builder->getLastBuildTime(),
             $documentationBuildTime
         );
     }
@@ -138,7 +138,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $documentationBuildTime = $builtDocumentation->getBuildTime();
 
         PHPUnit_Framework_Assert::assertLessThan(
-            $this->generator->getLastBuildTime(),
+            $this->builder->getLastBuildTime(),
             $documentationBuildTime
         );
     }

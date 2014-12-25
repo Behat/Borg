@@ -17,6 +17,11 @@
             <argument type="service" id="documentation.provider"/>
             <argument type="service" id="documentation.builder"/>
             <argument type="service" id="documentation.publisher"/>
+            <argument type="service">
+                <service class="Behat\Borg\Documentation\Publisher\Strategy\RefreshablePublishingStrategy">
+                    <argument type="service" id="documentation.publisher"/>
+                </service>
+            </argument>
         </service>
 
         <service id="documentation.provider"
@@ -25,21 +30,11 @@
         </service>
 
         <service id="documentation.builder"
-                 class="Behat\Borg\Documentation\Builder\StrategicDocumentationBuilder">
+                 class="Behat\Borg\SphinxDoc\SphinxDocumentationBuilder">
+            <argument>%kernel.root_dir%/../build/docs</argument>
+            <argument>%kernel.root_dir%/../sphinx</argument>
             <argument type="service">
-                <service
-                        class="Behat\Borg\Documentation\Builder\Strategy\RefreshableBuildStrategy">
-                    <argument type="service" id="documentation.publisher"/>
-                </service>
-            </argument>
-            <argument type="service">
-                <service class="Behat\Borg\SphinxDoc\SphinxDocumentationGenerator">
-                    <argument>%kernel.root_dir%/../build/docs</argument>
-                    <argument>%kernel.root_dir%/../sphinx</argument>
-                    <argument type="service">
-                        <service class="Symfony\Component\Filesystem\Filesystem"/>
-                    </argument>
-                </service>
+                <service class="Symfony\Component\Filesystem\Filesystem"/>
             </argument>
         </service>
 

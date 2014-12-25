@@ -8,6 +8,7 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Provider\DocumentationProvider;
 use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\Strategy\PublishingStrategy;
 
 /**
  * Manages documentation.
@@ -17,29 +18,35 @@ final class DocumentationManager
     private $provider;
     private $builder;
     private $publisher;
+    private $strategy;
 
     /**
-     * @param \Behat\Borg\Documentation\Provider\DocumentationProvider  $provider
-     * @param \Behat\Borg\Documentation\Builder\DocumentationBuilder   $builder
+     * @param DocumentationProvider  $provider
+     * @param DocumentationBuilder   $builder
      * @param DocumentationPublisher $publisher
+     * @param PublishingStrategy     $strategy
      */
     public function __construct(
         DocumentationProvider $provider,
         DocumentationBuilder $builder,
-        DocumentationPublisher $publisher
+        DocumentationPublisher $publisher,
+        PublishingStrategy $strategy
     ) {
         $this->provider = $provider;
         $this->builder = $builder;
         $this->publisher = $publisher;
+        $this->strategy = $strategy;
     }
 
     /**
      * Builds all documentation from provider using builder and publishes it.
      */
-    public function buildAndPublishDocumentation()
+    public function publishAllDocumentation()
     {
         foreach ($this->provider->getAllDocumentation() as $documentation) {
-            $this->buildSingleDocumentation($documentation);
+            if ($this->strategy->isSatisfiedByDocumentation($documentation)) {
+                $this->publisher->publishDocumentation($this->buildDocumentation($documentation));
+            }
         }
     }
 
@@ -48,7 +55,7 @@ final class DocumentationManager
      *
      * @param DocumentationId $anId
      *
-     * @return \Behat\Borg\Documentation\Builder\BuiltDocumentation
+     * @return BuiltDocumentation
      */
     public function getPublishedDocumentation(DocumentationId $anId)
     {
@@ -56,18 +63,14 @@ final class DocumentationManager
     }
 
     /**
-     * Builds single documentation.
+     * Builds the single documentation.
      *
      * @param Documentation $documentation
+     *
+     * @return BuiltDocumentation|null
      */
-    private function buildSingleDocumentation(Documentation $documentation)
+    private function buildDocumentation(Documentation $documentation)
     {
-        $builtDocumentation = $this->builder->build($documentation);
-
-        if (!$builtDocumentation) {
-            return;
-        }
-
-        $this->publisher->publishDocumentation($builtDocumentation);
+        return $this->builder->build($documentation);
     }
 }

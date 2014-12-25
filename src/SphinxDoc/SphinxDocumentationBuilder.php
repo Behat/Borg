@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\SphinxDoc;
 
-use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
+use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use DateTimeImmutable;
@@ -14,7 +14,7 @@ use Symfony\Component\Process\Process;
  *
  * @see http://sphinx-doc.org
  */
-final class SphinxDocumentationGenerator implements DocumentationGenerator
+final class SphinxDocumentationBuilder implements DocumentationBuilder
 {
     const COMMAND_LINE = 'sphinx-build';
 
@@ -37,7 +37,7 @@ final class SphinxDocumentationGenerator implements DocumentationGenerator
     /**
      * {@inheritdoc}
      */
-    public function generate(Documentation $documentation)
+    public function build(Documentation $documentation)
     {
         $source = $documentation->getSource();
 

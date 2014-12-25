@@ -1,18 +1,18 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Builder\Strategy;
+namespace spec\Behat\Borg\Documentation\Publisher\Strategy;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\Strategy\BuildStrategy;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
 use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\Strategy\PublishingStrategy;
 use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class RefreshableBuildStrategySpec extends ObjectBehavior
+class RefreshablePublishingStrategySpec extends ObjectBehavior
 {
     function let(DocumentationPublisher $repository)
     {
@@ -21,7 +21,7 @@ class RefreshableBuildStrategySpec extends ObjectBehavior
 
     function it_is_a_build_strategy()
     {
-        $this->shouldHaveType(BuildStrategy::class);
+        $this->shouldHaveType(PublishingStrategy::class);
     }
 
     function it_is_satisfied_by_documentation_that_was_not_yet_built(

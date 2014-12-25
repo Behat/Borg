@@ -1,14 +1,14 @@
 <?php
 
-namespace Behat\Borg\Documentation\Builder\Strategy;
+namespace Behat\Borg\Documentation\Publisher\Strategy;
 
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 
 /**
- * Allows builds of new or outdated documentation only.
+ * Allows publishing of new or outdated documentation only.
  */
-final class RefreshableBuildStrategy implements BuildStrategy
+final class RefreshablePublishingStrategy implements PublishingStrategy
 {
     private $publisher;
 
@@ -34,6 +34,7 @@ final class RefreshableBuildStrategy implements BuildStrategy
         }
 
         $builtDocumentation = $this->publisher->getPublishedDocumentation($anId);
+
         if ($builtDocumentation->getDocumentationTime() < $documentation->getTime()) {
             return true;
         }

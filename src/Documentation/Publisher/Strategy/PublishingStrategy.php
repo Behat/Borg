@@ -1,13 +1,13 @@
 <?php
 
-namespace Behat\Borg\Documentation\Builder\Strategy;
+namespace Behat\Borg\Documentation\Publisher\Strategy;
 
 use Behat\Borg\Documentation\Documentation;
 
 /**
  * Defines when to build specific documents.
  */
-interface BuildStrategy
+interface PublishingStrategy
 {
     /**
      * Checks if provided documentation should be built.
