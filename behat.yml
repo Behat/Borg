@@ -8,7 +8,7 @@ default:
             contexts:
                 - DocumentationManagerCliContext:
                     manager:  @documentation.manager
-                    provider: @documentation.provider.github
+                    provider: @documentation.provider
             filters:  { role: 'documentation manager', tags: 'critical' }
 
     extensions:

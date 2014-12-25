@@ -2,8 +2,10 @@ vendor/
 web/bundles/
 app/cache/*
 app/logs/*
+repositories/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+!repositories/.gitkeep
 app/bootstrap.php.cache
 app/config/parameters.yml
 phpunit.xml
