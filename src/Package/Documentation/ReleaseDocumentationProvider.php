@@ -28,7 +28,7 @@ final class ReleaseDocumentationProvider implements DocumentationProvider
     {
         if (!$anId instanceof ReleaseDocumentationId) {
             throw new \InvalidArgumentException(
-                'GitHubDocumentationProvider works only with ReleaseDocumentationId.'
+                'ReleaseDocumentationProvider works only with ReleaseDocumentationId.'
             );
         }
 
