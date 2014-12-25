@@ -34,7 +34,7 @@
             </argument>
             <argument type="service">
                 <service class="Behat\Borg\SphinxDoc\SphinxDocumentationGenerator">
-                    <argument>%kernel.root_dir%/../build</argument>
+                    <argument>%kernel.root_dir%/../build/docs</argument>
                     <argument>%kernel.root_dir%/../sphinx</argument>
                     <argument type="service">
                         <service class="Symfony\Component\Filesystem\Filesystem"/>
@@ -48,9 +48,9 @@
         </service>
 
         <service id="package.release_downloader.github"
-                 class="Behat\Borg\Github\GitHubBranchReleaseDownloader">
+                 class="Behat\Borg\GitHub\GitHubBranchReleaseDownloader">
             <argument type="service" id="github.client"/>
-            <argument>%kernel.root_dir%/../repositories</argument>
+            <argument>%kernel.root_dir%/../build/repositories</argument>
             <argument type="collection">
                 <argument>behat/docs</argument>
             </argument>

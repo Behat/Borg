@@ -22,7 +22,8 @@ class CommittedReleaseSpec extends ObjectBehavior
             Commit::committedWithShaAt(
                 '839e5185da9434753db47959bee16642bb4f2ce4',
                 new \DateTimeImmutable('2011-04-14T16:00:49Z')
-            )
+            ),
+            __DIR__
         );
     }
 
@@ -54,5 +55,16 @@ class CommittedReleaseSpec extends ObjectBehavior
     function its_release_time_is_a_time_of_commit()
     {
         $this->getReleaseTime()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
+    }
+
+    function its_path_is_a_path_it_was_constructed_with()
+    {
+        $this->getPath()->shouldReturn(__DIR__);
+    }
+
+    function it_could_say_if_file_is_included_in_release()
+    {
+        $this->shouldHaveFile(basename(__FILE__));
+        $this->shouldNotHaveFile('any_file');
     }
 }

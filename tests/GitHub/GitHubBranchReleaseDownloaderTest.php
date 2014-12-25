@@ -103,14 +103,14 @@ class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         $release30 = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
 
         $this->assertContains(
-            new CommittedRelease($release25, $this->getLatestCommit($release25)),
+            new CommittedRelease($release25, $this->getLatestCommit($release25), "{$this->tempDownloadPath}/Behat/docs/v2.5"),
             $downloadedReleases,
             "Release 2.5 is not found",
             false,
             false
         );
         $this->assertContains(
-            new CommittedRelease($release30, $this->getLatestCommit($release30)),
+            new CommittedRelease($release30, $this->getLatestCommit($release30), "{$this->tempDownloadPath}/Behat/docs/v3.0"),
             $downloadedReleases,
             "Release 3.0 is not found",
             false,

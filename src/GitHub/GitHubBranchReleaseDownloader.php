@@ -35,7 +35,7 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
         }
 
         $commit = $this->fetchLatestCommit($release);
-        $committedRelease = new CommittedRelease($release, $commit);
+        $committedRelease = new CommittedRelease($release, $commit, $this->getReleasePath($release));
 
         if ($this->releaseIsAlreadyAtCommit($release, $commit)) {
             return $committedRelease;

@@ -5,6 +5,7 @@ namespace Behat\Borg\GitHub;
 use Behat\Borg\Package\DownloadedRelease;
 use Behat\Borg\Package\Release;
 use DateTimeImmutable;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Represents GitHub committed release.
@@ -13,11 +14,13 @@ final class CommittedRelease implements DownloadedRelease
 {
     private $release;
     private $commit;
+    private $path;
 
-    public function __construct(Release $release, Commit $commit)
+    public function __construct(Release $release, Commit $commit, $path)
     {
         $this->release = $release;
         $this->commit = $commit;
+        $this->path = $path;
     }
 
     /**
@@ -49,7 +52,7 @@ final class CommittedRelease implements DownloadedRelease
      */
     public function getPath()
     {
-        // TODO: Implement getPath() method.
+        return $this->path;
     }
 
     /**
@@ -59,6 +62,6 @@ final class CommittedRelease implements DownloadedRelease
      */
     public function hasFile($relativePath)
     {
-        // TODO: Implement hasFile() method.
+        return file_exists($this->path . '/' . $relativePath);
     }
 }
