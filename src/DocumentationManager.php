@@ -44,9 +44,7 @@ final class DocumentationManager
     public function publishAllDocumentation()
     {
         foreach ($this->provider->getAllDocumentation() as $documentation) {
-            if ($this->strategy->isSatisfiedByDocumentation($documentation)) {
-                $this->publisher->publishDocumentation($this->buildDocumentation($documentation));
-            }
+            $this->publishDocumentation($documentation);
         }
     }
 
@@ -60,6 +58,18 @@ final class DocumentationManager
     public function getPublishedDocumentation(DocumentationId $anId)
     {
         return $this->publisher->getPublishedDocumentation($anId);
+    }
+
+    /**
+     * Builds and publishes provided documentation.
+     *
+     * @param Documentation $documentation
+     */
+    private function publishDocumentation(Documentation $documentation)
+    {
+        if ($this->strategy->isSatisfiedByDocumentation($documentation)) {
+            $this->publisher->publishDocumentation($this->buildDocumentation($documentation));
+        }
     }
 
     /**
