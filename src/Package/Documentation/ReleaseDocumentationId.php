@@ -13,6 +13,8 @@ final class ReleaseDocumentationId implements DocumentationId
     private $release;
 
     /**
+     * Initializes documentation id.
+     *
      * @param Release $release
      */
     public function __construct(Release $release)

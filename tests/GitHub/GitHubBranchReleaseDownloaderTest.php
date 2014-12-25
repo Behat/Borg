@@ -6,11 +6,10 @@ use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\CommittedRelease;
 use Behat\Borg\GitHub\GitHubBranchReleaseDownloader;
 use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\DownloadedRelease;
+use Behat\Borg\Package\Downloader\DownloadedRelease;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Github\Client;
-use Github\HttpClient\CachedHttpClient;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 

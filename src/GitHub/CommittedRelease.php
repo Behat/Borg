@@ -2,10 +2,9 @@
 
 namespace Behat\Borg\GitHub;
 
-use Behat\Borg\Package\DownloadedRelease;
+use Behat\Borg\Package\Downloader\DownloadedRelease;
 use Behat\Borg\Package\Release;
 use DateTimeImmutable;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Represents GitHub committed release.

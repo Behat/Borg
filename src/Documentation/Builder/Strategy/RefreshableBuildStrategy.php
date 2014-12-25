@@ -13,6 +13,8 @@ final class RefreshableBuildStrategy implements BuildStrategy
     private $publisher;
 
     /**
+     * Initializes strategy.
+     *
      * @param DocumentationPublisher $publisher
      */
     public function __construct(DocumentationPublisher $publisher)

@@ -1,6 +1,8 @@
 <?php
 
-namespace Behat\Borg\Package;
+namespace Behat\Borg\Package\Downloader;
+
+use Behat\Borg\Package\Release;
 
 /**
  * Represents a mechanism do download releases.

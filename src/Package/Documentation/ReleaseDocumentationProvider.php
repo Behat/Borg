@@ -5,10 +5,13 @@ namespace Behat\Borg\Package\Documentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Provider\DocumentationProvider;
-use Behat\Borg\Package\DownloadedRelease;
-use Behat\Borg\Package\ReleaseDownloader;
+use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\ReleaseDownloader;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;
 
+/**
+ * Documentation provider that works together with release downloader.
+ */
 final class ReleaseDocumentationProvider implements DocumentationProvider
 {
     private $releaseDownloader;
@@ -51,12 +54,6 @@ final class ReleaseDocumentationProvider implements DocumentationProvider
         return $allDocumentation;
     }
 
-    /**
-     * @param DocumentationId   $anId
-     * @param DownloadedRelease $release
-     *
-     * @return Documentation
-     */
     private function createDocumentation(DocumentationId $anId, DownloadedRelease $release)
     {
         if ($release->hasFile('doc/index.rst')) {

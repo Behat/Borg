@@ -2,9 +2,9 @@
 
 namespace Behat\Borg\GitHub;
 
+use Behat\Borg\Package\Downloader\ReleaseDownloader;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
-use Behat\Borg\Package\ReleaseDownloader;
 use Behat\Borg\Package\Version;
 use Github\Client;
 use Github\HttpClient\Message\ResponseMediator;

@@ -11,10 +11,10 @@ use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Fake\Documentation\FakeDocumentationGenerator;
 use Fake\Documentation\FakeDocumentationProvider;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
-use Fake\Documentation\Generator\FakeDocumentationGenerator;
 use Fake\Package\FakePackage;
 
 /**

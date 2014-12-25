@@ -16,6 +16,8 @@ final class StrategicDocumentationBuilder implements DocumentationBuilder
     private $generator;
 
     /**
+     * Initializes builder.
+     *
      * @param BuildStrategy          $strategy
      * @param DocumentationGenerator $generator
      */

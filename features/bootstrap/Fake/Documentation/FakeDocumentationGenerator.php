@@ -1,11 +1,10 @@
 <?php
 
-namespace Fake\Documentation\Generator;
+namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Builder\Generator\DocumentationGenerator;
 use Behat\Borg\Documentation\Documentation;
 use DateTimeImmutable;
-use Fake\Documentation\FakeBuiltDocumentation;
 
 /**
  * It wraps documentation into FakeBuildDocumentation and returns one back.

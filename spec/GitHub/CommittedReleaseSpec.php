@@ -4,7 +4,7 @@ namespace spec\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\DownloadedRelease;
+use Behat\Borg\Package\Downloader\DownloadedRelease;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use PhpSpec\ObjectBehavior;

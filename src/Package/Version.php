@@ -18,10 +18,15 @@ final class Version
      */
     public static function string($string)
     {
-        return new self($string);
+        $version = new Version();
+        $version->versionString = $string;
+
+        return $version;
     }
 
     /**
+     * Returns string representation of version.
+     *
      * @return string
      */
     public function __toString()
@@ -29,8 +34,5 @@ final class Version
         return $this->versionString;
     }
 
-    private function __construct($versionString)
-    {
-        $this->versionString = $versionString;
-    }
+    private function __construct() { }
 }

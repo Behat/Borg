@@ -23,13 +23,6 @@ interface BuiltDocumentation
     public function getBuildPath();
 
     /**
-     * Returns path to the built documentation index file.
-     *
-     * @return string
-     */
-    public function getIndexPath();
-
-    /**
      * Returns time documentation was built at.
      *
      * @return DateTimeImmutable

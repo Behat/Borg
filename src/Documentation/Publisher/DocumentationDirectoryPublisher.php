@@ -6,10 +6,18 @@ use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Documentation publisher that simply moves built docs into a public directory.
+ */
 final class DocumentationDirectoryPublisher implements DocumentationPublisher
 {
     private $publishPath;
 
+    /**
+     * Initialises publisher.
+     *
+     * @param string $publishPath
+     */
     public function __construct($publishPath)
     {
         $this->publishPath = $publishPath;
