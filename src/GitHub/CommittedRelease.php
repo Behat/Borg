@@ -43,4 +43,22 @@ final class CommittedRelease implements DownloadedRelease
     {
         return $this->commit->getTime();
     }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        // TODO: Implement getPath() method.
+    }
+
+    /**
+     * @param string $relativePath
+     *
+     * @return Boolean
+     */
+    public function hasFile($relativePath)
+    {
+        // TODO: Implement hasFile() method.
+    }
 }

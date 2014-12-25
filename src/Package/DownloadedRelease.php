@@ -18,4 +18,16 @@ interface DownloadedRelease
      * @return DateTimeImmutable
      */
     public function getReleaseTime();
+
+    /**
+     * @return string
+     */
+    public function getPath();
+
+    /**
+     * @param string $relativePath
+     *
+     * @return Boolean
+     */
+    public function hasFile($relativePath);
 }
