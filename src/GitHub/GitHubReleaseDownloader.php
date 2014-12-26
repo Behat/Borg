@@ -4,7 +4,6 @@ namespace Behat\Borg\GitHub;
 
 use Behat\Borg\Package\Downloader\ReleaseDownloader;
 use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Provider\ReleaseProvider;
 use Behat\Borg\Package\Release;
 use Github\Client;
 use Github\HttpClient\Message\ResponseMediator;
@@ -12,14 +11,12 @@ use Symfony\Component\Filesystem\Filesystem;
 
 final class GitHubReleaseDownloader implements ReleaseDownloader
 {
-    private $provider;
     private $client;
     private $filesystem;
     private $downloadPath;
 
-    public function __construct(ReleaseProvider $provider, Client $client, $downloadPath)
+    public function __construct(Client $client, $downloadPath)
     {
-        $this->provider = $provider;
         $this->client = $client;
         $this->downloadPath = $downloadPath;
         $this->filesystem = new Filesystem();
@@ -30,10 +27,6 @@ final class GitHubReleaseDownloader implements ReleaseDownloader
      */
     public function downloadRelease(Release $release)
     {
-        if (!$this->provider->hasRelease($release)) {
-            throw new \InvalidArgumentException("Trying to download untracked release.");
-        }
-
         $commit = $this->fetchLatestCommit($release);
         $committedRelease = new CommittedRelease(
             $release, $commit, $this->getReleasePath($release)

@@ -18,7 +18,6 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
     private $client;
     private $tempDownloadPath;
     private $downloader;
-    private $provider;
 
     protected function setUp()
     {
@@ -26,9 +25,8 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         $this->client = new Client();
         $this->client->authenticate(getenv('GITHUB_TOKEN'), null, Client::AUTH_URL_TOKEN);
 
-        $this->provider = $this->getMock(ReleaseProvider::class);
         $this->downloader = new GitHubReleaseDownloader(
-            $this->provider, $this->client, $this->tempDownloadPath
+            $this->client, $this->tempDownloadPath
         );
 
         (new Filesystem())->remove($this->tempDownloadPath);
@@ -40,7 +38,6 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
         $releasePath = $this->tempDownloadPath . '/' . $release;
 
-        $this->provider->method('hasRelease')->with($release)->willReturn(true);
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
         $this->assertInstanceOf(DownloadedRelease::class, $downloadedRelease);
@@ -65,7 +62,6 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         file_put_contents("{$releasePath}/commit.meta", serialize($oldCommit));
         touch("{$releasePath}/some_file");
 
-        $this->provider->method('hasRelease')->with($release)->willReturn(true);
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
         $this->assertNotEquals($oldCommit, $downloadedRelease->getCommit());
@@ -83,25 +79,23 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         file_put_contents("{$releasePath}/commit.meta", serialize($oldCommit));
         touch("{$releasePath}/some_file");
 
-        $this->provider->method('hasRelease')->with($release)->willReturn(true);
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
         $this->assertEquals($oldCommit, $downloadedRelease->getCommit());
         $this->assertFileExists("{$releasePath}/some_file");
     }
 
-    /** @test @expectedException InvalidArgumentException */
-    function it_throws_an_exception_when_trying_to_download_untracked_release()
+    /** @test @expectedException RuntimeException */
+    function it_throws_an_exception_when_trying_to_download_nonexistent_release()
     {
         $release = new Release(GitHubPackage::named('Behat/Behat'), Version::string('v1.0'));
-        $this->provider->method('hasRelease')->with($release)->willReturn(false);
 
         $this->downloader->downloadRelease($release);
     }
 
     private function getLatestCommit(Release $release)
     {
-        $commit = $this->client->api('repo')->commits()->all(
+        $commit = $this->client->repo()->commits()->all(
             $release->getPackage()->getOrganisation(),
             $release->getPackage()->getName(),
             array('sha' => (string)$release->getVersion())
