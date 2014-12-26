@@ -13,7 +13,7 @@ final class GitHubPackage implements Package
 
     public static function named($name)
     {
-        if (!preg_match('/^[\w\d]+\/[\w\d]+$/', $name)) {
+        if (!preg_match('/^[\w\d\-\_]+\/[\w\d\-\_]+$/', $name)) {
             throw new \InvalidArgumentException('Invalid GitHub package name provided.');
         }
 

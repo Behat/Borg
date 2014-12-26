@@ -18,6 +18,10 @@ final class Version
      */
     public static function string($string)
     {
+        if (!preg_match('/^[vV]?\d+\.\d+(?:\.\d+)?$/', $string)) {
+            throw new \InvalidArgumentException("Invalid Version string provided: $string.");
+        }
+
         $version = new Version();
         $version->versionString = $string;
 

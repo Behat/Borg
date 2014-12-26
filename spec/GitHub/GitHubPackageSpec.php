@@ -18,9 +18,14 @@ class GitHubPackageSpec extends ObjectBehavior
         $this->shouldHaveType(Package::class);
     }
 
-    function it_can_only_be_created_using_proper_github_package_name()
+    function it_can_only_be_created_using_full_github_package_name()
     {
         $this->shouldThrow()->during('named', ['behat']);
+    }
+
+    function it_can_be_created_using_github_package_name_with_dashes_and_underscores()
+    {
+        $this->shouldNotThrow()->during('named', ['everzet/basket-by-example']);
     }
 
     function it_belongs_to_some_organisation()
