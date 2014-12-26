@@ -17,11 +17,4 @@ interface ReleaseDownloader
      * @return DownloadedRelease
      */
     public function downloadRelease(Release $release);
-
-    /**
-     * Downloads all tracked releases.
-     *
-     * @return DownloadedRelease[]
-     */
-    public function downloadAllReleases();
 }

@@ -4,25 +4,25 @@ namespace Behat\Borg\GitHub;
 
 use Behat\Borg\Package\Downloader\ReleaseDownloader;
 use Behat\Borg\Package\Package;
+use Behat\Borg\Package\Provider\ReleaseProvider;
 use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
 use Github\Client;
 use Github\HttpClient\Message\ResponseMediator;
 use Symfony\Component\Filesystem\Filesystem;
 
-final class GitHubBranchReleaseDownloader implements ReleaseDownloader
+final class GitHubReleaseDownloader implements ReleaseDownloader
 {
+    private $provider;
     private $client;
     private $filesystem;
     private $downloadPath;
-    private $trackedRepositories;
 
-    public function __construct(Client $client, $downloadPath, array $trackedRepositories)
+    public function __construct(ReleaseProvider $provider, Client $client, $downloadPath)
     {
+        $this->provider = $provider;
         $this->client = $client;
-        $this->filesystem = new Filesystem();
         $this->downloadPath = $downloadPath;
-        $this->trackedRepositories = $trackedRepositories;
+        $this->filesystem = new Filesystem();
     }
 
     /**
@@ -30,12 +30,14 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
      */
     public function downloadRelease(Release $release)
     {
-        if (!in_array((string) $release->getPackage(), $this->trackedRepositories)) {
-            throw new \InvalidArgumentException("Trying to download untracked package.");
+        if (!$this->provider->hasRelease($release)) {
+            throw new \InvalidArgumentException("Trying to download untracked release.");
         }
 
         $commit = $this->fetchLatestCommit($release);
-        $committedRelease = new CommittedRelease($release, $commit, $this->getReleasePath($release));
+        $committedRelease = new CommittedRelease(
+            $release, $commit, $this->getReleasePath($release)
+        );
 
         if ($this->releaseIsAlreadyAtCommit($release, $commit)) {
             return $committedRelease;
@@ -46,42 +48,9 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
         return $committedRelease;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function downloadAllReleases()
-    {
-        $documentation = [];
-
-        foreach ($this->trackedRepositories as $repositoryName) {
-            $package = GitHubPackage::named($repositoryName);
-
-            foreach ($this->fetchPackageReleases($package) as $release) {
-                $documentation[] = $this->downloadRelease($release);
-            }
-        }
-
-        return $documentation;
-    }
-
-    private function fetchPackageReleases(Package $package)
-    {
-        $releases = [];
-
-        $organisation = $package->getOrganisation();
-        $repository = $package->getName();
-        $branches = $this->client->api('repo')->branches($organisation, $repository);
-
-        foreach ($branches as $branch) {
-            $releases[] = new Release($package, Version::string($branch['name']));
-        }
-
-        return $releases;
-    }
-
     private function fetchLatestCommit(Release $release)
     {
-        $commit = $this->client->api('repo')->commits()->all(
+        $commit = $this->client->repo()->commits()->all(
             $release->getPackage()->getOrganisation(),
             $release->getPackage()->getName(),
             array('sha' => (string)$release->getVersion())
@@ -123,14 +92,16 @@ final class GitHubBranchReleaseDownloader implements ReleaseDownloader
     private function downloadArchive(Release $release, Commit $commit, $releasePath)
     {
         $archivePath = $this->getArchivePath($release->getPackage(), $commit);
-        $content = ResponseMediator::getContent($this->client->getHttpClient()->get(
-            'repos/' .
-            rawurlencode($release->getPackage()->getOrganisation()) .
-            '/' .
-            rawurlencode($release->getPackage()->getName()) .
-            '/zipball/' .
-            $commit->getSha()
-        ));
+        $content = ResponseMediator::getContent(
+            $this->client->getHttpClient()->get(
+                'repos/' .
+                rawurlencode($release->getPackage()->getOrganisation()) .
+                '/' .
+                rawurlencode($release->getPackage()->getName()) .
+                '/zipball/' .
+                $commit->getSha()
+            )
+        );
         file_put_contents($archivePath, $content);
 
         $archive = new \ZipArchive();

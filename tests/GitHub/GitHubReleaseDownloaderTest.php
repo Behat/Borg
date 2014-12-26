@@ -3,21 +3,22 @@
 namespace tests\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
-use Behat\Borg\GitHub\CommittedRelease;
-use Behat\Borg\GitHub\GitHubBranchReleaseDownloader;
+use Behat\Borg\GitHub\GitHubReleaseDownloader;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Provider\ReleaseProvider;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Github\Client;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
+class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
 {
     private $client;
     private $tempDownloadPath;
     private $downloader;
+    private $provider;
 
     protected function setUp()
     {
@@ -25,8 +26,9 @@ class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         $this->client = new Client();
         $this->client->authenticate(getenv('GITHUB_TOKEN'), null, Client::AUTH_URL_TOKEN);
 
-        $this->downloader = new GitHubBranchReleaseDownloader(
-            $this->client, $this->tempDownloadPath, ['Behat/docs']
+        $this->provider = $this->getMock(ReleaseProvider::class);
+        $this->downloader = new GitHubReleaseDownloader(
+            $this->provider, $this->client, $this->tempDownloadPath
         );
 
         (new Filesystem())->remove($this->tempDownloadPath);
@@ -38,6 +40,7 @@ class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
         $releasePath = $this->tempDownloadPath . '/' . $release;
 
+        $this->provider->method('hasRelease')->with($release)->willReturn(true);
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
         $this->assertInstanceOf(DownloadedRelease::class, $downloadedRelease);
@@ -62,6 +65,7 @@ class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         file_put_contents("{$releasePath}/commit.meta", serialize($oldCommit));
         touch("{$releasePath}/some_file");
 
+        $this->provider->method('hasRelease')->with($release)->willReturn(true);
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
         $this->assertNotEquals($oldCommit, $downloadedRelease->getCommit());
@@ -79,6 +83,7 @@ class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         file_put_contents("{$releasePath}/commit.meta", serialize($oldCommit));
         touch("{$releasePath}/some_file");
 
+        $this->provider->method('hasRelease')->with($release)->willReturn(true);
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
         $this->assertEquals($oldCommit, $downloadedRelease->getCommit());
@@ -86,38 +91,12 @@ class GitHubBranchReleaseDownloaderTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test @expectedException InvalidArgumentException */
-    function it_throws_an_exception_when_trying_to_download_release_for_untracked_package()
+    function it_throws_an_exception_when_trying_to_download_untracked_release()
     {
-        $release = new Release(GitHubPackage::named('Behat/Behat'), Version::string('v3.0'));
+        $release = new Release(GitHubPackage::named('Behat/Behat'), Version::string('v1.0'));
+        $this->provider->method('hasRelease')->with($release)->willReturn(false);
 
         $this->downloader->downloadRelease($release);
-    }
-
-    /** @test */
-    function it_can_download_all_releases_for_tracked_repositories()
-    {
-        $downloadedReleases = $this->downloader->downloadAllReleases();
-
-        $release25 = new Release(GitHubPackage::named('Behat/docs'), Version::string('v2.5'));
-        $release30 = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
-
-        $this->assertContains(
-            new CommittedRelease($release25, $this->getLatestCommit($release25), "{$this->tempDownloadPath}/Behat/docs/v2.5"),
-            $downloadedReleases,
-            "Release 2.5 is not found",
-            false,
-            false
-        );
-        $this->assertContains(
-            new CommittedRelease($release30, $this->getLatestCommit($release30), "{$this->tempDownloadPath}/Behat/docs/v3.0"),
-            $downloadedReleases,
-            "Release 3.0 is not found",
-            false,
-            false
-        );
-
-        $this->assertFileExists("{$this->tempDownloadPath}/Behat/docs/v2.5/commit.meta");
-        $this->assertFileExists("{$this->tempDownloadPath}/Behat/docs/v3.0/commit.meta");
     }
 
     private function getLatestCommit(Release $release)
