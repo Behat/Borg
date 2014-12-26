@@ -2,15 +2,13 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Borg\Documentation\Provider\DocumentationProvider;
-use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Github\Client;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
@@ -20,18 +18,18 @@ use Symfony\Component\Process\Process;
 class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
 {
     private $manager;
-    private $provider;
+    private $client;
 
     /**
      * Initializes context.
      *
-     * @param DocumentationManager  $manager
-     * @param DocumentationProvider $provider
+     * @param DocumentationManager $manager
+     * @param Client               $client
      */
-    public function __construct(DocumentationManager $manager, DocumentationProvider $provider)
+    public function __construct(DocumentationManager $manager, Client $client)
     {
         $this->manager = $manager;
-        $this->provider = $provider;
+        $this->client = $client;
     }
 
     /**
@@ -39,11 +37,13 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
      */
     public function cleanBuildAndWebFolders()
     {
-        (new Filesystem())->remove([
-            __DIR__ . '/../../build/repositories/behat',
-            __DIR__ . '/../../build/docs/behat',
-            __DIR__ . '/../../web/docs/behat'
-        ]);
+        (new Filesystem())->remove(
+            [
+                __DIR__ . '/../../build/repositories/behat',
+                __DIR__ . '/../../build/docs/behat',
+                __DIR__ . '/../../web/docs/behat'
+            ]
+        );
     }
 
     /**
@@ -67,11 +67,10 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
      */
     public function versionWasDocumented(Package $package, Version $version)
     {
-        $anId = new ReleaseDocumentationId(new Release($package, $version));
-
-        PHPUnit_Framework_Assert::assertNotNull(
-            $this->provider->findDocumentationById($anId),
-            'Provider does not know about the expected documentation.'
+        $this->client->repo()->branches(
+            (string)$package->getOrganisation(),
+            (string)$package->getName(),
+            (string)$version
         );
     }
 

@@ -11,13 +11,6 @@ use Behat\Borg\Documentation\Documentation;
 interface DocumentationProvider
 {
     /**
-     * @param DocumentationId $anId
-     *
-     * @return null|Documentation
-     */
-    public function findDocumentationById(DocumentationId $anId);
-
-    /**
      * @return Documentation[]
      */
     public function getAllDocumentation();

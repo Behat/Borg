@@ -24,22 +24,6 @@ final class ReleaseDocumentationProvider implements DocumentationProvider
     /**
      * {@inheritdoc}
      */
-    public function findDocumentationById(DocumentationId $anId)
-    {
-        if (!$anId instanceof ReleaseDocumentationId) {
-            throw new \InvalidArgumentException(
-                'ReleaseDocumentationProvider works only with ReleaseDocumentationId.'
-            );
-        }
-
-        $downloadedRelease = $this->releaseDownloader->downloadRelease($anId->getRelease());
-
-        return $this->createDocumentation($anId, $downloadedRelease);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getAllDocumentation()
     {
         $allDocumentation = [];

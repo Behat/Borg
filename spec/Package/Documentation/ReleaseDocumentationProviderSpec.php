@@ -29,68 +29,6 @@ class ReleaseDocumentationProviderSpec extends ObjectBehavior
         $this->shouldHaveType(DocumentationProvider::class);
     }
 
-    function it_can_provide_sphinx_documentation_from_doc_folder_in_downloaded_release(
-        Package $package,
-        ReleaseDownloader $downloader,
-        DownloadedRelease $downloadedRelease
-    ) {
-        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $releaseTime = new \DateTimeImmutable();
-        $anId = new ReleaseDocumentationId($release);
-        $downloader->downloadRelease($release)->willReturn($downloadedRelease);
-
-        $downloadedRelease->getRelease()->willReturn($release);
-        $downloadedRelease->getReleaseTime()->willReturn($releaseTime);
-        $downloadedRelease->hasFile('doc/index.rst')->willReturn(true);
-        $downloadedRelease->getPath()->willReturn('/full/path');
-
-        $this->findDocumentationById($anId)->shouldBeLike(
-            new Documentation($anId, RstDocumentationSource::atPath('/full/path/doc'), $releaseTime)
-        );
-    }
-
-    function it_can_provide_sphinx_documentation_from_root_folder_in_downloaded_release(
-        Package $package,
-        ReleaseDownloader $downloader,
-        DownloadedRelease $downloadedRelease
-    ) {
-        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $releaseTime = new \DateTimeImmutable();
-        $anId = new ReleaseDocumentationId($release);
-        $downloader->downloadRelease($release)->willReturn($downloadedRelease);
-
-        $downloadedRelease->getRelease()->willReturn($release);
-        $downloadedRelease->getReleaseTime()->willReturn($releaseTime);
-        $downloadedRelease->hasFile('index.rst')->willReturn(true);
-        $downloadedRelease->getPath()->willReturn('/full/path');
-
-        $this->findDocumentationById($anId)->shouldBeLike(
-            new Documentation($anId, RstDocumentationSource::atPath('/full/path'), $releaseTime)
-        );
-    }
-
-    function it_returns_null_if_documentation_is_not_presented_in_root_or_doc_folder(
-        Package $package,
-        ReleaseDownloader $downloader,
-        DownloadedRelease $downloadedRelease
-    ) {
-        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $releaseTime = new \DateTimeImmutable();
-        $anId = new ReleaseDocumentationId($release);
-        $downloader->downloadRelease($release)->willReturn($downloadedRelease);
-
-        $downloadedRelease->getRelease()->willReturn($release);
-        $downloadedRelease->getReleaseTime()->willReturn($releaseTime);
-
-        $this->findDocumentationById($anId)->shouldReturn(null);
-    }
-
-    function it_throws_an_exception_if_asked_to_provide_documentation_for_non_released_docs(
-        DocumentationId $anId
-    ) {
-        $this->shouldThrow()->duringFindDocumentationById($anId->getWrappedObject());
-    }
-
     function it_can_provide_available_documentation_for_all_downloaded_releases(
         ReleaseDownloader $downloader,
         Package $package1,
