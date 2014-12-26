@@ -7,6 +7,7 @@ use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Behat\Borg\ReleaseManager;
 use Fake\Documentation\FakeDocumentationFinder;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
