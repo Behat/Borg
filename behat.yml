@@ -1,7 +1,7 @@
 default:
     suites:
-        documentation_manager:
-            contexts: [ 'DocumentationManagerContext' ]
+        documentation:
+            contexts: [ 'DocumentationContext' ]
             filters:  { role: 'documentation manager' }
 
         documentation_manager_cli:

@@ -3,14 +3,11 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\Publisher\Strategy\RefreshablePublishingStrategy;
-use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
-use Fake\Documentation\FakeDocumentationBuilder;
-use Fake\Documentation\FakeDocumentationProvider;
+use Fake\Documentation\FakeDocumentationFinder;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
 use Fake\Package\FakePackage;
@@ -18,26 +15,20 @@ use Fake\Package\FakePackage;
 /**
  * Describes documentation-related features from the documentation manager context.
  */
-class DocumentationManagerContext implements Context, SnippetAcceptingContext
+class DocumentationContext implements Context, SnippetAcceptingContext
 {
-    private $provider;
-    private $manager;
-    private $builder;
+    private $finder;
     private $publisher;
+    private $releaseManager;
 
     /**
      * Initializes context.
      */
     public function __construct()
     {
-        $this->provider = new FakeDocumentationProvider();
-        $this->builder = new FakeDocumentationBuilder();
         $this->publisher = new FakeDocumentationPublisher();
-
-        $publishingStrategy = new RefreshablePublishingStrategy($this->publisher);
-        $this->manager = new DocumentationManager(
-            $this->provider, $this->builder, $this->publisher, $publishingStrategy
-        );
+        $this->finder = new FakeDocumentationFinder();
+        $this->releaseManager = new ReleaseManager();
     }
 
     /**
@@ -65,7 +56,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
         $source = new FakeDocumentationSource();
         $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
 
-        $this->provider->wasDocumented($documentation);
+        $this->finder->addDocumentation($documentation);
     }
 
     /**
@@ -73,7 +64,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function iReleasePackage(Package $package, Version $version)
     {
-        $this->manager->publishAllDocumentation();
+        $this->releaseManager->release(new Release($package, $version));
     }
 
     /**
