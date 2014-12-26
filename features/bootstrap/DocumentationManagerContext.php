@@ -2,7 +2,6 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Publisher\Strategy\RefreshablePublishingStrategy;
 use Behat\Borg\DocumentationManager;
@@ -24,6 +23,7 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     private $provider;
     private $manager;
     private $builder;
+    private $publisher;
 
     /**
      * Initializes context.
@@ -32,11 +32,11 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     {
         $this->provider = new FakeDocumentationProvider();
         $this->builder = new FakeDocumentationBuilder();
-        $publisher = new FakeDocumentationPublisher();
+        $this->publisher = new FakeDocumentationPublisher();
 
-        $publishingStrategy = new RefreshablePublishingStrategy($publisher);
+        $publishingStrategy = new RefreshablePublishingStrategy($this->publisher);
         $this->manager = new DocumentationManager(
-            $this->provider, $this->builder, $publisher, $publishingStrategy
+            $this->provider, $this->builder, $this->publisher, $publishingStrategy
         );
     }
 
@@ -69,41 +69,10 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given :package version :version documentation was built
+     * @When I release :package version :version
      */
-    public function packageDocumentationWasBuilt(Package $package, Version $version)
+    public function iReleasePackage(Package $package, Version $version)
     {
-        $this->packageWasDocumented($package, $version);
-        $this->iBuildTheDocumentation();
-    }
-
-    /**
-     * @When  :package version :version documentation is updated
-     */
-    public function packageDocumentationWasUpdated(Package $package, Version $version)
-    {
-        $id = new ReleaseDocumentationId(new Release($package, $version));
-        $source = new FakeDocumentationSource();
-        $documentation = new Documentation($id, $source, $this->createTime('20.01.1988 16:00'));
-
-        $this->provider->wasDocumented($documentation);
-    }
-
-    /**
-     * @When I build the documentation
-     */
-    public function iBuildTheDocumentation()
-    {
-        $this->builder->changeBuildTime($this->createTime('19.01.1988 20:00'));
-        $this->manager->publishAllDocumentation();
-    }
-
-    /**
-     * @When I build the documentation again
-     */
-    public function iBuildTheDocumentationAgain()
-    {
-        $this->builder->changeBuildTime($this->createTime('20.01.1988 20:00'));
         $this->manager->publishAllDocumentation();
     }
 
@@ -112,49 +81,8 @@ class DocumentationManagerContext implements Context, SnippetAcceptingContext
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        $this->getBuiltDocumentationForPackageVersion($package, $version);
-    }
-
-    /**
-     * @Then the documentation for :package version :version should have been republished
-     */
-    public function thePackageDocumentationShouldHaveBeenRebuilt(Package $package, Version $version)
-    {
-        $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
-        $documentationBuildTime = $builtDocumentation->getBuildTime();
-
-        PHPUnit_Framework_Assert::assertGreaterThanOrEqual(
-            $this->builder->getLastBuildTime(),
-            $documentationBuildTime
-        );
-    }
-
-    /**
-     * @Then the documentation for :package version :version should not have been republished
-     */
-    public function thePackageDocumentationShouldNotHaveBeenRebuilt(Package $package, Version $version)
-    {
-        $builtDocumentation = $this->getBuiltDocumentationForPackageVersion($package, $version);
-        $documentationBuildTime = $builtDocumentation->getBuildTime();
-
-        PHPUnit_Framework_Assert::assertLessThan(
-            $this->builder->getLastBuildTime(),
-            $documentationBuildTime
-        );
-    }
-
-    /**
-     * @param Package $package
-     * @param Version $version
-     *
-     * @return BuiltDocumentation
-     */
-    private function getBuiltDocumentationForPackageVersion(Package $package, Version $version)
-    {
-        $id = new ReleaseDocumentationId(new Release($package, $version));
-        $builtDocumentation = $this->manager->getPublishedDocumentation($id);
-
-        return $builtDocumentation;
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        PHPUnit_Framework_Assert::assertTrue($this->publisher->hasPublishedDocumentation($anId));
     }
 
     /**
