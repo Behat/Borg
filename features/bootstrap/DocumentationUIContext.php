@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 /**
  * Defines application features from the specific context.
  */
-class DocumentationCliContext implements Context, SnippetAcceptingContext
+class DocumentationUIContext implements Context, SnippetAcceptingContext
 {
     private $publisher;
     private $client;
