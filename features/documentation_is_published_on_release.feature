@@ -10,19 +10,19 @@ Feature: Documentation is published on release
 
   @critical
   Scenario: Publishing behat 3.0 documentation
-    Given "Behat/docs" version v3.0 was documented
-    When I release "Behat/docs" version v3.0
-    Then the documentation for "Behat/docs" version v3.0 should have been published
+    Given "Behat/docs" version "v3.0" was documented
+    When I release "Behat/docs" version "v3.0"
+    Then the documentation for "Behat/docs" version "v3.0" should have been published
 
   Scenario: Publishing both behat 2.5 and 3.0 documentation
-    Given "Behat/docs" version v2.5 was documented
-    And "Behat/docs" version v3.0 was documented
-    When I release "Behat/docs" version v2.5
-    And I release "Behat/docs" version v3.0
-    Then the documentation for "Behat/docs" version v2.5 should have been published
-    And the documentation for "Behat/docs" version v3.0 should have been published
+    Given "Behat/docs" version "v2.5" was documented
+    And "Behat/docs" version "v3.0" was documented
+    When I release "Behat/docs" version "v2.5"
+    And I release "Behat/docs" version "v3.0"
+    Then the documentation for "Behat/docs" version "v2.5" should have been published
+    And the documentation for "Behat/docs" version "v3.0" should have been published
 
   Scenario: Publishing extension documentation
-    Given "Behat/Symfony2Extension" version v2.0.0 was documented
-    When I release "Behat/Symfony2Extension" version v2.0.0
-    Then the documentation for "Behat/Symfony2Extension" version v2.0 should have been published
+    Given "Behat/Symfony2Extension" version "v2.0.0" was documented
+    When I release "Behat/Symfony2Extension" version "v2.0.0"
+    Then the documentation for "Behat/Symfony2Extension" version "v2.0" should have been published
