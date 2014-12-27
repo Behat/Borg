@@ -6,12 +6,12 @@ use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Listener\ReleaseDownloadListener;
+use Behat\Borg\Package\Listener\DownloadListener;
 
 /**
  * Builds documentation after release was been downloaded.
  */
-final class DocumentingDownloadListener implements ReleaseDownloadListener
+final class DocumentingDownloadListener implements DownloadListener
 {
     /**
      * @var SourceFinder
@@ -22,7 +22,7 @@ final class DocumentingDownloadListener implements ReleaseDownloadListener
      */
     private $builder;
     /**
-     * @var DocumentationBuildListener[]
+     * @var BuildListener[]
      */
     private $listeners;
 
@@ -41,9 +41,9 @@ final class DocumentingDownloadListener implements ReleaseDownloadListener
     /**
      * Registers build listener.
      *
-     * @param DocumentationBuildListener $listener
+     * @param BuildListener $listener
      */
-    public function registerListener(DocumentationBuildListener $listener)
+    public function registerListener(BuildListener $listener)
     {
         $this->listeners[] = $listener;
     }

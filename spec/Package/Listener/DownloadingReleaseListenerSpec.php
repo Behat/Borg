@@ -5,7 +5,7 @@ namespace spec\Behat\Borg\Package\Listener;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Downloader\Downloader;
 use Behat\Borg\Package\Listener\DownloadingReleaseListener;
-use Behat\Borg\Package\Listener\ReleaseDownloadListener;
+use Behat\Borg\Package\Listener\DownloadListener;
 use Behat\Borg\Package\Listener\ReleaseListener;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
@@ -29,8 +29,8 @@ class DownloadingReleaseListenerSpec extends ObjectBehavior
         Package $package,
         Downloader $downloader,
         Download $downloadedRelease,
-        ReleaseDownloadListener $listener1,
-        ReleaseDownloadListener $listener2
+        DownloadListener $listener1,
+        DownloadListener $listener2
     ) {
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
         $downloader->downloadRelease($release)->willReturn($downloadedRelease);

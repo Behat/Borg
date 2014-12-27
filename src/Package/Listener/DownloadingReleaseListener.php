@@ -15,7 +15,7 @@ final class DownloadingReleaseListener implements ReleaseListener
      */
     private $downloader;
     /**
-     * @var ReleaseDownloadListener[]
+     * @var DownloadListener[]
      */
     private $listeners = [];
 
@@ -30,11 +30,11 @@ final class DownloadingReleaseListener implements ReleaseListener
     }
 
     /**
-     * Registers new listener.
+     * Registers new download listener.
      *
-     * @param ReleaseDownloadListener $listener
+     * @param DownloadListener $listener
      */
-    public function registerListener(ReleaseDownloadListener $listener)
+    public function registerListener(DownloadListener $listener)
     {
         $this->listeners[] = $listener;
     }

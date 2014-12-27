@@ -8,9 +8,9 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\Documentation\Finder\SourceFinder;
-use Behat\Borg\Documentation\Listener\DocumentationBuildListener;
+use Behat\Borg\Documentation\Listener\BuildListener;
 use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Listener\ReleaseDownloadListener;
+use Behat\Borg\Package\Listener\DownloadListener;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
@@ -24,9 +24,9 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
         $this->beConstructedWith($finder, $builder);
     }
 
-    function it_is_download_listener()
+    function it_is_a_release_download_listener()
     {
-        $this->shouldHaveType(ReleaseDownloadListener::class);
+        $this->shouldHaveType(DownloadListener::class);
     }
 
     function it_builds_found_documentation_using_builder_and_notifies_listeners(
@@ -36,8 +36,8 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
         SourceFinder $finder,
         Builder $builder,
         BuiltDocumentation $builtDocumentation,
-        DocumentationBuildListener $listener1,
-        DocumentationBuildListener $listener2
+        BuildListener $listener1,
+        BuildListener $listener2
     ) {
         $finder->findDocumentationSource($download)->willReturn($source);
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
@@ -60,7 +60,7 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
         Download $release,
         SourceFinder $finder,
         Builder $builder,
-        DocumentationBuildListener $listener
+        BuildListener $listener
     ) {
         $finder->findDocumentationSource($release)->willReturn(null);
 

@@ -7,7 +7,7 @@ use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 /**
  * Provides a way to listen to documentation build events.
  */
-interface DocumentationBuildListener
+interface BuildListener
 {
     /**
      * Notifies listener when documentation was successfully built.

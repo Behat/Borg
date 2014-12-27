@@ -37,7 +37,7 @@
         </service>
 
         <service id="documentation.listener.build.publishing"
-                class="Behat\Borg\Documentation\Listener\PublishingDocumentationBuildListener">
+                class="Behat\Borg\Documentation\Listener\PublishingBuildListener">
             <argument type="service" id="documentation.publisher"/>
         </service>
 

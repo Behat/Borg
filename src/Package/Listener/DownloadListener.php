@@ -7,7 +7,7 @@ use Behat\Borg\Package\Downloader\Download;
 /**
  * Listens to release download events.
  */
-interface ReleaseDownloadListener
+interface DownloadListener
 {
     /**
      * Notifies listener about successful release download.
