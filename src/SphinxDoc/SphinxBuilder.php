@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 /**
- * Generates *.rst documentation using Sphinx.
+ * Builds *.rst documentation using Sphinx-doc.
  *
  * @see http://sphinx-doc.org
  */
