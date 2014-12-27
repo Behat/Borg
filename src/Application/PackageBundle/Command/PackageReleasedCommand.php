@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\DocumentationBundle\Command;
+namespace Behat\Borg\Application\PackageBundle\Command;
 
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Release;

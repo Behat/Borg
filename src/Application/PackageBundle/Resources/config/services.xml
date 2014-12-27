@@ -7,7 +7,7 @@
     <services>
 
         <service
-                class="Behat\Borg\Application\DocumentationBundle\Command\PackageReleasedCommand">
+                class="Behat\Borg\Application\PackageBundle\Command\PackageReleasedCommand">
             <argument type="service" id="release.manager"/>
             <tag name="console.command"/>
         </service>
