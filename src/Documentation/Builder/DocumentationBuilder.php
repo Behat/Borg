@@ -5,7 +5,7 @@ namespace Behat\Borg\Documentation\Builder;
 use Behat\Borg\Documentation\Documentation;
 
 /**
- * Builds raw documentation into built documentation.
+ * Builds raw documentation.
  */
 interface DocumentationBuilder
 {
@@ -14,7 +14,7 @@ interface DocumentationBuilder
      *
      * @param Documentation $documentation
      *
-     * @return null|BuiltDocumentation
+     * @return BuiltDocumentation
      */
     public function build(Documentation $documentation);
 }

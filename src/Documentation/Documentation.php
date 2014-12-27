@@ -14,6 +14,8 @@ final class Documentation
     private $time;
 
     /**
+     * Initializes documentation.
+     *
      * @param DocumentationId     $anId
      * @param DocumentationSource $source
      * @param DateTimeImmutable   $time
@@ -29,6 +31,8 @@ final class Documentation
     }
 
     /**
+     * Returns documentation ID.
+     *
      * @return DocumentationId
      */
     public function getId()
@@ -37,6 +41,8 @@ final class Documentation
     }
 
     /**
+     * Returns documentation source.
+     *
      * @return DocumentationSource
      */
     public function getSource()
@@ -45,6 +51,8 @@ final class Documentation
     }
 
     /**
+     * Returns time documentation was built at.
+     *
      * @return DateTimeImmutable
      */
     public function getTime()

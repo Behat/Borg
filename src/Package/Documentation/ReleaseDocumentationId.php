@@ -13,6 +13,8 @@ final class ReleaseDocumentationId implements DocumentationId
     private $release;
 
     /**
+     * Initializes documentation id.
+     *
      * @param Release $release
      */
     public function __construct(Release $release)
@@ -34,6 +36,14 @@ final class ReleaseDocumentationId implements DocumentationId
     public function getVersionString()
     {
         return (string)$this->release->getVersion();
+    }
+
+    /**
+     * @return Release
+     */
+    public function getRelease()
+    {
+        return $this->release;
     }
 
     /**

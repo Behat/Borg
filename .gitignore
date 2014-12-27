@@ -1,1 +1,14 @@
 vendor/
+web/bundles/
+web/docs/
+app/cache/*
+app/logs/*
+build/repositories/*
+build/docs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+!build/repositories/.gitkeep
+!build/docs/.gitkeep
+app/bootstrap.php.cache
+app/config/parameters.yml
+phpunit.xml

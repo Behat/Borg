@@ -23,6 +23,8 @@ final class Release
     }
 
     /**
+     * Returns package instance.
+     *
      * @return Package
      */
     public function getPackage()
@@ -31,6 +33,8 @@ final class Release
     }
 
     /**
+     * Returns package version.
+     *
      * @return Version
      */
     public function getVersion()
@@ -39,6 +43,8 @@ final class Release
     }
 
     /**
+     * Returns string representation of release.
+     *
      * @return string
      */
     public function __toString()

@@ -11,6 +11,8 @@ use DateTimeImmutable;
 interface BuiltDocumentation
 {
     /**
+     * Returns documentation ID.
+     *
      * @return DocumentationId
      */
     public function getId();
@@ -21,13 +23,6 @@ interface BuiltDocumentation
      * @return string
      */
     public function getBuildPath();
-
-    /**
-     * Returns path to the built documentation index file.
-     *
-     * @return string
-     */
-    public function getIndexPath();
 
     /**
      * Returns time documentation was built at.

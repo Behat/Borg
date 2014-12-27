@@ -37,4 +37,11 @@ class ReleaseDocumentationIdSpec extends ObjectBehavior
     {
         $this->getVersionString()->shouldReturn('1.0.0');
     }
+
+    function it_holds_a_release_reference(Package $package)
+    {
+        $this->getRelease()->shouldBeLike(
+            new Release($package->getWrappedObject(), Version::string('1.0.0'))
+        );
+    }
 }

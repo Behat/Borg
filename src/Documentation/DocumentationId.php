@@ -3,7 +3,7 @@
 namespace Behat\Borg\Documentation;
 
 /**
- * Represents a unique way to identify documentation.
+ * Represents a unique way to identify any documentation.
  */
 interface DocumentationId
 {
