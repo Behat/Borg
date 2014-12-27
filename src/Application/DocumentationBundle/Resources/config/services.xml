@@ -7,29 +7,53 @@
     <services>
 
         <service
-                class="Behat\Borg\Application\DocumentationBundle\Command\GenerateDocumentationCommand">
-            <argument type="service" id="documentation.manager"/>
+                class="Behat\Borg\Application\DocumentationBundle\Command\PackageReleasedCommand">
+            <argument type="service" id="release.manager"/>
             <tag name="console.command"/>
         </service>
 
-        <service id="documentation.manager"
-                 class="Behat\Borg\DocumentationManager">
-            <argument type="service" id="documentation.provider"/>
-            <argument type="service" id="documentation.builder"/>
+        <service id="release.manager"
+                 class="Behat\Borg\ReleaseManager">
+            <call method="registerListener">
+                <argument type="service" id="package.listener.release.downloading"/>
+            </call>
+        </service>
+
+        <service id="package.listener.release.downloading"
+                class="Behat\Borg\Package\Listener\DownloadingReleaseListener">
+            <argument type="service" id="package.release_downloader"/>
+            <call method="registerListener">
+                <argument type="service" id="package.listener.download.documenting"/>
+            </call>
+        </service>
+
+        <service id="package.listener.download.documenting"
+                class="Behat\Borg\Documentation\Listener\DocumentingDownloadListener">
+            <argument type="service" id="documentation.finder.rst"/>
+            <argument type="service" id="documentation.builder.sphinx"/>
+            <call method="registerListener">
+                <argument type="service" id="documentation.listener.build.publishing"/>
+            </call>
+        </service>
+
+        <service id="documentation.listener.build.publishing"
+                class="Behat\Borg\Documentation\Listener\PublishingDocumentationBuildListener">
             <argument type="service" id="documentation.publisher"/>
-            <argument type="service">
-                <service class="Behat\Borg\Documentation\Publisher\Strategy\RefreshablePublishingStrategy">
-                    <argument type="service" id="documentation.publisher"/>
-                </service>
+        </service>
+
+        <service id="package.release_downloader"
+                 class="Behat\Borg\GitHub\GitHubReleaseDownloader">
+            <argument type="service" id="github.client"/>
+            <argument>%kernel.root_dir%/../build/repositories</argument>
+            <argument type="collection">
+                <argument>Behat/docs</argument>
             </argument>
         </service>
 
-        <service id="documentation.provider"
-                 class="Behat\Borg\Package\Documentation\ReleaseDocumentationProvider">
-            <argument type="service" id="package.release_downloader.github"/>
-        </service>
+        <service id="documentation.finder.rst"
+                class="Behat\Borg\SphinxDoc\RstDocumentationFinder"/>
 
-        <service id="documentation.builder"
+        <service id="documentation.builder.sphinx"
                  class="Behat\Borg\SphinxDoc\SphinxDocumentationBuilder">
             <argument>%kernel.root_dir%/../build/docs</argument>
             <argument>%kernel.root_dir%/../sphinx</argument>
@@ -41,15 +65,6 @@
         <service id="documentation.publisher"
                  class="Behat\Borg\Documentation\Publisher\DocumentationDirectoryPublisher">
             <argument>%kernel.root_dir%/../web/docs</argument>
-        </service>
-
-        <service id="package.release_downloader.github"
-                 class="Behat\Borg\GitHub\GitHubBranchReleaseDownloader">
-            <argument type="service" id="github.client"/>
-            <argument>%kernel.root_dir%/../build/repositories</argument>
-            <argument type="collection">
-                <argument>Behat/docs</argument>
-            </argument>
         </service>
 
         <service id="github.client"
