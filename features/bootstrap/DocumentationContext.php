@@ -12,7 +12,7 @@ use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Documentation\FakeDocumentationBuilder;
-use Fake\Documentation\FakeDocumentationFinder;
+use Fake\Documentation\FakeDocumentationSourceFinder;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
 use Fake\Package\FakePackage;
@@ -33,7 +33,7 @@ class DocumentationContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->publisher = new FakeDocumentationPublisher();
-        $this->finder = new FakeDocumentationFinder();
+        $this->finder = new FakeDocumentationSourceFinder();
         $downloader = new FakeReleaseDownloader();
         $builder = new FakeDocumentationBuilder();
 
@@ -69,11 +69,9 @@ class DocumentationContext implements Context, SnippetAcceptingContext
     public function packageWasDocumented(Package $package, Version $version)
     {
         $release = new Release($package, $version);
-        $id = new ReleaseDocumentationId($release);
         $source = new FakeDocumentationSource();
-        $documentation = new Documentation($id, $source, new DateTimeImmutable());
 
-        $this->finder->releaseWasDocumented($release, $documentation);
+        $this->finder->releaseWasDocumented($release, $source);
     }
 
     /**
