@@ -27,7 +27,7 @@ final class ReleaseDocumentationId implements DocumentationId
      */
     public function getProjectName()
     {
-        return (string)$this->release->getPackage();
+        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '-$1', $this->release->getPackage()));
     }
 
     /**
@@ -51,8 +51,6 @@ final class ReleaseDocumentationId implements DocumentationId
      */
     public function __toString()
     {
-        return sprintf(
-            '%s/%s', $this->release->getPackage(), $this->release->getVersion()->getMinor()
-        );
+        return sprintf('%s/%s', $this->getProjectName(), $this->getVersionString());
     }
 }

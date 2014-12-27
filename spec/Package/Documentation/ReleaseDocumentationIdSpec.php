@@ -33,6 +33,13 @@ class ReleaseDocumentationIdSpec extends ObjectBehavior
         $this->getProjectName()->shouldReturn('behat');
     }
 
+    function it_tableize_package_name_into_a_project_name(Package $package)
+    {
+        $package->__toString()->willReturn('Behat/Symfony2Extension');
+
+        $this->getProjectName()->shouldReturn('behat/symfony2-extension');
+    }
+
     function it_uses_version_as_a_version_string()
     {
         $this->getVersionString()->shouldReturn('1.0');
