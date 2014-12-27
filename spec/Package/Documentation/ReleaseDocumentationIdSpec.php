@@ -23,9 +23,9 @@ class ReleaseDocumentationIdSpec extends ObjectBehavior
         $this->shouldHaveType(DocumentationId::class);
     }
 
-    function it_can_be_converted_to_a_string_combining_both_package_name_and_its_version()
+    function it_can_be_converted_to_a_string_combining_both_package_name_and_its_version_minor()
     {
-        $this->__toString()->shouldReturn('behat/1.0.0');
+        $this->__toString()->shouldReturn('behat/1.0');
     }
 
     function it_uses_package_name_as_a_project_name()
@@ -35,7 +35,7 @@ class ReleaseDocumentationIdSpec extends ObjectBehavior
 
     function it_uses_version_as_a_version_string()
     {
-        $this->getVersionString()->shouldReturn('1.0.0');
+        $this->getVersionString()->shouldReturn('1.0');
     }
 
     function it_holds_a_release_reference(Package $package)

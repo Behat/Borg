@@ -49,14 +49,14 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
 
         $built = $this->builder->buildDocumentation($documentation);
 
-        $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3.5/index.html');
+        $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3/index.html');
         $this->assertEquals(
-            $this->tempOutputPath . '/my/doc/v1.3.5/index.html', $built->getIndexPath()
+            $this->tempOutputPath . '/my/doc/v1.3/index.html', $built->getIndexPath()
         );
 
         $this->assertContains('<h1>Docs', file_get_contents($built->getIndexPath()));
         $this->assertContains('my/doc', file_get_contents($built->getIndexPath()));
-        $this->assertContains('v1.3.5', file_get_contents($built->getIndexPath()));
+        $this->assertContains('v1.3', file_get_contents($built->getIndexPath()));
     }
 
     /**

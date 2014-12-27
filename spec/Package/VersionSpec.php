@@ -30,6 +30,18 @@ class VersionSpec extends ObjectBehavior
         $this->shouldThrow()->during('string', ['master']);
     }
 
+    function it_can_represent_minor_version()
+    {
+        $this->getMinor()->shouldReturn('1.0');
+    }
+
+    function it_can_present_minor_version_even_if_it_is_prefixed()
+    {
+        $this->beConstructedThrough('string', ['v1.2.3']);
+
+        $this->getMinor()->shouldReturn('v1.2');
+    }
+
     function it_can_be_converted_to_that_string_later()
     {
         $this->__toString()->shouldReturn('1.0.0');

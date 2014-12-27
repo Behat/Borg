@@ -29,6 +29,16 @@ final class Version
     }
 
     /**
+     * Returns minor part of the version string.
+     *
+     * @return string
+     */
+    public function getMinor()
+    {
+        return preg_replace('/^([vV]?\d+\.\d+).*$/', '$1', $this->versionString);
+    }
+
+    /**
      * Returns string representation of version.
      *
      * @return string

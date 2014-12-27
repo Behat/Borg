@@ -35,7 +35,7 @@ final class ReleaseDocumentationId implements DocumentationId
      */
     public function getVersionString()
     {
-        return (string)$this->release->getVersion();
+        return $this->release->getVersion()->getMinor();
     }
 
     /**
@@ -51,6 +51,8 @@ final class ReleaseDocumentationId implements DocumentationId
      */
     public function __toString()
     {
-        return (string)$this->release;
+        return sprintf(
+            '%s/%s', $this->release->getPackage(), $this->release->getVersion()->getMinor()
+        );
     }
 }
