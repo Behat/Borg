@@ -29,11 +29,12 @@ final class DirectoryPublisher implements Publisher
      */
     public function publishDocumentation(BuiltDocumentation $builtDocumentation)
     {
-        $path = "{$this->publishPath}/{$builtDocumentation->getId()}";
-        (new Filesystem())->mirror($builtDocumentation->getBuildPath(), $path);
+        $buildPath = $builtDocumentation->getBuildPath();
+        $publishPath = "{$this->publishPath}/{$builtDocumentation->getId()}";
+        $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, $publishPath);
 
-        $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, $path);
-        file_put_contents("{$path}/publish.meta", serialize($publishedDocumentation));
+        $this->moveDocumentation($buildPath, $publishPath);
+        $this->writePublishingMeta($publishPath, $publishedDocumentation);
 
         return $publishedDocumentation;
     }
@@ -56,5 +57,17 @@ final class DirectoryPublisher implements Publisher
         }
 
         return unserialize(file_get_contents("{$this->publishPath}/{$anId}/publish.meta"));
+    }
+
+    private function moveDocumentation($buildPath, $publishPath)
+    {
+        $filesystem = new Filesystem();
+        $filesystem->mirror($buildPath, $publishPath);
+        $filesystem->remove($buildPath);
+    }
+
+    private function writePublishingMeta($publishPath, PublishedDocumentation $documentation)
+    {
+        file_put_contents("{$publishPath}/publish.meta", serialize($documentation));
     }
 }
