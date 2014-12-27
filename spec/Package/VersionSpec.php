@@ -51,6 +51,13 @@ class VersionSpec extends ObjectBehavior
         $this->getPatch()->shouldReturn('1.2.3-rc1');
     }
 
+    function its_patch_version_is_x_if_no_patch_part_provided()
+    {
+        $this->beConstructedThrough('string', ['v1.2']);
+
+        $this->getPatch()->shouldReturn('1.2.x');
+    }
+
     function it_can_represent_canonical_SemVer()
     {
         $this->getSemVer()->shouldReturn('v1.2.3-rc1');

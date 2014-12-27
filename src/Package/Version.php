@@ -29,7 +29,7 @@ final class Version
         $version->versionString = $string;
         $version->major = $matches[1];
         $version->minor = $matches[2];
-        $version->patch = isset($matches[3]) ? $matches[3] : '';
+        $version->patch = isset($matches[3]) ? $matches[3] : 'x';
 
         return $version;
     }
