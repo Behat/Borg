@@ -6,6 +6,7 @@ Feature: Documentation is published on release
   Rules:
     - Documentation for Behat should be published
     - Documentation for both versions should be published
+    - Extensions documentation is also published
 
   @critical
   Scenario: Publishing behat 3.0 documentation
@@ -20,3 +21,8 @@ Feature: Documentation is published on release
     And I release "Behat/docs" version v3.0
     Then the documentation for "Behat/docs" version v2.5 should have been published
     And the documentation for "Behat/docs" version v3.0 should have been published
+
+  Scenario: Publishing extension documentation
+    Given "Behat/Symfony2Extension" version v2.0.0 was documented
+    When I release "Behat/Symfony2Extension" version v2.0.0
+    Then the documentation for "Behat/Symfony2Extension" version v2.0 should have been published

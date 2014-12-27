@@ -68,15 +68,23 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
-        PHPUnit::assertTrue(
-            $this->client->repo()->contents()->exists(
-                (string)$package->getOrganisation(),
-                (string)$package->getName(),
-                'index.rst',
-                (string)$version
-            ),
-            'index.rst is not found in the provided repository version'
+        $rstFoundInRepo = $this->client->repo()->contents()->exists(
+            (string)$package->getOrganisation(),
+            (string)$package->getName(),
+            'index.rst',
+            (string)$version
         );
+
+        if (!$rstFoundInRepo) {
+            $rstFoundInRepo = $this->client->repo()->contents()->exists(
+                    (string)$package->getOrganisation(),
+                    (string)$package->getName(),
+                    'doc/index.rst',
+                    (string)$version
+                );
+        }
+
+        PHPUnit::assertTrue($rstFoundInRepo, 'RST is not found in the provided repository version');
     }
 
     /**
