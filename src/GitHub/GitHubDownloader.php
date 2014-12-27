@@ -5,6 +5,7 @@ namespace Behat\Borg\GitHub;
 use Behat\Borg\Package\Downloader\Downloader;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
+use DateTimeImmutable;
 use Github\Client;
 use Github\HttpClient\Message\ResponseMediator;
 use Symfony\Component\Filesystem\Filesystem;
@@ -28,30 +29,27 @@ final class GitHubDownloader implements Downloader
     public function downloadRelease(Release $release)
     {
         $commit = $this->fetchLatestCommit($release);
-        $committedRelease = new GitHubDownload(
-            $release, $commit, $this->getReleasePath($release)
-        );
+        $download = new GitHubDownload($release, $commit, $this->getDownloadPath($release));
 
         if ($this->releaseIsAlreadyAtCommit($release, $commit)) {
-            return $committedRelease;
+            return $download;
         }
 
         $this->downloadReleaseAtCommit($release, $commit);
 
-        return $committedRelease;
+        return $download;
     }
 
     private function fetchLatestCommit(Release $release)
     {
-        $commit = $this->client->repo()->commits()->all(
-            $release->getPackage()->getOrganisation(),
-            $release->getPackage()->getName(),
-            array('sha' => (string)$release->getVersion())
-        )[0];
+        $organisation = $release->getPackage()->getOrganisation();
+        $repository = $release->getPackage()->getName();
+        $version = (string)$release->getVersion();
 
-        $date = new \DateTimeImmutable($commit['commit']['author']['date']);
+        $commit = $this->client->repo()->commits()->all($organisation, $repository, array('sha' => $version))[0];
+        $time = new DateTimeImmutable($commit['commit']['author']['date']);
 
-        return Commit::committedWithShaAtTime($commit['sha'], $date);
+        return Commit::committedWithShaAtTime($commit['sha'], $time);
     }
 
     private function releaseIsAlreadyAtCommit(Release $release, Commit $newCommit)
@@ -71,14 +69,14 @@ final class GitHubDownloader implements Downloader
 
     private function downloadReleaseAtCommit(Release $release, Commit $commit)
     {
-        $path = $this->getReleasePath($release);
+        $downloadPath = $this->getDownloadPath($release);
 
-        if (file_exists($path)) {
-            $this->filesystem->remove($path);
+        if (file_exists($downloadPath)) {
+            $this->filesystem->remove($downloadPath);
         }
 
-        $this->filesystem->mkdir($path);
-        $this->downloadArchive($release, $commit, $path);
+        $this->filesystem->mkdir($downloadPath);
+        $this->downloadArchive($release, $commit, $downloadPath);
         file_put_contents($this->getCommitMetaPath($release), serialize($commit));
     }
 
@@ -107,14 +105,14 @@ final class GitHubDownloader implements Downloader
         $this->filesystem->remove($archivePath);
     }
 
-    private function getReleasePath(Release $release)
+    private function getDownloadPath(Release $release)
     {
         return "{$this->downloadPath}/{$release}";
     }
 
     private function getCommitMetaPath(Release $release)
     {
-        return "{$this->getReleasePath($release)}/commit.meta";
+        return "{$this->getDownloadPath($release)}/commit.meta";
     }
 
     private function getArchivePath(Package $package, Commit $commit)
