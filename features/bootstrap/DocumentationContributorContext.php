@@ -14,8 +14,8 @@ use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
-use Fake\Package\FakePackage;
 use Fake\Package\FakeDownloader;
+use Fake\Package\FakePackage;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
@@ -68,10 +68,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
-        $this->finder->releaseWasDocumented(
-            new Release($package, $version),
-            new FakeSource()
-        );
+        $this->finder->releaseWasDocumented(new Release($package, $version), new FakeSource());
     }
 
     /**
