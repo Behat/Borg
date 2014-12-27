@@ -11,6 +11,8 @@ use DateTimeImmutable;
 interface BuiltDocumentation
 {
     /**
+     * Returns documentation ID.
+     *
      * @return DocumentationId
      */
     public function getId();

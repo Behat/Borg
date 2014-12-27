@@ -45,19 +45,6 @@ class GitHubBranchReleaseProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    function it_can_check_if_provided_release_exist()
-    {
-        $package = GitHubPackage::named('Behat/docs');
-
-        $this->assertTrue(
-            $this->provider->hasRelease(new Release($package, Version::string('v2.5')))
-        );
-        $this->assertFalse(
-            $this->provider->hasRelease(new Release($package, Version::string('v1.0')))
-        );
-    }
-
-    /** @test */
     function it_ignores_branches_that_do_not_look_like_versions()
     {
         $package = GitHubPackage::named('everzet/basket-by-example');

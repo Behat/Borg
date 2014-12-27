@@ -17,33 +17,21 @@ final class FakeDownloadedRelease implements DownloadedRelease
         $this->releaseTime = new \DateTimeImmutable();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRelease()
     {
         return $this->release;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReleaseTime()
     {
         return $this->releaseTime;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath()
     {
         return __DIR__;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasFile($relativePath)
     {
         return file_exists($this->getPath() . '/' . $relativePath);

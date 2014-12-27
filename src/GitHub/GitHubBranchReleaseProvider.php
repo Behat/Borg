@@ -37,22 +37,6 @@ final class GitHubBranchReleaseProvider implements ReleaseProvider
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function hasRelease(Release $release)
-    {
-        $branches = $this->fetchBranches($release->getPackage());
-
-        foreach ($branches as $branch) {
-            if ($branch['name'] == $release->getVersion()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Fetches branches for provided package.
      *
      * @param Package $package

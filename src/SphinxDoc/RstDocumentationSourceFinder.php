@@ -7,14 +7,14 @@ use Behat\Borg\Package\Downloader\DownloadedRelease;
 
 final class RstDocumentationSourceFinder implements DocumentationSourceFinder
 {
-    public function findDocumentationSource(DownloadedRelease $downloadedRelease)
+    public function findDocumentationSource(DownloadedRelease $download)
     {
-        if ($downloadedRelease->hasFile('index.rst')) {
-            return RstDocumentationSource::atPath($downloadedRelease->getPath());
+        if ($download->hasFile('index.rst')) {
+            return RstDocumentationSource::atPath($download->getPath());
         }
 
-        if ($downloadedRelease->hasFile('doc/index.rst')) {
-            return RstDocumentationSource::atPath($downloadedRelease->getPath() . '/doc');
+        if ($download->hasFile('doc/index.rst')) {
+            return RstDocumentationSource::atPath($download->getPath() . '/doc');
         }
     }
 }

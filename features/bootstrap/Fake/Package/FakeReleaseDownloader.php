@@ -7,9 +7,6 @@ use Behat\Borg\Package\Release;
 
 final class FakeReleaseDownloader implements ReleaseDownloader
 {
-    /**
-     * {@inheritdoc}
-     */
     public function downloadRelease(Release $release)
     {
         return new FakeDownloadedRelease($release);

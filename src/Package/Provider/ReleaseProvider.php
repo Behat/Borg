@@ -6,19 +6,10 @@ use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 
 /**
- * Provides all tracked releases.
+ * Provides releases for provided package.
  */
 interface ReleaseProvider
 {
-    /**
-     * Check if provider knows about given release.
-     *
-     * @param Release $release
-     *
-     * @return Boolean
-     */
-    public function hasRelease(Release $release);
-
     /**
      * Returns all available releases for provided package.
      *

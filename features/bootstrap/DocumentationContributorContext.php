@@ -21,7 +21,7 @@ use Fake\Package\FakeReleaseDownloader;
 /**
  * Describes documentation-related features from the documentation manager context.
  */
-class DocumentationContext implements Context, SnippetAcceptingContext
+class DocumentationContributorContext implements Context, SnippetAcceptingContext
 {
     private $finder;
     private $publisher;

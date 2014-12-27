@@ -1,15 +1,15 @@
 default:
     suites:
-        documentation:
-            contexts: [ 'DocumentationContext' ]
-            filters:  { role: 'documentation manager' }
+        documentation_contributor:
+            contexts: [ 'DocumentationContributorContext' ]
+            filters:  { role: 'documentation contributor' }
 
-        documentation_manager_cli:
+        documentation_cli:
             contexts:
                 - DocumentationCliContext:
                     publisher: @documentation.publisher
                     client:    @github.client
-            filters:  { role: 'documentation manager', tags: 'critical' }
+            filters:  { role: 'documentation contributor', tags: 'critical' }
 
     extensions:
         Behat\Symfony2Extension: ~
