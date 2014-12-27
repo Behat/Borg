@@ -43,7 +43,7 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
         $downloadedRelease->getRelease()->willReturn($release);
         $downloadedRelease->getReleaseTime()->willReturn(new \DateTimeImmutable());
-        $builder->build(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
+        $builder->buildDocumentation(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
             $builtDocumentation
         );
 
@@ -64,7 +64,7 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
     ) {
         $finder->findDocumentationSource($release)->willReturn(null);
 
-        $builder->build(Argument::any())->shouldNotBeCalled();
+        $builder->buildDocumentation(Argument::any())->shouldNotBeCalled();
         $listener->documentationWasBuilt(Argument::any())->shouldNotBeCalled();
 
         $this->registerListener($listener);

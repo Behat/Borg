@@ -37,7 +37,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createDocumentationSource();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $this->builder->build($documentation);
+        $this->builder->buildDocumentation($documentation);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $built = $this->builder->build($documentation);
+        $built = $this->builder->buildDocumentation($documentation);
 
         $this->assertFileExists($this->tempOutputPath . '/my/doc/index.html');
         $this->assertEquals($this->tempOutputPath . '/my/doc/index.html', $built->getIndexPath());
@@ -67,7 +67,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createRstDocumentationSourceWithoutIndex();
         $documentation = new Documentation($anId, $source, new DateTimeImmutable());
 
-        $this->builder->build($documentation);
+        $this->builder->buildDocumentation($documentation);
     }
 
     /**

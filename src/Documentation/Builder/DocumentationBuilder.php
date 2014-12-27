@@ -16,5 +16,5 @@ interface DocumentationBuilder
      *
      * @return BuiltDocumentation
      */
-    public function build(Documentation $documentation);
+    public function buildDocumentation(Documentation $documentation);
 }

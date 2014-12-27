@@ -37,7 +37,7 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
     /**
      * {@inheritdoc}
      */
-    public function build(Documentation $documentation)
+    public function buildDocumentation(Documentation $documentation)
     {
         $source = $documentation->getSource();
 

@@ -12,7 +12,7 @@ interface ReleaseDownloadListener
     /**
      * Notifies listener about successful release download.
      *
-     * @param DownloadedRelease $downloadedRelease
+     * @param DownloadedRelease $download
      */
-    public function releaseWasDownloaded(DownloadedRelease $downloadedRelease);
+    public function releaseWasDownloaded(DownloadedRelease $download);
 }

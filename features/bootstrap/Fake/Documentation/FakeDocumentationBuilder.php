@@ -8,7 +8,7 @@ use DateTimeImmutable;
 
 final class FakeDocumentationBuilder implements DocumentationBuilder
 {
-    public function build(Documentation $documentation)
+    public function buildDocumentation(Documentation $documentation)
     {
         return new FakeBuiltDocumentation($documentation, new DateTimeImmutable());
     }
