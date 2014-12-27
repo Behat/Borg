@@ -35,7 +35,7 @@ final class ReleaseDocumentationId implements DocumentationId
      */
     public function getVersionString()
     {
-        return $this->release->getVersion()->getMinor();
+        return sprintf('v%s', $this->release->getVersion()->getMinor());
     }
 
     /**

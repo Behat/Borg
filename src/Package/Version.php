@@ -8,6 +8,9 @@ namespace Behat\Borg\Package;
 final class Version
 {
     private $versionString;
+    private $major;
+    private $minor;
+    private $patch;
 
     /**
      * Constructs version from a string.
@@ -18,24 +21,57 @@ final class Version
      */
     public static function string($string)
     {
-        if (!preg_match('/^[vV]?\d+\.\d+(?:\.\d+)?$/', $string)) {
+        if (!preg_match('/^[vV]?(\d+)\.(\d+)(?:\.(\d+.*))?$/', $string, $matches)) {
             throw new \InvalidArgumentException("Invalid Version string provided: $string.");
         }
 
         $version = new Version();
         $version->versionString = $string;
+        $version->major = $matches[1];
+        $version->minor = $matches[2];
+        $version->patch = isset($matches[3]) ? $matches[3] : '';
 
         return $version;
     }
 
     /**
-     * Returns minor part of the version string.
+     * Returns major version string without the leading "v".
+     *
+     * @return string
+     */
+    public function getMajor()
+    {
+        return $this->major;
+    }
+
+    /**
+     * Returns minor version string without the leading "v".
      *
      * @return string
      */
     public function getMinor()
     {
-        return preg_replace('/^([vV]?\d+\.\d+).*$/', '$1', $this->versionString);
+        return sprintf('%d.%d', $this->major, $this->minor);
+    }
+
+    /**
+     * Returns patch version string without the leading "v".
+     *
+     * @return string
+     */
+    public function getPatch()
+    {
+        return sprintf('%d.%d.%s', $this->major, $this->minor, $this->patch);
+    }
+
+    /**
+     * Returns canonical SemVer patch version string.
+     *
+     * @return string
+     */
+    public function getSemVer()
+    {
+        return sprintf('v%s', $this->getPatch());
     }
 
     /**
