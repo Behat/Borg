@@ -3,15 +3,20 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\Listener\DocumentingDownloadListener;
+use Behat\Borg\Documentation\Listener\PublishingDocumentationBuildListener;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
+use Behat\Borg\Package\Listener\DownloadingReleaseListener;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Behat\Borg\ReleaseManager;
+use Fake\Documentation\FakeDocumentationBuilder;
 use Fake\Documentation\FakeDocumentationFinder;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
 use Fake\Package\FakePackage;
+use Fake\Package\FakeReleaseDownloader;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -29,7 +34,17 @@ class DocumentationContext implements Context, SnippetAcceptingContext
     {
         $this->publisher = new FakeDocumentationPublisher();
         $this->finder = new FakeDocumentationFinder();
+        $downloader = new FakeReleaseDownloader();
+        $builder = new FakeDocumentationBuilder();
+
         $this->releaseManager = new ReleaseManager();
+        $downloadingListener = new DownloadingReleaseListener($downloader);
+        $documentingListener = new DocumentingDownloadListener($this->finder, $builder);
+        $publishingListener = new PublishingDocumentationBuildListener($this->publisher);
+
+        $this->releaseManager->registerListener($downloadingListener);
+        $downloadingListener->registerListener($documentingListener);
+        $documentingListener->registerListener($publishingListener);
     }
 
     /**
@@ -53,11 +68,12 @@ class DocumentationContext implements Context, SnippetAcceptingContext
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
-        $id = new ReleaseDocumentationId(new Release($package, $version));
+        $release = new Release($package, $version);
+        $id = new ReleaseDocumentationId($release);
         $source = new FakeDocumentationSource();
-        $documentation = new Documentation($id, $source, $this->createTime('19.01.1988 18:00'));
+        $documentation = new Documentation($id, $source, new DateTimeImmutable());
 
-        $this->finder->addDocumentation($documentation);
+        $this->finder->releaseWasDocumented($release, $documentation);
     }
 
     /**
@@ -75,15 +91,5 @@ class DocumentationContext implements Context, SnippetAcceptingContext
     {
         $anId = new ReleaseDocumentationId(new Release($package, $version));
         PHPUnit_Framework_Assert::assertTrue($this->publisher->hasPublishedDocumentation($anId));
-    }
-
-    /**
-     * @param string $time
-     *
-     * @return DateTimeImmutable
-     */
-    private function createTime($time)
-    {
-        return DateTimeImmutable::createFromFormat('d.m.Y H:i', $time);
     }
 }

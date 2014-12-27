@@ -19,22 +19,6 @@ final class FakeDocumentationBuilder implements DocumentationBuilder
     }
 
     /**
-     * @param DateTimeImmutable $buildTime
-     */
-    public function changeBuildTime(DateTimeImmutable $buildTime)
-    {
-        $this->buildTime = $buildTime;
-    }
-
-    /**
-     * @return DateTimeImmutable
-     */
-    public function getLastBuildTime()
-    {
-        return $this->buildTime;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function build(Documentation $documentation)
