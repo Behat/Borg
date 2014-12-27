@@ -8,6 +8,7 @@ use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
+use Behat\MinkExtension\Context\RawMinkContext;
 use Github\Client;
 use PHPUnit_Framework_Assert as PHPUnit;
 use Symfony\Component\Filesystem\Filesystem;
@@ -16,7 +17,7 @@ use Symfony\Component\Process\Process;
 /**
  * Defines application features from the specific context.
  */
-class DocumentationUIContext implements Context, SnippetAcceptingContext
+class DocumentationUIContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
     private $publisher;
     private $client;
@@ -92,11 +93,9 @@ class DocumentationUIContext implements Context, SnippetAcceptingContext
      */
     public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
-        PHPUnit::assertTrue(
-            $this->publisher->hasPublishedDocumentation(
-                new ReleaseDocumentationId(new Release($package, $version))
-            )
-        );
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        $this->visitPath('/docs/' . $anId);
+        $this->assertSession()->pageTextContains('Behat Documentation');
     }
 
     private function packageReleaseCommand(Package $package, Version $version)
