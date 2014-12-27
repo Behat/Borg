@@ -29,7 +29,7 @@
 
         <service id="package.listener.download.documenting"
                 class="Behat\Borg\Documentation\Listener\DocumentingDownloadListener">
-            <argument type="service" id="documentation.finder.rst"/>
+            <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.builder.sphinx"/>
             <call method="registerListener">
                 <argument type="service" id="documentation.listener.build.publishing"/>
@@ -50,8 +50,8 @@
             </argument>
         </service>
 
-        <service id="documentation.finder.rst"
-                class="Behat\Borg\SphinxDoc\RstDocumentationFinder"/>
+        <service id="documentation.source_finder.rst"
+                class="Behat\Borg\SphinxDoc\RstDocumentationSourceFinder"/>
 
         <service id="documentation.builder.sphinx"
                  class="Behat\Borg\SphinxDoc\SphinxDocumentationBuilder">

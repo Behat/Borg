@@ -11,6 +11,7 @@ use Behat\Borg\Package\Version;
 use Github\Client;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Defines application features from the specific context.
@@ -67,10 +68,14 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
-        $this->client->repo()->branches(
-            (string)$package->getOrganisation(),
-            (string)$package->getName(),
-            (string)$version
+        PHPUnit::assertTrue(
+            $this->client->repo()->contents()->exists(
+                (string)$package->getOrganisation(),
+                (string)$package->getName(),
+                'index.rst',
+                (string)$version
+            ),
+            'index.rst is not found in the provided repository version'
         );
     }
 
@@ -79,16 +84,13 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
      */
     public function iReleasePackage(Package $package, Version $version)
     {
-        $process = new Process(
-            __DIR__ . "/../../app/console package:released {$package} {$version} -e=test"
-        );
+        $process = new Process($this->packageReleaseCommand($package, $version));
         $process->run();
 
-        if (!$process->isSuccessful()) {
-            throw new \RuntimeException(
-                sprintf("%s\n%s", $process->getOutput(), $process->getErrorOutput())
-            );
-        }
+        PHPUnit::assertTrue(
+            $process->isSuccessful(),
+            sprintf("%s\n%s", $process->getOutput(), $process->getErrorOutput())
+        );
     }
 
     /**
@@ -96,7 +98,13 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        $anId = new ReleaseDocumentationId(new Release($package, $version));
-        PHPUnit_Framework_Assert::assertTrue($this->publisher->hasPublishedDocumentation($anId));
+        PHPUnit::assertTrue($this->publisher->hasPublishedDocumentation(
+            new ReleaseDocumentationId(new Release($package, $version))
+        ));
+    }
+
+    private function packageReleaseCommand(Package $package, Version $version)
+    {
+        return __DIR__ . "/../../app/console package:released {$package} {$version} -e=test";
     }
 }

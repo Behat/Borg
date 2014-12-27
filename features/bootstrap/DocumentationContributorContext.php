@@ -2,7 +2,6 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Listener\DocumentingDownloadListener;
 use Behat\Borg\Documentation\Listener\PublishingDocumentationBuildListener;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
@@ -12,11 +11,12 @@ use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Documentation\FakeDocumentationBuilder;
-use Fake\Documentation\FakeDocumentationSourceFinder;
 use Fake\Documentation\FakeDocumentationPublisher;
 use Fake\Documentation\FakeDocumentationSource;
+use Fake\Documentation\FakeDocumentationSourceFinder;
 use Fake\Package\FakePackage;
 use Fake\Package\FakeReleaseDownloader;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -68,10 +68,10 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function packageWasDocumented(Package $package, Version $version)
     {
-        $release = new Release($package, $version);
-        $source = new FakeDocumentationSource();
-
-        $this->finder->releaseWasDocumented($release, $source);
+        $this->finder->releaseWasDocumented(
+            new Release($package, $version),
+            new FakeDocumentationSource()
+        );
     }
 
     /**
@@ -87,7 +87,10 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        $anId = new ReleaseDocumentationId(new Release($package, $version));
-        PHPUnit_Framework_Assert::assertTrue($this->publisher->hasPublishedDocumentation($anId));
+        PHPUnit::assertTrue(
+            $this->publisher->hasPublishedDocumentation(
+                new ReleaseDocumentationId(new Release($package, $version))
+            )
+        );
     }
 }
