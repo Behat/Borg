@@ -2,16 +2,16 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Github\Client;
+use PHPUnit_Framework_Assert as PHPUnit;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
-use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Defines application features from the specific context.
@@ -24,10 +24,10 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
     /**
      * Initializes context.
      *
-     * @param DocumentationPublisher $publisher
-     * @param Client                 $client
+     * @param Publisher $publisher
+     * @param Client    $client
      */
-    public function __construct(DocumentationPublisher $publisher, Client $client)
+    public function __construct(Publisher $publisher, Client $client)
     {
         $this->publisher = $publisher;
         $this->client = $client;
@@ -98,9 +98,11 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
      */
     public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        PHPUnit::assertTrue($this->publisher->hasPublishedDocumentation(
-            new ReleaseDocumentationId(new Release($package, $version))
-        ));
+        PHPUnit::assertTrue(
+            $this->publisher->hasPublishedDocumentation(
+                new ReleaseDocumentationId(new Release($package, $version))
+            )
+        );
     }
 
     private function packageReleaseCommand(Package $package, Version $version)

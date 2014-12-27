@@ -4,9 +4,9 @@ namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\Publisher;
 
-final class FakeDocumentationPublisher implements DocumentationPublisher
+final class FakePublisher implements Publisher
 {
     private $documentation;
 

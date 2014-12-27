@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Documentation publisher that simply moves built docs into a public directory.
  */
-final class DocumentationDirectoryPublisher implements DocumentationPublisher
+final class DirectoryPublisher implements Publisher
 {
     private $publishPath;
 

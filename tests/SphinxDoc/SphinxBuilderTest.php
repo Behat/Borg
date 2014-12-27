@@ -3,20 +3,19 @@
 namespace tests\Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Documentation\Source;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
-use Behat\Borg\SphinxDoc\RstDocumentationSource;
-use Behat\Borg\SphinxDoc\SphinxDocumentationBuilder;
+use Behat\Borg\SphinxDoc\Rst;
+use Behat\Borg\SphinxDoc\SphinxBuilder;
 use DateTimeImmutable;
 use PHPUnit_Framework_TestCase;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
-class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
+class SphinxBuilderTest extends PHPUnit_Framework_TestCase
 {
     private $tempInputPath;
     private $tempOutputPath;
@@ -26,10 +25,7 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     {
         $this->tempInputPath = getenv('TEMP_PATH') . '/sphinx/input';
         $this->tempOutputPath = getenv('TEMP_PATH') . '/sphinx/output';
-
-        $this->builder = new SphinxDocumentationBuilder(
-            $this->tempOutputPath, realpath(__DIR__ . '/../../sphinx'), new Filesystem()
-        );
+        $this->builder = new SphinxBuilder($this->tempOutputPath, realpath(__DIR__ . '/../../sphinx'), new Filesystem());
 
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
     }
@@ -54,7 +50,9 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
         $built = $this->builder->buildDocumentation($documentation);
 
         $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3.5/index.html');
-        $this->assertEquals($this->tempOutputPath . '/my/doc/v1.3.5/index.html', $built->getIndexPath());
+        $this->assertEquals(
+            $this->tempOutputPath . '/my/doc/v1.3.5/index.html', $built->getIndexPath()
+        );
 
         $this->assertContains('<h1>Docs', file_get_contents($built->getIndexPath()));
         $this->assertContains('my/doc', file_get_contents($built->getIndexPath()));
@@ -95,30 +93,30 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return DocumentationSource
+     * @return Source
      */
     private function createDocumentationSource()
     {
-        return $this->getMock(DocumentationSource::class);
+        return $this->getMock(Source::class);
     }
 
     /**
      * @param string $content
      *
-     * @return RstDocumentationSource
+     * @return Rst
      */
     private function createRstDocumentationSourceWithIndex($content)
     {
         (new Filesystem())->dumpFile($this->tempInputPath . '/index.rst', $content);
 
-        return RstDocumentationSource::atPath($this->tempInputPath);
+        return Rst::atPath($this->tempInputPath);
     }
 
     /**
-     * @return RstDocumentationSource
+     * @return Rst
      */
     private function createRstDocumentationSourceWithoutIndex()
     {
-        return RstDocumentationSource::atPath($this->tempInputPath);
+        return Rst::atPath($this->tempInputPath);
     }
 }

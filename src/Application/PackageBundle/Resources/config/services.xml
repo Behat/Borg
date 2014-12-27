@@ -42,7 +42,7 @@
         </service>
 
         <service id="package.release_downloader"
-                 class="Behat\Borg\GitHub\GitHubReleaseDownloader">
+                 class="Behat\Borg\GitHub\GitHubDownloader">
             <argument type="service" id="github.client"/>
             <argument>%kernel.root_dir%/../build/repositories</argument>
             <argument type="collection">
@@ -51,10 +51,10 @@
         </service>
 
         <service id="documentation.source_finder.rst"
-                class="Behat\Borg\SphinxDoc\RstDocumentationSourceFinder"/>
+                class="Behat\Borg\SphinxDoc\RstFinder"/>
 
         <service id="documentation.builder.sphinx"
-                 class="Behat\Borg\SphinxDoc\SphinxDocumentationBuilder">
+                 class="Behat\Borg\SphinxDoc\SphinxBuilder">
             <argument>%kernel.root_dir%/../build/docs</argument>
             <argument>%kernel.root_dir%/../sphinx</argument>
             <argument type="service">
@@ -63,7 +63,7 @@
         </service>
 
         <service id="documentation.publisher"
-                 class="Behat\Borg\Documentation\Publisher\DocumentationDirectoryPublisher">
+                 class="Behat\Borg\Documentation\Publisher\DirectoryPublisher">
             <argument>%kernel.root_dir%/../web/docs</argument>
         </service>
 

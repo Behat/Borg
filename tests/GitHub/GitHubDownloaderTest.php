@@ -3,17 +3,16 @@
 namespace tests\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
-use Behat\Borg\GitHub\GitHubReleaseDownloader;
+use Behat\Borg\GitHub\GitHubDownloader;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Provider\ReleaseProvider;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Github\Client;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
+class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
 {
     private $client;
     private $tempDownloadPath;
@@ -24,10 +23,7 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
         $this->tempDownloadPath = getenv('TEMP_PATH') . '/github/download';
         $this->client = new Client();
         $this->client->authenticate(getenv('GITHUB_TOKEN'), null, Client::AUTH_URL_TOKEN);
-
-        $this->downloader = new GitHubReleaseDownloader(
-            $this->client, $this->tempDownloadPath
-        );
+        $this->downloader = new GitHubDownloader($this->client, $this->tempDownloadPath);
 
         (new Filesystem())->remove($this->tempDownloadPath);
     }

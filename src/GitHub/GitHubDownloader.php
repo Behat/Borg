@@ -2,14 +2,14 @@
 
 namespace Behat\Borg\GitHub;
 
-use Behat\Borg\Package\Downloader\ReleaseDownloader;
+use Behat\Borg\Package\Downloader\Downloader;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Github\Client;
 use Github\HttpClient\Message\ResponseMediator;
 use Symfony\Component\Filesystem\Filesystem;
 
-final class GitHubReleaseDownloader implements ReleaseDownloader
+final class GitHubDownloader implements Downloader
 {
     private $client;
     private $filesystem;

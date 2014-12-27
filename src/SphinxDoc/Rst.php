@@ -2,14 +2,14 @@
 
 namespace Behat\Borg\SphinxDoc;
 
-use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Documentation\Source;
 
 /**
  * Represents *.rst documentation source.
  *
  * Used by sphinx-doc (http://sphinx-doc.org).
  */
-final class RstDocumentationSource implements DocumentationSource
+final class Rst implements Source
 {
     private $path;
 
@@ -18,11 +18,11 @@ final class RstDocumentationSource implements DocumentationSource
      *
      * @param string $path
      *
-     * @return RstDocumentationSource
+     * @return Rst
      */
     public static function atPath($path)
     {
-        $source = new RstDocumentationSource();
+        $source = new Rst();
         $source->path = $path;
 
         return $source;

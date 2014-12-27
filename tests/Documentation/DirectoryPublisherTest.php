@@ -4,12 +4,12 @@ namespace tests\Behat\Borg\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Publisher\DocumentationDirectoryPublisher;
+use Behat\Borg\Documentation\Publisher\DirectoryPublisher;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class DocumentationDirectoryPublisherTest extends PHPUnit_Framework_TestCase
+class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
 {
     private $tempBuildPath;
     private $tempPublishPath;
@@ -19,8 +19,7 @@ class DocumentationDirectoryPublisherTest extends PHPUnit_Framework_TestCase
     {
         $this->tempBuildPath = getenv('TEMP_PATH') . '/github/publisher/build';
         $this->tempPublishPath = getenv('TEMP_PATH') . '/github/publisher/publish';
-
-        $this->publisher = new DocumentationDirectoryPublisher($this->tempPublishPath);
+        $this->publisher = new DirectoryPublisher($this->tempPublishPath);
 
         (new Filesystem())->remove([$this->tempBuildPath, $this->tempPublishPath]);
     }

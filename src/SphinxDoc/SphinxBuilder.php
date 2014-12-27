@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\SphinxDoc;
 
-use Behat\Borg\Documentation\Builder\DocumentationBuilder;
+use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use DateTimeImmutable;
@@ -14,7 +14,7 @@ use Symfony\Component\Process\Process;
  *
  * @see http://sphinx-doc.org
  */
-final class SphinxDocumentationBuilder implements DocumentationBuilder
+final class SphinxBuilder implements Builder
 {
     const COMMAND_LINE = 'sphinx-build';
 
@@ -41,7 +41,7 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
     {
         $source = $documentation->getSource();
 
-        if (!$source instanceof RstDocumentationSource) {
+        if (!$source instanceof Rst) {
             throw new \InvalidArgumentException(
                 'Sphinx documentation builder can only build RST docs'
             );
@@ -53,7 +53,7 @@ final class SphinxDocumentationBuilder implements DocumentationBuilder
 
         $this->executeCommand($commandLine);
 
-        return new BuiltSphinxDocumentation(
+        return new BuiltSphinx(
             $documentation->getId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
         );
     }

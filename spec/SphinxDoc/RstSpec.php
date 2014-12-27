@@ -2,11 +2,11 @@
 
 namespace spec\Behat\Borg\SphinxDoc;
 
-use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Documentation\Source;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class RstDocumentationSourceSpec extends ObjectBehavior
+class RstSpec extends ObjectBehavior
 {
     function let()
     {
@@ -15,7 +15,7 @@ class RstDocumentationSourceSpec extends ObjectBehavior
 
     function it_is_a_documentation_source()
     {
-        $this->shouldHaveType(DocumentationSource::class);
+        $this->shouldHaveType(Source::class);
     }
 
     function it_has_path_to_all_its_RST_documents()

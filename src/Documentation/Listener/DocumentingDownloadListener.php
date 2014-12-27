@@ -2,9 +2,9 @@
 
 namespace Behat\Borg\Documentation\Listener;
 
-use Behat\Borg\Documentation\Builder\DocumentationBuilder;
+use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
+use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
 
@@ -14,11 +14,11 @@ use Behat\Borg\Package\Listener\ReleaseDownloadListener;
 final class DocumentingDownloadListener implements ReleaseDownloadListener
 {
     /**
-     * @var DocumentationSourceFinder
+     * @var SourceFinder
      */
     private $finder;
     /**
-     * @var DocumentationBuilder
+     * @var Builder
      */
     private $builder;
     /**
@@ -29,10 +29,10 @@ final class DocumentingDownloadListener implements ReleaseDownloadListener
     /**
      * Initializes listener.
      *
-     * @param DocumentationSourceFinder $finder
-     * @param DocumentationBuilder      $builder
+     * @param SourceFinder $finder
+     * @param Builder      $builder
      */
-    public function __construct(DocumentationSourceFinder $finder, DocumentationBuilder $builder)
+    public function __construct(SourceFinder $finder, Builder $builder)
     {
         $this->finder = $finder;
         $this->builder = $builder;

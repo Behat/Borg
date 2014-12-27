@@ -10,12 +10,12 @@ use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use Behat\Borg\ReleaseManager;
-use Fake\Documentation\FakeDocumentationBuilder;
-use Fake\Documentation\FakeDocumentationPublisher;
-use Fake\Documentation\FakeDocumentationSource;
-use Fake\Documentation\FakeDocumentationSourceFinder;
+use Fake\Documentation\FakeBuilder;
+use Fake\Documentation\FakePublisher;
+use Fake\Documentation\FakeSource;
+use Fake\Documentation\FakeSourceFinder;
 use Fake\Package\FakePackage;
-use Fake\Package\FakeReleaseDownloader;
+use Fake\Package\FakeDownloader;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
@@ -32,10 +32,10 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function __construct()
     {
-        $this->publisher = new FakeDocumentationPublisher();
-        $this->finder = new FakeDocumentationSourceFinder();
-        $downloader = new FakeReleaseDownloader();
-        $builder = new FakeDocumentationBuilder();
+        $this->publisher = new FakePublisher();
+        $this->finder = new FakeSourceFinder();
+        $downloader = new FakeDownloader();
+        $builder = new FakeBuilder();
 
         $this->releaseManager = new ReleaseManager();
         $downloadingListener = new DownloadingReleaseListener($downloader);
@@ -70,7 +70,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     {
         $this->finder->releaseWasDocumented(
             new Release($package, $version),
-            new FakeDocumentationSource()
+            new FakeSource()
         );
     }
 

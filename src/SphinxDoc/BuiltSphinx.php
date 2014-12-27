@@ -9,7 +9,7 @@ use DateTimeImmutable;
 /**
  * Represents built Sphinx (*.rst) documentation.
  */
-final class BuiltSphinxDocumentation implements BuiltDocumentation
+final class BuiltSphinx implements BuiltDocumentation
 {
     private $anId;
     private $buildPath;

@@ -7,7 +7,7 @@ use Behat\Borg\Documentation\Documentation;
 /**
  * Builds raw documentation.
  */
-interface DocumentationBuilder
+interface Builder
 {
     /**
      * Builds provided documentation.

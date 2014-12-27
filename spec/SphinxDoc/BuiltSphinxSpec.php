@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class BuiltSphinxDocumentationSpec extends ObjectBehavior
+class BuiltSphinxSpec extends ObjectBehavior
 {
     function let(
         DocumentationId $anId,

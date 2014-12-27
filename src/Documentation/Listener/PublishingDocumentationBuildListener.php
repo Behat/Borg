@@ -3,7 +3,7 @@
 namespace Behat\Borg\Documentation\Listener;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
+use Behat\Borg\Documentation\Publisher\Publisher;
 
 /**
  * Publishes documentation after successful build.
@@ -11,16 +11,16 @@ use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 final class PublishingDocumentationBuildListener implements DocumentationBuildListener
 {
     /**
-     * @var DocumentationPublisher
+     * @var Publisher
      */
     private $publisher;
 
     /**
      * Initializes listener.
      *
-     * @param DocumentationPublisher $publisher
+     * @param Publisher $publisher
      */
-    public function __construct(DocumentationPublisher $publisher)
+    public function __construct(Publisher $publisher)
     {
         $this->publisher = $publisher;
     }

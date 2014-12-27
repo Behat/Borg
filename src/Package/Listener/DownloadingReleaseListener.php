@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\Package\Listener;
 
-use Behat\Borg\Package\Downloader\ReleaseDownloader;
+use Behat\Borg\Package\Downloader\Downloader;
 use Behat\Borg\Package\Release;
 
 /**
@@ -11,7 +11,7 @@ use Behat\Borg\Package\Release;
 final class DownloadingReleaseListener implements ReleaseListener
 {
     /**
-     * @var ReleaseDownloader
+     * @var Downloader
      */
     private $downloader;
     /**
@@ -22,9 +22,9 @@ final class DownloadingReleaseListener implements ReleaseListener
     /**
      * Initializes listener.
      *
-     * @param ReleaseDownloader $downloader
+     * @param Downloader $downloader
      */
-    public function __construct(ReleaseDownloader $downloader)
+    public function __construct(Downloader $downloader)
     {
         $this->downloader = $downloader;
     }

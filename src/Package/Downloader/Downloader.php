@@ -7,7 +7,7 @@ use Behat\Borg\Package\Release;
 /**
  * Represents a mechanism do download releases.
  */
-interface ReleaseDownloader
+interface Downloader
 {
     /**
      * Downloads provided release.

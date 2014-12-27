@@ -3,7 +3,7 @@
 namespace spec\Behat\Borg\Package\Listener;
 
 use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Downloader\ReleaseDownloader;
+use Behat\Borg\Package\Downloader\Downloader;
 use Behat\Borg\Package\Listener\DownloadingReleaseListener;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
 use Behat\Borg\Package\Listener\ReleaseListener;
@@ -15,7 +15,7 @@ use Prophecy\Argument;
 
 class DownloadingReleaseListenerSpec extends ObjectBehavior
 {
-    function let(ReleaseDownloader $downloader)
+    function let(Downloader $downloader)
     {
         $this->beConstructedWith($downloader);
     }
@@ -27,7 +27,7 @@ class DownloadingReleaseListenerSpec extends ObjectBehavior
 
     function it_downloads_new_release_using_downloader_and_notifies_registered_listeners(
         Package $package,
-        ReleaseDownloader $downloader,
+        Downloader $downloader,
         Download $downloadedRelease,
         ReleaseDownloadListener $listener1,
         ReleaseDownloadListener $listener2

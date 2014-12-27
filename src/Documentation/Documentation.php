@@ -18,12 +18,12 @@ final class Documentation
     /**
      * Initializes documentation after it was downloaded.
      *
-     * @param Download            $download
-     * @param DocumentationSource $source
+     * @param Download $download
+     * @param Source   $source
      *
      * @return Documentation
      */
-    public static function downloaded(Download $download, DocumentationSource $source)
+    public static function downloaded(Download $download, Source $source)
     {
         $documentation = new Documentation();
         $documentation->anId = new ReleaseDocumentationId($download->getRelease());
@@ -46,7 +46,7 @@ final class Documentation
     /**
      * Returns documentation source.
      *
-     * @return DocumentationSource
+     * @return Source
      */
     public function getSource()
     {

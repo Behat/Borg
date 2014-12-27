@@ -3,11 +3,11 @@
 namespace spec\Behat\Borg\Documentation\Listener;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Builder\DocumentationBuilder;
+use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
+use Behat\Borg\Documentation\Source;
+use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Documentation\Listener\DocumentationBuildListener;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
@@ -19,7 +19,7 @@ use Prophecy\Argument;
 
 class DocumentingDownloadListenerSpec extends ObjectBehavior
 {
-    function let(DocumentationSourceFinder $finder, DocumentationBuilder $builder)
+    function let(SourceFinder $finder, Builder $builder)
     {
         $this->beConstructedWith($finder, $builder);
     }
@@ -31,10 +31,10 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
 
     function it_builds_found_documentation_using_builder_and_notifies_listeners(
         Package $package,
-        DocumentationSource $source,
+        Source $source,
         Download $download,
-        DocumentationSourceFinder $finder,
-        DocumentationBuilder $builder,
+        SourceFinder $finder,
+        Builder $builder,
         BuiltDocumentation $builtDocumentation,
         DocumentationBuildListener $listener1,
         DocumentationBuildListener $listener2
@@ -58,8 +58,8 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
 
     function it_does_not_build_documentation_if_finder_does_not_find_any(
         Download $release,
-        DocumentationSourceFinder $finder,
-        DocumentationBuilder $builder,
+        SourceFinder $finder,
+        Builder $builder,
         DocumentationBuildListener $listener
     ) {
         $finder->findDocumentationSource($release)->willReturn(null);

@@ -9,7 +9,7 @@ use InvalidArgumentException;
 /**
  * Publishes built documentation.
  */
-interface DocumentationPublisher
+interface Publisher
 {
     /**
      * Publishes provided built documentation.
