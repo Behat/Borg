@@ -5,6 +5,10 @@ namespace tests\Behat\Borg\SphinxDoc;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Package;
+use Behat\Borg\Package\Release;
+use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;
 use Behat\Borg\SphinxDoc\SphinxDocumentationBuilder;
 use DateTimeImmutable;
@@ -33,9 +37,9 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     /** @test @expectedException InvalidArgumentException */
     function it_throws_an_exception_if_non_RST_documentation_provided()
     {
-        $anId = $this->createDocumentationId('my/doc', '1.3.5');
+        $download = $this->createDownload('my/doc', '1.3.5');
         $source = $this->createDocumentationSource();
-        $documentation = new Documentation($anId, $source, new DateTimeImmutable());
+        $documentation = Documentation::downloaded($download, $source);
 
         $this->builder->buildDocumentation($documentation);
     }
@@ -43,14 +47,14 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_builds_RST_documentation_into_the_output_path()
     {
-        $anId = $this->createDocumentationId('my/doc', 'v1.3.5');
+        $download = $this->createDownload('my/doc', 'v1.3.5');
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
-        $documentation = new Documentation($anId, $source, new DateTimeImmutable());
+        $documentation = Documentation::downloaded($download, $source);
 
         $built = $this->builder->buildDocumentation($documentation);
 
-        $this->assertFileExists($this->tempOutputPath . '/my/doc/index.html');
-        $this->assertEquals($this->tempOutputPath . '/my/doc/index.html', $built->getIndexPath());
+        $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3.5/index.html');
+        $this->assertEquals($this->tempOutputPath . '/my/doc/v1.3.5/index.html', $built->getIndexPath());
 
         $this->assertContains('<h1>Docs', file_get_contents($built->getIndexPath()));
         $this->assertContains('my/doc', file_get_contents($built->getIndexPath()));
@@ -63,27 +67,31 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
      */
     function it_throws_an_exception_if_sphinx_can_not_build_documents()
     {
-        $anId = $this->createDocumentationId('myDoc', '1.3.5');
+        $download = $this->createDownload('my/doc', '1.3.5');
         $source = $this->createRstDocumentationSourceWithoutIndex();
-        $documentation = new Documentation($anId, $source, new DateTimeImmutable());
+        $documentation = Documentation::downloaded($download, $source);
 
         $this->builder->buildDocumentation($documentation);
     }
 
     /**
-     * @param string $id
+     * @param string $packageName
      * @param string $version
      *
-     * @return DocumentationId
+     * @return DownloadedRelease
      */
-    private function createDocumentationId($id, $version)
+    private function createDownload($packageName, $version)
     {
-        $anId = $this->getMock(DocumentationId::class);
-        $anId->method('__toString')->willReturn($id);
-        $anId->method('getProjectName')->willReturn($id);
-        $anId->method('getVersionString')->willReturn($version);
+        $package = $this->getMock(Package::class);
+        $package->method('__toString')->willReturn($packageName);
 
-        return $anId;
+        $download = $this->getMock(DownloadedRelease::class);
+        $download->method('getRelease')->willReturn(
+            $release = new Release($package, Version::string($version))
+        );
+        $download->method('getReleaseTime')->willReturn(new DateTimeImmutable());
+
+        return $download;
     }
 
     /**

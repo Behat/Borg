@@ -4,9 +4,7 @@ namespace Behat\Borg\Documentation\Listener;
 
 use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
-use Behat\Borg\Documentation\DocumentationSource;
 use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
-use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Downloader\DownloadedRelease;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
 
@@ -59,26 +57,11 @@ final class DocumentingDownloadListener implements ReleaseDownloadListener
             return;
         }
 
-        $documentation = $this->createDocumentation($download, $source);
+        $documentation = Documentation::downloaded($download, $source);
         $builtDocumentation = $this->builder->buildDocumentation($documentation);
 
         foreach ($this->listeners as $listener) {
             $listener->documentationWasBuilt($builtDocumentation);
         }
-    }
-
-    /**
-     * Creates documentation from provided download and source.
-     *
-     * @param DownloadedRelease   $download
-     * @param DocumentationSource $source
-     *
-     * @return Documentation
-     */
-    private function createDocumentation(DownloadedRelease $download, DocumentationSource $source)
-    {
-        $anId = new ReleaseDocumentationId($download->getRelease());
-
-        return new Documentation($anId, $source, $download->getReleaseTime());
     }
 }

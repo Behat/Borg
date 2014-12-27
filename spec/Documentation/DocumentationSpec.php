@@ -5,15 +5,23 @@ namespace spec\Behat\Borg\Documentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
+use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Package;
+use Behat\Borg\Package\Release;
+use Behat\Borg\Package\Version;
 use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class DocumentationSpec extends ObjectBehavior
 {
-    function let(DocumentationId $anId, DocumentationSource $source)
+    function let(DownloadedRelease $download, Package $package, DocumentationSource $source)
     {
-        $this->beConstructedWith($anId, $source, new DateTimeImmutable());
+        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
+        $download->getRelease()->willReturn($release);
+        $download->getReleaseTime()->willReturn(new DateTimeImmutable());
+
+        $this->beConstructedThrough('downloaded', [$download, $source]);
     }
 
     function it_represents_documentation()
@@ -21,9 +29,9 @@ class DocumentationSpec extends ObjectBehavior
         $this->shouldHaveType(Documentation::class);
     }
 
-    function it_has_an_id(DocumentationId $anId)
+    function it_has_an_id()
     {
-        $this->getId()->shouldReturn($anId);
+        $this->getId()->shouldHaveType(DocumentationId::class);
     }
 
     function it_has_a_source(DocumentationSource $source)
