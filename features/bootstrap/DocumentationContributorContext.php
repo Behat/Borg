@@ -2,7 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\DocumentingDownloadListener;
+use Behat\Borg\Documentation\BuildingDownloadListener;
 use Behat\Borg\Documentation\PublishingBuildListener;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\DownloadingReleaseListener;
@@ -39,7 +39,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
 
         $this->releaseManager = new ReleaseManager();
         $downloadingListener = new DownloadingReleaseListener($downloader);
-        $documentingListener = new DocumentingDownloadListener($this->finder, $builder);
+        $documentingListener = new BuildingDownloadListener($this->finder, $builder);
         $publishingListener = new PublishingBuildListener($this->publisher);
 
         $this->releaseManager->registerListener($downloadingListener);

@@ -28,7 +28,7 @@
         </service>
 
         <service id="package.listener.download.documenting"
-                class="Behat\Borg\Documentation\DocumentingDownloadListener">
+                class="Behat\Borg\Documentation\BuildingDownloadListener">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.builder.sphinx"/>
             <call method="registerListener">

@@ -11,7 +11,7 @@ use Behat\Borg\Package\Listener\DownloadListener;
 /**
  * Builds documentation after release was been downloaded.
  */
-final class DocumentingDownloadListener implements DownloadListener
+final class BuildingDownloadListener implements DownloadListener
 {
     /**
      * @var SourceFinder
