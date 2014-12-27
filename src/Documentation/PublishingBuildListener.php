@@ -1,8 +1,9 @@
 <?php
 
-namespace Behat\Borg\Documentation\Listener;
+namespace Behat\Borg\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Listener\BuildListener;
 use Behat\Borg\Documentation\Publisher\Publisher;
 
 /**

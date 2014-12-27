@@ -1,10 +1,10 @@
 <?php
 
-namespace Behat\Borg\Documentation\Listener;
+namespace Behat\Borg\Documentation;
 
 use Behat\Borg\Documentation\Builder\Builder;
-use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
+use Behat\Borg\Documentation\Listener\BuildListener;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Listener\DownloadListener;
 

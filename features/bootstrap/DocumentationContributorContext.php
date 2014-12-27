@@ -2,10 +2,10 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Listener\DocumentingDownloadListener;
-use Behat\Borg\Documentation\Listener\PublishingBuildListener;
+use Behat\Borg\Documentation\DocumentingDownloadListener;
+use Behat\Borg\Documentation\PublishingBuildListener;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
-use Behat\Borg\Package\Listener\DownloadingReleaseListener;
+use Behat\Borg\Package\DownloadingReleaseListener;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;

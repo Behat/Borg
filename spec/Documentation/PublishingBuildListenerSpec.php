@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Listener;
+namespace spec\Behat\Borg\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Listener\BuildListener;

@@ -1,10 +1,9 @@
 <?php
 
-namespace spec\Behat\Borg\Package\Listener;
+namespace spec\Behat\Borg\Package;
 
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Downloader\Downloader;
-use Behat\Borg\Package\Listener\DownloadingReleaseListener;
 use Behat\Borg\Package\Listener\DownloadListener;
 use Behat\Borg\Package\Listener\ReleaseListener;
 use Behat\Borg\Package\Package;
@@ -20,7 +19,7 @@ class DownloadingReleaseListenerSpec extends ObjectBehavior
         $this->beConstructedWith($downloader);
     }
 
-    function it_is_a_listener()
+    function it_is_a_release_listener()
     {
         $this->shouldHaveType(ReleaseListener::class);
     }

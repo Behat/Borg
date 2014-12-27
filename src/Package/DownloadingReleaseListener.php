@@ -1,9 +1,10 @@
 <?php
 
-namespace Behat\Borg\Package\Listener;
+namespace Behat\Borg\Package;
 
 use Behat\Borg\Package\Downloader\Downloader;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Package\Listener\DownloadListener;
+use Behat\Borg\Package\Listener\ReleaseListener;
 
 /**
  * Downloads all new releases using downloader.
