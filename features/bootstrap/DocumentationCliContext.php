@@ -66,45 +66,31 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
     /**
      * @Given :package version :version was documented
      */
-    public function packageWasDocumented(Package $package, Version $version)
+    public function releaseWasDocumented(Package $package, Version $version)
     {
-        $rstFoundInRepo = $this->client->repo()->contents()->exists(
-            (string)$package->getOrganisation(),
-            (string)$package->getName(),
-            'index.rst',
-            (string)$version
-        );
+        $rstIsInRepo = $this->fileExistsInRepositoryVersion($package, $version, 'index.rst')
+                    || $this->fileExistsInRepositoryVersion($package, $version, 'doc/index.rst');
 
-        if (!$rstFoundInRepo) {
-            $rstFoundInRepo = $this->client->repo()->contents()->exists(
-                    (string)$package->getOrganisation(),
-                    (string)$package->getName(),
-                    'doc/index.rst',
-                    (string)$version
-                );
-        }
-
-        PHPUnit::assertTrue($rstFoundInRepo, 'RST is not found in the provided repository version');
+        PHPUnit::assertTrue($rstIsInRepo, 'RST is not found in the provided repository version');
     }
 
     /**
      * @When I release :package version :version
      */
-    public function iReleasePackage(Package $package, Version $version)
+    public function iReleaseRelease(Package $package, Version $version)
     {
         $process = new Process($this->packageReleaseCommand($package, $version));
         $process->run();
 
         PHPUnit::assertTrue(
-            $process->isSuccessful(),
-            sprintf("%s\n%s", $process->getOutput(), $process->getErrorOutput())
+            $process->isSuccessful(), "{$process->getOutput()}\n{$process->getErrorOutput()}"
         );
     }
 
     /**
-     * @Then the documentation for :package version :version should have been published
+     * @Then :package version :version documentation should have been published
      */
-    public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
+    public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
         PHPUnit::assertTrue(
             $this->publisher->hasPublishedDocumentation(
@@ -116,5 +102,12 @@ class DocumentationCliContext implements Context, SnippetAcceptingContext
     private function packageReleaseCommand(Package $package, Version $version)
     {
         return __DIR__ . "/../../app/console package:released {$package} {$version} -e=test";
+    }
+
+    private function fileExistsInRepositoryVersion(Package $package, Version $version, $path)
+    {
+        return $this->client->repo()->contents()->exists(
+            (string)$package->getOrganisation(), (string)$package->getName(), $path, (string)$version
+        );
     }
 }

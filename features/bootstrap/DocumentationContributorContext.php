@@ -66,7 +66,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Given :package version :version was documented
      */
-    public function packageWasDocumented(Package $package, Version $version)
+    public function releaseWasDocumented(Package $package, Version $version)
     {
         $this->finder->releaseWasDocumented(new Release($package, $version), new FakeSource());
     }
@@ -74,15 +74,15 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @When I release :package version :version
      */
-    public function iReleasePackage(Package $package, Version $version)
+    public function iReleaseRelease(Package $package, Version $version)
     {
         $this->releaseManager->release(new Release($package, $version));
     }
 
     /**
-     * @Then the documentation for :package version :version should have been published
+     * @Then :package version :version documentation should have been published
      */
-    public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
+    public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
         PHPUnit::assertTrue(
             $this->publisher->hasPublishedDocumentation(
