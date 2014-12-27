@@ -14,7 +14,7 @@
     </testsuites>
 
     <php>
-        <env name="TEMP_PATH" value="/tmp/behat_borg_tests"/>
-        <env name="GITHUB_TOKEN" value="__PROVIDE_TOKEN__"/>
+        <!--env name="TEMP_PATH" value="/tmp/behat_borg_tests"/-->
+        <!--env name="GITHUB_TOKEN" value="__PROVIDE_TOKEN__"/-->
     </php>
 </phpunit>
