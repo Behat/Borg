@@ -5,6 +5,8 @@ namespace Behat\Borg\SphinxDoc;
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Exception\BuildFailed;
+use Behat\Borg\Documentation\Exception\IncompatibleDocumentationGiven;
 use DateTimeImmutable;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
@@ -23,8 +25,8 @@ final class SphinxBuilder implements Builder
     private $filesystem;
 
     /**
-     * @param string     $buildPath
-     * @param string     $configPath
+     * @param string $buildPath
+     * @param string $configPath
      * @param Filesystem $filesystem
      */
     public function __construct($buildPath, $configPath, Filesystem $filesystem)
@@ -42,8 +44,11 @@ final class SphinxBuilder implements Builder
         $source = $documentation->getSource();
 
         if (!$source instanceof Rst) {
-            throw new \InvalidArgumentException(
-                'Sphinx documentation builder can only build RST docs'
+            throw new IncompatibleDocumentationGiven(
+                sprintf(
+                    'Sphinx documentation builder can only build RST-based docs, `%s` given.',
+                    get_class($source)
+                )
             );
         }
 
@@ -83,14 +88,13 @@ final class SphinxBuilder implements Builder
     private function executeCommand($commandLine)
     {
         $process = new Process(self::COMMAND_LINE);
-
         $process->setCommandLine($commandLine);
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException(
+            throw new BuildFailed(
                 sprintf(
-                    "%s\n%s",
+                    "Documentation build failed (%s):\n%s",
                     $process->getOutput(),
                     $process->getErrorOutput()
                 )

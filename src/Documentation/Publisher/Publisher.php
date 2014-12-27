@@ -4,7 +4,7 @@ namespace Behat\Borg\Documentation\Publisher;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use InvalidArgumentException;
+use Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished;
 
 /**
  * Publishes built documentation.
@@ -34,7 +34,7 @@ interface Publisher
      *
      * @return PublishedDocumentation
      *
-     * @throws InvalidArgumentException If documentation was not published
+     * @throws RequestedDocumentationWasNotPublished
      */
     public function getPublishedDocumentation(DocumentationId $anId);
 }

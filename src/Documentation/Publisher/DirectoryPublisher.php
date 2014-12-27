@@ -4,6 +4,7 @@ namespace Behat\Borg\Documentation\Publisher;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -51,7 +52,7 @@ final class DirectoryPublisher implements Publisher
     public function getPublishedDocumentation(DocumentationId $anId)
     {
         if (!$this->hasPublishedDocumentation($anId)) {
-            throw new \InvalidArgumentException("Documentation {$anId} was not published.");
+            throw new RequestedDocumentationWasNotPublished("Documentation `{$anId}` was not published.");
         }
 
         return unserialize(file_get_contents("{$this->publishPath}/{$anId}/publish.meta"));

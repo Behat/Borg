@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\GitHub;
 
+use Behat\Borg\GitHub\Exception\BadRepositoryNameGiven;
 use Behat\Borg\Package\Package;
 
 /**
@@ -9,16 +10,30 @@ use Behat\Borg\Package\Package;
  */
 final class GitHubPackage implements Package
 {
-    private $name;
+    private $repositoryString;
+    private $organisation;
+    private $repository;
 
-    public static function named($name)
+    /**
+     * Initializes GitHub package.
+     *
+     * @param $repositoryString
+     *
+     * @return GitHubPackage
+     *
+     * @throws BadRepositoryNameGiven
+     */
+    public static function named($repositoryString)
     {
-        if (!preg_match('/^[\w\-]+\/[\w\-]+$/', $name)) {
-            throw new \InvalidArgumentException('Invalid GitHub package name provided.');
+        if (!preg_match('/^[\w\-]+\/[\w\-]+$/', $repositoryString)) {
+            throw new BadRepositoryNameGiven(
+                "`{$repositoryString}` is not a supported GitHub repository name."
+            );
         }
 
         $package = new GitHubPackage();
-        $package->name = $name;
+        $package->repositoryString = $repositoryString;
+        list($package->organisation, $package->repository) = explode('/', $repositoryString);
 
         return $package;
     }
@@ -28,7 +43,7 @@ final class GitHubPackage implements Package
      */
     public function getOrganisation()
     {
-        return explode('/', $this->name)[0];
+        return $this->organisation;
     }
 
     /**
@@ -36,7 +51,7 @@ final class GitHubPackage implements Package
      */
     public function getName()
     {
-        return explode('/', $this->name)[1];
+        return $this->repository;
     }
 
     /**
@@ -44,7 +59,7 @@ final class GitHubPackage implements Package
      */
     public function __toString()
     {
-        return $this->name;
+        return $this->repositoryString;
     }
 
     private function __construct() { }

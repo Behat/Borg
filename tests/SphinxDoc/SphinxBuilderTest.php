@@ -30,7 +30,10 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
     }
 
-    /** @test @expectedException InvalidArgumentException */
+    /**
+     * @test
+     * @expectedException \Behat\Borg\Documentation\Exception\IncompatibleDocumentationGiven
+     */
     function it_throws_an_exception_if_non_RST_documentation_provided()
     {
         $download = $this->createDownload('my/doc', '1.3.5');
@@ -61,7 +64,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException RuntimeException
+     * @expectedException \Behat\Borg\Documentation\Exception\BuildFailed
      */
     function it_throws_an_exception_if_sphinx_can_not_build_documents()
     {

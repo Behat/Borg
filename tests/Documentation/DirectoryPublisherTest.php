@@ -81,7 +81,10 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($publishedDoc, $this->publisher->getPublishedDocumentation($anId));
     }
 
-    /** @test @expectedException InvalidArgumentException */
+    /**
+     * @test
+     * @expectedException \Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished
+     */
     function it_throws_an_exception_when_trying_to_get_unpublished_documentation()
     {
         $this->publisher->getPublishedDocumentation($this->getMock(DocumentationId::class));

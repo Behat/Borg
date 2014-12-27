@@ -2,6 +2,8 @@
 
 namespace Behat\Borg\Package;
 
+use Behat\Borg\Package\Exception\BadVersionStringGiven;
+
 /**
  * Represents software package version.
  */
@@ -18,11 +20,13 @@ final class Version
      * @param string $string
      *
      * @return Version
+     *
+     * @throws BadVersionStringGiven
      */
     public static function string($string)
     {
         if (!preg_match('/^[vV]?(\d+)\.(\d+)(?:\.(\d+.*))?$/', $string, $matches)) {
-            throw new \InvalidArgumentException("Invalid Version string provided: $string.");
+            throw new BadVersionStringGiven("`{$string}` is not a supported version string.");
         }
 
         $version = new Version();
