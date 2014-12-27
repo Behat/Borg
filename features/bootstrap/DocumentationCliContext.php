@@ -2,7 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\DocumentationManager;
+use Behat\Borg\Documentation\Publisher\DocumentationPublisher;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
@@ -15,20 +15,20 @@ use Symfony\Component\Process\Process;
 /**
  * Defines application features from the specific context.
  */
-class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
+class DocumentationCliContext implements Context, SnippetAcceptingContext
 {
-    private $manager;
+    private $publisher;
     private $client;
 
     /**
      * Initializes context.
      *
-     * @param DocumentationManager $manager
-     * @param Client               $client
+     * @param DocumentationPublisher $publisher
+     * @param Client                 $client
      */
-    public function __construct(DocumentationManager $manager, Client $client)
+    public function __construct(DocumentationPublisher $publisher, Client $client)
     {
-        $this->manager = $manager;
+        $this->publisher = $publisher;
         $this->client = $client;
     }
 
@@ -65,7 +65,7 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
     /**
      * @Given :package version :version was documented
      */
-    public function versionWasDocumented(Package $package, Version $version)
+    public function packageWasDocumented(Package $package, Version $version)
     {
         $this->client->repo()->branches(
             (string)$package->getOrganisation(),
@@ -75,11 +75,13 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I build the documentation
+     * @When I release :package version :version
      */
-    public function iBuildTheDocumentation()
+    public function iReleasePackage(Package $package, Version $version)
     {
-        $process = new Process(__DIR__ . '/../../app/console doc:build -e=test');
+        $process = new Process(
+            __DIR__ . "/../../app/console package:released {$package} {$version} -e=test"
+        );
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -92,13 +94,9 @@ class DocumentationManagerCliContext implements Context, SnippetAcceptingContext
     /**
      * @Then the documentation for :package version :version should have been published
      */
-    public function theDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
+    public function thePackageDocumentationShouldHaveBeenBuilt(Package $package, Version $version)
     {
-        $id = new ReleaseDocumentationId(new Release($package, $version));
-        $publishedDocumentation = $this->manager->getPublishedDocumentation($id);
-
-        PHPUnit_Framework_Assert::assertNotNull(
-            $publishedDocumentation, 'Documentation is not published.'
-        );
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        PHPUnit_Framework_Assert::assertTrue($this->publisher->hasPublishedDocumentation($anId));
     }
 }

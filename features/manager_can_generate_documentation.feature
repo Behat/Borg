@@ -7,6 +7,7 @@ Feature: Manager can generate documentation
     - Documentation for Behat should be published
     - Documentation for both versions should be published
 
+  @critical
   Scenario: Generating behat 3.0 documentation
     Given "Behat/docs" version v3.0 was documented
     When I release "Behat/docs" version v3.0

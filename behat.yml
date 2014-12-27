@@ -6,9 +6,9 @@ default:
 
         documentation_manager_cli:
             contexts:
-                - DocumentationManagerCliContext:
-                    manager: @documentation.manager
-                    client:  @github.client
+                - DocumentationCliContext:
+                    publisher: @documentation.publisher
+                    client:    @github.client
             filters:  { role: 'documentation manager', tags: 'critical' }
 
     extensions:
