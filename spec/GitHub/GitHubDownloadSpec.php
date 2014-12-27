@@ -4,13 +4,13 @@ namespace spec\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class CommittedReleaseSpec extends ObjectBehavior
+class GitHubDownloadSpec extends ObjectBehavior
 {
     function let()
     {
@@ -19,7 +19,7 @@ class CommittedReleaseSpec extends ObjectBehavior
                 GitHubPackage::named('behat/docs'),
                 Version::string('v2.5')
             ),
-            Commit::committedWithShaAt(
+            Commit::committedWithShaAtTime(
                 '839e5185da9434753db47959bee16642bb4f2ce4',
                 new \DateTimeImmutable('2011-04-14T16:00:49Z')
             ),
@@ -27,9 +27,9 @@ class CommittedReleaseSpec extends ObjectBehavior
         );
     }
 
-    function it_is_downloaded_release()
+    function it_is_a_download()
     {
-        $this->shouldHaveType(DownloadedRelease::class);
+        $this->shouldHaveType(Download::class);
     }
 
     function it_holds_a_release()
@@ -45,7 +45,7 @@ class CommittedReleaseSpec extends ObjectBehavior
     function it_holds_a_commit()
     {
         $this->getCommit()->shouldBeLike(
-            Commit::committedWithShaAt(
+            Commit::committedWithShaAtTime(
                 '839e5185da9434753db47959bee16642bb4f2ce4',
                 new \DateTimeImmutable('2011-04-14T16:00:49Z')
             )

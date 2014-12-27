@@ -12,7 +12,15 @@ final class Commit
     private $sha;
     private $time;
 
-    public static function committedWithShaAt($sha, DateTimeImmutable $time)
+    /**
+     * Initializes commit.
+     *
+     * @param string            $sha
+     * @param DateTimeImmutable $time
+     *
+     * @return Commit
+     */
+    public static function committedWithShaAtTime($sha, DateTimeImmutable $time)
     {
         $commit = new Commit();
         $commit->sha = $sha;
@@ -22,6 +30,8 @@ final class Commit
     }
 
     /**
+     * Returns commit SHA.
+     *
      * @return string
      */
     public function getSha()
@@ -30,6 +40,8 @@ final class Commit
     }
 
     /**
+     * Returns commit time.
+     *
      * @return DateTimeImmutable
      */
     public function getTime()

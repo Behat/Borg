@@ -3,16 +3,16 @@
 namespace spec\Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\SphinxDoc\RstDocumentationSource;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class RstDocumentationSourceFinderSpec extends ObjectBehavior
 {
-    function let(DownloadedRelease $release)
+    function let(Download $download)
     {
-        $release->hasFile(Argument::any())->willReturn(false);
+        $download->hasFile(Argument::any())->willReturn(false);
     }
 
     function it_is_documentation_finder()
@@ -20,30 +20,29 @@ class RstDocumentationSourceFinderSpec extends ObjectBehavior
         $this->shouldHaveType(DocumentationSourceFinder::class);
     }
 
-    function it_finds_source_if_downloaded_release_has_index_rst_in_root_folder(
-        DownloadedRelease $release
-    ) {
-        $release->hasFile('index.rst')->willReturn(true);
-        $release->getPath()->willReturn('/root');
+    function it_finds_source_if_downloaded_release_has_index_rst_in_root_folder(Download $download)
+    {
+        $download->hasFile('index.rst')->willReturn(true);
+        $download->getPath()->willReturn('/root');
 
-        $this->findDocumentationSource($release)->shouldBeLike(
+        $this->findDocumentationSource($download)->shouldBeLike(
             RstDocumentationSource::atPath('/root')
         );
     }
 
     function it_finds_source_if_downloaded_release_has_doc_folder_with_index_rst_in_it(
-        DownloadedRelease $release
+        Download $download
     ) {
-        $release->hasFile('doc/index.rst')->willReturn(true);
-        $release->getPath()->willReturn('/root');
+        $download->hasFile('doc/index.rst')->willReturn(true);
+        $download->getPath()->willReturn('/root');
 
-        $this->findDocumentationSource($release)->shouldBeLike(
+        $this->findDocumentationSource($download)->shouldBeLike(
             RstDocumentationSource::atPath('/root/doc')
         );
     }
 
-    function it_returns_null_otherwise(DownloadedRelease $release)
+    function it_returns_null_otherwise(Download $download)
     {
-        $this->findDocumentationSource($release)->shouldReturn(null);
+        $this->findDocumentationSource($download)->shouldReturn(null);
     }
 }

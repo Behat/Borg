@@ -5,7 +5,7 @@ namespace tests\Behat\Borg\GitHub;
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubReleaseDownloader;
 use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Provider\ReleaseProvider;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
@@ -40,7 +40,7 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
 
         $downloadedRelease = $this->downloader->downloadRelease($release);
 
-        $this->assertInstanceOf(DownloadedRelease::class, $downloadedRelease);
+        $this->assertInstanceOf(Download::class, $downloadedRelease);
         $this->assertFileExists($releasePath . '/index.rst');
         $this->assertEquals(
             $downloadedRelease->getCommit(),
@@ -52,7 +52,7 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
     function it_replaces_existing_release_if_newer_commits_found()
     {
         $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
-        $oldCommit = Commit::committedWithShaAt(
+        $oldCommit = Commit::committedWithShaAtTime(
             'eda4feb1fb814faf3ab334c2b26b9e61eb7a3940',
             new \DateTimeImmutable('2014-05-10T12:35:02Z')
         );
@@ -103,6 +103,6 @@ class GitHubReleaseDownloaderTest extends PHPUnit_Framework_TestCase
 
         $date = new \DateTimeImmutable($commit['commit']['author']['date']);
 
-        return Commit::committedWithShaAt($commit['sha'], $date);
+        return Commit::committedWithShaAtTime($commit['sha'], $date);
     }
 }

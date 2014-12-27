@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\Package\Listener;
 
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Downloader\ReleaseDownloader;
 use Behat\Borg\Package\Listener\DownloadingReleaseListener;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
@@ -28,7 +28,7 @@ class DownloadingReleaseListenerSpec extends ObjectBehavior
     function it_downloads_new_release_using_downloader_and_notifies_registered_listeners(
         Package $package,
         ReleaseDownloader $downloader,
-        DownloadedRelease $downloadedRelease,
+        Download $downloadedRelease,
         ReleaseDownloadListener $listener1,
         ReleaseDownloadListener $listener2
     ) {

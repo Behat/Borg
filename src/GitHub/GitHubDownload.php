@@ -2,19 +2,25 @@
 
 namespace Behat\Borg\GitHub;
 
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Release;
-use DateTimeImmutable;
 
 /**
- * Represents GitHub committed release.
+ * Represents downloaded GitHub release.
  */
-final class CommittedRelease implements DownloadedRelease
+final class GitHubDownload implements Download
 {
     private $release;
     private $commit;
     private $path;
 
+    /**
+     * Initializes downloaded release.
+     *
+     * @param Release $release
+     * @param Commit  $commit
+     * @param string  $path
+     */
     public function __construct(Release $release, Commit $commit, $path)
     {
         $this->release = $release;
@@ -23,14 +29,8 @@ final class CommittedRelease implements DownloadedRelease
     }
 
     /**
-     * @return Release
-     */
-    public function getRelease()
-    {
-        return $this->release;
-    }
-
-    /**
+     * Returns the commit.
+     *
      * @return Commit
      */
     public function getCommit()
@@ -39,7 +39,15 @@ final class CommittedRelease implements DownloadedRelease
     }
 
     /**
-     * @return DateTimeImmutable
+     * {@inheritdoc}
+     */
+    public function getRelease()
+    {
+        return $this->release;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getReleaseTime()
     {
@@ -47,7 +55,7 @@ final class CommittedRelease implements DownloadedRelease
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getPath()
     {
@@ -55,9 +63,7 @@ final class CommittedRelease implements DownloadedRelease
     }
 
     /**
-     * @param string $relativePath
-     *
-     * @return Boolean
+     * {@inheritdoc}
      */
     public function hasFile($relativePath)
     {

@@ -5,7 +5,7 @@ namespace spec\Behat\Borg\Documentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
@@ -15,7 +15,7 @@ use Prophecy\Argument;
 
 class DocumentationSpec extends ObjectBehavior
 {
-    function let(DownloadedRelease $download, Package $package, DocumentationSource $source)
+    function let(Download $download, Package $package, DocumentationSource $source)
     {
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
         $download->getRelease()->willReturn($release);

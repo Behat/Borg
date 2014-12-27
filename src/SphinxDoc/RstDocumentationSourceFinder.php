@@ -3,11 +3,11 @@
 namespace Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 
 final class RstDocumentationSourceFinder implements DocumentationSourceFinder
 {
-    public function findDocumentationSource(DownloadedRelease $download)
+    public function findDocumentationSource(Download $download)
     {
         if ($download->hasFile('index.rst')) {
             return RstDocumentationSource::atPath($download->getPath());
@@ -16,5 +16,7 @@ final class RstDocumentationSourceFinder implements DocumentationSourceFinder
         if ($download->hasFile('doc/index.rst')) {
             return RstDocumentationSource::atPath($download->getPath() . '/doc');
         }
+
+        return null;
     }
 }

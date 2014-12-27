@@ -6,9 +6,9 @@ use Behat\Borg\Package\Release;
 use DateTimeImmutable;
 
 /**
- * Represents a downloaded release.
+ * Represents a release download.
  */
-interface DownloadedRelease
+interface Download
 {
     /**
      * Returns a release that been downloaded.

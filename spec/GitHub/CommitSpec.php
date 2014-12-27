@@ -10,7 +10,7 @@ class CommitSpec extends ObjectBehavior
     function let()
     {
         $this->beConstructedThrough(
-            'committedWithShaAt',
+            'committedWithShaAtTime',
             [
                 '839e5185da9434753db47959bee16642bb4f2ce4',
                 new \DateTimeImmutable('2011-04-14T16:00:49Z')

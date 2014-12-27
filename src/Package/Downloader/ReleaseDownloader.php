@@ -14,7 +14,7 @@ interface ReleaseDownloader
      *
      * @param Release $release
      *
-     * @return DownloadedRelease
+     * @return Download
      */
     public function downloadRelease(Release $release);
 }

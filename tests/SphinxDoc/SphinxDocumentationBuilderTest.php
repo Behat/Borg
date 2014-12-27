@@ -5,7 +5,7 @@ namespace tests\Behat\Borg\SphinxDoc;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;
@@ -78,14 +78,14 @@ class SphinxDocumentationBuilderTest extends PHPUnit_Framework_TestCase
      * @param string $packageName
      * @param string $version
      *
-     * @return DownloadedRelease
+     * @return Download
      */
     private function createDownload($packageName, $version)
     {
         $package = $this->getMock(Package::class);
         $package->method('__toString')->willReturn($packageName);
 
-        $download = $this->getMock(DownloadedRelease::class);
+        $download = $this->getMock(Download::class);
         $download->method('getRelease')->willReturn(
             $release = new Release($package, Version::string($version))
         );

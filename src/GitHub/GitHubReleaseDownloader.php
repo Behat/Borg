@@ -28,7 +28,7 @@ final class GitHubReleaseDownloader implements ReleaseDownloader
     public function downloadRelease(Release $release)
     {
         $commit = $this->fetchLatestCommit($release);
-        $committedRelease = new CommittedRelease(
+        $committedRelease = new GitHubDownload(
             $release, $commit, $this->getReleasePath($release)
         );
 
@@ -51,7 +51,7 @@ final class GitHubReleaseDownloader implements ReleaseDownloader
 
         $date = new \DateTimeImmutable($commit['commit']['author']['date']);
 
-        return Commit::committedWithShaAt($commit['sha'], $date);
+        return Commit::committedWithShaAtTime($commit['sha'], $date);
     }
 
     private function releaseIsAlreadyAtCommit(Release $release, Commit $newCommit)

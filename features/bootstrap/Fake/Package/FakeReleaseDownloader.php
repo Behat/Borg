@@ -9,6 +9,6 @@ final class FakeReleaseDownloader implements ReleaseDownloader
 {
     public function downloadRelease(Release $release)
     {
-        return new FakeDownloadedRelease($release);
+        return new FakeDownload($release);
     }
 }

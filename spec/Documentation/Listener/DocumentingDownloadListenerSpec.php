@@ -9,7 +9,7 @@ use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\DocumentationSource;
 use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
 use Behat\Borg\Documentation\Listener\DocumentationBuildListener;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
@@ -32,17 +32,17 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
     function it_builds_found_documentation_using_builder_and_notifies_listeners(
         Package $package,
         DocumentationSource $source,
-        DownloadedRelease $downloadedRelease,
+        Download $download,
         DocumentationSourceFinder $finder,
         DocumentationBuilder $builder,
         BuiltDocumentation $builtDocumentation,
         DocumentationBuildListener $listener1,
         DocumentationBuildListener $listener2
     ) {
-        $finder->findDocumentationSource($downloadedRelease)->willReturn($source);
+        $finder->findDocumentationSource($download)->willReturn($source);
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $downloadedRelease->getRelease()->willReturn($release);
-        $downloadedRelease->getReleaseTime()->willReturn(new \DateTimeImmutable());
+        $download->getRelease()->willReturn($release);
+        $download->getReleaseTime()->willReturn(new \DateTimeImmutable());
         $builder->buildDocumentation(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
             $builtDocumentation
         );
@@ -53,11 +53,11 @@ class DocumentingDownloadListenerSpec extends ObjectBehavior
         $this->registerListener($listener1);
         $this->registerListener($listener2);
 
-        $this->releaseWasDownloaded($downloadedRelease);
+        $this->releaseWasDownloaded($download);
     }
 
     function it_does_not_build_documentation_if_finder_does_not_find_any(
-        DownloadedRelease $release,
+        Download $release,
         DocumentationSourceFinder $finder,
         DocumentationBuilder $builder,
         DocumentationBuildListener $listener

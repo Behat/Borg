@@ -5,7 +5,7 @@ namespace Behat\Borg\Documentation\Listener;
 use Behat\Borg\Documentation\Builder\DocumentationBuilder;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Finder\DocumentationSourceFinder;
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Listener\ReleaseDownloadListener;
 
 /**
@@ -51,7 +51,7 @@ final class DocumentingDownloadListener implements ReleaseDownloadListener
     /**
      * {@inheritdoc}
      */
-    public function releaseWasDownloaded(DownloadedRelease $download)
+    public function releaseWasDownloaded(Download $download)
     {
         if (null === $source = $this->finder->findDocumentationSource($download)) {
             return;

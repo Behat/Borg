@@ -2,11 +2,11 @@
 
 namespace Fake\Package;
 
-use Behat\Borg\Package\Downloader\DownloadedRelease;
+use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Release;
 use DateTimeImmutable;
 
-final class FakeDownloadedRelease implements DownloadedRelease
+final class FakeDownload implements Download
 {
     private $release;
     private $releaseTime;
