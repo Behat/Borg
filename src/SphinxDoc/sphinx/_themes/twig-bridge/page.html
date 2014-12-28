@@ -1,0 +1,19 @@
+{% raw %}
+{% endraw %}
+
+{{ '{% block title %}' }}
+    {{ docstitle }} {{ title|striptags|e }}
+{{ '{% endblock title %}' }}
+
+{{ '{% block body %}' }}
+    <nav class="toc">
+        <h3>Chapters</h3>
+        {{ toc }}
+    </nav>
+
+    <section class="text">
+        {% block body %}
+            {{ body }}
+        {% endblock %}
+    </section>
+{{ '{% endblock body %}' }}

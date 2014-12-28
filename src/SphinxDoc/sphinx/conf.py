@@ -18,4 +18,4 @@ exclude_trees = []
 exclude_patterns = []
 
 html_theme_path = ["_themes"]
-html_theme = 'borg'
+html_theme = 'twig-bridge'

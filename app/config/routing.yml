@@ -1,0 +1,4 @@
+documentation:
+    resource: "@DocumentationBundle/Controller/"
+    type:     annotation
+    prefix:   /docs

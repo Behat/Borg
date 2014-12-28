@@ -27,20 +27,6 @@
             </call>
         </service>
 
-        <service id="package.listener.download.documenting"
-                class="Behat\Borg\Documentation\BuildingDownloadListener">
-            <argument type="service" id="documentation.source_finder.rst"/>
-            <argument type="service" id="documentation.builder.sphinx"/>
-            <call method="registerListener">
-                <argument type="service" id="documentation.listener.build.publishing"/>
-            </call>
-        </service>
-
-        <service id="documentation.listener.build.publishing"
-                class="Behat\Borg\Documentation\PublishingBuildListener">
-            <argument type="service" id="documentation.publisher"/>
-        </service>
-
         <service id="package.release_downloader"
                  class="Behat\Borg\GitHub\GitHubDownloader">
             <argument type="service" id="github.client"/>
@@ -48,23 +34,6 @@
             <argument type="collection">
                 <argument>Behat/docs</argument>
             </argument>
-        </service>
-
-        <service id="documentation.source_finder.rst"
-                class="Behat\Borg\SphinxDoc\RstFinder"/>
-
-        <service id="documentation.builder.sphinx"
-                 class="Behat\Borg\SphinxDoc\SphinxBuilder">
-            <argument>%kernel.root_dir%/../build/docs</argument>
-            <argument>%kernel.root_dir%/../sphinx</argument>
-            <argument type="service">
-                <service class="Symfony\Component\Filesystem\Filesystem"/>
-            </argument>
-        </service>
-
-        <service id="documentation.publisher"
-                 class="Behat\Borg\Documentation\Publisher\DirectoryPublisher">
-            <argument>%kernel.root_dir%/../web/docs</argument>
         </service>
 
         <service id="github.client"

@@ -4,12 +4,14 @@ default:
             contexts: [ 'DocumentationContributorContext' ]
             filters:  { role: 'documentation contributor' }
 
-        documentation_cli:
+        documentation_ui:
             contexts:
-                - DocumentationCliContext:
+                - DocumentationUIContext:
                     publisher: @documentation.publisher
                     client:    @github.client
             filters:  { role: 'documentation contributor', tags: 'critical' }
 
     extensions:
         Behat\Symfony2Extension: ~
+        Behat\MinkExtension:
+            sessions: { default: { symfony2: ~ } }
