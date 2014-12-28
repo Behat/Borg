@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Application\DocumentationBundle\Twig;
 
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Release;
@@ -28,13 +29,12 @@ final class DocumentationLoader extends Twig_Loader_Filesystem
         }
 
         $id = $this->getDocumentationId($m['org'], $m['pkg'], $m['ver']);
-        if (!$this->publisher->hasPublishedDocumentation($id)) {
+
+        if (!$this->publisher->hasPublished($id)) {
             return false;
         }
 
-        $doc = $this->publisher->getPublishedDocumentation($id);
-
-        return file_exists($doc->getPublishPath() . '/' . $m['path']);
+        return file_exists($this->getFullPath($id, $m['path']));
     }
 
     protected function findTemplate($template)
@@ -48,8 +48,7 @@ final class DocumentationLoader extends Twig_Loader_Filesystem
         preg_match(self::$regex, $template, $m);
 
         $id = $this->getDocumentationId($m['org'], $m['pkg'], $m['ver']);
-        $doc = $this->publisher->getPublishedDocumentation($id);
-        $file = realpath($doc->getPublishPath() . '/' . $m['path']);
+        $file = $this->getFullPath($id, $m['path']);
 
         return $this->cache[$logicalName] = $file;
     }
@@ -59,5 +58,10 @@ final class DocumentationLoader extends Twig_Loader_Filesystem
         return new ReleaseDocumentationId(
             new Release(new SimplePackage($organisation, $package), Version::string($version))
         );
+    }
+
+    private function getFullPath(DocumentationId $id, $path)
+    {
+        return $this->publisher->getPublished($id)->getPublishPath() . '/' . $path;
     }
 }
