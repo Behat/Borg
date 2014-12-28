@@ -95,7 +95,9 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     {
         $anId = new ReleaseDocumentationId(new Release($package, $version));
         $this->visitPath('/docs/' . $anId);
-        $this->assertSession()->pageTextContains('Behat Documentation');
+
+        $this->assertSession()->pageTextContains($package);
+        $this->assertSession()->pageTextContains($version);
     }
 
     private function packageReleaseCommand(Package $package, Version $version)
