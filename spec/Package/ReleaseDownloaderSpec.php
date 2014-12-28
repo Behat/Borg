@@ -12,7 +12,7 @@ use Behat\Borg\Package\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DownloadingReleaseListenerSpec extends ObjectBehavior
+class ReleaseDownloaderSpec extends ObjectBehavior
 {
     function let(Downloader $downloader)
     {

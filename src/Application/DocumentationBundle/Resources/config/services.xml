@@ -7,7 +7,7 @@
     <services>
 
         <service id="package.listener.download.documenting"
-                 class="Behat\Borg\Documentation\BuildingDownloadListener">
+                 class="Behat\Borg\Documentation\DownloadBuilder">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.builder.sphinx"/>
             <call method="registerListener">
@@ -16,7 +16,7 @@
         </service>
 
         <service id="documentation.listener.build.publishing"
-                 class="Behat\Borg\Documentation\PublishingBuildListener">
+                 class="Behat\Borg\Documentation\BuildPublisher">
             <argument type="service" id="documentation.publisher"/>
         </service>
 

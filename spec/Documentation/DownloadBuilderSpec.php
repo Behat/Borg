@@ -15,7 +15,7 @@ use Behat\Borg\Package\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class BuildingDownloadListenerSpec extends ObjectBehavior
+class DownloadBuilderSpec extends ObjectBehavior
 {
     function let(SourceFinder $finder, Builder $builder)
     {

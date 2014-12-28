@@ -8,7 +8,7 @@ use Behat\Borg\Documentation\Publisher\Publisher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class PublishingBuildListenerSpec extends ObjectBehavior
+class BuildPublisherSpec extends ObjectBehavior
 {
     function let(Publisher $publisher)
     {

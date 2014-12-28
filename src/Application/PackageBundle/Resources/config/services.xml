@@ -20,7 +20,7 @@
         </service>
 
         <service id="package.listener.release.downloading"
-                class="Behat\Borg\Package\DownloadingReleaseListener">
+                class="Behat\Borg\Package\ReleaseDownloader">
             <argument type="service" id="package.release_downloader"/>
             <call method="registerListener">
                 <argument type="service" id="package.listener.download.documenting"/>

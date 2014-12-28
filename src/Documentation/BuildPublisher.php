@@ -9,7 +9,7 @@ use Behat\Borg\Documentation\Publisher\Publisher;
 /**
  * Publishes documentation after successful build.
  */
-final class PublishingBuildListener implements BuildListener
+final class BuildPublisher implements BuildListener
 {
     /**
      * @var Publisher

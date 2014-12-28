@@ -9,7 +9,7 @@ use Behat\Borg\Package\Listener\ReleaseListener;
 /**
  * Downloads all new releases using downloader.
  */
-final class DownloadingReleaseListener implements ReleaseListener
+final class ReleaseDownloader implements ReleaseListener
 {
     /**
      * @var Downloader
