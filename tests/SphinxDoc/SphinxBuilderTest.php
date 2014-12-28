@@ -28,7 +28,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
     {
         $this->tempInputPath = getenv('TEMP_PATH') . '/sphinx/input';
         $this->tempOutputPath = getenv('TEMP_PATH') . '/sphinx/output';
-        $this->builder = new SphinxBuilder($this->tempOutputPath, realpath(__DIR__ . '/../../src/SphinxDoc/sphinx'), new Filesystem());
+        $this->builder = new SphinxBuilder($this->tempOutputPath, realpath(__DIR__ . '/../../src/Application/DocumentationBundle/Resources/sphinx'), new Filesystem());
 
         (new Filesystem())->remove([$this->tempInputPath, $this->tempOutputPath]);
     }

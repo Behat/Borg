@@ -1,0 +1,19 @@
+{% raw %}
+{% extends 'DocumentationBundle::page.html.twig' %}
+{% endraw %}
+
+{{ '{% block title %}' }}
+    {{ title|striptags|e }} {{ docstitle }}
+{{ '{% endblock title %}' }}
+
+{{ '{% block toc %}' }}
+    {{ toc }}
+{{ '{% endblock toc %}' }}
+
+{{ '{% block text %}' }}
+    <section class="text">
+        {% block body %}
+            {{ body }}
+        {% endblock %}
+    </section>
+{{ '{% endblock text %}' }}

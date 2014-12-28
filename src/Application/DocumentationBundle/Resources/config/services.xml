@@ -26,7 +26,7 @@
         <service id="documentation.builder.sphinx"
                  class="Behat\Borg\SphinxDoc\SphinxBuilder">
             <argument>%kernel.root_dir%/../build/docs</argument>
-            <argument>%kernel.root_dir%/../src/SphinxDoc/sphinx</argument>
+            <argument>%kernel.root_dir%/../src/Application/DocumentationBundle/Resources/sphinx</argument>
             <argument type="service">
                 <service class="Symfony\Component\Filesystem\Filesystem"/>
             </argument>
