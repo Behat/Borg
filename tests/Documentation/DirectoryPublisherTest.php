@@ -13,6 +13,9 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
 {
     private $tempBuildPath;
     private $tempPublishPath;
+    /**
+     * @var DirectoryPublisher
+     */
     private $publisher;
 
     protected function setUp()
@@ -36,7 +39,7 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         (new Filesystem())->mkdir($this->tempBuildPath . '/built_doc');
         (new Filesystem())->touch($this->tempBuildPath . '/built_doc/my_file');
 
-        $publishedDoc = $this->publisher->publishDocumentation($builtDoc);
+        $publishedDoc = $this->publisher->publish($builtDoc);
 
         $this->assertEquals(
             PublishedDocumentation::publish($builtDoc, $this->tempPublishPath . '/built_doc'),
@@ -59,8 +62,8 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         (new Filesystem())->mkdir($this->tempPublishPath . '/my_doc');
         file_put_contents($this->tempPublishPath . '/my_doc/publish.meta', serialize($publishedDoc));
 
-        $this->assertTrue($this->publisher->hasPublishedDocumentation($anId));
-        $this->assertFalse($this->publisher->hasPublishedDocumentation($this->getMock(DocumentationId::class)));
+        $this->assertTrue($this->publisher->hasPublished($anId));
+        $this->assertFalse($this->publisher->hasPublished($this->getMock(DocumentationId::class)));
     }
 
     /** @test */
@@ -78,7 +81,7 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
             $this->tempPublishPath . '/my_doc/publish.meta', serialize($publishedDoc)
         );
 
-        $this->assertEquals($publishedDoc, $this->publisher->getPublishedDocumentation($anId));
+        $this->assertEquals($publishedDoc, $this->publisher->getPublished($anId));
     }
 
     /**
@@ -87,6 +90,6 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
      */
     function it_throws_an_exception_when_trying_to_get_unpublished_documentation()
     {
-        $this->publisher->getPublishedDocumentation($this->getMock(DocumentationId::class));
+        $this->publisher->getPublished($this->getMock(DocumentationId::class));
     }
 }

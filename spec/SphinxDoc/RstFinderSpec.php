@@ -25,7 +25,7 @@ class RstFinderSpec extends ObjectBehavior
         $download->hasFile('index.rst')->willReturn(true);
         $download->getPath()->willReturn('/root');
 
-        $this->findDocumentationSource($download)->shouldBeLike(Rst::atPath('/root'));
+        $this->findSource($download)->shouldBeLike(Rst::atPath('/root'));
     }
 
     function it_finds_source_if_downloaded_release_has_doc_folder_with_index_rst_in_it(Download $download)
@@ -33,11 +33,11 @@ class RstFinderSpec extends ObjectBehavior
         $download->hasFile('doc/index.rst')->willReturn(true);
         $download->getPath()->willReturn('/root');
 
-        $this->findDocumentationSource($download)->shouldBeLike(Rst::atPath('/root/doc'));
+        $this->findSource($download)->shouldBeLike(Rst::atPath('/root/doc'));
     }
 
     function it_returns_null_otherwise(Download $download)
     {
-        $this->findDocumentationSource($download)->shouldReturn(null);
+        $this->findSource($download)->shouldReturn(null);
     }
 }

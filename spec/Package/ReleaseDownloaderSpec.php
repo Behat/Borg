@@ -32,7 +32,7 @@ class ReleaseDownloaderSpec extends ObjectBehavior
         DownloadListener $listener2
     ) {
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $downloader->downloadRelease($release)->willReturn($downloadedRelease);
+        $downloader->download($release)->willReturn($downloadedRelease);
 
         $listener1->releaseWasDownloaded($downloadedRelease)->shouldBeCalled();
         $listener2->releaseWasDownloaded($downloadedRelease)->shouldBeCalled();

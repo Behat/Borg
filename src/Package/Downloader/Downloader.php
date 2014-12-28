@@ -16,5 +16,5 @@ interface Downloader
      *
      * @return Download
      */
-    public function downloadRelease(Release $release);
+    public function download(Release $release);
 }

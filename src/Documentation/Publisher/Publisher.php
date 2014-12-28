@@ -16,7 +16,7 @@ interface Publisher
      *
      * @param BuiltDocumentation $builtDocumentation
      */
-    public function publishDocumentation(BuiltDocumentation $builtDocumentation);
+    public function publish(BuiltDocumentation $builtDocumentation);
 
     /**
      * Checks if documentation with the id was published.
@@ -25,7 +25,7 @@ interface Publisher
      *
      * @return Boolean
      */
-    public function hasPublishedDocumentation(DocumentationId $anId);
+    public function hasPublished(DocumentationId $anId);
 
     /**
      * Gets published documentation by its unique ID.
@@ -36,5 +36,5 @@ interface Publisher
      *
      * @throws RequestedDocumentationWasNotPublished
      */
-    public function getPublishedDocumentation(DocumentationId $anId);
+    public function getPublished(DocumentationId $anId);
 }

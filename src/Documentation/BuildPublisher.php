@@ -31,6 +31,6 @@ final class BuildPublisher implements BuildListener
      */
     public function documentationWasBuilt(BuiltDocumentation $builtDocumentation)
     {
-        $this->publisher->publishDocumentation($builtDocumentation);
+        $this->publisher->publish($builtDocumentation);
     }
 }

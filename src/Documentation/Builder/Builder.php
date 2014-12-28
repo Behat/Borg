@@ -19,5 +19,5 @@ interface Builder
      *
      * @throws BuildFailed
      */
-    public function buildDocumentation(Documentation $documentation);
+    public function build(Documentation $documentation);
 }

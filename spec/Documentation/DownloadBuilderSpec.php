@@ -37,11 +37,11 @@ class DownloadBuilderSpec extends ObjectBehavior
         BuildListener $listener1,
         BuildListener $listener2
     ) {
-        $finder->findDocumentationSource($download)->willReturn($source);
+        $finder->findSource($download)->willReturn($source);
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
         $download->getRelease()->willReturn($release);
         $download->getReleaseTime()->willReturn(new \DateTimeImmutable());
-        $builder->buildDocumentation(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
+        $builder->build(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
             $builtDocumentation
         );
 
@@ -60,9 +60,9 @@ class DownloadBuilderSpec extends ObjectBehavior
         Builder $builder,
         BuildListener $listener
     ) {
-        $finder->findDocumentationSource($release)->willReturn(null);
+        $finder->findSource($release)->willReturn(null);
 
-        $builder->buildDocumentation(Argument::any())->shouldNotBeCalled();
+        $builder->build(Argument::any())->shouldNotBeCalled();
         $listener->documentationWasBuilt(Argument::any())->shouldNotBeCalled();
 
         $this->registerListener($listener);

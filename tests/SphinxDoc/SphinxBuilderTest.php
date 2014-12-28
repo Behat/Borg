@@ -19,6 +19,9 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
 {
     private $tempInputPath;
     private $tempOutputPath;
+    /**
+     * @var SphinxBuilder
+     */
     private $builder;
 
     protected function setUp()
@@ -40,7 +43,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createDocumentationSource();
         $documentation = Documentation::downloaded($download, $source);
 
-        $this->builder->buildDocumentation($documentation);
+        $this->builder->build($documentation);
     }
 
     /** @test */
@@ -50,7 +53,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
         $documentation = Documentation::downloaded($download, $source);
 
-        $built = $this->builder->buildDocumentation($documentation);
+        $built = $this->builder->build($documentation);
 
         $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3/index.html');
         $this->assertEquals(
@@ -72,7 +75,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
         $source = $this->createRstDocumentationSourceWithoutIndex();
         $documentation = Documentation::downloaded($download, $source);
 
-        $this->builder->buildDocumentation($documentation);
+        $this->builder->build($documentation);
     }
 
     /**

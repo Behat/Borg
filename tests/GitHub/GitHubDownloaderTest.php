@@ -14,8 +14,14 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
 {
-    private $client;
     private $tempDownloadPath;
+    /**
+     * @var Client
+     */
+    private $client;
+    /**
+     * @var GitHubDownloader
+     */
     private $downloader;
 
     protected function setUp()
@@ -34,7 +40,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
         $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
         $releasePath = $this->tempDownloadPath . '/' . $release;
 
-        $downloadedRelease = $this->downloader->downloadRelease($release);
+        $downloadedRelease = $this->downloader->download($release);
 
         $this->assertInstanceOf(Download::class, $downloadedRelease);
         $this->assertFileExists($releasePath . '/index.rst');
@@ -58,7 +64,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
         file_put_contents("{$releasePath}/commit.meta", serialize($oldCommit));
         touch("{$releasePath}/some_file");
 
-        $downloadedRelease = $this->downloader->downloadRelease($release);
+        $downloadedRelease = $this->downloader->download($release);
 
         $this->assertNotEquals($oldCommit, $downloadedRelease->getCommit());
         $this->assertFileNotExists("{$releasePath}/some_file");
@@ -75,7 +81,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
         file_put_contents("{$releasePath}/commit.meta", serialize($oldCommit));
         touch("{$releasePath}/some_file");
 
-        $downloadedRelease = $this->downloader->downloadRelease($release);
+        $downloadedRelease = $this->downloader->download($release);
 
         $this->assertEquals($oldCommit, $downloadedRelease->getCommit());
         $this->assertFileExists("{$releasePath}/some_file");
@@ -86,7 +92,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     {
         $release = new Release(GitHubPackage::named('Behat/Behat'), Version::string('v1.0'));
 
-        $this->downloader->downloadRelease($release);
+        $this->downloader->download($release);
     }
 
     private function getLatestCommit(Release $release)

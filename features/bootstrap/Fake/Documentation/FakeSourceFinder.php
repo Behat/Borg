@@ -16,7 +16,7 @@ final class FakeSourceFinder implements SourceFinder
         $this->source[(string)$release] = $source;
     }
 
-    public function findDocumentationSource(Download $download)
+    public function findSource(Download $download)
     {
         return $this->source[(string)$download->getRelease()];
     }

@@ -17,5 +17,5 @@ interface SourceFinder
      *
      * @return null|Source
      */
-    public function findDocumentationSource(Download $download);
+    public function findSource(Download $download);
 }

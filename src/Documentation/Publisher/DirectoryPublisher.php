@@ -27,7 +27,7 @@ final class DirectoryPublisher implements Publisher
     /**
      * {@inheritdoc}
      */
-    public function publishDocumentation(BuiltDocumentation $builtDocumentation)
+    public function publish(BuiltDocumentation $builtDocumentation)
     {
         $buildPath = $builtDocumentation->getBuildPath();
         $publishPath = "{$this->publishPath}/{$builtDocumentation->getId()}";
@@ -42,7 +42,7 @@ final class DirectoryPublisher implements Publisher
     /**
      * {@inheritdoc}
      */
-    public function hasPublishedDocumentation(DocumentationId $anId)
+    public function hasPublished(DocumentationId $anId)
     {
         return file_exists("{$this->publishPath}/{$anId}/publish.meta");
     }
@@ -50,9 +50,9 @@ final class DirectoryPublisher implements Publisher
     /**
      * {@inheritdoc}
      */
-    public function getPublishedDocumentation(DocumentationId $anId)
+    public function getPublished(DocumentationId $anId)
     {
-        if (!$this->hasPublishedDocumentation($anId)) {
+        if (!$this->hasPublished($anId)) {
             throw new RequestedDocumentationWasNotPublished("Documentation `{$anId}` was not published.");
         }
 

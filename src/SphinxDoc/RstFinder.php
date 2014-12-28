@@ -13,7 +13,7 @@ final class RstFinder implements SourceFinder
     /**
      * {@inheritdoc}
      */
-    public function findDocumentationSource(Download $download)
+    public function findSource(Download $download)
     {
         if ($download->hasFile('index.rst')) {
             return Rst::atPath($download->getPath());

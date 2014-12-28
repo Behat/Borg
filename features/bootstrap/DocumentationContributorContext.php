@@ -85,7 +85,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
         PHPUnit::assertTrue(
-            $this->publisher->hasPublishedDocumentation(
+            $this->publisher->hasPublished(
                 new ReleaseDocumentationId(new Release($package, $version))
             )
         );

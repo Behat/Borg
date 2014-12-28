@@ -45,7 +45,7 @@ final class ReleaseDownloader implements ReleaseListener
      */
     public function packageWasReleased(Release $release)
     {
-        $downloadedRelease = $this->downloader->downloadRelease($release);
+        $downloadedRelease = $this->downloader->download($release);
 
         foreach ($this->listeners as $listener) {
             $listener->releaseWasDownloaded($downloadedRelease);

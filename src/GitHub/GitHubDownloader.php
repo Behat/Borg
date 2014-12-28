@@ -26,7 +26,7 @@ final class GitHubDownloader implements Downloader
     /**
      * {@inheritdoc}
      */
-    public function downloadRelease(Release $release)
+    public function download(Release $release)
     {
         $commit = $this->fetchLatestCommit($release);
         $download = new GitHubDownload($release, $commit, $this->getDownloadPath($release));

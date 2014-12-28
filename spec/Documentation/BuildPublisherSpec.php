@@ -22,7 +22,7 @@ class BuildPublisherSpec extends ObjectBehavior
 
     function it_publishes_built_documentation(Publisher $publisher, BuiltDocumentation $built)
     {
-        $publisher->publishDocumentation($built)->shouldBeCalled();
+        $publisher->publish($built)->shouldBeCalled();
 
         $this->documentationWasBuilt($built);
     }

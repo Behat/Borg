@@ -53,12 +53,12 @@ final class DownloadBuilder implements DownloadListener
      */
     public function releaseWasDownloaded(Download $download)
     {
-        if (null === $source = $this->finder->findDocumentationSource($download)) {
+        if (null === $source = $this->finder->findSource($download)) {
             return;
         }
 
         $documentation = Documentation::downloaded($download, $source);
-        $builtDocumentation = $this->builder->buildDocumentation($documentation);
+        $builtDocumentation = $this->builder->build($documentation);
 
         foreach ($this->listeners as $listener) {
             $listener->documentationWasBuilt($builtDocumentation);

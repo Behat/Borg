@@ -7,7 +7,7 @@ use Behat\Borg\Package\Release;
 
 final class FakeDownloader implements Downloader
 {
-    public function downloadRelease(Release $release)
+    public function download(Release $release)
     {
         return new FakeDownload($release);
     }

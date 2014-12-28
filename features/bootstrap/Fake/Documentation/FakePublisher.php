@@ -10,17 +10,17 @@ final class FakePublisher implements Publisher
 {
     private $documentation;
 
-    public function publishDocumentation(BuiltDocumentation $builtDocumentation)
+    public function publish(BuiltDocumentation $builtDocumentation)
     {
         $this->documentation[(string)$builtDocumentation->getId()] = $builtDocumentation;
     }
 
-    public function hasPublishedDocumentation(DocumentationId $anId)
+    public function hasPublished(DocumentationId $anId)
     {
         return isset($this->documentation['' . $anId]);
     }
 
-    public function getPublishedDocumentation(DocumentationId $anId)
+    public function getPublished(DocumentationId $anId)
     {
         return $this->documentation[(string)$anId];
     }
