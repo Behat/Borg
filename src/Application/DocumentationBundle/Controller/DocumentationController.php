@@ -16,21 +16,19 @@ class DocumentationController extends Controller
      * @Route(
      *     "/{version}",
      *     name="behat_documentation_index",
-     *     requirements={"version": "v\d+\.\d+"}
+     *     requirements={ "version": "v\d+\.\d+" }
      * )
      * @Route(
      *     "/behat/docs/{version}",
      *     name="behat_documentation_fullpath_index",
-     *     requirements={
-     *         "version": "v\d+\.\d+"
-     *     }
+     *     requirements={ "version": "v\d+\.\d+" }
      * )
      * @Route(
      *     "/behat/docs/{version}/{path}",
      *     name="behat_documentation_fullpath_page",
      *     requirements={
      *         "version": "v\d+\.\d+",
-     *         "path": ".*"
+     *         "path":    ".*"
      *     }
      * )
      *
@@ -50,7 +48,7 @@ class DocumentationController extends Controller
      *     name="behat_documentation_page",
      *     requirements={
      *         "version": "v\d+\.\d+",
-     *         "path": ".*"
+     *         "path":    ".*"
      *     }
      * )
      *
@@ -76,9 +74,9 @@ class DocumentationController extends Controller
      *     "/{project}/{version}",
      *     name="documentation_index",
      *     requirements={
-     *         "project": ".*",
+     *         "project": "\w+\/\w+",
      *         "version": "v\d+\.\d+",
-     *         "path": ".*"
+     *         "path":    ".*"
      *     }
      * )
      *
@@ -98,7 +96,7 @@ class DocumentationController extends Controller
      *     "/{project}/{version}/{path}",
      *     name="documentation_page",
      *     requirements={
-     *         "project": ".*",
+     *         "project": "\w+\/\w+",
      *         "version": "v\d+\.\d+",
      *         "path":    ".*"
      *     }
