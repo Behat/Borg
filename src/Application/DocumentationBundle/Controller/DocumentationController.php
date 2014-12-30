@@ -69,8 +69,7 @@ class DocumentationController extends Controller
      *     name="documentation_index",
      *     requirements={
      *         "project": "[\w\-]+\/[\w\-]+",
-     *         "version": "v\d+\.\d+",
-     *         "path":    ".*"
+     *         "version": "v\d+\.\d+"
      *     }
      * )
      *
@@ -82,7 +81,7 @@ class DocumentationController extends Controller
      */
     public function documentationIndexAction($project, $version, $path = 'index.html')
     {
-        return $this->redirectToRoute('documentation_page', compact($project, $version, $path));
+        return $this->redirectToRoute('documentation_page', compact('project', 'version', 'path'));
     }
 
     /**

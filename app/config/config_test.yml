@@ -17,3 +17,8 @@ swiftmailer:
 
 twig:
     exception_controller: Behat\Borg\Application\Debug\Controller\ExceptionController::showAction
+
+parameters:
+    package.release_downloader.path: %kernel.cache_dir%/build/repositories
+    documentation.build.path: %kernel.cache_dir%/build/docs
+    documentation.publisher.path: %kernel.cache_dir%/docs
