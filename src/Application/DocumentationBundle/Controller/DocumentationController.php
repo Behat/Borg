@@ -29,7 +29,7 @@ class DocumentationController extends Controller
      *     name="behat_documentation_fullpath_page",
      *     requirements={
      *         "version": "v\d+\.\d+",
-     *         "path":    ".*"
+     *         "path":    ".*\.html$"
      *     }
      * )
      *
@@ -49,7 +49,7 @@ class DocumentationController extends Controller
      *     name="behat_documentation_page",
      *     requirements={
      *         "version": "v\d+\.\d+",
-     *         "path":    ".*"
+     *         "path":    ".*\.html$"
      *     }
      * )
      *
@@ -91,7 +91,7 @@ class DocumentationController extends Controller
      *     requirements={
      *         "project": "[\w\-]+\/[\w\-]+",
      *         "version": "v\d+\.\d+",
-     *         "path":    ".*"
+     *         "path":    ".*\.html$"
      *     }
      * )
      *
