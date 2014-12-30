@@ -4,6 +4,7 @@ namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
 use Behat\Borg\Documentation\File\FileLocator;
 use Behat\Borg\Documentation\StringDocumentationId;
+use Behat\Borg\DocumentationManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -59,14 +60,7 @@ class DocumentationController extends Controller
      */
     public function behatDocumentationPageAction($version, $path)
     {
-        $anId = new StringDocumentationId('behat/docs', $version);
-        $locator = FileLocator::ofDocumentationFile($anId, $path);
-
-        if (!$publishedFile = $this->get('documentation.manager')->findFile($locator)) {
-            throw $this->createNotFoundException();
-        }
-
-        return $this->render("documentation:{$publishedFile}");
+        return $this->documentationPageAction('behat/docs', $version, $path);
     }
 
     /**
@@ -113,10 +107,18 @@ class DocumentationController extends Controller
         $anId = new StringDocumentationId($project, $version);
         $locator = FileLocator::ofDocumentationFile($anId, $path);
 
-        if (!$publishedFile = $this->get('documentation.manager')->findFile($locator)) {
+        if (!$publishedFile = $this->getDocumentationManager()->findFile($locator)) {
             throw $this->createNotFoundException();
         }
 
         return $this->render("documentation:{$publishedFile}");
+    }
+
+    /**
+     * @return DocumentationManager
+     */
+    private function getDocumentationManager()
+    {
+        return $this->get('documentation.manager');
     }
 }
