@@ -4,8 +4,8 @@ namespace spec\Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Locator\FileLocator;
-use Behat\Borg\Documentation\Locator\LocatedFile;
+use Behat\Borg\Documentation\File\FileLocator;
+use Behat\Borg\Documentation\File\PublishedFile;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use PhpSpec\ObjectBehavior;
@@ -30,7 +30,7 @@ class DocumentationManagerSpec extends ObjectBehavior
         $publisher->getPublished($anId)->willReturn($publishedDocumentation);
 
         $locatedFile = $this->findFile($locator);
-        $locatedFile->shouldBeAnInstanceOf(LocatedFile::class);
+        $locatedFile->shouldBeAnInstanceOf(PublishedFile::class);
         $locatedFile->getAbsolutePath()->shouldReturn(__FILE__);
     }
 

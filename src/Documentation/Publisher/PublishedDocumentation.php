@@ -75,5 +75,29 @@ final class PublishedDocumentation
         return $this->path;
     }
 
+    /**
+     * Checks if file at provided relative path exists.
+     *
+     * @param string $relativePath
+     *
+     * @return Boolean
+     */
+    public function hasFile($relativePath)
+    {
+        return file_exists($this->getAbsoluteFilePath($relativePath));
+    }
+
+    /**
+     * Generates absolute file path provided relative one.
+     *
+     * @param string $relativePath
+     *
+     * @return string
+     */
+    public function getAbsoluteFilePath($relativePath)
+    {
+        return $this->path . '/' . $relativePath;
+    }
+
     private function __construct() { }
 }

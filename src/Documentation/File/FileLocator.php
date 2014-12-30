@@ -1,11 +1,11 @@
 <?php
 
-namespace Behat\Borg\Documentation\Locator;
+namespace Behat\Borg\Documentation\File;
 
 use Behat\Borg\Documentation\DocumentationId;
 
 /**
- * Represents a documentation file that should be located.
+ * Represents a documentation file locator.
  */
 final class FileLocator
 {

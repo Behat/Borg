@@ -2,8 +2,8 @@
 
 namespace Behat\Borg;
 
-use Behat\Borg\Documentation\Locator\FileLocator;
-use Behat\Borg\Documentation\Locator\LocatedFile;
+use Behat\Borg\Documentation\File\FileLocator;
+use Behat\Borg\Documentation\File\PublishedFile;
 use Behat\Borg\Documentation\Publisher\Publisher;
 
 /**
@@ -31,7 +31,7 @@ final class DocumentationManager
      *
      * @param FileLocator $locator
      *
-     * @return null|LocatedFile
+     * @return null|PublishedFile
      */
     public function findFile(FileLocator $locator)
     {
@@ -40,12 +40,11 @@ final class DocumentationManager
         }
 
         $documentation = $this->publisher->getPublished($locator->getId());
-        $path = $documentation->getPublishPath() . '/' . $locator->getRelativePath();
 
-        if (!file_exists($path)) {
+        if (!$documentation->hasFile($locator->getRelativePath())) {
             return null;
         }
 
-        return LocatedFile::atPath($path);
+        return PublishedFile::publishedAtPath($documentation, $locator->getRelativePath());
     }
 }

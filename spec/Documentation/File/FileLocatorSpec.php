@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation\Locator;
+namespace spec\Behat\Borg\Documentation\File;
 
 use Behat\Borg\Documentation\DocumentationId;
 use PhpSpec\ObjectBehavior;

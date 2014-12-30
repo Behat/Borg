@@ -19,7 +19,7 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $builtDocumentation->getBuildTime()->willReturn($buildTime);
         $builtDocumentation->getDocumentationTime()->willReturn($docTime);
 
-        $this->beConstructedThrough('publish', [$builtDocumentation, '/published/to']);
+        $this->beConstructedThrough('publish', [$builtDocumentation, __DIR__]);
     }
 
     function it_has_the_same_id_as_built_documentation(DocumentationId $anId)
@@ -39,6 +39,17 @@ class PublishedDocumentationSpec extends ObjectBehavior
 
     function it_has_the_publish_path()
     {
-        $this->getPublishPath()->shouldReturn('/published/to');
+        $this->getPublishPath()->shouldReturn(__DIR__);
+    }
+
+    function it_can_tell_if_file_at_provided_relative_path_exists()
+    {
+        $this->shouldHaveFile(basename(__FILE__));
+        $this->shouldNotHaveFile('any file');
+    }
+
+    function it_can_provide_absolute_path_to_provided_relative_path()
+    {
+        $this->getAbsoluteFilePath(basename(__FILE__))->shouldReturn(__FILE__);
     }
 }
