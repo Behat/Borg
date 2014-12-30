@@ -2,11 +2,13 @@
 
 namespace Behat\Borg\GitHub;
 
+use Behat\Borg\GitHub\Exception\ReleaseWasNotFound;
 use Behat\Borg\Package\Downloader\Downloader;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use DateTimeImmutable;
 use Github\Client;
+use Github\Exception\RuntimeException;
 use Github\HttpClient\Message\ResponseMediator;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -28,7 +30,14 @@ final class GitHubDownloader implements Downloader
      */
     public function download(Release $release)
     {
-        $commit = $this->fetchLatestCommit($release);
+        try {
+            $commit = $this->fetchLatestCommit($release);
+        } catch (RuntimeException $e) {
+            throw new ReleaseWasNotFound(
+                "Requested release `{$release}` was not found on GitHub.", 0, $e
+            );
+        }
+
         $download = new GitHubDownload($release, $commit, $this->getDownloadPath($release));
 
         if ($this->releaseIsAlreadyAtCommit($release, $commit)) {
