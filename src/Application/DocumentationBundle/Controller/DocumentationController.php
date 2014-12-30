@@ -12,44 +12,34 @@ class DocumentationController extends Controller
 {
     /**
      * @Route(
-     *     "/{organisation}/{package}/{version}/{path}",
-     *     name="documentation_page",
+     *     "/{version}",
+     *     name="behat_documentation_index",
+     *     requirements={"version": "v\d+\.\d+"}
+     * )
+     * @Route(
+     *     "/behat/docs/{version}",
+     *     name="behat_documentation_fullpath_index",
+     *     requirements={
+     *         "version": "v\d+\.\d+"
+     *     }
+     * )
+     * @Route(
+     *     "/behat/docs/{version}/{path}",
+     *     name="behat_documentation_fullpath_page",
      *     requirements={
      *         "version": "v\d+\.\d+",
      *         "path": ".*"
      *     }
      * )
      *
-     * @param string $organisation
-     * @param string $package
      * @param string $version
      * @param string $path
      *
-     * @return RedirectResponse|Response
-     */
-    public function documentationPageAction($organisation, $package, $version, $path)
-    {
-        if ('behat' === $organisation && 'docs' === $package) {
-            return $this->redirectToRoute('behat_documentation_page', ['version' => $version, 'path' => $path]);
-        }
-
-        return $this->render("docs::{$organisation}:{$package}:{$version}/{$path}");
-    }
-
-    /**
-     * @Route(
-     *     "/{version}",
-     *     name="behat_documentation_index",
-     *     requirements={"version": "v\d+\.\d+"}
-     * )
-     *
-     * @param string $version
-     *
      * @return RedirectResponse
      */
-    public function behatDocumentationIndexAction($version = 'v3.0')
+    public function behatDocumentationIndexAction($version = 'v3.0', $path = 'index.html')
     {
-        return $this->redirectToRoute('behat_documentation_page', ['version' => $version, 'path' => 'index.html']);
+        return $this->redirectToRoute('behat_documentation_page', compact('version', 'path'));
     }
 
     /**
@@ -70,5 +60,49 @@ class DocumentationController extends Controller
     public function behatDocumentationPageAction($version, $path)
     {
         return $this->render("docs::behat:docs:{$version}/{$path}");
+    }
+
+    /**
+     * @Route(
+     *     "/{organisation}/{package}/{version}",
+     *     name="documentation_index",
+     *     requirements={
+     *         "version": "v\d+\.\d+",
+     *         "path": ".*"
+     *     }
+     * )
+     *
+     * @param string $organisation
+     * @param string $package
+     * @param string $version
+     * @param string $path
+     *
+     * @return RedirectResponse
+     */
+    public function documentationIndexAction($organisation, $package, $version, $path = 'index.html')
+    {
+        return $this->redirectToRoute('documentation_page', compact($organisation, $package, $version, $path));
+    }
+
+    /**
+     * @Route(
+     *     "/{organisation}/{package}/{version}/{path}",
+     *     name="documentation_page",
+     *     requirements={
+     *         "version": "v\d+\.\d+",
+     *         "path": ".*"
+     *     }
+     * )
+     *
+     * @param string $organisation
+     * @param string $package
+     * @param string $version
+     * @param string $path
+     *
+     * @return RedirectResponse|Response
+     */
+    public function documentationPageAction($organisation, $package, $version, $path)
+    {
+        return $this->render("docs::{$organisation}:{$package}:{$version}/{$path}");
     }
 }
