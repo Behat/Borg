@@ -3,9 +3,9 @@
 namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
 use Behat\Borg\Documentation\Locator\FileLocator;
+use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Release;
-use Behat\Borg\Package\SimplePackage;
 use Behat\Borg\Package\Version;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -64,7 +64,7 @@ class DocumentationController extends Controller
      */
     public function behatDocumentationPageAction($version, $path)
     {
-        $package = new SimplePackage('behat', 'docs');
+        $package = GitHubPackage::named('behat/docs');
         $version = Version::string($version);
         $release = new Release($package, $version);
         $locator = FileLocator::ofDocumentationFile(new ReleaseDocumentationId($release), $path);
@@ -117,7 +117,7 @@ class DocumentationController extends Controller
      */
     public function documentationPageAction($organisation, $package, $version, $path)
     {
-        $package = new SimplePackage($organisation, $package);
+        $package = GitHubPackage::named("{$organisation}/{$package}");
         $version = Version::string($version);
         $release = new Release($package, $version);
         $locator = FileLocator::ofDocumentationFile(new ReleaseDocumentationId($release), $path);
