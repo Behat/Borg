@@ -33,9 +33,7 @@ final class GitHubDownloader implements Downloader
         try {
             $commit = $this->fetchLatestCommit($release);
         } catch (RuntimeException $e) {
-            throw new ReleaseWasNotFound(
-                "Requested release `{$release}` was not found on GitHub.", 0, $e
-            );
+            throw new ReleaseWasNotFound("Requested release `{$release}` was not found on GitHub.", 0, $e);
         }
 
         $download = new GitHubDownload($release, $commit, $this->getDownloadPath($release));
