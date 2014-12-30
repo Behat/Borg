@@ -27,6 +27,7 @@ Feature: Documentation is published on release
     When I release "Behat/Symfony2Extension" version "v2.0.0"
     Then "Behat/Symfony2Extension" version "v2.0" documentation should have been published
 
+  @critical
   Scenario: Not publishing documentation if release was not documented
     Given "Everzet/CustomExtension" version "v1.0.0" was not documented
     When I release "Everzet/CustomExtension" version "v1.0.0"

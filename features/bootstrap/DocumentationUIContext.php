@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
@@ -76,6 +77,17 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
+     * @Given :package version :version was not documented
+     */
+    public function releaseWasNotDocumented(Package $package, Version $version)
+    {
+        $rstIsInRepo = $this->fileExistsInRepositoryVersion($package, $version, 'index.rst')
+                    || $this->fileExistsInRepositoryVersion($package, $version, 'doc/index.rst');
+
+        PHPUnit::assertFalse($rstIsInRepo, 'RST is found in the provided repository version');
+    }
+
+    /**
      * @When I release :package version :version
      */
     public function iReleaseRelease(Package $package, Version $version)
@@ -98,6 +110,17 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
 
         $this->assertSession()->pageTextContains($package);
         $this->assertSession()->pageTextContains($version);
+    }
+
+    /**
+     * @Then :package version :version documentation should not be published
+     */
+    public function releaseDocumentationShouldNotBePublished(Package $package, Version $version)
+    {
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        $this->visitPath('/docs/' . $anId . '/index.html');
+
+        $this->assertSession()->statusCodeEquals(404);
     }
 
     private function packageReleaseCommand(Package $package, Version $version)
