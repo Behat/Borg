@@ -8,18 +8,18 @@ use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\SimplePackage;
 use Behat\Borg\Package\Version;
-use Twig_Loader_Filesystem;
+use Twig_ExistsLoaderInterface;
+use Twig_LoaderInterface;
 
-final class DocumentationLoader extends Twig_Loader_Filesystem
+final class DocumentationLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterface
 {
-    private static $regex = '#^docs::(?<org>[\w\-]+):(?<pkg>[\w\-]+):v(?<ver>\d+\.\d+)/(?<path>.*)$#';
+    private static $regex = '#^documentation:(?<org>[\w\-]+):(?<pkg>[\w\-]+):v(?<ver>\d+\.\d+)/(?<path>.*)$#';
     private $publisher;
+    private $cache = [];
 
     public function __construct(Publisher $publisher)
     {
         $this->publisher = $publisher;
-
-        parent::__construct(array());
     }
 
     public function exists($template)
@@ -37,7 +37,31 @@ final class DocumentationLoader extends Twig_Loader_Filesystem
         return file_exists($this->getFullPath($id, $m['path']));
     }
 
-    protected function findTemplate($template)
+    /**
+     * {@inheritdoc}
+     */
+    public function getSource($template)
+    {
+        return file_get_contents($this->findTemplate($template));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheKey($template)
+    {
+        return $this->findTemplate($template);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFresh($name, $time)
+    {
+        return filemtime($this->findTemplate($name)) <= $time;
+    }
+
+    private function findTemplate($template)
     {
         $logicalName = (string)$template;
 

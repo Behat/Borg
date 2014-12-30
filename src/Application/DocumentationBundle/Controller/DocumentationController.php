@@ -59,7 +59,7 @@ class DocumentationController extends Controller
      */
     public function behatDocumentationPageAction($version, $path)
     {
-        return $this->render("docs::behat:docs:{$version}/{$path}");
+        return $this->render("documentation:behat:docs:{$version}/{$path}");
     }
 
     /**
@@ -103,6 +103,6 @@ class DocumentationController extends Controller
      */
     public function documentationPageAction($organisation, $package, $version, $path)
     {
-        return $this->render("docs::{$organisation}:{$package}:{$version}/{$path}");
+        return $this->render("documentation:{$organisation}:{$package}:{$version}/{$path}");
     }
 }
