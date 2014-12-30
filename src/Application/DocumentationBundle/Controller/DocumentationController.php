@@ -2,6 +2,12 @@
 
 namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
+use Behat\Borg\Documentation\Locator\FileLocator;
+use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
+use Behat\Borg\Package\Package;
+use Behat\Borg\Package\Release;
+use Behat\Borg\Package\SimplePackage;
+use Behat\Borg\Package\Version;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -59,7 +65,15 @@ class DocumentationController extends Controller
      */
     public function behatDocumentationPageAction($version, $path)
     {
-        return $this->render("documentation:behat:docs:{$version}/{$path}");
+        $package = new SimplePackage('behat', 'docs');
+        $documentationId = $this->getDocumentationId($package, Version::string($version));
+        $locator = FileLocator::ofDocumentationFile($documentationId, $path);
+
+        if (!$filePath = $this->get('documentation.manager')->findFile($locator)) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render("documentation:{$filePath}");
     }
 
     /**
@@ -103,6 +117,19 @@ class DocumentationController extends Controller
      */
     public function documentationPageAction($organisation, $package, $version, $path)
     {
-        return $this->render("documentation:{$organisation}:{$package}:{$version}/{$path}");
+        $package = new SimplePackage($organisation, $package);
+        $documentationId = $this->getDocumentationId($package, Version::string($version));
+        $locator = FileLocator::ofDocumentationFile($documentationId, $path);
+
+        if (!$filePath = $this->get('documentation.manager')->findFile($locator)) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render("documentation:{$filePath}");
+    }
+
+    private function getDocumentationId(Package $package, Version $version)
+    {
+        return new ReleaseDocumentationId(new Release($package, $version));
     }
 }

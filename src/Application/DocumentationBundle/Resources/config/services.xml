@@ -15,6 +15,11 @@
             </call>
         </service>
 
+        <service id="documentation.manager"
+                 class="Behat\Borg\DocumentationManager">
+            <argument type="service" id="documentation.publisher"/>
+        </service>
+
         <service id="documentation.listener.build.publishing"
                  class="Behat\Borg\Documentation\BuildPublisher">
             <argument type="service" id="documentation.publisher"/>
