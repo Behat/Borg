@@ -18,6 +18,10 @@ final class FakeSourceFinder implements SourceFinder
 
     public function findSource(Download $download)
     {
+        if (!isset($this->source[(string)$download->getRelease()])) {
+            return null;
+        }
+
         return $this->source[(string)$download->getRelease()];
     }
 }

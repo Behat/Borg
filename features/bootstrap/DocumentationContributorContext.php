@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\DownloadBuilder;
@@ -72,6 +73,13 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
+     * @Given :package version :version was not documented
+     */
+    public function releaseWasNotDocumented(Package $package, Version $version)
+    {
+    }
+
+    /**
      * @When I release :package version :version
      */
     public function iReleaseRelease(Package $package, Version $version)
@@ -85,6 +93,18 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
         PHPUnit::assertTrue(
+            $this->publisher->hasPublished(
+                new ReleaseDocumentationId(new Release($package, $version))
+            )
+        );
+    }
+
+    /**
+     * @Then :package version :version documentation should not be published
+     */
+    public function versionDocumentationShouldNotBePublished(Package $package, Version $version)
+    {
+        PHPUnit::assertFalse(
             $this->publisher->hasPublished(
                 new ReleaseDocumentationId(new Release($package, $version))
             )
