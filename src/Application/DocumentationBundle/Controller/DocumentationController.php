@@ -3,10 +3,7 @@
 namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
 use Behat\Borg\Documentation\Locator\FileLocator;
-use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Documentation\StringDocumentationId;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -64,10 +61,8 @@ class DocumentationController extends Controller
      */
     public function behatDocumentationPageAction($version, $path)
     {
-        $package = GitHubPackage::named('behat/docs');
-        $version = Version::string($version);
-        $release = new Release($package, $version);
-        $locator = FileLocator::ofDocumentationFile(new ReleaseDocumentationId($release), $path);
+        $anId = new StringDocumentationId('behat/docs', $version);
+        $locator = FileLocator::ofDocumentationFile($anId, $path);
 
         if (!$filePath = $this->get('documentation.manager')->findFile($locator)) {
             throw $this->createNotFoundException();
@@ -78,49 +73,47 @@ class DocumentationController extends Controller
 
     /**
      * @Route(
-     *     "/{organisation}/{package}/{version}",
+     *     "/{project}/{version}",
      *     name="documentation_index",
      *     requirements={
+     *         "project": ".*",
      *         "version": "v\d+\.\d+",
      *         "path": ".*"
      *     }
      * )
      *
-     * @param string $organisation
-     * @param string $package
+     * @param string $project
      * @param string $version
      * @param string $path
      *
      * @return RedirectResponse
      */
-    public function documentationIndexAction($organisation, $package, $version, $path = 'index.html')
+    public function documentationIndexAction($project, $version, $path = 'index.html')
     {
-        return $this->redirectToRoute('documentation_page', compact($organisation, $package, $version, $path));
+        return $this->redirectToRoute('documentation_page', compact($project, $version, $path));
     }
 
     /**
      * @Route(
-     *     "/{organisation}/{package}/{version}/{path}",
+     *     "/{project}/{version}/{path}",
      *     name="documentation_page",
      *     requirements={
+     *         "project": ".*",
      *         "version": "v\d+\.\d+",
-     *         "path": ".*"
+     *         "path":    ".*"
      *     }
      * )
      *
-     * @param string $organisation
-     * @param string $package
+     * @param string $project
      * @param string $version
      * @param string $path
      *
      * @return RedirectResponse|Response
      */
-    public function documentationPageAction($organisation, $package, $version, $path)
+    public function documentationPageAction($project, $version, $path)
     {
-        $package = GitHubPackage::named("{$organisation}/{$package}");
-        $version = Version::string($version);
-        $release = new Release($package, $version);
-        $locator = FileLocator::ofDocumentationFile(new ReleaseDocumentationId($release), $path);
+        $anId = new StringDocumentationId($project, $version);
+        $locator = FileLocator::ofDocumentationFile($anId, $path);
 
         if (!$filePath = $this->get('documentation.manager')->findFile($locator)) {
             throw $this->createNotFoundException();
