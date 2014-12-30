@@ -4,7 +4,6 @@ namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
 use Behat\Borg\Documentation\Locator\FileLocator;
 use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
-use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\SimplePackage;
 use Behat\Borg\Package\Version;
@@ -66,8 +65,9 @@ class DocumentationController extends Controller
     public function behatDocumentationPageAction($version, $path)
     {
         $package = new SimplePackage('behat', 'docs');
-        $documentationId = $this->getDocumentationId($package, Version::string($version));
-        $locator = FileLocator::ofDocumentationFile($documentationId, $path);
+        $version = Version::string($version);
+        $release = new Release($package, $version);
+        $locator = FileLocator::ofDocumentationFile(new ReleaseDocumentationId($release), $path);
 
         if (!$filePath = $this->get('documentation.manager')->findFile($locator)) {
             throw $this->createNotFoundException();
@@ -118,18 +118,14 @@ class DocumentationController extends Controller
     public function documentationPageAction($organisation, $package, $version, $path)
     {
         $package = new SimplePackage($organisation, $package);
-        $documentationId = $this->getDocumentationId($package, Version::string($version));
-        $locator = FileLocator::ofDocumentationFile($documentationId, $path);
+        $version = Version::string($version);
+        $release = new Release($package, $version);
+        $locator = FileLocator::ofDocumentationFile(new ReleaseDocumentationId($release), $path);
 
         if (!$filePath = $this->get('documentation.manager')->findFile($locator)) {
             throw $this->createNotFoundException();
         }
 
         return $this->render("documentation:{$filePath}");
-    }
-
-    private function getDocumentationId(Package $package, Version $version)
-    {
-        return new ReleaseDocumentationId(new Release($package, $version));
     }
 }
