@@ -94,7 +94,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
         $anId = new ReleaseDocumentationId(new Release($package, $version));
-        $this->visitPath('/docs/' . $anId);
+        $this->visitPath('/docs/' . $anId . '/index.html');
 
         $this->assertSession()->pageTextContains($package);
         $this->assertSession()->pageTextContains($version);

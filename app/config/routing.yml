@@ -1,4 +1,13 @@
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    '::homepage.html.twig'
+        section:     'homepage'
+
 documentation:
-    resource: "@DocumentationBundle/Controller/"
+    resource: '@DocumentationBundle/Controller/'
     type:     annotation
     prefix:   /docs
+    defaults:
+        section: 'documentation'

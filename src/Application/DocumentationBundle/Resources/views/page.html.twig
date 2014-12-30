@@ -1,6 +1,17 @@
-{% extends '::base.html.twig' %}
+{% extends '::layout.html.twig' %}
 
-{% block body %}
-    {% block toc %}{% endblock %}
-    {% block text %}{% endblock %}
-{% endblock body %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/documentation.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/pygments.css') }}">
+{% endblock %}
+
+{% block page %}
+    <nav class="toc">
+        <h3>Chapters</h3>
+        {% block toc %}{% endblock %}
+    </nav>
+
+    <section class="text">
+        {% block text %}{% endblock %}
+    </section>
+{% endblock page %}

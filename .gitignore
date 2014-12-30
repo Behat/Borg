@@ -5,7 +5,6 @@ app/cache/*
 app/logs/*
 build/repositories/*
 build/docs/*
-design/borg/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 !build/repositories/.gitkeep
