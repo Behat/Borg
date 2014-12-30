@@ -29,6 +29,6 @@ Feature: Documentation is published on release
 
   @critical
   Scenario: Not publishing documentation if release was not documented
-    Given "Everzet/CustomExtension" version "v1.0.0" was not documented
-    When I release "Everzet/CustomExtension" version "v1.0.0"
-    Then "Everzet/CustomExtension" version "v1.0" documentation should not be published
+    Given "everzet/persisted-objects" version "v1.0.0" was not documented
+    When I release "everzet/persisted-objects" version "v1.0.0"
+    Then "everzet/persisted-objects" version "v1.0" documentation should not be published

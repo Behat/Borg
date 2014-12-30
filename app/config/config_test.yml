@@ -16,4 +16,4 @@ swiftmailer:
     disable_delivery: true
 
 twig:
-    exception_controller:
+    exception_controller: Behat\Borg\Application\Debug\Controller\ExceptionController::showAction

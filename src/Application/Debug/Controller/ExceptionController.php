@@ -2,13 +2,18 @@
 
 namespace Behat\Borg\Application\Debug\Controller;
 
-use SebastianBergmann\Exporter\Exception;
 use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ExceptionController
 {
     public function showAction(FlattenException $exception)
     {
-        throw new Exception("{$exception->getClass()}: {$exception->getMessage()}");
+        if (NotFoundHttpException::class == $exception->getClass()) {
+            return new Response('Page not found', 404);
+        }
+
+        return new Response("{$exception->getClass()}: {$exception->getMessage()}", 500);
     }
 }
