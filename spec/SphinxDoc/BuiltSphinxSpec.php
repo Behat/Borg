@@ -23,9 +23,9 @@ class BuiltSphinxSpec extends ObjectBehavior
         $this->shouldHaveType(BuiltDocumentation::class);
     }
 
-    function it_has_an_id(DocumentationId $anId)
+    function it_has_a_documentation_id(DocumentationId $anId)
     {
-        $this->getId()->shouldReturn($anId);
+        $this->getDocumentationId()->shouldReturn($anId);
     }
 
     function it_has_a_path_documentation_was_built_into()

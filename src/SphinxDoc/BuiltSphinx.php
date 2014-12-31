@@ -37,7 +37,7 @@ final class BuiltSphinx implements BuiltDocumentation
     /**
      * {@inheritdoc}
      */
-    public function getId()
+    public function getDocumentationId()
     {
         return $this->anId;
     }

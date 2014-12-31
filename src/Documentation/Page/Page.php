@@ -10,13 +10,9 @@ use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 final class Page
 {
     /**
-     * @var PublishedDocumentation
+     * @var string
      */
-    private $documentation;
-    /**
-     * @var PageId
-     */
-    private $pageId;
+    private $path;
 
     /**
      * Initializes page.
@@ -26,8 +22,7 @@ final class Page
      */
     public function __construct(PublishedDocumentation $documentation, PageId $pageId)
     {
-        $this->documentation = $documentation;
-        $this->pageId = $pageId;
+        $this->path = $documentation->getPagePath($pageId);
     }
 
     /**
@@ -37,7 +32,7 @@ final class Page
      */
     public function getPath()
     {
-        return $this->documentation->getPagePath($this->pageId);
+        return $this->path;
     }
 
     /**

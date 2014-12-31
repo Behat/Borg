@@ -15,7 +15,7 @@ interface BuiltDocumentation
      *
      * @return DocumentationId
      */
-    public function getId();
+    public function getDocumentationId();
 
     /**
      * Returns documentation build path.

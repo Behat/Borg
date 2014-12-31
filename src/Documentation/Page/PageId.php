@@ -16,18 +16,18 @@ final class PageId
     /**
      * @var string
      */
-    private $pagePath;
+    private $path;
 
     /**
      * Initializes ID.
      *
      * @param DocumentationId $documentationId
-     * @param string          $pagePath
+     * @param string          $path
      */
-    public function __construct(DocumentationId $documentationId, $pagePath)
+    public function __construct(DocumentationId $documentationId, $path)
     {
         $this->documentationId = $documentationId;
-        $this->pagePath = $pagePath;
+        $this->path = $path;
     }
 
     /**
@@ -47,6 +47,6 @@ final class PageId
      */
     public function getPath()
     {
-        return $this->pagePath;
+        return $this->path;
     }
 }

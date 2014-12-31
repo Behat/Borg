@@ -17,7 +17,7 @@ final class FakeBuiltDocumentation implements BuiltDocumentation
         $this->buildTime = $buildTime;
     }
 
-    public function getId()
+    public function getDocumentationId()
     {
         return $this->documentation->getId();
     }

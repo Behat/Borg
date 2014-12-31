@@ -17,16 +17,16 @@ class PublishedDocumentationSpec extends ObjectBehavior
         \DateTimeImmutable $buildTime,
         \DateTimeImmutable $docTime
     ) {
-        $builtDocumentation->getId()->willReturn($anId);
+        $builtDocumentation->getDocumentationId()->willReturn($anId);
         $builtDocumentation->getBuildTime()->willReturn($buildTime);
         $builtDocumentation->getDocumentationTime()->willReturn($docTime);
 
         $this->beConstructedThrough('publish', [$builtDocumentation, __DIR__]);
     }
 
-    function it_has_the_same_id_as_built_documentation(DocumentationId $anId)
+    function it_has_documentation_id(DocumentationId $anId)
     {
-        $this->getId()->shouldReturn($anId);
+        $this->getDocumentationId()->shouldReturn($anId);
     }
 
     function it_has_the_same_build_time_as_built_documentation(\DateTimeImmutable $buildTime)

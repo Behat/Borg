@@ -29,13 +29,13 @@ final class PublishedDocumentation
      */
     public static function publish(BuiltDocumentation $builtDocumentation, $path)
     {
-        $publishedDocumentation = new PublishedDocumentation();
-        $publishedDocumentation->id = $builtDocumentation->getId();
-        $publishedDocumentation->buildTime = $builtDocumentation->getBuildTime();
-        $publishedDocumentation->documentationTime = $builtDocumentation->getDocumentationTime();
-        $publishedDocumentation->path = $path;
+        $documentation = new PublishedDocumentation();
+        $documentation->id = $builtDocumentation->getDocumentationId();
+        $documentation->buildTime = $builtDocumentation->getBuildTime();
+        $documentation->documentationTime = $builtDocumentation->getDocumentationTime();
+        $documentation->path = $path;
 
-        return $publishedDocumentation;
+        return $documentation;
     }
 
     /**
@@ -43,7 +43,7 @@ final class PublishedDocumentation
      *
      * @return DocumentationId
      */
-    public function getId()
+    public function getDocumentationId()
     {
         return $this->id;
     }
@@ -66,6 +66,16 @@ final class PublishedDocumentation
     public function getDocumentationTime()
     {
         return $this->documentationTime;
+    }
+
+    /**
+     * Returns path documentation was published to.
+     *
+     * @return string
+     */
+    public function getPublishPath()
+    {
+        return $this->path;
     }
 
     /**
