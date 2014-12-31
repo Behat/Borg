@@ -13,6 +13,14 @@ final class Page
      * @var string
      */
     private $path;
+    /**
+     * @var string
+     */
+    private $projectName;
+    /**
+     * @var string
+     */
+    private $versionString;
 
     /**
      * Initializes page.
@@ -23,6 +31,28 @@ final class Page
     public function __construct(PublishedDocumentation $documentation, PageId $pageId)
     {
         $this->path = $documentation->getPagePath($pageId);
+        $this->projectName = $documentation->getDocumentationId()->getProjectName();
+        $this->versionString = $documentation->getDocumentationId()->getVersionString();
+    }
+
+    /**
+     * Returns a documented project name.
+     *
+     * @return string
+     */
+    public function getProjectName()
+    {
+        return $this->projectName;
+    }
+
+    /**
+     * Returns a documented project version string.
+     *
+     * @return string
+     */
+    public function getVersionString()
+    {
+        return $this->versionString;
     }
 
     /**

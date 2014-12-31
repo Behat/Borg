@@ -148,7 +148,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         );
 
         PHPUnit::assertNotNull($page, 'Page not found.');
-        PHPUnit::assertEquals($name, $page->getPackageName());
+        PHPUnit::assertEquals($name, $page->getProjectName());
     }
 
     /**

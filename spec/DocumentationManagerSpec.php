@@ -43,6 +43,10 @@ class DocumentationManagerSpec extends ObjectBehavior
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
+        $built->getDocumentationId()->willReturn($anId);
+        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
+        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
+
         $pageId = new PageId(basename(__FILE__));
         $publishedDocumentation = PublishedDocumentation::publish(
             $built->getWrappedObject(), __DIR__
