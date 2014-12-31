@@ -152,10 +152,15 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
-     * @Then documentation time of :arg1 page for :arg2 version :arg3 should be :arg4
+     * @Then documentation time of :pageId page for :package version :version should be :date
      */
-    public function documentationTimeOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    public function documentationTimeOfPageForVersionShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $date)
     {
-        throw new PendingException();
+        $page = $this->documentationManager->findPage(
+            new ReleaseDocumentationId(new Release($package, $version)), $pageId
+        );
+
+        PHPUnit::assertNotNull($page, 'Page not found.');
+        PHPUnit::assertEquals($date, $page->getDocumentationTime());
     }
 }
