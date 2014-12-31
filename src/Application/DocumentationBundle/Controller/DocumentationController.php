@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
-use Behat\Borg\Documentation\File\FileLocator;
+use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\StringDocumentationId;
 use Behat\Borg\DocumentationManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -103,14 +103,13 @@ class DocumentationController extends Controller
      */
     public function documentationPageAction($project, $version, $path)
     {
-        $anId = new StringDocumentationId($project, $version);
-        $locator = FileLocator::ofDocumentationFile($anId, $path);
+        $docId = new StringDocumentationId($project, $version);
 
-        if (!$publishedFile = $this->getDocumentationManager()->findFile($locator)) {
+        if (!$page = $this->getDocumentationManager()->findPage(new PageId($docId, $path))) {
             throw $this->createNotFoundException();
         }
 
-        return $this->render("documentation:{$publishedFile}");
+        return $this->render("documentation:{$page}");
     }
 
     /**

@@ -1,6 +1,5 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
@@ -42,9 +41,8 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     {
         (new Filesystem())->remove(
             [
-                __DIR__ . '/../../build/repositories/behat',
-                __DIR__ . '/../../build/docs/behat',
-                __DIR__ . '/../../web/docs/behat'
+                __DIR__ . '/../../app/cache/build',
+                __DIR__ . '/../../app/cache/docs'
             ]
         );
     }

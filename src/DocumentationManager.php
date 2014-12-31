@@ -2,8 +2,8 @@
 
 namespace Behat\Borg;
 
-use Behat\Borg\Documentation\File\FileLocator;
-use Behat\Borg\Documentation\File\PublishedFile;
+use Behat\Borg\Documentation\Page\PageId;
+use Behat\Borg\Documentation\Page\Page;
 use Behat\Borg\Documentation\Publisher\Publisher;
 
 /**
@@ -27,24 +27,24 @@ final class DocumentationManager
     }
 
     /**
-     * Tries to find documentation using provided file locator.
+     * Tries to find the documentation page using its ID.
      *
-     * @param FileLocator $locator
+     * @param PageId $anId
      *
-     * @return null|PublishedFile
+     * @return null|Page
      */
-    public function findFile(FileLocator $locator)
+    public function findPage(PageId $anId)
     {
-        if (!$this->publisher->hasPublished($locator->getId())) {
+        $documentationId = $anId->getDocumentationId();
+        if (!$this->publisher->hasPublished($documentationId)) {
             return null;
         }
 
-        $documentation = $this->publisher->getPublished($locator->getId());
-
-        if (!$documentation->hasFile($locator->getRelativePath())) {
+        $documentation = $this->publisher->getPublished($documentationId);
+        if (!$documentation->hasPage($anId)) {
             return null;
         }
 
-        return PublishedFile::publishedAtPath($documentation, $locator->getRelativePath());
+        return $documentation->getPage($anId);
     }
 }

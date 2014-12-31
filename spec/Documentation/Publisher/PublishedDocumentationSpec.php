@@ -4,6 +4,8 @@ namespace spec\Behat\Borg\Documentation\Publisher;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Page\Page;
+use Behat\Borg\Documentation\Page\PageId;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -37,19 +39,37 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->getDocumentationTime()->shouldReturn($docTime);
     }
 
-    function it_has_the_publish_path()
+    function it_can_tell_if_it_contains_a_page(DocumentationId $anId)
     {
-        $this->getPublishPath()->shouldReturn(__DIR__);
+        $this->shouldHavePage(new PageId($anId->getWrappedObject(), basename(__FILE__)));
+        $this->shouldNotHavePage(new PageId($anId->getWrappedObject(), 'any file'));
     }
 
-    function it_can_tell_if_file_at_provided_relative_path_exists()
+    function it_can_get_page_by_its_id(DocumentationId $anId)
     {
-        $this->shouldHaveFile(basename(__FILE__));
-        $this->shouldNotHaveFile('any file');
+        $pageId = new PageId($anId->getWrappedObject(), basename(__FILE__));
+
+        $this->getPage($pageId)->shouldBeLike(new Page($this->getWrappedObject(), $pageId));
     }
 
-    function it_can_provide_absolute_path_to_provided_relative_path()
+    function it_throws_an_exception_when_trying_to_get_inexistent_page(DocumentationId $anId)
     {
-        $this->getAbsoluteFilePath(basename(__FILE__))->shouldReturn(__FILE__);
+        $pageId = new PageId($anId->getWrappedObject(), 'any file');
+
+        $this->shouldThrow()->duringGetPage($pageId);
+    }
+
+    function it_can_provide_absolute_path_to_provided_page(DocumentationId $anId)
+    {
+        $pageId = new PageId($anId->getWrappedObject(), basename(__FILE__));
+
+        $this->getPagePath($pageId)->shouldReturn(__FILE__);
+    }
+
+    function it_throws_an_exception_when_trying_to_get_path_for_inexistent_page(DocumentationId $anId)
+    {
+        $pageId = new PageId($anId->getWrappedObject(), 'any file');
+
+        $this->shouldThrow()->duringGetPagePath($pageId);
     }
 }

@@ -4,6 +4,9 @@ namespace Behat\Borg\Documentation\Publisher;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Exception\PageNotFound;
+use Behat\Borg\Documentation\Page\Page;
+use Behat\Borg\Documentation\Page\PageId;
 use DateTimeImmutable;
 
 /**
@@ -66,37 +69,47 @@ final class PublishedDocumentation
     }
 
     /**
-     * Returns path documentation was published to.
-     *
-     * @return string
-     */
-    public function getPublishPath()
-    {
-        return $this->path;
-    }
-
-    /**
      * Checks if file at provided relative path exists.
      *
-     * @param string $relativePath
+     * @param PageId $anId
      *
      * @return Boolean
      */
-    public function hasFile($relativePath)
+    public function hasPage(PageId $anId)
     {
-        return file_exists($this->getAbsoluteFilePath($relativePath));
+        return file_exists($this->path . '/' . $anId->getPath());
     }
 
     /**
-     * Generates absolute file path provided relative one.
+     * Returns page by its ID.
      *
-     * @param string $relativePath
+     * @param PageId $anId
+     *
+     * @return Page
+     */
+    public function getPage(PageId $anId)
+    {
+        if (!$this->hasPage($anId)) {
+            throw new PageNotFound("Documentation page `{$anId->getPath()}` was not found.");
+        }
+
+        return new Page($this, $anId);
+    }
+
+    /**
+     * Generates absolute file path for provided page ID.
+     *
+     * @param PageId $anId
      *
      * @return string
      */
-    public function getAbsoluteFilePath($relativePath)
+    public function getPagePath(PageId $anId)
     {
-        return $this->path . '/' . $relativePath;
+        if (!$this->hasPage($anId)) {
+            throw new PageNotFound("Documentation page `{$anId->getPath()}` was not found.");
+        }
+
+        return $this->path . '/' . $anId->getPath();
     }
 
     private function __construct() { }
