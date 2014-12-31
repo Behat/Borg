@@ -12,8 +12,8 @@ use DateTimeImmutable;
 final class Documentation
 {
     private $anId;
-    private $source;
     private $time;
+    private $source;
 
     /**
      * Initializes documentation after it was downloaded.
@@ -27,8 +27,8 @@ final class Documentation
     {
         $documentation = new Documentation();
         $documentation->anId = new ReleaseDocumentationId($download->getRelease());
-        $documentation->source = $source;
         $documentation->time = $download->getReleaseTime();
+        $documentation->source = $source;
 
         return $documentation;
     }
