@@ -41,35 +41,29 @@ class PublishedDocumentationSpec extends ObjectBehavior
 
     function it_can_tell_if_it_contains_a_page(DocumentationId $anId)
     {
-        $this->shouldHavePage(new PageId($anId->getWrappedObject(), basename(__FILE__)));
-        $this->shouldNotHavePage(new PageId($anId->getWrappedObject(), 'any file'));
+        $this->shouldHavePage(new PageId(basename(__FILE__)));
+        $this->shouldNotHavePage(new PageId('any file'));
     }
 
-    function it_can_get_page_by_its_id(DocumentationId $anId)
+    function it_can_get_page_by_its_id()
     {
-        $pageId = new PageId($anId->getWrappedObject(), basename(__FILE__));
+        $pageId = new PageId(basename(__FILE__));
 
         $this->getPage($pageId)->shouldBeLike(new Page($this->getWrappedObject(), $pageId));
     }
 
-    function it_throws_an_exception_when_trying_to_get_inexistent_page(DocumentationId $anId)
+    function it_throws_an_exception_when_trying_to_get_inexistent_page()
     {
-        $pageId = new PageId($anId->getWrappedObject(), 'any file');
-
-        $this->shouldThrow()->duringGetPage($pageId);
+        $this->shouldThrow()->duringGetPage(new PageId('any file'));
     }
 
-    function it_can_provide_absolute_path_to_provided_page(DocumentationId $anId)
+    function it_can_provide_absolute_path_to_provided_page()
     {
-        $pageId = new PageId($anId->getWrappedObject(), basename(__FILE__));
-
-        $this->getPagePath($pageId)->shouldReturn(__FILE__);
+        $this->getPagePath(new PageId(basename(__FILE__)))->shouldReturn(__FILE__);
     }
 
-    function it_throws_an_exception_when_trying_to_get_path_for_inexistent_page(DocumentationId $anId)
+    function it_throws_an_exception_when_trying_to_get_path_for_inexistent_page()
     {
-        $pageId = new PageId($anId->getWrappedObject(), 'any file');
-
-        $this->shouldThrow()->duringGetPagePath($pageId);
+        $this->shouldThrow()->duringGetPagePath(new PageId('any file'));
     }
 }

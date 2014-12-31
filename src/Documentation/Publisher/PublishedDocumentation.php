@@ -69,16 +69,6 @@ final class PublishedDocumentation
     }
 
     /**
-     * Returns path documentation was published to.
-     *
-     * @return string
-     */
-    public function getPublishPath()
-    {
-        return $this->path;
-    }
-
-    /**
      * Checks if file at provided relative path exists.
      *
      * @param PageId $anId
@@ -87,7 +77,7 @@ final class PublishedDocumentation
      */
     public function hasPage(PageId $anId)
     {
-        return file_exists($this->path . '/' . $anId->getPath());
+        return file_exists("{$this->path}/{$anId}");
     }
 
     /**
@@ -119,7 +109,7 @@ final class PublishedDocumentation
             throw new PageNotFound("Documentation page `{$anId->getPath()}` was not found.");
         }
 
-        return $this->path . '/' . $anId->getPath();
+        return "{$this->path}/{$anId}";
     }
 
     private function __construct() { }

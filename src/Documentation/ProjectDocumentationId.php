@@ -3,9 +3,9 @@
 namespace Behat\Borg\Documentation;
 
 /**
- * Very simple string-based documentation ID.
+ * Very simple project documentation ID.
  */
-final class StringDocumentationId implements DocumentationId
+final class ProjectDocumentationId implements DocumentationId
 {
     private $projectName;
     private $versionString;

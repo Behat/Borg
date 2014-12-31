@@ -23,24 +23,24 @@ class DocumentationManagerSpec extends ObjectBehavior
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
-        $pageId = new PageId($anId->getWrappedObject(), basename(__FILE__));
+        $pageId = new PageId(basename(__FILE__));
         $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
 
         $publisher->hasPublished($anId)->willReturn(true);
         $publisher->getPublished($anId)->willReturn($publishedDocumentation);
 
-        $page = $this->findPage($pageId);
+        $page = $this->findPage($anId, $pageId);
         $page->shouldBeAnInstanceOf(Page::class);
         $page->getPath()->shouldReturn(__FILE__);
     }
 
     function it_returns_null_if_documentation_was_not_published(Publisher $publisher, DocumentationId $anId)
     {
-        $locator = new PageId($anId->getWrappedObject(), basename(__FILE__));
+        $pageId = new PageId(basename(__FILE__));
 
         $publisher->hasPublished($anId)->willReturn(false);
 
-        $this->findPage($locator)->shouldReturn(null);
+        $this->findPage($anId, $pageId)->shouldReturn(null);
     }
 
     function it_returns_null_if_documentation_is_published_but_file_does_not_exist(
@@ -48,14 +48,12 @@ class DocumentationManagerSpec extends ObjectBehavior
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
-        $locator = new PageId($anId->getWrappedObject(), 'no_file');
-        $publishedDocumentation = PublishedDocumentation::publish(
-            $built->getWrappedObject(), __DIR__
-        );
+        $pageId = new PageId('no_file');
+        $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
 
         $publisher->hasPublished($anId)->willReturn(true);
         $publisher->getPublished($anId)->willReturn($publishedDocumentation);
 
-        $this->findPage($locator)->shouldReturn(null);
+        $this->findPage($anId, $pageId)->shouldReturn(null);
     }
 }

@@ -2,24 +2,23 @@
 
 namespace spec\Behat\Borg\Documentation\Page;
 
-use Behat\Borg\Documentation\DocumentationId;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class PageIdSpec extends ObjectBehavior
 {
-    function let(DocumentationId $anId)
+    function let()
     {
-        $this->beConstructedWith($anId, '/doc/path');
+        $this->beConstructedWith('/doc/path');
     }
 
-    function it_holds_the_documentation_id(DocumentationId $anId)
-    {
-        $this->getDocumentationId()->shouldReturn($anId);
-    }
-
-    function it_holds_a_page_path()
+    function it_represents_a_path()
     {
         $this->getPath()->shouldReturn('/doc/path');
+    }
+
+    function it_can_be_converted_to_string()
+    {
+        $this->__toString()->shouldReturn('/doc/path');
     }
 }

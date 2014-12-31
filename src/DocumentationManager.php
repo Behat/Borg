@@ -2,6 +2,7 @@
 
 namespace Behat\Borg;
 
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
 use Behat\Borg\Documentation\Publisher\Publisher;
@@ -29,22 +30,22 @@ final class DocumentationManager
     /**
      * Tries to find the documentation page using its ID.
      *
-     * @param PageId $anId
+     * @param DocumentationId $documentationId
+     * @param PageId          $pageId
      *
-     * @return null|Page
+     * @return Page|null
      */
-    public function findPage(PageId $anId)
+    public function findPage(DocumentationId $documentationId, PageId $pageId)
     {
-        $documentationId = $anId->getDocumentationId();
         if (!$this->publisher->hasPublished($documentationId)) {
             return null;
         }
 
         $documentation = $this->publisher->getPublished($documentationId);
-        if (!$documentation->hasPage($anId)) {
+        if (!$documentation->hasPage($pageId)) {
             return null;
         }
 
-        return $documentation->getPage($anId);
+        return $documentation->getPage($pageId);
     }
 }

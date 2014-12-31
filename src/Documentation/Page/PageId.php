@@ -2,17 +2,11 @@
 
 namespace Behat\Borg\Documentation\Page;
 
-use Behat\Borg\Documentation\DocumentationId;
-
 /**
  * Represents a documentation page ID.
  */
 final class PageId
 {
-    /**
-     * @var DocumentationId
-     */
-    private $documentationId;
     /**
      * @var string
      */
@@ -21,23 +15,11 @@ final class PageId
     /**
      * Initializes ID.
      *
-     * @param DocumentationId $documentationId
-     * @param string          $path
+     * @param string $path
      */
-    public function __construct(DocumentationId $documentationId, $path)
+    public function __construct($path)
     {
-        $this->documentationId = $documentationId;
         $this->path = $path;
-    }
-
-    /**
-     * Returns documentation ID.
-     *
-     * @return DocumentationId
-     */
-    public function getDocumentationId()
-    {
-        return $this->documentationId;
     }
 
     /**
@@ -46,6 +28,14 @@ final class PageId
      * @return string
      */
     public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->path;
     }
