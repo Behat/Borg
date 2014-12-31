@@ -37,4 +37,13 @@ interface Publisher
      * @throws RequestedDocumentationWasNotPublished
      */
     public function getPublished(DocumentationId $anId);
+
+    /**
+     * Gets all available documentation for provided project name.
+     *
+     * @param string $projectName
+     *
+     * @return PublishedDocumentation[]
+     */
+    public function findForProject($projectName);
 }

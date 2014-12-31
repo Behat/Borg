@@ -26,4 +26,14 @@ final class FakePublisher implements Publisher
     {
         return $this->documentation[(string)$anId];
     }
+
+    public function findForProject($projectName)
+    {
+        return array_filter(
+            $this->documentation,
+            function (PublishedDocumentation $documentation) use ($projectName) {
+                return strtolower($projectName) == $documentation->getDocumentationId()->getProjectName();
+            }
+        );
+    }
 }

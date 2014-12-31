@@ -82,6 +82,27 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($publishedDoc, $this->publisher->getPublished($anId));
     }
 
+    /** @test */
+    function it_can_find_all_available_documentation_for_provided_project_name()
+    {
+        $v1Id = $this->getMock(DocumentationId::class);
+        $v1Id->method('__toString')->willReturn('my_doc/v1.0');
+        $v1BuiltDoc = $this->getMock(BuiltDocumentation::class);
+        $v1Doc = PublishedDocumentation::publish($v1BuiltDoc, $this->tempPublishPath . '/my_doc/v1.0');
+
+        $v2Id = $this->getMock(DocumentationId::class);
+        $v2Id->method('__toString')->willReturn('my_doc/v2.0');
+        $v2BuiltDoc = $this->getMock(BuiltDocumentation::class);
+        $v2Doc = PublishedDocumentation::publish($v2BuiltDoc, $this->tempPublishPath . '/my_doc/v2.0');
+
+        (new Filesystem())
+            ->dumpFile($this->tempPublishPath . '/my_doc/v1.0/publish.meta', serialize($v1Doc));
+        (new Filesystem())
+            ->dumpFile($this->tempPublishPath . '/my_doc/v2.0/publish.meta', serialize($v2Doc));
+
+        $this->assertEquals([$v1Doc, $v2Doc], $this->publisher->findForProject('my_doc'));
+    }
+
     /**
      * @test
      * @expectedException \Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished
