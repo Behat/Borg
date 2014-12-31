@@ -39,12 +39,8 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
      */
     public function cleanBuildAndWebFolders()
     {
-        (new Filesystem())->remove(
-            [
-                __DIR__ . '/../../app/cache/build',
-                __DIR__ . '/../../app/cache/docs'
-            ]
-        );
+        $cacheDir = __DIR__ . '/../../app/cache/test';
+        (new Filesystem())->remove([ "{$cacheDir}/build", "{$cacheDir}/docs" ]);
     }
 
     /**
