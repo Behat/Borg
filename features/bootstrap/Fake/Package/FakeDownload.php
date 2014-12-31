@@ -2,6 +2,7 @@
 
 namespace Fake\Package;
 
+use Behat\Borg\Documentation\Source;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Release;
 use DateTimeImmutable;
@@ -9,12 +10,14 @@ use DateTimeImmutable;
 final class FakeDownload implements Download
 {
     private $release;
-    private $releaseTime;
+    private $time;
+    private $source;
 
-    public function __construct(Release $release)
+    public function __construct(Release $release, DateTimeImmutable $time, Source $source = null)
     {
         $this->release = $release;
-        $this->releaseTime = new \DateTimeImmutable();
+        $this->time = $time;
+        $this->source = $source;
     }
 
     public function getRelease()
@@ -24,7 +27,12 @@ final class FakeDownload implements Download
 
     public function getReleaseTime()
     {
-        return $this->releaseTime;
+        return $this->time;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
     }
 
     public function getPath()

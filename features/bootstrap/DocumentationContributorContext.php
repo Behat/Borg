@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
@@ -24,7 +25,7 @@ use PHPUnit_Framework_Assert as PHPUnit;
  */
 class DocumentationContributorContext implements Context, SnippetAcceptingContext
 {
-    private $finder;
+    private $downloader;
     private $releaseManager;
     private $documentationManager;
 
@@ -34,15 +35,15 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function __construct()
     {
         $publisher = new FakePublisher();
-        $this->finder = new FakeSourceFinder();
-        $downloader = new FakeDownloader();
+        $finder = new FakeSourceFinder();
+        $this->downloader = new FakeDownloader();
         $builder = new FakeBuilder();
 
         $this->releaseManager = new ReleaseManager();
         $this->documentationManager = new DocumentationManager($builder, $publisher);
 
-        $downloadingListener = new ReleaseDownloader($downloader);
-        $documentingListener = new DownloadBuilder($this->finder, $this->documentationManager);
+        $downloadingListener = new ReleaseDownloader($this->downloader);
+        $documentingListener = new DownloadBuilder($finder, $this->documentationManager);
 
         $this->releaseManager->registerListener($downloadingListener);
         $downloadingListener->registerListener($documentingListener);
@@ -65,11 +66,27 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
+     * @Transform :date
+     */
+    public function transformStringToDate($string)
+    {
+        return DateTimeImmutable::createFromFormat('d.m.Y', $string);
+    }
+
+    /**
+     * @Given :package version :version was documented on :date
+     */
+    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $date)
+    {
+        $this->downloader->releaseWasDocumented(new Release($package, $version), $date, new FakeSource());
+    }
+
+    /**
      * @Given :package version :version was documented
      */
     public function releaseWasDocumented(Package $package, Version $version)
     {
-        $this->finder->releaseWasDocumented(new Release($package, $version), new FakeSource());
+        $this->releaseWasDocumentedOn($package, $version, new DateTimeImmutable());
     }
 
     /**
@@ -111,5 +128,29 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
                 new PageId('index.html')
             )
         );
+    }
+
+    /**
+     * @When :arg1 version :arg2 built documentation is published
+     */
+    public function versionBuiltDocumentationIsPublished($arg1, $arg2)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then package name of :arg1 page for :arg2 version :arg3 should be :arg4
+     */
+    public function packageNameOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then documentation time of :arg1 page for :arg2 version :arg3 should be :arg4
+     */
+    public function documentationTimeOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    {
+        throw new PendingException();
     }
 }
