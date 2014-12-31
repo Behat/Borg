@@ -3,16 +3,13 @@
 namespace tests\Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
 use Behat\Borg\SphinxDoc\Rst;
 use Behat\Borg\SphinxDoc\SphinxBuilder;
 use DateTimeImmutable;
 use PHPUnit_Framework_TestCase;
-use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class SphinxBuilderTest extends PHPUnit_Framework_TestCase
@@ -39,9 +36,9 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
      */
     function it_throws_an_exception_if_non_RST_documentation_provided()
     {
-        $download = $this->createDownload('my/doc', '1.3.5');
+        $anId = $this->createDocumentationId('my/doc', '1.3');
         $source = $this->createDocumentationSource();
-        $documentation = Documentation::downloaded($download, $source);
+        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
 
         $this->builder->build($documentation);
     }
@@ -49,9 +46,9 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_builds_RST_documentation_into_the_output_path()
     {
-        $download = $this->createDownload('my/doc', 'v1.3.5');
+        $anId = $this->createDocumentationId('my/doc', 'v1.3');
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
-        $documentation = Documentation::downloaded($download, $source);
+        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
 
         $built = $this->builder->build($documentation);
 
@@ -71,31 +68,27 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
      */
     function it_throws_an_exception_if_sphinx_can_not_build_documents()
     {
-        $download = $this->createDownload('my/doc', '1.3.5');
+        $anId = $this->createDocumentationId('my/doc', '1.3');
         $source = $this->createRstDocumentationSourceWithoutIndex();
-        $documentation = Documentation::downloaded($download, $source);
+        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
 
         $this->builder->build($documentation);
     }
 
     /**
-     * @param string $packageName
-     * @param string $version
+     * @param string $projectName
+     * @param string $versionString
      *
      * @return Download
      */
-    private function createDownload($packageName, $version)
+    private function createDocumentationId($projectName, $versionString)
     {
-        $package = $this->getMock(Package::class);
-        $package->method('__toString')->willReturn($packageName);
+        $anId = $this->getMock(DocumentationId::class);
+        $anId->method('getProjectName')->willReturn($projectName);
+        $anId->method('getVersionString')->willReturn($versionString);
+        $anId->method('__toString')->willReturn("{$projectName}/{$versionString}");
 
-        $download = $this->getMock(Download::class);
-        $download->method('getRelease')->willReturn(
-            $release = new Release($package, Version::string($version))
-        );
-        $download->method('getReleaseTime')->willReturn(new DateTimeImmutable());
-
-        return $download;
+        return $anId;
     }
 
     /**

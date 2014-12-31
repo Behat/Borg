@@ -2,8 +2,6 @@
 
 namespace Behat\Borg\Documentation;
 
-use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
-use Behat\Borg\Package\Downloader\Download;
 use DateTimeImmutable;
 
 /**
@@ -18,19 +16,15 @@ final class Documentation
     /**
      * Initializes documentation after it was downloaded.
      *
-     * @param Download $download
-     * @param Source   $source
-     *
-     * @return Documentation
+     * @param DocumentationId   $anId
+     * @param DateTimeImmutable $time
+     * @param Source            $source
      */
-    public static function downloaded(Download $download, Source $source)
+    public function __construct(DocumentationId $anId, DateTimeImmutable $time, Source $source)
     {
-        $documentation = new Documentation();
-        $documentation->anId = new ReleaseDocumentationId($download->getRelease());
-        $documentation->time = $download->getReleaseTime();
-        $documentation->source = $source;
-
-        return $documentation;
+        $this->anId = $anId;
+        $this->time = $time;
+        $this->source = $source;
     }
 
     /**
@@ -62,6 +56,4 @@ final class Documentation
     {
         return $this->time;
     }
-
-    private function __construct() { }
 }

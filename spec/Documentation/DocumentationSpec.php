@@ -15,13 +15,9 @@ use Prophecy\Argument;
 
 class DocumentationSpec extends ObjectBehavior
 {
-    function let(Download $download, Package $package, Source $source)
+    function let(DocumentationId $anId, Source $source)
     {
-        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $download->getRelease()->willReturn($release);
-        $download->getReleaseTime()->willReturn(new DateTimeImmutable());
-
-        $this->beConstructedThrough('downloaded', [$download, $source]);
+        $this->beConstructedWith($anId, new DateTimeImmutable(), $source);
     }
 
     function it_represents_documentation()
@@ -29,9 +25,9 @@ class DocumentationSpec extends ObjectBehavior
         $this->shouldHaveType(Documentation::class);
     }
 
-    function it_has_an_id()
+    function it_has_an_id(DocumentationId $anId)
     {
-        $this->getId()->shouldHaveType(DocumentationId::class);
+        $this->getId()->shouldReturn($anId);
     }
 
     function it_has_a_source(Source $source)
