@@ -2,6 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\PackageDocumentation\DownloadBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
@@ -24,24 +25,24 @@ use PHPUnit_Framework_Assert as PHPUnit;
 class DocumentationContributorContext implements Context, SnippetAcceptingContext
 {
     private $finder;
-    private $publisher;
     private $releaseManager;
+    private $documentationManager;
 
     /**
      * Initializes context.
      */
     public function __construct()
     {
-        $this->publisher = new FakePublisher();
+        $publisher = new FakePublisher();
         $this->finder = new FakeSourceFinder();
         $downloader = new FakeDownloader();
         $builder = new FakeBuilder();
 
         $this->releaseManager = new ReleaseManager();
-        $documentationManager = new DocumentationManager($builder, $this->publisher);
+        $this->documentationManager = new DocumentationManager($builder, $publisher);
 
         $downloadingListener = new ReleaseDownloader($downloader);
-        $documentingListener = new DownloadBuilder($this->finder, $documentationManager);
+        $documentingListener = new DownloadBuilder($this->finder, $this->documentationManager);
 
         $this->releaseManager->registerListener($downloadingListener);
         $downloadingListener->registerListener($documentingListener);
@@ -91,9 +92,10 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
     {
-        PHPUnit::assertTrue(
-            $this->publisher->hasPublished(
-                new ReleaseDocumentationId(new Release($package, $version))
+        PHPUnit::assertNotNull(
+            $this->documentationManager->findPage(
+                new ReleaseDocumentationId(new Release($package, $version)),
+                new PageId('index.html')
             )
         );
     }
@@ -103,9 +105,10 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function versionDocumentationShouldNotBePublished(Package $package, Version $version)
     {
-        PHPUnit::assertFalse(
-            $this->publisher->hasPublished(
-                new ReleaseDocumentationId(new Release($package, $version))
+        PHPUnit::assertNull(
+            $this->documentationManager->findPage(
+                new ReleaseDocumentationId(new Release($package, $version)),
+                new PageId('index.html')
             )
         );
     }

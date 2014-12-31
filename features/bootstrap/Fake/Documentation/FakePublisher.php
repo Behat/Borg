@@ -4,6 +4,7 @@ namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Publisher\Publisher;
 
 final class FakePublisher implements Publisher
@@ -12,7 +13,8 @@ final class FakePublisher implements Publisher
 
     public function publish(BuiltDocumentation $builtDocumentation)
     {
-        $this->documentation[(string)$builtDocumentation->getDocumentationId()] = $builtDocumentation;
+        $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, __DIR__ . '/build');
+        $this->documentation[(string)$builtDocumentation->getDocumentationId()] = $publishedDocumentation;
     }
 
     public function hasPublished(DocumentationId $anId)

@@ -4,9 +4,9 @@ Feature: Documentation is published on release
   I want documentation to be published after we release new version of it
 
   Rules:
-    - Documentation for Behat should be published
-    - Documentation for both versions should be published
-    - Extensions documentation is also published
+  - Documentation for Behat should be published
+  - Documentation for both versions should be published
+  - Extensions documentation is also published
 
   @critical
   Scenario: Publishing behat 3.0 documentation
