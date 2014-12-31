@@ -4,6 +4,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
+use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\PackageDocumentation\DownloadBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
@@ -119,7 +120,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     {
         PHPUnit::assertNotNull(
             $this->documentationManager->findPage(
-                new ReleaseDocumentationId(new Release($package, $version)),
+                $this->getDocumentationId($package, $version),
                 new PageId('index.html')
             )
         );
@@ -132,7 +133,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     {
         PHPUnit::assertNull(
             $this->documentationManager->findPage(
-                new ReleaseDocumentationId(new Release($package, $version)),
+                $this->getDocumentationId($package, $version),
                 new PageId('index.html')
             )
         );
@@ -141,11 +142,9 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Then package name of :pageId page for :package version :version should be :name
      */
-    public function packageNameOfPageForVersionShouldBe(PageId $pageId, Package $package, Version $version, $name)
+    public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
     {
-        $page = $this->documentationManager->findPage(
-            new ReleaseDocumentationId(new Release($package, $version)), $pageId
-        );
+        $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($name, $page->getProjectName());
@@ -154,13 +153,35 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Then documentation time of :pageId page for :package version :version should be :date
      */
-    public function documentationTimeOfPageForVersionShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $date)
+    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $date)
     {
-        $page = $this->documentationManager->findPage(
-            new ReleaseDocumentationId(new Release($package, $version)), $pageId
-        );
+        $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($date, $page->getDocumentationTime());
+    }
+
+    /**
+     * @Then documentation for :version should be in the list of available documentation for :projectName
+     */
+    public function documentationVersionShouldBeInTheList($projectName, Version $version)
+    {
+        PHPUnit_Framework_Assert::assertContains(
+            $this->getDocumentationId(FakePackage::named($projectName), $version),
+            array_map(
+                function (PublishedDocumentation $documentation) {
+                    return $documentation->getDocumentationId();
+                },
+                $this->documentationManager->getAvailableDocumentation($projectName)
+            ),
+            'Documentation for provided version not found in the list.',
+            false,
+            false
+        );
+    }
+
+    private function getDocumentationId(Package $package, Version $version)
+    {
+        return new ReleaseDocumentationId(new Release($package, $version));
     }
 }
