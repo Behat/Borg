@@ -12,17 +12,25 @@
     <services>
 
         <service id="package.listener.download.documenting"
-                 class="Behat\Borg\Documentation\DownloadBuilder">
+                 class="Behat\Borg\Documentation\Package\DownloadBuilder">
             <argument type="service" id="documentation.source_finder.rst"/>
-            <argument type="service" id="documentation.builder.sphinx"/>
-            <call method="registerListener">
-                <argument type="service" id="documentation.listener.build.publishing"/>
-            </call>
+            <argument type="service" id="documentation.manager"/>
+        </service>
+
+        <service id="twig.loader.documentation"
+                 class="Behat\Borg\Application\DocumentationBundle\Twig\DocumentationLoader"
+                 public="false">
+            <argument type="service" id="documentation.publisher"/>
+            <tag name="twig.loader"/>
         </service>
 
         <service id="documentation.manager"
                  class="Behat\Borg\DocumentationManager">
+            <argument type="service" id="documentation.builder.sphinx"/>
             <argument type="service" id="documentation.publisher"/>
+            <call method="registerListener">
+                <argument type="service" id="documentation.listener.build.publishing"/>
+            </call>
         </service>
 
         <service id="documentation.listener.build.publishing"
@@ -45,13 +53,6 @@
         <service id="documentation.publisher"
                  class="Behat\Borg\Documentation\Publisher\DirectoryPublisher">
             <argument>%documentation.publisher.path%</argument>
-        </service>
-
-        <service id="twig.loader.documentation"
-                 class="Behat\Borg\Application\DocumentationBundle\Twig\DocumentationLoader"
-                 public="false">
-            <argument type="service" id="documentation.publisher"/>
-            <tag name="twig.loader"/>
         </service>
 
     </services>

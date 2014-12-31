@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Package\Documentation;
+namespace spec\Behat\Borg\Documentation\Package;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Package\Package;

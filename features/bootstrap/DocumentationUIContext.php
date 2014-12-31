@@ -4,7 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
+use Behat\Borg\Documentation\Package\ReleaseDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Release;
 use Behat\Borg\Package\Version;

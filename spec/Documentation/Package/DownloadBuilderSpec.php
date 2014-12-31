@@ -1,12 +1,14 @@
 <?php
 
-namespace spec\Behat\Borg\Documentation;
+namespace spec\Behat\Borg\Documentation\Package;
 
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Documentation\Listener\BuildListener;
+use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\Source;
+use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Downloader\Download;
 use Behat\Borg\Package\Listener\DownloadListener;
 use Behat\Borg\Package\Package;
@@ -17,9 +19,10 @@ use Prophecy\Argument;
 
 class DownloadBuilderSpec extends ObjectBehavior
 {
-    function let(SourceFinder $finder, Builder $builder)
+    function let(SourceFinder $finder, Publisher $publisher, Builder $builder)
     {
-        $this->beConstructedWith($finder, $builder);
+        $manager = new DocumentationManager($builder->getWrappedObject(), $publisher->getWrappedObject());
+        $this->beConstructedWith($finder, $manager);
     }
 
     function it_is_a_release_download_listener()
@@ -32,24 +35,13 @@ class DownloadBuilderSpec extends ObjectBehavior
         Source $source,
         Download $download,
         SourceFinder $finder,
-        Builder $builder,
-        BuiltDocumentation $builtDocumentation,
-        BuildListener $listener1,
-        BuildListener $listener2
+        Builder $builder
     ) {
         $finder->findSource($download)->willReturn($source);
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
         $download->getRelease()->willReturn($release);
         $download->getReleaseTime()->willReturn(new \DateTimeImmutable());
-        $builder->build(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
-            $builtDocumentation
-        );
-
-        $listener1->documentationWasBuilt($builtDocumentation)->shouldBeCalled();
-        $listener2->documentationWasBuilt($builtDocumentation)->shouldBeCalled();
-
-        $this->registerListener($listener1);
-        $this->registerListener($listener2);
+        $builder->build(Argument::which('getSource', $source->getWrappedObject()))->shouldBeCalled();
 
         $this->releaseWasDownloaded($download);
     }
@@ -57,15 +49,11 @@ class DownloadBuilderSpec extends ObjectBehavior
     function it_does_not_build_documentation_if_finder_does_not_find_any(
         Download $release,
         SourceFinder $finder,
-        Builder $builder,
-        BuildListener $listener
+        Builder $builder
     ) {
         $finder->findSource($release)->willReturn(null);
 
         $builder->build(Argument::any())->shouldNotBeCalled();
-        $listener->documentationWasBuilt(Argument::any())->shouldNotBeCalled();
-
-        $this->registerListener($listener);
 
         $this->releaseWasDownloaded($release);
     }
