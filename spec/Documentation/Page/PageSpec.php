@@ -39,6 +39,11 @@ class PageSpec extends ObjectBehavior
         $this->getVersionString()->shouldReturn('v3.1');
     }
 
+    function it_stores_documentation_time(\DateTimeImmutable $documentationTime)
+    {
+        $this->getDocumentationTime()->shouldReturn($documentationTime);
+    }
+
     function it_has_a_path()
     {
         $this->getPath()->shouldReturn(__FILE__);
