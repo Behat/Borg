@@ -131,14 +131,6 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
-     * @When :arg1 version :arg2 built documentation is published
-     */
-    public function versionBuiltDocumentationIsPublished($arg1, $arg2)
-    {
-        throw new PendingException();
-    }
-
-    /**
      * @Then package name of :arg1 page for :arg2 version :arg3 should be :arg4
      */
     public function packageNameOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)

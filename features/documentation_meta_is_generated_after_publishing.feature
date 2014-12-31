@@ -10,6 +10,6 @@ Feature: Documentation meta is generated after publishing
 
   Scenario: Getting documentation package name and update time
     Given "Behat/docs" version "v3.0" was documented on "31.12.2014"
-    When "Behat/docs" version "v3.0" built documentation is published
+    When I release "Behat/docs" version "v3.0"
     Then package name of "index.html" page for "Behat/docs" version "v3.0" should be "Behat/docs"
     And documentation time of "index.html" page for "Behat/docs" version "v3.0" should be "31.12.2014"
