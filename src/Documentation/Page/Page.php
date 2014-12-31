@@ -5,7 +5,7 @@ namespace Behat\Borg\Documentation\Page;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 
 /**
- * Represents an absolute path to a documentation file.
+ * Represents a documentation page.
  */
 final class Page
 {
