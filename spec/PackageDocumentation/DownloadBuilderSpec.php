@@ -35,13 +35,17 @@ class DownloadBuilderSpec extends ObjectBehavior
         Source $source,
         Download $download,
         SourceFinder $finder,
-        Builder $builder
+        Builder $builder,
+        BuiltDocumentation $builtDocumentation
     ) {
         $finder->findSource($download)->willReturn($source);
         $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
         $download->getRelease()->willReturn($release);
         $download->getReleaseTime()->willReturn(new \DateTimeImmutable());
-        $builder->build(Argument::which('getSource', $source->getWrappedObject()))->shouldBeCalled();
+
+        $builder->build(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
+            $builtDocumentation
+        )->shouldBeCalled();
 
         $this->releaseWasDownloaded($download);
     }

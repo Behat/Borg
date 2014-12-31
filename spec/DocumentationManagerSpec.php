@@ -6,7 +6,6 @@ use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Listener\BuildListener;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
@@ -22,24 +21,19 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->beConstructedWith($builder, $publisher);
     }
 
-    function it_builds_documentation_using_builder_and_notifies_listeners(
+    function it_builds_documentation_using_builder_and_publishes_it_using_publisher(
         Builder $builder,
         DocumentationId $anId,
         Source $source,
-        BuildListener $listener1,
-        BuildListener $listener2,
-        BuiltDocumentation $builtDocumentation
+        BuiltDocumentation $builtDocumentation,
+        Publisher $publisher
     ) {
         $documentation = new Documentation(
             $anId->getWrappedObject(), new \DateTimeImmutable(), $source->getWrappedObject()
         );
 
-        $this->registerListener($listener1);
-        $this->registerListener($listener2);
-
         $builder->build($documentation)->willReturn($builtDocumentation);
-        $listener1->documentationWasBuilt($builtDocumentation)->shouldBeCalled();
-        $listener1->documentationWasBuilt($builtDocumentation)->shouldBeCalled();
+        $publisher->publish($builtDocumentation)->shouldBeCalled();
 
         $this->build($documentation);
     }

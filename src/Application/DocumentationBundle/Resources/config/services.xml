@@ -28,14 +28,6 @@
                  class="Behat\Borg\DocumentationManager">
             <argument type="service" id="documentation.builder.sphinx"/>
             <argument type="service" id="documentation.publisher"/>
-            <call method="registerListener">
-                <argument type="service" id="documentation.listener.build.publishing"/>
-            </call>
-        </service>
-
-        <service id="documentation.listener.build.publishing"
-                 class="Behat\Borg\Documentation\BuildPublisher">
-            <argument type="service" id="documentation.publisher"/>
         </service>
 
         <service id="documentation.source_finder.rst"
