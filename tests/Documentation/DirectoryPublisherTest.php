@@ -100,7 +100,10 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         (new Filesystem())
             ->dumpFile($this->tempPublishPath . '/my_doc/v2.0/publish.meta', serialize($v2Doc));
 
-        $this->assertEquals([$v1Doc, $v2Doc], $this->publisher->findForProject('my_doc'));
+        $documentation = $this->publisher->findForProject('my_doc');
+
+        $this->assertContains($v1Doc, $documentation, 'v1 documentation is not found', false, false);
+        $this->assertContains($v2Doc, $documentation, 'v2 documentation is not found', false, false);
     }
 
     /**
