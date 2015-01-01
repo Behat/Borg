@@ -5,7 +5,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    github_token:      YouMustProvideToken
+    # GitHub token. Default is `SYMFONY__GITHUB__TOKEN` environment variable
+    github_token:      %github.token%
 
     locale:            en
 
