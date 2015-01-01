@@ -8,7 +8,7 @@ use Twig_LoaderInterface;
 
 final class DocumentationLoader implements Twig_LoaderInterface, Twig_ExistsLoaderInterface
 {
-    private static $regex = '#^documentation:(?<path>.*)$#';
+    private static $regex = '#^documentation:(?<path>.*+)$#';
     private $publisher;
     private $cache = [];
 
