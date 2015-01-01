@@ -7,7 +7,6 @@ use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\DocumentationManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,19 +16,19 @@ class DocumentationController extends Controller
      * @Route(
      *     "/{version}",
      *     name="behat_documentation_index",
-     *     requirements={ "version": "v\d+\.\d+" }
+     *     requirements={ "version": "v\d++\.\d++" }
      * )
      * @Route(
      *     "/behat/docs/{version}",
      *     name="behat_documentation_fullpath_index",
-     *     requirements={ "version": "v\d+\.\d+" }
+     *     requirements={ "version": "v\d++\.\d++" }
      * )
      * @Route(
      *     "/behat/docs/{version}/{path}",
      *     name="behat_documentation_fullpath_page",
      *     requirements={
-     *         "version": "v\d+\.\d+",
-     *         "path":    ".*\.html$"
+     *         "version": "v\d++\.\d++",
+     *         "path":    ".*\.html"
      *     }
      * )
      *
@@ -48,8 +47,8 @@ class DocumentationController extends Controller
      *     "/{version}/{path}",
      *     name="behat_documentation_page",
      *     requirements={
-     *         "version": "v\d+\.\d+",
-     *         "path":    ".*\.html$"
+     *         "version": "v\d++\.\d++",
+     *         "path":    ".*\.html"
      *     }
      * )
      *
@@ -68,8 +67,8 @@ class DocumentationController extends Controller
      *     "/{project}/{version}",
      *     name="documentation_index",
      *     requirements={
-     *         "project": "[\w\-]+\/[\w\-]+",
-     *         "version": "v\d+\.\d+"
+     *         "project": "[\w\-]++\/[\w\-]++",
+     *         "version": "v\d++\.\d++"
      *     }
      * )
      *
@@ -89,9 +88,9 @@ class DocumentationController extends Controller
      *     "/{project}/{version}/{path}",
      *     name="documentation_page",
      *     requirements={
-     *         "project": "[\w\-]+\/[\w\-]+",
-     *         "version": "v\d+\.\d+",
-     *         "path":    ".*\.html$"
+     *         "project": "[\w\-]++\/[\w\-]++",
+     *         "version": "v\d++\.\d++",
+     *         "path":    ".*\.html"
      *     }
      * )
      *

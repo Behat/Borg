@@ -25,7 +25,7 @@ final class Version
      */
     public static function string($string)
     {
-        if (!preg_match('/^[vV]?(\d+)\.(\d+)(?:\.(\d+.*))?$/', $string, $matches)) {
+        if (!preg_match('/^[vV]?+(\d++)\.(\d++)(?:\.(\d++.*+))?$/', $string, $matches)) {
             throw new BadVersionStringGiven("`{$string}` is not a supported version string.");
         }
 
