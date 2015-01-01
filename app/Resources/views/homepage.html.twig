@@ -6,50 +6,80 @@
 
 {% block title %}Behat{% endblock %}
 
-{% block page %}
-    <div class="big-logo clearfix">
-        <img class="b" src="{{ asset('/images/b@2x.png') }}">
-        <img class="behat" src="{{ asset('/images/behat@2x.png') }}">
-    </div>
+{% block body %}
+    <section class="page clearfix">
+        <div class="big-logo clearfix">
+            <img class="b" src="{{ asset('/images/b@2x.png') }}">
+            <img class="behat" src="{{ asset('/images/behat@2x.png') }}">
+        </div>
 
-    <span class="slogan">
-        A <strong>php</strong> framework for autotesting your <strong>business</strong> expectations.
-    </span>
+        <span class="slogan">
+            A <strong>php</strong> framework for autotesting your <strong>business</strong> expectations.
+        </span>
 
-    <nav class="gates clearfix">
-        <a class="introduction" href="{{ path('behat_documentation_page', {'version': 'v3.0', 'path': 'quick_intro_pt1.html'}) }}">
-            Read quick introduction
-        </a>
-        <a class="documentation" href="{{ path('behat_documentation_page', {'version': 'v3.0', 'path': 'index.html'}) }}">
-            Read the documentation
-        </a>
-        <a class="training" href="http://inviqa.com/services/get-trained/bdd-immersion-days/">
-            Sign-up for behat training
-        </a>
-    </nav>
+        <nav class="gates clearfix">
+            <a class="introduction" href="{{ path('behat_documentation_page', {'version': 'v3.0', 'path': 'quick_intro_pt1.html'}) }}">
+                Read quick introduction
+            </a>
+            <a class="documentation" href="{{ path('behat_documentation_page', {'version': 'v3.0', 'path': 'index.html'}) }}">
+                Read the documentation
+            </a>
+            <a class="training" href="http://inviqa.com/services/get-trained/bdd-immersion-days/">
+                Sign-up for behat training
+            </a>
+        </nav>
+    </section>
 
-    <ul class="why clearfix">
-        <li class="communication clearfix">
-            <h4 class="why-header">Focused on communication</h4>
+    <section class="why clearfix">
+        <p>Behat is an open source <a href="http://en.wikipedia.org/wiki/Behavior-driven_development">Behavior-Driven Development</a> framework for
+            <strong>PHP</strong>.
+            It is a tool to support you in delivering <em>software that matters</em> through
+            continous communication, deliberate discovery and
+            test-automation.</p>
 
-            <p class="why-text">Behat is like no other testing framework you have used. Instead of
+        <div class="why-right communication clearfix">
+            <h4>Focused on communication</h4>
+
+            <p>Behat is like no other testing framework you have used. Instead of
                 proving that your system was built right, it helps you to build the right system in
                 the first place by facilitating and enriching requirements communication.</p>
-        </li>
-        <li class="extensions clearfix">
-            <h4 class="why-header">Extensible to the core</h4>
+        </div>
 
-            <p class="why-text">Behat is very extensible. Almost every bit of the framework
+        <div class="why-left php clearfix">
+            <h4>Built from the ground up for the PHP community</h4>
+
+            <p>Behat was built from the ground up for PHP and it is a great PHP library to the core.
+                The codebase heavily uses Symfony2 components, religiously follows PSR standards
+                and has an incredibly high ratings according to major language static analysis tools.
+                This all basically means that as a PHP developer, with Behat you will always feel
+                like home.</p>
+        </div>
+
+        <div class="why-right extensions clearfix">
+            <h4>Extendable to the core</h4>
+
+            <p>Behat is very extensible. Almost every bit of the framework
                 functionality could be enhanced or even replaced through the powerful
-                extension system. There are plenty extensions already available.
-        </li>
-        <li class="community clearfix">
-            <h4 class="why-header">Has an amazing community</h4>
+                extension system. There are plenty extensions already available.</p>
+        </div>
+    </section>
 
-            <p class="why-text">Behat has an amazing community of users that are
-                always ready to help or support you in your first BDD steps. You found a rare bug,
-                have a feature request or just need help in setting up your first test suite - help
-                is always a link away.</p>
-        </li>
-    </ul>
-{% endblock page %}
+    <section class="community clearfix">
+        <div class="community-links clearfix">
+            <h4>Join <strong>behat</strong> community</h4>
+
+            <div class="first clearfix">
+                <p>GitHub</p>
+                <a href="https://github.com/Behat">@Behat</a>
+            </div>
+            <div class="clearfix">
+                <p>Twitter</p>
+                <a href="https://twitter.com/BehatPHP">@BehatPHP</a>
+            </div>
+            <div class="clearfix">
+                <p>Google group</p>
+                <a href="https://groups.google.com/forum/#!forum/behat">#!forum/behat<br></a>
+            </div>
+        </div>
+    </section>
+{% endblock body %}

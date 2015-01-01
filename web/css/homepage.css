@@ -90,75 +90,151 @@
 }
 
 .why {
-  float: left;
-  clear: both;
   width: 100%;
-  margin-top: 80px;
-  padding-bottom: 20px;
-  background-color: rgb(245, 245, 245);
+  margin: 80px auto 0;
+  padding-bottom: 60px;
+  border-top: 1px solid rgb(192, 192, 192);
+  border-bottom: 1px solid rgb(192, 192, 192);
 }
 
-.why .communication {
-  float: left;
-  width: 240px;
-  margin: 20px 0 0 20px;
-}
-
-.why .communication h4 {
-  background-image: url('../images/talk@2x.png');
-  background-size: 30px 27px;
-}
-
-.why .extensions {
-  float: left;
-  width: 240px;
-  margin: 20px 0 0 30px;
-}
-
-.why .extensions h4 {
-  background-image: url('../images/gear@2x.png');
-  background-size: 30px 31px;
-}
-
-.why .community {
-  float: right;
-  width: 240px;
-  margin: 20px 20px 0 0;
-}
-
-.why .community h4 {
-  background-image: url('../images/people@2x.png');
-  background-size: 30px 27px;
-}
-
-.why h4 {
-  float: left;
-  width: 100%;
-  min-height: 29px;
-  padding-top: 4px;
-  padding-left: 40px;
-  background: no-repeat left center;
-  font: italic 1.6rem 'Trebuchet MS';
-  color: rgb(80, 80, 80);
-}
-
-.why .why-text {
-  float: left;
-  clear: both;
-  width: 100%;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid rgb(221, 221, 221);
-  font-size: 1.4rem;
+.why > p {
+  width: 600px;
+  margin: 80px auto 0;
+  font-size: 1.8rem;
   font-weight: 400;
-  line-height: 1.38;
+  color: #505050;
+  line-height: 1.5;
+}
+
+.why > p a {
+  text-decoration: underline;
   color: rgb(0, 0, 0);
 }
 
-.why .why-text a {
-  text-decoration: underline;
+.why > p strong {
+  color: rgb(0, 0, 0);
 }
 
-.why .why-text strong {
-  font-weight: 700;
+.why > p em {
+  font-style: italic;
+}
+
+.why-right h4 {
+  float: right;
+  width: 400px;
+  font-size: 3.0rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #505050;
+}
+
+.why-right p {
+  float: right;
+  clear: both;
+  width: 400px;
+  margin-top: 30px;
+  font-size: 1.6rem;
+  color: #505050;
+  line-height: 1.5;
+}
+
+.why-left h4,
+.community h4{
+  float: left ;
+  width: 400px;
+  font-size: 3.0rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #505050;
+}
+
+.why-left p {
+  float: left;
+  clear: both;
+  width: 400px;
+  margin-top: 30px;
+  font-size: 1.6rem;
+  color: #505050;
+  line-height: 1.5;
+}
+
+.why .communication {
+  position: relative;
+  width: 730px;
+  min-height: 225px;
+  margin: 80px auto 0;
+  background: url('../images/talk@2x.png') no-repeat left top;
+  background-size: 250px 225px;
+}
+
+.why .php {
+  position: relative;
+  width: 730px;
+  min-height: 250px;
+  margin: 80px auto 0;
+  background: url('../images/php@2x.png') no-repeat right top;
+  background-size: 250px 129px;
+}
+
+.why .extensions {
+  position: relative;
+  width: 730px;
+  min-height: 250px;
+  margin: 80px auto 0;
+  background: url('../images/gear@2x.png') no-repeat left top;
+  background-size: 250px 250px;
+}
+
+.community {
+  position: relative;
+  width: 730px;
+  min-height: 225px;
+  margin: 80px auto 0;
+  background: url('../images/people@2x.png') no-repeat right top;
+  background-size: 250px 225px;
+}
+
+.community-links {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 15;
+  width: 450px;
+  height: 152px;
+  margin: auto 0;
+}
+
+.community-links h4 strong {
+  font-family: Comfortaa;
+  font-weight: Bold;
+}
+
+.community-links > div {
+  float: left;
+  clear: both;
+  width: 250px;
+  height: 22px;
+  margin-top: 10px;
+  font-size: 1.6rem;
+}
+
+.community-links .first {
+  margin-top: 25px;
+}
+
+.community-links p {
+  float: left;
+  font-weight: 400;
+  line-height: 1.38;
+  color: #505050;
+}
+
+.community-links a {
+  display: block;
+  float: right;
+  min-width: 140px;
+  font-weight: bold;
+  text-decoration: underline;
+  color: rgb(0, 0, 0);
 }

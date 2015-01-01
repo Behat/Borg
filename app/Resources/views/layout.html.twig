@@ -25,9 +25,11 @@
     </div>
 </header>
 
-<section class="page clearfix">
-    {% block page %}{% endblock %}
-</section>
+{% block body %}
+    <section class="page clearfix">
+        {% block page %}{% endblock %}
+    </section>
+{% endblock %}
 
 <footer class="clearfix">
     <div class="footer-center">
