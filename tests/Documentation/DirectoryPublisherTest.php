@@ -20,8 +20,8 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->tempBuildPath = getenv('TEMP_PATH') . '/github/publisher/build';
-        $this->tempPublishPath = getenv('TEMP_PATH') . '/github/publisher/publish';
+        $this->tempBuildPath = getenv('TEST_TEMP_PATH') . '/github/publisher/build';
+        $this->tempPublishPath = getenv('TEST_TEMP_PATH') . '/github/publisher/publish';
         $this->publisher = new DirectoryPublisher($this->tempPublishPath);
 
         (new Filesystem())->remove([$this->tempBuildPath, $this->tempPublishPath]);

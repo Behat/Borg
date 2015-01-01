@@ -26,9 +26,9 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->tempDownloadPath = getenv('TEMP_PATH') . '/github/download';
+        $this->tempDownloadPath = getenv('TEST_TEMP_PATH') . '/github/download';
         $this->client = new Client();
-        $this->client->authenticate(getenv('GITHUB_TOKEN'), null, Client::AUTH_URL_TOKEN);
+        $this->client->authenticate(getenv('TEST_GITHUB_TOKEN'), null, Client::AUTH_URL_TOKEN);
         $this->downloader = new GitHubDownloader($this->client, $this->tempDownloadPath);
 
         (new Filesystem())->remove($this->tempDownloadPath);
