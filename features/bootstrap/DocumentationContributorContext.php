@@ -1,6 +1,5 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
@@ -30,6 +29,8 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     private $releaseManager;
     private $documentationManager;
 
+    use DocumentationTransformations;
+
     /**
      * Initializes context.
      */
@@ -51,43 +52,11 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
-     * @Transform :package
+     * @Given :package version :version was documented on :time
      */
-    public function transformStringToPackage($string)
+    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $time)
     {
-        return FakePackage::named($string);
-    }
-
-    /**
-     * @Transform :version
-     */
-    public function transformStringToVersion($string)
-    {
-        return Version::string($string);
-    }
-
-    /**
-     * @Transform :pageId
-     */
-    public function transformStringToPageId($string)
-    {
-        return new PageId($string);
-    }
-
-    /**
-     * @Transform :date
-     */
-    public function transformStringToDate($string)
-    {
-        return DateTimeImmutable::createFromFormat('d.m.Y', $string);
-    }
-
-    /**
-     * @Given :package version :version was documented on :date
-     */
-    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $date)
-    {
-        $this->downloader->releaseWasDocumented(new Release($package, $version), $date, new FakeSource());
+        $this->downloader->releaseWasDocumented(new Release($package, $version), $time, new FakeSource());
     }
 
     /**
@@ -151,14 +120,14 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
-     * @Then documentation time of :pageId page for :package version :version should be :date
+     * @Then documentation time of :pageId page for :package version :version should be :time
      */
-    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $date)
+    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $time)
     {
         $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
-        PHPUnit::assertEquals($date, $page->getDocumentationTime());
+        PHPUnit::assertEquals($time, $page->getDocumentationTime());
     }
 
     /**

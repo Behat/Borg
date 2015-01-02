@@ -3,6 +3,7 @@
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
@@ -22,6 +23,8 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
 {
     private $publisher;
     private $client;
+
+    use DocumentationTransformations;
 
     /**
      * Initializes context.
@@ -50,22 +53,6 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     public function transformStringToPackage($string)
     {
         return GithubPackage::named($string);
-    }
-
-    /**
-     * @Transform :version
-     */
-    public function transformStringToVersion($string)
-    {
-        return Version::string($string);
-    }
-
-    /**
-     * @Transform :time
-     */
-    public function transformStringToDate($string)
-    {
-        return DateTimeImmutable::createFromFormat('d.m.Y H:i:s', $string, new DateTimeZone('Z'));
     }
 
     /**
@@ -137,9 +124,9 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
-     * @Then package name of :arg1 page for :arg2 version :arg3 should be :arg4
+     * @Then package name of :pageId page for :package version :version should be :name
      */
-    public function packageNameOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
     {
         throw new PendingException();
     }
