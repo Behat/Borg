@@ -109,7 +109,9 @@ class DocumentationController extends Controller
             throw $this->createNotFoundException();
         }
 
-        return $this->render("documentation:{$page}");
+        return $this->render("documentation:{$page}", [
+            'page' => $page
+        ]);
     }
 
     /**

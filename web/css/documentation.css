@@ -98,7 +98,7 @@ body > section {
   line-height: 2.4rem;
 }
 
-.toc {
+.sidebar {
   font-size: 1.4rem;
   float: right;
   width: 200px;
@@ -108,7 +108,7 @@ body > section {
 .toc h3 {
   display: block;
   height: 40px;
-  padding: 4px 0px 0px 30px;
+  padding: 5px 0 0 30px;
   font-size: 2.4rem;
   font-weight: normal;
   font-style: italic;
@@ -116,6 +116,28 @@ body > section {
   background-size: 22px 40px;
   margin-top: 24px;
   margin-bottom: 12px;
+}
+
+.meta h3 {
+  display: block;
+  height: 40px;
+  padding: 10px 0 0 30px;
+  font-size: 2.4rem;
+  font-weight: normal;
+  font-style: italic;
+  background: url(../images/documentation/meta@2x.png) 0 10px no-repeat;
+  background-size: 22px 25px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.meta dl dt {
+  margin-bottom: 0.5rem;
+}
+
+.meta dl dd {
+  padding-left: 16px;
+  color: #000;
 }
 
 .toc ul {

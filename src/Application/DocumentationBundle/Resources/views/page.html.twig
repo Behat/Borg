@@ -6,9 +6,19 @@
 {% endblock %}
 
 {% block page %}
-    <nav class="toc">
-        <h3>Chapters</h3>
-        {% block toc %}{% endblock %}
+    <nav class="sidebar">
+        <div class="meta">
+            <h3>Meta</h3>
+            <dl>
+                <dt>Package name:</dt>
+                <dd>{{ page.projectName }}</dd>
+            </dl>
+        </div>
+
+        <div class="toc">
+            <h3>Chapters</h3>
+            {% block toc %}{% endblock %}
+        </div>
     </nav>
 
     <section class="text">
