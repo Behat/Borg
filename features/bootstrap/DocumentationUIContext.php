@@ -128,7 +128,10 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
      */
     public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
     {
-        throw new PendingException();
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        $this->visitPath('/docs/' . $anId . '/' . $pageId);
+
+        $this->assertSession()->pageTextContains("Package name: {$name}");
     }
 
     /**
