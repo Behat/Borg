@@ -135,11 +135,14 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
-     * @Then documentation time of :arg1 page for :arg2 version :arg3 should be :arg4
+     * @Then documentation time of :pageId page for :package version :version should be :time
      */
-    public function documentationTimeOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $time)
     {
-        throw new PendingException();
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        $this->visitPath('/docs/' . $anId . '/' . $pageId);
+
+        $this->assertSession()->pageTextContains('Last edit: ' . $time->format('d.m.Y, H:i'));
     }
 
     /**

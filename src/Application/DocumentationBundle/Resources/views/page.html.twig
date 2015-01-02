@@ -12,6 +12,8 @@
             <dl>
                 <dt>Package name:</dt>
                 <dd>{{ page.projectName }}</dd>
+                <dt>Last edit:</dt>
+                <dd>{{ page.documentationTime|date('d.m.Y, H:i', timezone="Zulu") }}</dd>
             </dl>
         </div>
 

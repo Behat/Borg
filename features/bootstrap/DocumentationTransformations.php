@@ -35,6 +35,6 @@ trait DocumentationTransformations
      */
     public function transformStringToDate($string)
     {
-        return DateTimeImmutable::createFromFormat('d.m.Y H:i:s', $string, new DateTimeZone('Z'));
+        return DateTimeImmutable::createFromFormat('d.m.Y, H:i:s', $string, new DateTimeZone('Z'));
     }
 }

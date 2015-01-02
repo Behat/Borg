@@ -138,6 +138,7 @@ body > section {
 .meta dl dd {
   padding-left: 16px;
   color: #000;
+  margin-bottom: 1rem;
 }
 
 .toc ul {
