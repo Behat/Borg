@@ -1,3 +1,4 @@
+@critical
 Feature: Documentation meta is generated after publishing
   In order to help users find relevant information quicker
   As a documentation contributor
