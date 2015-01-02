@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
@@ -60,6 +61,14 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
+     * @Transform :time
+     */
+    public function transformStringToDate($string)
+    {
+        return DateTimeImmutable::createFromFormat('d.m.Y H:i:s', $string, new DateTimeZone('Z'));
+    }
+
+    /**
      * @Given :package version :version was documented
      */
     public function releaseWasDocumented(Package $package, Version $version)
@@ -68,6 +77,16 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
                     || $this->fileExistsInRepositoryVersion($package, $version, 'doc/index.rst');
 
         PHPUnit::assertTrue($rstIsInRepo, 'RST is not found in the provided repository version');
+    }
+
+    /**
+     * @Given :package version :version was documented on :time
+     */
+    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $time)
+    {
+        $this->releaseWasDocumented($package, $version);
+
+        PHPUnit::assertEquals($time, $this->getLatestCommitDate($package, $version));
     }
 
     /**
@@ -117,6 +136,30 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         $this->assertSession()->statusCodeEquals(404);
     }
 
+    /**
+     * @Then package name of :arg1 page for :arg2 version :arg3 should be :arg4
+     */
+    public function packageNameOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then documentation time of :arg1 page for :arg2 version :arg3 should be :arg4
+     */
+    public function documentationTimeOfPageForVersionShouldBe($arg1, $arg2, $arg3, $arg4)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then documentation for :arg1 should be in the list of available documentation for :arg2
+     */
+    public function documentationForShouldBeInTheListOfAvailableDocumentationFor($arg1, $arg2)
+    {
+        throw new PendingException();
+    }
+
     private function packageReleaseCommand(Package $package, Version $version)
     {
         return __DIR__ . "/../../app/console package:released {$package} {$version} -e=test";
@@ -127,5 +170,16 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         return $this->client->repo()->contents()->exists(
             (string)$package->getOrganisation(), (string)$package->getName(), $path, (string)$version
         );
+    }
+
+    private function getLatestCommitDate(Package $package, Version $version)
+    {
+        $commit = $this->client->repo()->commits()->all(
+            $package->getOrganisation(),
+            $package->getName(),
+            ['sha' => (string)$version]
+        )[0];
+
+        return new \DateTimeImmutable($commit['commit']['author']['date']);
     }
 }
