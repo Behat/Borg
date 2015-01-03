@@ -66,7 +66,7 @@ final class DirectoryPublisher implements Publisher
     public function findForProject($projectName)
     {
         $documentation = [];
-        foreach (Finder::create()->directories()->in("{$this->publishPath}/{$projectName}") as $dir) {
+        foreach (Finder::create()->depth(0)->directories()->in("{$this->publishPath}/{$projectName}") as $dir) {
             $documentation[] = unserialize(file_get_contents($dir . '/publish.meta'));
         }
 

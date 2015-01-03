@@ -141,6 +141,29 @@ body > section {
   margin-bottom: 1rem;
 }
 
+.meta dd {
+  padding-top: 3px
+}
+
+.meta .version {
+  margin-bottom: 8px;
+}
+
+.meta .version a {
+  color: #4f4f4f;
+  font-size: 1.4rem;
+  padding: 3px 5px;
+}
+
+.meta .version.current a {
+  background-color: #272822;;
+  color: #fff;
+}
+
+.meta .version a:hover {
+  text-decoration: underline;
+}
+
 .toc ul {
   margin: 0;
   padding: 0 0 0 18px;

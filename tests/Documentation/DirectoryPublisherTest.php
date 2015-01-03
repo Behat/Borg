@@ -106,6 +106,23 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         $this->assertContains($v2Doc, $documentation, 'v2 documentation is not found', false, false);
     }
 
+    /** @test */
+    function it_ignores_sub_folders_of_documentation_versions()
+    {
+        $anId = $this->getMock(DocumentationId::class);
+        $anId->method('__toString')->willReturn('my_doc/v1.0');
+        $builtDoc = $this->getMock(BuiltDocumentation::class);
+        $doc = PublishedDocumentation::publish($builtDoc, $this->tempPublishPath . '/my_doc/v1.0');
+
+        (new Filesystem())
+            ->dumpFile(
+                $this->tempPublishPath . '/my_doc/v1.0/publish.meta', serialize($doc));
+        (new Filesystem())
+            ->dumpFile($this->tempPublishPath . '/my_doc/v1.0/subfolder/publish.meta', serialize($doc));
+
+        $this->assertCount(1, $this->publisher->findForProject('my_doc'));
+    }
+
     /**
      * @test
      * @expectedException \Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished

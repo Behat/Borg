@@ -14,6 +14,22 @@
                 <dd>{{ page.projectName }}</dd>
                 <dt>Last edit:</dt>
                 <dd>{{ page.documentationTime|date('d.m.Y, H:i', timezone="Zulu") }}</dd>
+                <dt>Versions:</dt>
+                <dd>
+                    <ul class="alternative-versions">
+                        {% for published in allPublished %}
+                            {% set version = published.documentationId.versionString %}
+                            <li class="version {% if version == page.versionString %}current{% endif %}">
+                                <a href="{{ path('documentation_index', {
+                                    'project': page.projectName,
+                                    'version': version
+                                }) }}">
+                                    {{ version }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </dd>
             </dl>
         </div>
 
