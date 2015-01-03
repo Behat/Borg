@@ -146,11 +146,14 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
-     * @Then documentation for :arg1 should be in the list of available documentation for :arg2
+     * @Then documentation for :version should be in the list of available documentation for :package
      */
-    public function documentationForShouldBeInTheListOfAvailableDocumentationFor($arg1, $arg2)
+    public function documentationVersionShouldBeInTheList(Package $package, Version $version)
     {
-        throw new PendingException();
+        $anId = new ReleaseDocumentationId(new Release($package, $version));
+        $this->visitPath('/docs/' . $anId . '/index.html');
+
+        $this->assertSession()->elementExists('css', ".meta .version:contains('$version')");
     }
 
     private function packageReleaseCommand(Package $package, Version $version)
