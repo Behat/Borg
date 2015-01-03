@@ -1,9 +1,7 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
@@ -121,39 +119,6 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         $this->visitPath('/docs/' . $anId . '/index.html');
 
         $this->assertSession()->statusCodeEquals(404);
-    }
-
-    /**
-     * @Then package name of :pageId page for :package version :version should be :name
-     */
-    public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
-    {
-        $anId = new ReleaseDocumentationId(new Release($package, $version));
-        $this->visitPath('/docs/' . $anId . '/' . $pageId);
-
-        $this->assertSession()->pageTextContains("Package name: {$name}");
-    }
-
-    /**
-     * @Then documentation time of :pageId page for :package version :version should be :time
-     */
-    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $time)
-    {
-        $anId = new ReleaseDocumentationId(new Release($package, $version));
-        $this->visitPath('/docs/' . $anId . '/' . $pageId);
-
-        $this->assertSession()->pageTextContains('Last edit: ' . $time->format('d.m.Y, H:i'));
-    }
-
-    /**
-     * @Then documentation for :version should be in the list of available documentation for :package
-     */
-    public function documentationVersionShouldBeInTheList(Package $package, Version $version)
-    {
-        $anId = new ReleaseDocumentationId(new Release($package, $version));
-        $this->visitPath('/docs/' . $anId . '/index.html');
-
-        $this->assertSession()->elementExists('css', ".meta .version:contains('$version')");
     }
 
     private function packageReleaseCommand(Package $package, Version $version)
