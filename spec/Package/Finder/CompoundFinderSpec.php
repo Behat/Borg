@@ -44,7 +44,7 @@ class CompoundFinderSpec extends ObjectBehavior
         $this->findPackage($download);
     }
 
-    function it_returns_null_if_finders_find_nothing(Download $download)
+    function it_returns_null_if_all_finders_find_nothing(Download $download)
     {
         $this->findPackage($download)->shouldReturn(null);
     }

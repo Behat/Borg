@@ -52,7 +52,7 @@ class GitHubDownloadSpec extends ObjectBehavior
         );
     }
 
-    function its_release_time_is_a_time_of_commit()
+    function its_release_time_is_a_time_of_the_commit()
     {
         $this->getReleaseTime()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
     }
@@ -62,12 +62,12 @@ class GitHubDownloadSpec extends ObjectBehavior
         $this->getVersion()->shouldBeLike(Version::string('v2.5'));
     }
 
-    function its_path_is_a_path_it_was_constructed_with()
+    function its_path_is_the_path_it_was_constructed_with()
     {
         $this->getPath()->shouldReturn(__DIR__);
     }
 
-    function it_could_say_if_file_is_included_in_release()
+    function it_could_say_if_given_file_is_included_in_the_release()
     {
         $this->shouldHaveFile(basename(__FILE__));
         $this->shouldNotHaveFile('any_file');

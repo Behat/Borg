@@ -12,12 +12,12 @@ class PageIdSpec extends ObjectBehavior
         $this->beConstructedWith('/doc/path');
     }
 
-    function it_represents_a_path()
+    function it_holds_a_page_path_it_was_constructed_with()
     {
         $this->getPath()->shouldReturn('/doc/path');
     }
 
-    function it_can_be_converted_to_string()
+    function its_string_representation_is_a_page_path_it_was_constructed_with()
     {
         $this->__toString()->shouldReturn('/doc/path');
     }

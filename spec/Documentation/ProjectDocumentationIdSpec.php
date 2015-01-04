@@ -13,22 +13,22 @@ class ProjectDocumentationIdSpec extends ObjectBehavior
         $this->beConstructedWith('behat/docs', 'v3.0');
     }
 
-    function it_is_documentation_id()
+    function it_is_a_documentation_id()
     {
         $this->shouldHaveType(DocumentationId::class);
     }
 
-    function it_has_a_project_name()
+    function its_project_name_is_the_first_argument_it_was_constructed_with()
     {
         $this->getProjectName()->shouldReturn('behat/docs');
     }
 
-    function it_has_a_version_string()
+    function its_version_string_is_the_second_argument_it_was_constructed_with()
     {
         $this->getVersionString()->shouldReturn('v3.0');
     }
 
-    function it_can_be_converted_to_string()
+    function its_string_representation_is_the_project_name_and_version_string_separated_by_slash()
     {
         $this->__toString()->shouldReturn('behat/docs/v3.0');
     }

@@ -12,8 +12,6 @@ use Behat\Borg\Package\Listener\PackageListener;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\PackageDownload;
 use Behat\Borg\Release\Downloader\Download;
-use Behat\Borg\Release\Repository;
-use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -31,7 +29,7 @@ class PackageDocumentationBuilderSpec extends ObjectBehavior
         $this->shouldHaveType(PackageListener::class);
     }
 
-    function it_builds_found_documentation_using_builder_and_notifies_listeners(
+    function it_builds_the_found_documentation_and_notifies_listeners(
         Package $package,
         Download $download,
         SourceFinder $finder,
@@ -53,7 +51,7 @@ class PackageDocumentationBuilderSpec extends ObjectBehavior
         $this->packageWasDownloaded($packageDownload);
     }
 
-    function it_does_not_build_documentation_if_finder_does_not_find_any(
+    function it_does_not_build_documentation_if_finder_does_not_find_any_source(
         Package $package,
         Download $download,
         SourceFinder $finder,

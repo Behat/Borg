@@ -33,7 +33,7 @@ class BuiltSphinxSpec extends ObjectBehavior
         $this->getBuildPath()->shouldReturn(__DIR__);
     }
 
-    function it_has_an_index_path_whic_is_the_index_html_inside_the_built_path()
+    function it_has_an_index_path_which_is_the_index_html_inside_the_built_path()
     {
         $this->getIndexPath()->shouldReturn(__DIR__ . '/index.html');
     }

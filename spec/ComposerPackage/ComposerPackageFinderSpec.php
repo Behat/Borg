@@ -15,7 +15,7 @@ class ComposerPackageFinderSpec extends ObjectBehavior
         $this->shouldHaveType(PackageFinder::class);
     }
 
-    function it_returns_a_composer_package_with_a_package_name_from_the_download_json(Download $download)
+    function it_finds_a_composer_package_if_download_has_a_composer_json(Download $download)
     {
         $download->getPath()->willReturn(__DIR__);
         $download->hasFile('composer.json')->willReturn(true);
@@ -23,7 +23,7 @@ class ComposerPackageFinderSpec extends ObjectBehavior
         $this->findPackage($download)->shouldBeLike(new ComposerPackage('behat/behat'));
     }
 
-    function it_finds_nothing_if_download_does_not_have_composer_json(Download $download)
+    function it_finds_nothing_if_download_does_not_have_a_composer_json(Download $download)
     {
         $download->hasFile('composer.json')->willReturn(false);
 

@@ -18,7 +18,7 @@ class GitHubRepositorySpec extends ObjectBehavior
         $this->shouldHaveType(Repository::class);
     }
 
-    function it_can_only_be_created_using_full_github_repository_name()
+    function it_can_only_be_created_using_the_full_github_repository_name()
     {
         $this->shouldThrow()->during('named', ['behat']);
     }
@@ -28,17 +28,22 @@ class GitHubRepositorySpec extends ObjectBehavior
         $this->shouldNotThrow()->during('named', ['everzet/basket-by-example']);
     }
 
-    function it_belongs_to_some_organisation()
+    function it_can_be_created_using_github_repository_name_with_periods()
+    {
+        $this->shouldNotThrow()->during('named', ['everzet/basket.by.example']);
+    }
+
+    function its_organisation_is_the_first_segment_of_the_string_it_was_constructed_with()
     {
         $this->getOrganisation()->shouldReturn('behat');
     }
 
-    function it_has_a_name()
+    function its_name_is_the_second_segment_of_the_string_it_was_constructed_with()
     {
         $this->getName()->shouldReturn('docs');
     }
 
-    function it_can_be_converted_to_string()
+    function its_string_representation_is_the_string_it_was_constructed_with()
     {
         $this->__toString()->shouldReturn('behat/docs');
     }

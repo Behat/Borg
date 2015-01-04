@@ -38,7 +38,7 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->build($documentation);
     }
 
-    function it_can_find_all_published_documentation_for_provided_project_name(
+    function it_can_find_all_published_documentation_for_a_provided_project_name(
         DocumentationId $anId,
         Publisher $publisher,
         BuiltDocumentation $built

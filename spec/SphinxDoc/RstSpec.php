@@ -18,7 +18,7 @@ class RstSpec extends ObjectBehavior
         $this->shouldHaveType(Source::class);
     }
 
-    function it_has_path_to_all_its_RST_documents()
+    function it_holds_the_path_to_all_its_RST_documents()
     {
         $this->getPath()->shouldReturn(__DIR__);
     }

@@ -18,27 +18,27 @@ class BorgPackageSpec extends ObjectBehavior
         $this->shouldHaveType(Package::class);
     }
 
-    function it_can_not_be_constructed_with_a_name_that_has_less_than_2_segments()
+    function it_can_not_be_constructed_with_a_name_that_has_less_than_2_segments_in_it()
     {
         $this->shouldThrow()->during('__construct', ['behat']);
     }
 
-    function it_can_not_be_constructed_with_a_name_that_has_more_than_2_segments()
+    function it_can_not_be_constructed_with_a_name_that_has_more_than_2_segments_in_it()
     {
         $this->shouldThrow()->during('__construct', ['behat/docs/v2']);
     }
 
-    function its_organisation_name_is_a_first_segment_of_construction_parameter()
+    function its_organisation_name_is_a_first_segment_of_the_constructor_argument()
     {
         $this->getOrganisation()->shouldReturn('behat');
     }
 
-    function its_name_is_a_second_segment_of_construction_parameter()
+    function its_name_is_a_second_segment_of_the_constructor_argument()
     {
         $this->getName()->shouldReturn('docs');
     }
 
-    function it_can_be_converted_to_string()
+    function its_string_representation_is_the_name_of_the_package()
     {
         $this->__toString()->shouldReturn('behat/docs');
     }

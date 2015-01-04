@@ -25,7 +25,7 @@ final class GitHubRepository implements Repository
      */
     public static function named($repositoryString)
     {
-        if (!preg_match('/^[\w\-]++\/[\w\-]++$/', $repositoryString)) {
+        if (!preg_match('/^[\w\-\.]++\/[\w\-\.]++$/', $repositoryString)) {
             throw new BadRepositoryNameGiven(
                 "`{$repositoryString}` is not a supported GitHub repository name."
             );

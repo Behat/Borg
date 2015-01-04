@@ -24,7 +24,7 @@ class ReleaseDownloaderSpec extends ObjectBehavior
         $this->shouldHaveType(ReleaseListener::class);
     }
 
-    function it_downloads_new_release_using_downloader_and_notifies_registered_listeners(
+    function it_downloads_every_new_release_and_notifies_registered_listeners(
         Repository $repository,
         Downloader $downloader,
         Download $downloadedRelease,

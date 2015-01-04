@@ -23,7 +23,7 @@ class ReleaseSpec extends ObjectBehavior
         $this->getVersion()->shouldReturn($version);
     }
 
-    function it_can_be_represented_as_a_string(Repository $repository)
+    function its_string_representation_is_a_repository_and_version_separated_by_slash(Repository $repository)
     {
         $this->beConstructedWith($repository, Version::string('1.0.0'));
 

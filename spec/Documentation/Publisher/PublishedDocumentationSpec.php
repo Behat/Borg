@@ -24,17 +24,17 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->beConstructedThrough('publish', [$builtDocumentation, __DIR__]);
     }
 
-    function it_has_documentation_id(DocumentationId $anId)
+    function it_has_a_documentation_id(DocumentationId $anId)
     {
         $this->getDocumentationId()->shouldReturn($anId);
     }
 
-    function it_has_the_same_build_time_as_built_documentation(\DateTimeImmutable $buildTime)
+    function it_has_the_same_build_time_as_the_built_documentation(\DateTimeImmutable $buildTime)
     {
         $this->getBuildTime()->shouldReturn($buildTime);
     }
 
-    function it_has_the_same_documentation_time_as_built_documentation(\DateTimeImmutable $docTime)
+    function it_has_the_same_documentation_time_as_the_built_documentation(\DateTimeImmutable $docTime)
     {
         $this->getDocumentationTime()->shouldReturn($docTime);
     }
@@ -45,7 +45,7 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->shouldNotHavePage(new PageId('any file'));
     }
 
-    function it_can_get_page_by_its_id()
+    function it_can_get_a_page_by_its_id()
     {
         $pageId = new PageId(basename(__FILE__));
 
@@ -57,7 +57,7 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->shouldThrow()->duringGetPage(new PageId('any file'));
     }
 
-    function it_can_provide_absolute_path_to_provided_page()
+    function it_can_provide_absolute_path_for_the_page_by_its_id()
     {
         $this->getPagePath(new PageId(basename(__FILE__)))->shouldReturn(__FILE__);
     }
