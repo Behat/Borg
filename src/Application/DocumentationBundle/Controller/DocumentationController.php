@@ -102,14 +102,18 @@ class DocumentationController extends Controller
      */
     public function documentationPageAction($project, $version, $path)
     {
+        $manager = $this->getDocumentationManager();
         $documentationId = new ProjectDocumentationId($project, $version);
         $pageId = new PageId($path);
 
-        if (!$page = $this->getDocumentationManager()->findPage($documentationId, $pageId)) {
+        if (!$page = $manager->findPage($documentationId, $pageId)) {
             throw $this->createNotFoundException();
         }
 
-        return $this->render("documentation:{$page}");
+        return $this->render("documentation:{$page}", [
+            'page'         => $page,
+            'allPublished' => $manager->getAvailableDocumentation($project)
+        ]);
     }
 
     /**

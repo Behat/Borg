@@ -22,6 +22,8 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private $publisher;
     private $client;
 
+    use DocumentationTransformations;
+
     /**
      * Initializes context.
      *
@@ -52,14 +54,6 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
-     * @Transform :version
-     */
-    public function transformStringToVersion($string)
-    {
-        return Version::string($string);
-    }
-
-    /**
      * @Given :package version :version was documented
      */
     public function releaseWasDocumented(Package $package, Version $version)
@@ -68,6 +62,16 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
                     || $this->fileExistsInRepositoryVersion($package, $version, 'doc/index.rst');
 
         PHPUnit::assertTrue($rstIsInRepo, 'RST is not found in the provided repository version');
+    }
+
+    /**
+     * @Given :package version :version was documented on :time
+     */
+    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $time)
+    {
+        $this->releaseWasDocumented($package, $version);
+
+        PHPUnit::assertEquals($time, $this->getLatestCommitDate($package, $version));
     }
 
     /**
@@ -127,5 +131,16 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         return $this->client->repo()->contents()->exists(
             (string)$package->getOrganisation(), (string)$package->getName(), $path, (string)$version
         );
+    }
+
+    private function getLatestCommitDate(Package $package, Version $version)
+    {
+        $commit = $this->client->repo()->commits()->all(
+            $package->getOrganisation(),
+            $package->getName(),
+            ['sha' => (string)$version]
+        )[0];
+
+        return new \DateTimeImmutable($commit['commit']['author']['date']);
     }
 }

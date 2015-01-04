@@ -4,12 +4,12 @@ default:
             contexts: [ 'DocumentationContributorContext' ]
             filters:  { role: 'documentation contributor' }
 
-        documentation_ui:
+        smoke:
             contexts:
                 - DocumentationUIContext:
                     publisher: @documentation.publisher
                     client:    @github.client
-            filters:  { role: 'documentation contributor', tags: 'critical' }
+            filters:  { tags: 'critical' }
 
     extensions:
         Behat\Symfony2Extension: ~

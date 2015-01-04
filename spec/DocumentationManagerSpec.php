@@ -38,15 +38,33 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->build($documentation);
     }
 
+    function it_can_find_all_published_documentation_for_provided_project_name(
+        DocumentationId $anId,
+        Publisher $publisher,
+        BuiltDocumentation $built
+    ) {
+        $built->getDocumentationId()->willReturn($anId);
+        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
+        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
+
+        $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
+
+        $publisher->findForProject('my/project')->willReturn([$publishedDocumentation]);
+
+        $this->getAvailableDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
+    }
+
     function it_locates_documentation_file_if_it_is_published_and_file_exists(
         Publisher $publisher,
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
+        $built->getDocumentationId()->willReturn($anId);
+        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
+        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
+
         $pageId = new PageId(basename(__FILE__));
-        $publishedDocumentation = PublishedDocumentation::publish(
-            $built->getWrappedObject(), __DIR__
-        );
+        $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
 
         $publisher->hasPublished($anId)->willReturn(true);
         $publisher->getPublished($anId)->willReturn($publishedDocumentation);

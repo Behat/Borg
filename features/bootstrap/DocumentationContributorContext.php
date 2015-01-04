@@ -3,6 +3,7 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
+use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\PackageDocumentation\DownloadBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
@@ -24,9 +25,11 @@ use PHPUnit_Framework_Assert as PHPUnit;
  */
 class DocumentationContributorContext implements Context, SnippetAcceptingContext
 {
-    private $finder;
+    private $downloader;
     private $releaseManager;
     private $documentationManager;
+
+    use DocumentationTransformations;
 
     /**
      * Initializes context.
@@ -34,34 +37,26 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function __construct()
     {
         $publisher = new FakePublisher();
-        $this->finder = new FakeSourceFinder();
-        $downloader = new FakeDownloader();
+        $finder = new FakeSourceFinder();
+        $this->downloader = new FakeDownloader();
         $builder = new FakeBuilder();
 
         $this->releaseManager = new ReleaseManager();
         $this->documentationManager = new DocumentationManager($builder, $publisher);
 
-        $downloadingListener = new ReleaseDownloader($downloader);
-        $documentingListener = new DownloadBuilder($this->finder, $this->documentationManager);
+        $downloadingListener = new ReleaseDownloader($this->downloader);
+        $documentingListener = new DownloadBuilder($finder, $this->documentationManager);
 
         $this->releaseManager->registerListener($downloadingListener);
         $downloadingListener->registerListener($documentingListener);
     }
 
     /**
-     * @Transform :package
+     * @Given :package version :version was documented on :time
      */
-    public function transformStringToPackage($string)
+    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $time)
     {
-        return FakePackage::named($string);
-    }
-
-    /**
-     * @Transform :version
-     */
-    public function transformStringToVersion($string)
-    {
-        return Version::string($string);
+        $this->downloader->releaseWasDocumented(new Release($package, $version), $time, new FakeSource());
     }
 
     /**
@@ -69,7 +64,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function releaseWasDocumented(Package $package, Version $version)
     {
-        $this->finder->releaseWasDocumented(new Release($package, $version), new FakeSource());
+        $this->releaseWasDocumentedOn($package, $version, new DateTimeImmutable());
     }
 
     /**
@@ -94,7 +89,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     {
         PHPUnit::assertNotNull(
             $this->documentationManager->findPage(
-                new ReleaseDocumentationId(new Release($package, $version)),
+                $this->getDocumentationId($package, $version),
                 new PageId('index.html')
             )
         );
@@ -107,9 +102,55 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     {
         PHPUnit::assertNull(
             $this->documentationManager->findPage(
-                new ReleaseDocumentationId(new Release($package, $version)),
+                $this->getDocumentationId($package, $version),
                 new PageId('index.html')
             )
         );
+    }
+
+    /**
+     * @Then package name of :pageId page for :package version :version should be :name
+     */
+    public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
+    {
+        $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
+
+        PHPUnit::assertNotNull($page, 'Page not found.');
+        PHPUnit::assertEquals($name, $page->getProjectName());
+    }
+
+    /**
+     * @Then documentation time of :pageId page for :package version :version should be :time
+     */
+    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $time)
+    {
+        $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
+
+        PHPUnit::assertNotNull($page, 'Page not found.');
+        PHPUnit::assertEquals($time, $page->getDocumentationTime());
+    }
+
+    /**
+     * @Then documentation for :version should be in the list of available documentation for :projectName
+     */
+    public function documentationVersionShouldBeInTheList($projectName, Version $version)
+    {
+        PHPUnit_Framework_Assert::assertContains(
+            $this->getDocumentationId(FakePackage::named($projectName), $version),
+            array_map(
+                function (PublishedDocumentation $documentation) {
+                    return $documentation->getDocumentationId();
+                },
+                $this->documentationManager->getAvailableDocumentation($projectName)
+            ),
+            'Documentation for provided version not found in the list.',
+            false,
+            false
+        );
+    }
+
+    private function getDocumentationId(Package $package, Version $version)
+    {
+        return new ReleaseDocumentationId(new Release($package, $version));
     }
 }

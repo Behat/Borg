@@ -7,6 +7,7 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
+use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Publisher\Publisher;
 
 /**
@@ -66,5 +67,17 @@ final class DocumentationManager
         }
 
         return $documentation->getPage($pageId);
+    }
+
+    /**
+     * Tries to find all available documentation for provided project name.
+     *
+     * @param string $projectName
+     *
+     * @return PublishedDocumentation[]
+     */
+    public function getAvailableDocumentation($projectName)
+    {
+        return $this->publisher->findForProject($projectName);
     }
 }

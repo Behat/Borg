@@ -6,6 +6,7 @@ use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Documentation publisher that simply moves built docs into a public directory.
@@ -57,6 +58,19 @@ final class DirectoryPublisher implements Publisher
         }
 
         return unserialize(file_get_contents("{$this->publishPath}/{$anId}/publish.meta"));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findForProject($projectName)
+    {
+        $documentation = [];
+        foreach (Finder::create()->depth(0)->directories()->in("{$this->publishPath}/{$projectName}") as $dir) {
+            $documentation[] = unserialize(file_get_contents($dir . '/publish.meta'));
+        }
+
+        return $documentation;
     }
 
     private function moveDocumentation($buildPath, $publishPath)
