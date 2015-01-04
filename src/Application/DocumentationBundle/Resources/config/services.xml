@@ -12,7 +12,7 @@
     <services>
 
         <service id="package.listener.download.documenting"
-                 class="Behat\Borg\PackageDocumentation\DownloadBuilder">
+                 class="Behat\Borg\PackageDocumentation\DownloadBuilder" public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.manager"/>
         </service>
@@ -31,10 +31,10 @@
         </service>
 
         <service id="documentation.source_finder.rst"
-                 class="Behat\Borg\SphinxDoc\RstFinder"/>
+                 class="Behat\Borg\SphinxDoc\RstFinder" public="false"/>
 
         <service id="documentation.builder.sphinx"
-                 class="Behat\Borg\SphinxDoc\SphinxBuilder">
+                 class="Behat\Borg\SphinxDoc\SphinxBuilder" public="false">
             <argument>%documentation.build.path%</argument>
             <argument>%kernel.root_dir%/../src/Application/DocumentationBundle/Resources/sphinx</argument>
             <argument type="service">
