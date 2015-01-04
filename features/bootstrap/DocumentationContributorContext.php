@@ -4,10 +4,10 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
+use Behat\Borg\PackageDocumentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\PackageDocumentation\DownloadBuilder;
 use Behat\Borg\DocumentationManager;
-use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
@@ -18,7 +18,6 @@ use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
 use Fake\Release\FakeDownloader;
-use Fake\Release\FakeRepository;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
