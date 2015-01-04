@@ -22,6 +22,7 @@ Feature: Documentation is published on repository release
     Then "behat/behat" version "v2.5" documentation should have been published
     And "behat/behat" version "v3.0" documentation should have been published
 
+  @critical
   Scenario: Publishing extension documentation
     Given "behat/symfony2-extension" version "v2.0.0" was documented in "Behat/Symfony2Extension"
     When I release "Behat/Symfony2Extension" version "v2.0.0"
