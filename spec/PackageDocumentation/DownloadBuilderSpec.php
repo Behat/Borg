@@ -5,7 +5,6 @@ namespace spec\Behat\Borg\PackageDocumentation;
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
-use Behat\Borg\Documentation\Listener\BuildListener;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\DocumentationManager;
