@@ -136,11 +136,9 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private function getLatestCommitDate(Package $package, Version $version)
     {
         $commit = $this->client->repo()->commits()->all(
-            $package->getOrganisation(),
-            $package->getName(),
-            ['sha' => (string)$version]
-        )[0];
+            $package->getOrganisation(), $package->getName(), ['sha' => (string)$version]
+        );
 
-        return new \DateTimeImmutable($commit['commit']['author']['date']);
+        return new \DateTimeImmutable($commit[0]['commit']['author']['date']);
     }
 }
