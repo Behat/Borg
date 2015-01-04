@@ -35,9 +35,6 @@
                  class="Behat\Borg\GitHub\GitHubDownloader" public="false">
             <argument type="service" id="github.client"/>
             <argument>%package.release_downloader.path%</argument>
-            <argument type="collection">
-                <argument>Behat/docs</argument>
-            </argument>
         </service>
 
         <service id="github.client"
