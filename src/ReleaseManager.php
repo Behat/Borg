@@ -33,7 +33,7 @@ final class ReleaseManager
     public function release(Release $release)
     {
         foreach ($this->listeners as $listener) {
-            $listener->packageWasReleased($release);
+            $listener->releaseReceived($release);
         }
     }
 }

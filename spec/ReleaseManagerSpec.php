@@ -18,8 +18,8 @@ class ReleaseManagerSpec extends ObjectBehavior
     ) {
         $aRelease = new Release($package->getWrappedObject(), Version::string('v2.5'));
 
-        $listener1->packageWasReleased($aRelease)->shouldBeCalled();
-        $listener2->packageWasReleased($aRelease)->shouldBeCalled();
+        $listener1->releaseReceived($aRelease)->shouldBeCalled();
+        $listener2->releaseReceived($aRelease)->shouldBeCalled();
 
         $this->registerListener($listener1);
         $this->registerListener($listener2);

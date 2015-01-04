@@ -40,6 +40,6 @@ class ReleaseDownloaderSpec extends ObjectBehavior
         $this->registerListener($listener1);
         $this->registerListener($listener2);
 
-        $this->packageWasReleased($release);
+        $this->releaseReceived($release);
     }
 }

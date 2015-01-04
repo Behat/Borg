@@ -10,9 +10,9 @@ use Behat\Borg\Release\Release;
 interface ReleaseListener
 {
     /**
-     * Notifies listener about new release.
+     * Notifies listener about a new release.
      *
      * @param Release $release
      */
-    public function packageWasReleased(Release $release);
+    public function releaseReceived(Release $release);
 }

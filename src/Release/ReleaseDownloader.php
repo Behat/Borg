@@ -43,7 +43,7 @@ final class ReleaseDownloader implements ReleaseListener
     /**
      * {@inheritdoc}
      */
-    public function packageWasReleased(Release $release)
+    public function releaseReceived(Release $release)
     {
         $downloadedRelease = $this->downloader->download($release);
 
