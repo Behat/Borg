@@ -3,7 +3,7 @@
 namespace Behat\Borg\Release;
 
 /**
- * Represents software package release.
+ * Represents a repository release.
  */
 final class Release
 {

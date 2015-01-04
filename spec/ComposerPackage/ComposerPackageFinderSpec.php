@@ -17,8 +17,8 @@ class ComposerPackageFinderSpec extends ObjectBehavior
 
     function it_finds_a_composer_package_if_download_has_a_composer_json(Download $download)
     {
-        $download->getPath()->willReturn(__DIR__);
         $download->hasFile('composer.json')->willReturn(true);
+        $download->getFilePath('composer.json')->willReturn(__DIR__ . '/composer.json');
 
         $this->findPackage($download)->shouldBeLike(new ComposerPackage('behat/behat'));
     }

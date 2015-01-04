@@ -17,8 +17,8 @@ class DocumentationPackageFinderSpec extends ObjectBehavior
 
     function it_finds_a_borg_package_if_download_has_a_borg_json_file(Download $download)
     {
-        $download->getPath()->willReturn(__DIR__);
         $download->hasFile('borg.json')->willReturn(true);
+        $download->getFilePath('borg.json')->willReturn(__DIR__ . '/borg.json');
 
         $this->findPackage($download)->shouldBeLike(new DocumentationPackage('behat/behat'));
     }
