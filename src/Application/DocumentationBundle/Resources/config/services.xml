@@ -13,14 +13,25 @@
 
         <service id="release.listener.download.packaging"
                  class="Behat\Borg\Package\ReleasePackager" public="false">
-            <argument type="service" id="package.finder.borg"/>
+            <argument type="service" id="package.finder.compound"/>
             <call method="registerListener">
                 <argument type="service" id="package.listener.package.documenting"/>
             </call>
         </service>
 
         <service id="package.finder.borg"
-                 class="Behat\Borg\Package\Finder\BorgFinder" public="false"/>
+                 class="Behat\Borg\BorgPackage\BorgPackageFinder" public="false"/>
+
+        <service id="package.finder.composer"
+                 class="Behat\Borg\ComposerPackage\ComposerPackageFinder" public="false"/>
+
+        <service id="package.finder.compound"
+                 class="Behat\Borg\Package\Finder\CompoundFinder" public="false">
+            <argument type="collection">
+                <argument type="service" id="package.finder.borg"/>
+                <argument type="service" id="package.finder.composer"/>
+            </argument>
+        </service>
 
         <service id="package.listener.package.documenting"
                  class="Behat\Borg\Package\Documentation\PackageDocumentationBuilder"
