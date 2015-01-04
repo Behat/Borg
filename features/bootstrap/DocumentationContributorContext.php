@@ -15,6 +15,7 @@ use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Documentation\FakeBuilder;
+use Fake\Documentation\FakeDocumentedDownload;
 use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
@@ -61,7 +62,9 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function packageWasDocumentedOn(Package $package, Version $version, Repository $repository, DateTimeImmutable $time)
     {
-        $this->downloader->releaseWasDocumented(new Release($repository, $version), $time, new FakeSource());
+        $release = new Release($repository, $version);
+        $download = new FakeDocumentedDownload($release, $time, $package, new FakeSource());
+        $this->downloader->addReleaseDownload($release, $download);
     }
 
     /**
