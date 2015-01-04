@@ -3,6 +3,7 @@
 namespace Behat\Borg\Release\Downloader;
 
 use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use DateTimeImmutable;
 
 /**
@@ -16,6 +17,13 @@ interface Download
      * @return Release
      */
     public function getRelease();
+
+    /**
+     * Returns downloaded version.
+     *
+     * @return Version
+     */
+    public function getVersion();
 
     /**
      * Returns release time.

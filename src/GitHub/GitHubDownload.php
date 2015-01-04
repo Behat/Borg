@@ -49,6 +49,14 @@ final class GitHubDownload implements Download
     /**
      * {@inheritdoc}
      */
+    public function getVersion()
+    {
+        return $this->release->getVersion();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getReleaseTime()
     {
         return $this->commit->getTime();

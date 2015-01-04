@@ -34,5 +34,15 @@ final class PackageDownload
         return $this->download;
     }
 
+    public function getVersion()
+    {
+        return $this->download->getVersion();
+    }
+
+    public function getReleaseTime()
+    {
+        return $this->download->getReleaseTime();
+    }
+
     private function __construct() { }
 }

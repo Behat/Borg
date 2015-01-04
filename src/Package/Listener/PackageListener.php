@@ -12,7 +12,7 @@ interface PackageListener
     /**
      * Notifies listeners that package was downloaded.
      *
-     * @param PackageDownload $package
+     * @param PackageDownload $packageDownload
      */
-    public function packageWasDownloaded(PackageDownload $package);
+    public function packageWasDownloaded(PackageDownload $packageDownload);
 }

@@ -4,9 +4,10 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
+use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\PackageDocumentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
-use Behat\Borg\PackageDocumentation\DownloadBuilder;
+use Behat\Borg\PackageDocumentation\PackageDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Repository;
@@ -17,6 +18,7 @@ use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
+use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
 use PHPUnit_Framework_Assert as PHPUnit;
 
@@ -37,18 +39,21 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function __construct()
     {
         $publisher = new FakePublisher();
-        $finder = new FakeSourceFinder();
+        $sourceFinder = new FakeSourceFinder();
+        $packageFinder = new FakePackageFinder();
         $this->downloader = new FakeDownloader();
         $builder = new FakeBuilder();
 
         $this->releaseManager = new ReleaseManager();
         $this->documentationManager = new DocumentationManager($builder, $publisher);
 
-        $downloadingListener = new ReleaseDownloader($this->downloader);
-        $documentingListener = new DownloadBuilder($finder, $this->documentationManager);
+        $releaseDownloader = new ReleaseDownloader($this->downloader);
+        $releasePackager = new ReleasePackager($packageFinder);
+        $documentingBuilder = new PackageDocumentationBuilder($sourceFinder, $this->documentationManager);
 
-        $this->releaseManager->registerListener($downloadingListener);
-        $downloadingListener->registerListener($documentingListener);
+        $this->releaseManager->registerListener($releaseDownloader);
+        $releaseDownloader->registerListener($releasePackager);
+        $releasePackager->registerListener($documentingBuilder);
     }
 
     /**

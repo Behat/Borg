@@ -5,13 +5,13 @@ namespace Behat\Borg\PackageDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\DocumentationManager;
-use Behat\Borg\Release\Downloader\Download;
-use Behat\Borg\Release\Listener\DownloadListener;
+use Behat\Borg\Package\Listener\PackageListener;
+use Behat\Borg\Package\PackageDownload;
 
 /**
- * Builds documentation after release was been downloaded.
+ * Builds documentation after package was been downloaded.
  */
-final class DownloadBuilder implements DownloadListener
+final class PackageDocumentationBuilder implements PackageListener
 {
     /**
      * @var SourceFinder
@@ -35,16 +35,20 @@ final class DownloadBuilder implements DownloadListener
     }
 
     /**
-     * {@inheritdoc}
+     * Notifies listeners that package was downloaded.
+     *
+     * @param PackageDownload $packageDownload
      */
-    public function releaseWasDownloaded(Download $download)
+    public function packageWasDownloaded(PackageDownload $packageDownload)
     {
-        if (null === $source = $this->finder->findSource($download)) {
+        if (null === $source = $this->finder->findSource($packageDownload->getDownload())) {
             return;
         }
 
-        $anId = new ReleaseDocumentationId($download->getRelease());
-        $time = $download->getReleaseTime();
+        $package = $packageDownload->getPackage();
+        $version = $packageDownload->getVersion();
+        $time = $packageDownload->getReleaseTime();
+        $anId = new PackageDocumentationId($package, $version);
 
         $this->manager->build(new Documentation($anId, $time, $source));
     }

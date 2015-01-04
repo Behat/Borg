@@ -8,15 +8,17 @@ use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\DocumentationManager;
+use Behat\Borg\Package\Listener\PackageListener;
+use Behat\Borg\Package\Package;
+use Behat\Borg\Package\PackageDownload;
 use Behat\Borg\Release\Downloader\Download;
-use Behat\Borg\Release\Listener\DownloadListener;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DownloadBuilderSpec extends ObjectBehavior
+class PackageDocumentationBuilderSpec extends ObjectBehavior
 {
     function let(SourceFinder $finder, Publisher $publisher, Builder $builder)
     {
@@ -24,40 +26,47 @@ class DownloadBuilderSpec extends ObjectBehavior
         $this->beConstructedWith($finder, $manager);
     }
 
-    function it_is_a_release_download_listener()
+    function it_is_a_package_listener()
     {
-        $this->shouldHaveType(DownloadListener::class);
+        $this->shouldHaveType(PackageListener::class);
     }
 
     function it_builds_found_documentation_using_builder_and_notifies_listeners(
-        Repository $package,
-        Source $source,
+        Package $package,
         Download $download,
         SourceFinder $finder,
+        Source $source,
         Builder $builder,
         BuiltDocumentation $builtDocumentation
     ) {
+        $packageDownload = PackageDownload::packageWasDownloaded(
+            $package->getWrappedObject(), $download->getWrappedObject()
+        );
         $finder->findSource($download)->willReturn($source);
-        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
-        $download->getRelease()->willReturn($release);
+        $download->getVersion()->willReturn(Version::string('v2.5'));
         $download->getReleaseTime()->willReturn(new \DateTimeImmutable());
 
         $builder->build(Argument::which('getSource', $source->getWrappedObject()))->willReturn(
             $builtDocumentation
         )->shouldBeCalled();
 
-        $this->releaseWasDownloaded($download);
+        $this->packageWasDownloaded($packageDownload);
     }
 
     function it_does_not_build_documentation_if_finder_does_not_find_any(
-        Download $release,
+        Package $package,
+        Download $download,
+        SourceFinder $finder,
         SourceFinder $finder,
         Builder $builder
     ) {
-        $finder->findSource($release)->willReturn(null);
+        $packageDownload = PackageDownload::packageWasDownloaded(
+            $package->getWrappedObject(), $download->getWrappedObject()
+        );
+        $finder->findSource($download)->willReturn(null);
 
         $builder->build(Argument::any())->shouldNotBeCalled();
 
-        $this->releaseWasDownloaded($release);
+        $this->packageWasDownloaded($packageDownload);
     }
 }

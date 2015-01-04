@@ -57,6 +57,11 @@ class GitHubDownloadSpec extends ObjectBehavior
         $this->getReleaseTime()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
     }
 
+    function its_version_is_the_release_version()
+    {
+        $this->getVersion()->shouldBeLike(Version::string('v2.5'));
+    }
+
     function its_path_is_a_path_it_was_constructed_with()
     {
         $this->getPath()->shouldReturn(__DIR__);
