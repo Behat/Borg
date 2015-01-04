@@ -13,10 +13,10 @@ final class Release
     /**
      * Initializes release.
      *
-     * @param Package $package
+     * @param Repository $package
      * @param Version $version
      */
-    public function __construct(Package $package, Version $version)
+    public function __construct(Repository $package, Version $version)
     {
         $this->package = $package;
         $this->version = $version;
@@ -25,7 +25,7 @@ final class Release
     /**
      * Returns package instance.
      *
-     * @return Package
+     * @return Repository
      */
     public function getPackage()
     {

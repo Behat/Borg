@@ -11,7 +11,7 @@ use Behat\Borg\Documentation\Source;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Listener\DownloadListener;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
@@ -31,7 +31,7 @@ class DownloadBuilderSpec extends ObjectBehavior
     }
 
     function it_builds_found_documentation_using_builder_and_notifies_listeners(
-        Package $package,
+        Repository $package,
         Source $source,
         Download $download,
         SourceFinder $finder,

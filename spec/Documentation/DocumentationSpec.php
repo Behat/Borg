@@ -6,7 +6,7 @@ use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\Release\Downloader\Download;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use DateTimeImmutable;

@@ -2,19 +2,19 @@
 
 namespace spec\Behat\Borg\Release;
 
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class ReleaseSpec extends ObjectBehavior
 {
-    function let(Package $package)
+    function let(Repository $package)
     {
         $package->__toString()->willReturn('my_package');
     }
 
-    function it_is_a_combination_of_package_and_specific_version(Package $package)
+    function it_is_a_combination_of_package_and_specific_version(Repository $package)
     {
         $version = Version::string('1.0.0');
         $this->beConstructedWith($package, $version);
@@ -23,7 +23,7 @@ class ReleaseSpec extends ObjectBehavior
         $this->getVersion()->shouldReturn($version);
     }
 
-    function it_can_be_represented_as_a_string(Package $package)
+    function it_can_be_represented_as_a_string(Repository $package)
     {
         $this->beConstructedWith($package, Version::string('1.0.0'));
 

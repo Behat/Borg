@@ -2,11 +2,11 @@
 
 namespace spec\Behat\Borg\GitHub;
 
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class GitHubPackageSpec extends ObjectBehavior
+class GitHubRepositorySpec extends ObjectBehavior
 {
     function let()
     {
@@ -15,7 +15,7 @@ class GitHubPackageSpec extends ObjectBehavior
 
     function it_is_a_package()
     {
-        $this->shouldHaveType(Package::class);
+        $this->shouldHaveType(Repository::class);
     }
 
     function it_can_only_be_created_using_full_github_package_name()

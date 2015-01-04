@@ -3,7 +3,7 @@
 namespace spec\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
-use Behat\Borg\GitHub\GitHubPackage;
+use Behat\Borg\GitHub\GitHubRepository;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
@@ -16,7 +16,7 @@ class GitHubDownloadSpec extends ObjectBehavior
     {
         $this->beConstructedWith(
             new Release(
-                GitHubPackage::named('behat/docs'),
+                GitHubRepository::named('behat/docs'),
                 Version::string('v2.5')
             ),
             Commit::committedWithShaAtTime(
@@ -36,7 +36,7 @@ class GitHubDownloadSpec extends ObjectBehavior
     {
         $this->getRelease()->shouldBeLike(
             new Release(
-                GitHubPackage::named('behat/docs'),
+                GitHubRepository::named('behat/docs'),
                 Version::string('v2.5')
             )
         );

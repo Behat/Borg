@@ -3,12 +3,12 @@
 namespace Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Exception\BadRepositoryNameGiven;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 
 /**
  * Represents a GitHub package.
  */
-final class GitHubPackage implements Package
+final class GitHubRepository implements Repository
 {
     private $repositoryString;
     private $organisation;
@@ -19,7 +19,7 @@ final class GitHubPackage implements Package
      *
      * @param $repositoryString
      *
-     * @return GitHubPackage
+     * @return GitHubRepository
      *
      * @throws BadRepositoryNameGiven
      */
@@ -31,7 +31,7 @@ final class GitHubPackage implements Package
             );
         }
 
-        $package = new GitHubPackage();
+        $package = new GitHubRepository();
         $package->repositoryString = $repositoryString;
         list($package->organisation, $package->repository) = explode('/', $repositoryString);
 

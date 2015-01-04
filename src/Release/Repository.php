@@ -5,7 +5,7 @@ namespace Behat\Borg\Release;
 /**
  * Represents software package.
  */
-interface Package
+interface Repository
 {
     /**
      * Returns package organisation name.

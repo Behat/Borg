@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\Application\ReleaseBundle\Command;
 
-use Behat\Borg\GitHub\GitHubPackage;
+use Behat\Borg\GitHub\GitHubRepository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
@@ -32,7 +32,7 @@ final class ReleaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $aPackage = GitHubPackage::named($input->getArgument('package'));
+        $aPackage = GitHubRepository::named($input->getArgument('package'));
         $version = Version::string($input->getArgument('version'));
         $aRelease = new Release($aPackage, $version);
 

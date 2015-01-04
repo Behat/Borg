@@ -6,7 +6,7 @@ use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Downloader\Downloader;
 use Behat\Borg\Release\Listener\DownloadListener;
 use Behat\Borg\Release\Listener\ReleaseListener;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
@@ -25,7 +25,7 @@ class ReleaseDownloaderSpec extends ObjectBehavior
     }
 
     function it_downloads_new_release_using_downloader_and_notifies_registered_listeners(
-        Package $package,
+        Repository $package,
         Downloader $downloader,
         Download $downloadedRelease,
         DownloadListener $listener1,

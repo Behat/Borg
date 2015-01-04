@@ -8,7 +8,7 @@ use Behat\Borg\PackageDocumentation\DownloadBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
 use Behat\Borg\Release\ReleaseDownloader;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
@@ -17,7 +17,7 @@ use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
 use Fake\Release\FakeDownloader;
-use Fake\Release\FakePackage;
+use Fake\Release\FakeRepository;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
@@ -52,32 +52,32 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
-     * @Given :package version :version was documented on :time
+     * @Given :package version :version was documented in :repository on :time
      */
-    public function releaseWasDocumentedOn(Package $package, Version $version, DateTimeImmutable $time)
+    public function releaseWasDocumentedOn($package, Version $version, Repository $repository, DateTimeImmutable $time)
     {
-        $this->downloader->releaseWasDocumented(new Release($package, $version), $time, new FakeSource());
+        $this->downloader->releaseWasDocumented(new Release($repository, $version), $time, new FakeSource());
     }
 
     /**
-     * @Given :package version :version was documented
+     * @Given :package version :version was documented in :repository
      */
-    public function releaseWasDocumented(Package $package, Version $version)
+    public function releaseWasDocumented($package, Version $version, Repository $repository)
     {
-        $this->releaseWasDocumentedOn($package, $version, new DateTimeImmutable());
+        $this->releaseWasDocumentedOn($package, $version, $repository, new DateTimeImmutable());
     }
 
     /**
      * @Given :package version :version was not documented
      */
-    public function releaseWasNotDocumented(Package $package, Version $version)
+    public function releaseWasNotDocumented(Repository $package, Version $version)
     {
     }
 
     /**
      * @When I release :package version :version
      */
-    public function iReleaseRelease(Package $package, Version $version)
+    public function iReleaseRelease(Repository $package, Version $version)
     {
         $this->releaseManager->release(new Release($package, $version));
     }
@@ -85,7 +85,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Then :package version :version documentation should have been published
      */
-    public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
+    public function releaseDocumentationShouldHaveBeenPublished(Repository $package, Version $version)
     {
         PHPUnit::assertNotNull(
             $this->documentationManager->findPage(
@@ -98,7 +98,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Then :package version :version documentation should not be published
      */
-    public function versionDocumentationShouldNotBePublished(Package $package, Version $version)
+    public function versionDocumentationShouldNotBePublished(Repository $package, Version $version)
     {
         PHPUnit::assertNull(
             $this->documentationManager->findPage(
@@ -111,7 +111,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Then package name of :pageId page for :package version :version should be :name
      */
-    public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
+    public function packageNameOfPageShouldBe(PageId $pageId, Repository $package, Version $version, $name)
     {
         $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
 
@@ -122,7 +122,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Then documentation time of :pageId page for :package version :version should be :time
      */
-    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $time)
+    public function timeOfPageShouldBe(PageId $pageId, Repository $package, Version $version, DateTimeImmutable $time)
     {
         $page = $this->documentationManager->findPage($this->getDocumentationId($package, $version), $pageId);
 
@@ -136,7 +136,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function documentationVersionShouldBeInTheList($projectName, Version $version)
     {
         PHPUnit_Framework_Assert::assertContains(
-            $this->getDocumentationId(FakePackage::named($projectName), $version),
+            $this->getDocumentationId(FakeRepository::named($projectName), $version),
             array_map(
                 function (PublishedDocumentation $documentation) {
                     return $documentation->getDocumentationId();
@@ -149,7 +149,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         );
     }
 
-    private function getDocumentationId(Package $package, Version $version)
+    private function getDocumentationId(Repository $package, Version $version)
     {
         return new ReleaseDocumentationId(new Release($package, $version));
     }

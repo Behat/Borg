@@ -3,7 +3,7 @@
 namespace spec\Behat\Borg\PackageDocumentation;
 
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
@@ -11,7 +11,7 @@ use Prophecy\Argument;
 
 class ReleaseDocumentationIdSpec extends ObjectBehavior
 {
-    function let(Package $package)
+    function let(Repository $package)
     {
         $package->__toString()->willReturn('behat');
 
@@ -33,7 +33,7 @@ class ReleaseDocumentationIdSpec extends ObjectBehavior
         $this->getProjectName()->shouldReturn('behat');
     }
 
-    function it_tableize_package_name_into_a_project_name(Package $package)
+    function it_tableize_package_name_into_a_project_name(Repository $package)
     {
         $package->__toString()->willReturn('Behat/Symfony2Extension');
 
@@ -45,7 +45,7 @@ class ReleaseDocumentationIdSpec extends ObjectBehavior
         $this->getVersionString()->shouldReturn('v1.0');
     }
 
-    function it_holds_a_release_reference(Package $package)
+    function it_holds_a_release_reference(Repository $package)
     {
         $this->getRelease()->shouldBeLike(
             new Release($package->getWrappedObject(), Version::string('1.0.0'))

@@ -4,7 +4,7 @@ namespace Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Exception\ReleaseWasNotFound;
 use Behat\Borg\Release\Downloader\Downloader;
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use DateTimeImmutable;
 use Github\Client;
@@ -122,17 +122,17 @@ final class GitHubDownloader implements Downloader
         return "{$this->getDownloadPath($release)}/commit.meta";
     }
 
-    private function getArchivePath(Package $package, Commit $commit)
+    private function getArchivePath(Repository $package, Commit $commit)
     {
         return "{$this->downloadPath}/{$package}/{$commit->getSha()}.zip";
     }
 
-    private function getOrganisationPath(Package $package)
+    private function getOrganisationPath(Repository $package)
     {
         return "{$this->downloadPath}/{$package->getOrganisation()}";
     }
 
-    private function getUnzippedCommitPath(Package $package, Commit $commit)
+    private function getUnzippedCommitPath(Repository $package, Commit $commit)
     {
         $shortSha = mb_substr($commit->getSha(), 0, 7);
         $organisation = $package->getOrganisation();

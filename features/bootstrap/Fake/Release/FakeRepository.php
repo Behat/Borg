@@ -2,9 +2,9 @@
 
 namespace Fake\Release;
 
-use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Repository;
 
-final class FakePackage implements Package
+final class FakeRepository implements Repository
 {
     private $name;
 
@@ -14,7 +14,7 @@ final class FakePackage implements Package
             throw new \InvalidArgumentException('Package should include organisation and name.');
         }
 
-        $package = new FakePackage();
+        $package = new FakeRepository();
         $package->name = $name;
 
         return $package;
