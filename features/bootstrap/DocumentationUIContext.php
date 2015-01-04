@@ -151,21 +151,21 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private function existsInRepositoryVersion(Repository $repository, Version $version, $path)
     {
         return $this->client->repo()->contents()->exists(
-            (string)$repository->getOrganisation(), (string)$repository->getName(), $path, (string)$version
+            (string)$repository->getOrganisationName(), (string)$repository->getName(), $path, (string)$version
         );
     }
 
     private function contentInRepositoryVersion(Repository $repository, Version $version, $path)
     {
         return file_get_contents($this->client->repo()->contents()->show(
-            (string)$repository->getOrganisation(), (string)$repository->getName(), $path, (string)$version
+            (string)$repository->getOrganisationName(), (string)$repository->getName(), $path, (string)$version
         )['download_url']);
     }
 
     private function getLatestCommitDate(Repository $package, Version $version)
     {
         $commit = $this->client->repo()->commits()->all(
-            $package->getOrganisation(), $package->getName(), ['sha' => (string)$version]
+            $package->getOrganisationName(), $package->getName(), ['sha' => (string)$version]
         );
 
         return new \DateTimeImmutable($commit[0]['commit']['author']['date']);

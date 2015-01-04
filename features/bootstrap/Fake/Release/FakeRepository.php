@@ -20,7 +20,7 @@ final class FakeRepository implements Repository
         return $package;
     }
 
-    public function getOrganisation()
+    public function getOrganisationName()
     {
         return explode('/', $this->name)[0];
     }

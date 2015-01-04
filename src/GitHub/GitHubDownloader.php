@@ -49,7 +49,7 @@ final class GitHubDownloader implements Downloader
 
     private function fetchLatestCommit(Release $release)
     {
-        $organisation = $release->getRepository()->getOrganisation();
+        $organisation = $release->getRepository()->getOrganisationName();
         $repository = $release->getRepository()->getName();
         $version = (string)$release->getVersion();
 
@@ -93,7 +93,7 @@ final class GitHubDownloader implements Downloader
         $content = ResponseMediator::getContent(
             $this->client->getHttpClient()->get(
                 'repos/' .
-                rawurlencode($release->getRepository()->getOrganisation()) .
+                rawurlencode($release->getRepository()->getOrganisationName()) .
                 '/' .
                 rawurlencode($release->getRepository()->getName()) .
                 '/zipball/' .
@@ -129,13 +129,13 @@ final class GitHubDownloader implements Downloader
 
     private function getOrganisationPath(Repository $package)
     {
-        return "{$this->downloadPath}/{$package->getOrganisation()}";
+        return "{$this->downloadPath}/{$package->getOrganisationName()}";
     }
 
     private function getUnzippedCommitPath(Repository $package, Commit $commit)
     {
         $shortSha = mb_substr($commit->getSha(), 0, 7);
-        $organisation = $package->getOrganisation();
+        $organisation = $package->getOrganisationName();
         $repository = $package->getName();
 
         return "{$this->getOrganisationPath($package)}/{$organisation}-{$repository}-{$shortSha}";

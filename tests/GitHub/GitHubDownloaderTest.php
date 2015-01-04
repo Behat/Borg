@@ -98,7 +98,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     private function getLatestCommit(Release $release)
     {
         $commit = $this->client->repo()->commits()->all(
-            $release->getRepository()->getOrganisation(),
+            $release->getRepository()->getOrganisationName(),
             $release->getRepository()->getName(),
             array('sha' => (string)$release->getVersion())
         )[0];

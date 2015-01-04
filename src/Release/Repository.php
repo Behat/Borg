@@ -12,7 +12,7 @@ interface Repository
      *
      * @return string
      */
-    public function getOrganisation();
+    public function getOrganisationName();
 
     /**
      * Returns repository name.
