@@ -34,7 +34,7 @@ final class ComposerPackage implements Package
     /**
      * {@inheritdoc]
      */
-    public function getOrganisation()
+    public function getOrganisationName()
     {
         return explode('/', $this->string)[0];
     }

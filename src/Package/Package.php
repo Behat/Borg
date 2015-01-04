@@ -12,7 +12,7 @@ interface Package
      *
      * @return string
      */
-    public function getOrganisation();
+    public function getOrganisationName();
 
     /**
      * Returns package name.

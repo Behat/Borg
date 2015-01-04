@@ -30,7 +30,7 @@ class ComposerPackageSpec extends ObjectBehavior
 
     function its_organisation_name_is_a_first_segment_of_the_constructor_argument()
     {
-        $this->getOrganisation()->shouldReturn('behat');
+        $this->getOrganisationName()->shouldReturn('behat');
     }
 
     function its_name_is_a_second_segment_of_the_constructor_argument()
