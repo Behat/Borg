@@ -19,7 +19,7 @@ final class ComposerPackageFinder implements PackageFinder
             return null;
         }
 
-        $meta = json_decode(file_get_contents("{$download->getFilePath('composer.json')}"), true);
+        $meta = json_decode(file_get_contents($download->getFilePath('composer.json')), true);
 
         return new ComposerPackage($meta['name']);
     }

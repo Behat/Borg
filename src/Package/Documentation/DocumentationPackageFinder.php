@@ -19,7 +19,7 @@ final class DocumentationPackageFinder implements PackageFinder
             return null;
         }
 
-        $meta = json_decode(file_get_contents("{$download->getFilePath('borg.json')}"), true);
+        $meta = json_decode(file_get_contents($download->getFilePath('borg.json')), true);
 
         return new DocumentationPackage($meta['for-package']);
     }
