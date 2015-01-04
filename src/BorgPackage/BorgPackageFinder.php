@@ -1,14 +1,14 @@
 <?php
 
-namespace Behat\Borg\Package\Finder;
+namespace Behat\Borg\BorgPackage;
 
-use Behat\Borg\Package\BorgPackage;
+use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Release\Downloader\Download;
 
 /**
  * Finds borg.json-based package information in the download.
  */
-final class BorgFinder implements PackageFinder
+final class BorgPackageFinder implements PackageFinder
 {
     /**
      * {@inheritdoc}

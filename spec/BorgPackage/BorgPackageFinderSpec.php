@@ -1,14 +1,14 @@
 <?php
 
-namespace spec\Behat\Borg\Package\Finder;
+namespace spec\Behat\Borg\BorgPackage;
 
-use Behat\Borg\Package\BorgPackage;
+use Behat\Borg\BorgPackage\BorgPackage;
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Release\Downloader\Download;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class BorgFinderSpec extends ObjectBehavior
+class BorgPackageFinderSpec extends ObjectBehavior
 {
     function it_is_a_package_finder()
     {
