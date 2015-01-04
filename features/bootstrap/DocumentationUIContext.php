@@ -6,9 +6,7 @@ use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubRepository;
 use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Documentation\ReleaseDocumentationId;
 use Behat\Borg\Release\Repository;
-use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Github\Client;
@@ -48,9 +46,9 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
-     * @Transform :package
+     * @Transform :repository
      */
-    public function transformStringToPackage($string)
+    public function transformStringToRepository($string)
     {
         return GitHubRepository::named($string);
     }
@@ -60,10 +58,15 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
      */
     public function packageWasDocumented(Package $package, Version $version, Repository $repository)
     {
-        $rstIsInRepo = $this->fileExistsInRepositoryVersion($repository, $version, 'index.rst')
-                    || $this->fileExistsInRepositoryVersion($repository, $version, 'doc/index.rst');
+        PHPUnit::assertTrue(
+            $this->repositoryPackageIs($repository, $version, $package),
+            "Repository `{$repository}` {$version} package name is not `{$package}`."
+        );
 
-        PHPUnit::assertTrue($rstIsInRepo, 'RST is not found in the provided repository version');
+        PHPUnit::assertTrue(
+            $this->repositoryContainsDocs($repository, $version),
+            'Documentation is not found in the provided repository version.'
+        );
     }
 
     /**
@@ -71,7 +74,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
      */
     public function packageWasDocumentedOn(Package $package, Version $version, Repository $repository, DateTimeImmutable $time)
     {
-        $this->packageWasDocumented($package, $repository, $version);
+        $this->packageWasDocumented($package, $version, $repository);
 
         PHPUnit::assertEquals($time, $this->getLatestCommitDate($repository, $version));
     }
@@ -91,9 +94,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         $process = new Process($this->releaseCommand($repository, $version));
         $process->run();
 
-        PHPUnit::assertTrue(
-            $process->isSuccessful(), "{$process->getOutput()}\n{$process->getErrorOutput()}"
-        );
+        PHPUnit::assertTrue($process->isSuccessful(), "{$process->getOutput()}\n{$process->getErrorOutput()}");
     }
 
     /**
@@ -124,11 +125,35 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         return __DIR__ . "/../../app/console release {$repository} {$version} -e=test";
     }
 
-    private function fileExistsInRepositoryVersion(Repository $repository, Version $version, $path)
+    private function repositoryContainsDocs(Repository $repository, Version $version)
+    {
+        return $this->existsInRepositoryVersion($repository, $version, 'index.rst')
+            || $this->existsInRepositoryVersion($repository, $version, 'doc/index.rst');
+    }
+
+    private function repositoryPackageIs(Repository $repository, Version $version, Package $package)
+    {
+        if ($this->existsInRepositoryVersion($repository, $version, 'borg.json')) {
+            $content = $this->contentInRepositoryVersion($repository, $version, 'borg.json');
+
+            return 1 === preg_match('#"for-package":\s*"' . preg_quote((string)$package) . '"#', $content);
+        }
+
+        return false;
+    }
+
+    private function existsInRepositoryVersion(Repository $repository, Version $version, $path)
     {
         return $this->client->repo()->contents()->exists(
             (string)$repository->getOrganisation(), (string)$repository->getName(), $path, (string)$version
         );
+    }
+
+    private function contentInRepositoryVersion(Repository $repository, Version $version, $path)
+    {
+        return file_get_contents($this->client->repo()->contents()->show(
+            (string)$repository->getOrganisation(), (string)$repository->getName(), $path, (string)$version
+        )['download_url']);
     }
 
     private function getLatestCommitDate(Repository $package, Version $version)
