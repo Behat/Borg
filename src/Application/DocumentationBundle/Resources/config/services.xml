@@ -11,8 +11,17 @@
 
     <services>
 
-        <service id="release.listener.download.documenting"
-                 class="Behat\Borg\PackageDocumentation\DownloadBuilder" public="false">
+        <service id="release.listener.download.packaging"
+                 class="Behat\Borg\Package\ReleasePackager" public="false">
+            <argument type="service" id="package.finder.borg"/>
+        </service>
+
+        <service id="package.finder.borg"
+                 class="Behat\Borg\Package\Finder\BorgFinder" public="false"/>
+
+        <service id="package.listener.package.documenting"
+                 class="Behat\Borg\Package\Documentation\PackageDocumentationBuilder"
+                 public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.manager"/>
         </service>
