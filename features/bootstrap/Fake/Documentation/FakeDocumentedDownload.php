@@ -43,6 +43,11 @@ final class FakeDocumentedDownload implements Download, DocumentedDownload, Pack
         return $this->original->hasFile($relativePath);
     }
 
+    public function getFilePath($relativePath)
+    {
+        return $this->original->getFilePath($relativePath);
+    }
+
     public function getPackage()
     {
         return $this->package;

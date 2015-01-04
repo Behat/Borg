@@ -20,7 +20,7 @@ final class RstFinder implements SourceFinder
         }
 
         if ($download->hasFile('doc/index.rst')) {
-            return Rst::atPath($download->getPath() . '/doc');
+            return Rst::atPath($download->getFilePath('doc'));
         }
 
         return null;

@@ -2,6 +2,7 @@
 
 namespace Fake\Release;
 
+use Behat\Borg\Filesystem\Exception\FileNotFound;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Release;
 use DateTimeImmutable;
@@ -34,6 +35,17 @@ final class FakeDownload implements Download
 
     public function hasFile($relativePath)
     {
-        return file_exists($this->getPath() . '/' . $relativePath);
+        return file_exists("{$this->getPath()}/{$relativePath}");
+    }
+
+    public function getFilePath($relativePath)
+    {
+        if (!$this->hasFile($relativePath)) {
+            throw new FileNotFound(
+                "Requested file `{$relativePath}` is not found in downloaded folder."
+            );
+        }
+
+        return "{$this->getPath()}/{$relativePath}";
     }
 }

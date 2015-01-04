@@ -2,6 +2,7 @@
 
 namespace spec\Behat\Borg\GitHub;
 
+use Behat\Borg\Filesystem\Directory;
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubRepository;
 use Behat\Borg\Release\Downloader\Download;
@@ -30,6 +31,11 @@ class GitHubDownloadSpec extends ObjectBehavior
     function it_is_a_download()
     {
         $this->shouldHaveType(Download::class);
+    }
+
+    function it_also_is_a_directory()
+    {
+        $this->shouldHaveType(Directory::class);
     }
 
     function it_holds_a_commit()
@@ -61,5 +67,15 @@ class GitHubDownloadSpec extends ObjectBehavior
     {
         $this->shouldHaveFile(basename(__FILE__));
         $this->shouldNotHaveFile('any_file');
+    }
+
+    function it_could_provide_an_absolute_path_to_the_file_using_relative_one()
+    {
+        $this->getFilePath(basename(__FILE__))->shouldReturn(__FILE__);
+    }
+
+    function it_should_throw_an_exception_when_trying_to_get_path_for_inexistent_file()
+    {
+        $this->shouldThrow()->duringGetFilePath('any_file');
     }
 }
