@@ -49,8 +49,8 @@ final class GitHubDownloader implements Downloader
 
     private function fetchLatestCommit(Release $release)
     {
-        $organisation = $release->getPackage()->getOrganisation();
-        $repository = $release->getPackage()->getName();
+        $organisation = $release->getRepository()->getOrganisation();
+        $repository = $release->getRepository()->getName();
         $version = (string)$release->getVersion();
 
         $commit = $this->client->repo()->commits()->all($organisation, $repository, array('sha' => $version))[0];
@@ -89,13 +89,13 @@ final class GitHubDownloader implements Downloader
 
     private function downloadArchive(Release $release, Commit $commit, $releasePath)
     {
-        $archivePath = $this->getArchivePath($release->getPackage(), $commit);
+        $archivePath = $this->getArchivePath($release->getRepository(), $commit);
         $content = ResponseMediator::getContent(
             $this->client->getHttpClient()->get(
                 'repos/' .
-                rawurlencode($release->getPackage()->getOrganisation()) .
+                rawurlencode($release->getRepository()->getOrganisation()) .
                 '/' .
-                rawurlencode($release->getPackage()->getName()) .
+                rawurlencode($release->getRepository()->getName()) .
                 '/zipball/' .
                 $commit->getSha()
             )
@@ -104,10 +104,10 @@ final class GitHubDownloader implements Downloader
 
         $archive = new \ZipArchive();
         $archive->open($archivePath);
-        $archive->extractTo($this->getOrganisationPath($release->getPackage()));
+        $archive->extractTo($this->getOrganisationPath($release->getRepository()));
         $archive->close();
 
-        $unzippedPath = $this->getUnzippedCommitPath($release->getPackage(), $commit);
+        $unzippedPath = $this->getUnzippedCommitPath($release->getRepository(), $commit);
         $this->filesystem->rename($unzippedPath, $releasePath, true);
         $this->filesystem->remove($archivePath);
     }

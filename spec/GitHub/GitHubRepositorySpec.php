@@ -13,17 +13,17 @@ class GitHubRepositorySpec extends ObjectBehavior
         $this->beConstructedThrough('named', ['behat/docs']);
     }
 
-    function it_is_a_package()
+    function it_is_a_repository()
     {
         $this->shouldHaveType(Repository::class);
     }
 
-    function it_can_only_be_created_using_full_github_package_name()
+    function it_can_only_be_created_using_full_github_repository_name()
     {
         $this->shouldThrow()->during('named', ['behat']);
     }
 
-    function it_can_be_created_using_github_package_name_with_dashes_and_underscores()
+    function it_can_be_created_using_github_repository_name_with_dashes_and_underscores()
     {
         $this->shouldNotThrow()->during('named', ['everzet/basket-by-example']);
     }

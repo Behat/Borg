@@ -3,7 +3,7 @@
 namespace Behat\Borg\Package;
 
 /**
- * Represents a package.
+ * Represents a software package.
  */
 interface Package
 {

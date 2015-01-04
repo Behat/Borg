@@ -4,6 +4,6 @@ namespace Behat\Borg\Release\Exception;
 
 use InvalidArgumentException;
 
-class BadOrganisationNameGiven extends InvalidArgumentException implements PackageException
+class BadOrganisationNameGiven extends InvalidArgumentException implements RepositoryException
 {
 }

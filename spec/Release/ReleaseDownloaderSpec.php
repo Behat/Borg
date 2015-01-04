@@ -25,13 +25,13 @@ class ReleaseDownloaderSpec extends ObjectBehavior
     }
 
     function it_downloads_new_release_using_downloader_and_notifies_registered_listeners(
-        Repository $package,
+        Repository $repository,
         Downloader $downloader,
         Download $downloadedRelease,
         DownloadListener $listener1,
         DownloadListener $listener2
     ) {
-        $release = new Release($package->getWrappedObject(), Version::string('v2.5'));
+        $release = new Release($repository->getWrappedObject(), Version::string('v2.5'));
         $downloader->download($release)->willReturn($downloadedRelease);
 
         $listener1->releaseWasDownloaded($downloadedRelease)->shouldBeCalled();

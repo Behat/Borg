@@ -7,33 +7,39 @@ namespace Behat\Borg\Release;
  */
 final class Release
 {
-    private $package;
+    /**
+     * @var Repository
+     */
+    private $repository;
+    /**
+     * @var Version
+     */
     private $version;
 
     /**
      * Initializes release.
      *
-     * @param Repository $package
-     * @param Version $version
+     * @param Repository $repository
+     * @param Version    $version
      */
-    public function __construct(Repository $package, Version $version)
+    public function __construct(Repository $repository, Version $version)
     {
-        $this->package = $package;
+        $this->repository = $repository;
         $this->version = $version;
     }
 
     /**
-     * Returns package instance.
+     * Returns release repository.
      *
      * @return Repository
      */
-    public function getPackage()
+    public function getRepository()
     {
-        return $this->package;
+        return $this->repository;
     }
 
     /**
-     * Returns package version.
+     * Returns release version.
      *
      * @return Version
      */
@@ -49,6 +55,6 @@ final class Release
      */
     public function __toString()
     {
-        return sprintf('%s/%s', $this->package, $this->version);
+        return sprintf('%s/%s', $this->repository, $this->version);
     }
 }

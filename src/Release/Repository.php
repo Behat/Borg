@@ -3,26 +3,26 @@
 namespace Behat\Borg\Release;
 
 /**
- * Represents software package.
+ * Represents software repository.
  */
 interface Repository
 {
     /**
-     * Returns package organisation name.
+     * Returns repository organisation name.
      *
      * @return string
      */
     public function getOrganisation();
 
     /**
-     * Returns package name.
+     * Returns repository name.
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Returns string representation of package.
+     * Returns string representation of repository.
      *
      * @return string
      */
