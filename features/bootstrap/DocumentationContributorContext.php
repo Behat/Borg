@@ -7,17 +7,17 @@ use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\PackageDocumentation\DownloadBuilder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
-use Behat\Borg\Package\ReleaseDownloader;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\ReleaseDownloader;
+use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
-use Fake\Package\FakeDownloader;
-use Fake\Package\FakePackage;
+use Fake\Release\FakeDownloader;
+use Fake\Release\FakePackage;
 use PHPUnit_Framework_Assert as PHPUnit;
 
 /**

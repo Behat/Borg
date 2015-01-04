@@ -2,8 +2,8 @@
 
 namespace Behat\Borg\GitHub;
 
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Release;
 
 /**
  * Represents downloaded GitHub release.

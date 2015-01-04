@@ -3,8 +3,8 @@
 namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Finder\SourceFinder;
-use Behat\Borg\Package\Downloader\Download;
-use Fake\Package\FakeDownload;
+use Behat\Borg\Release\Downloader\Download;
+use Fake\Release\FakeDownload;
 
 final class FakeSourceFinder implements SourceFinder
 {

@@ -9,11 +9,11 @@ use Behat\Borg\Documentation\Listener\BuildListener;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\DocumentationManager;
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Listener\DownloadListener;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Listener\DownloadListener;
+use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

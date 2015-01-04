@@ -3,9 +3,9 @@
 namespace spec\Behat\Borg\PackageDocumentation;
 
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

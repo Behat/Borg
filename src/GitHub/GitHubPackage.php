@@ -3,7 +3,7 @@
 namespace Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Exception\BadRepositoryNameGiven;
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 
 /**
  * Represents a GitHub package.

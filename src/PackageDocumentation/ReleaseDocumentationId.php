@@ -3,7 +3,7 @@
 namespace Behat\Borg\PackageDocumentation;
 
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Release\Release;
 
 /**
  * Represents a unique ID for the specific package release documentation.

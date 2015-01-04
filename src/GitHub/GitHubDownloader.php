@@ -3,9 +3,9 @@
 namespace Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Exception\ReleaseWasNotFound;
-use Behat\Borg\Package\Downloader\Downloader;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Release\Downloader\Downloader;
+use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Release;
 use DateTimeImmutable;
 use Github\Client;
 use Github\Exception\RuntimeException;

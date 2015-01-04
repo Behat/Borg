@@ -4,9 +4,9 @@ namespace spec\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

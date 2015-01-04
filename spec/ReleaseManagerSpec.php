@@ -2,10 +2,10 @@
 
 namespace spec\Behat\Borg;
 
-use Behat\Borg\Package\Listener\ReleaseListener;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Listener\ReleaseListener;
+use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

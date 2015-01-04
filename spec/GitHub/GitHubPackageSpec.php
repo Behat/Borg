@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\GitHub;
 
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

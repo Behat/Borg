@@ -5,8 +5,8 @@ namespace Behat\Borg\PackageDocumentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\DocumentationManager;
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Listener\DownloadListener;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Listener\DownloadListener;
 
 /**
  * Builds documentation after release was been downloaded.

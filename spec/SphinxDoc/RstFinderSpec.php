@@ -3,7 +3,7 @@
 namespace spec\Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Finder\SourceFinder;
-use Behat\Borg\Package\Downloader\Download;
+use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\SphinxDoc\Rst;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

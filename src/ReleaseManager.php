@@ -2,8 +2,8 @@
 
 namespace Behat\Borg;
 
-use Behat\Borg\Package\Listener\ReleaseListener;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Release\Listener\ReleaseListener;
+use Behat\Borg\Release\Release;
 
 /**
  * Manages package releases.

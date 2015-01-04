@@ -1,8 +1,8 @@
 <?php
 
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Package\Version;
-use Fake\Package\FakePackage;
+use Behat\Borg\Release\Version;
+use Fake\Release\FakePackage;
 
 trait DocumentationTransformations
 {

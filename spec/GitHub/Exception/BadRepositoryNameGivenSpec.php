@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\GitHub\Exception;
 
-use Behat\Borg\Package\Exception\PackageException;
+use Behat\Borg\Release\Exception\PackageException;
 use LogicException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

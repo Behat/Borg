@@ -5,9 +5,9 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubPackage;
 use Behat\Borg\PackageDocumentation\ReleaseDocumentationId;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Package;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Github\Client;
 use PHPUnit_Framework_Assert as PHPUnit;
@@ -123,7 +123,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
 
     private function packageReleaseCommand(Package $package, Version $version)
     {
-        return __DIR__ . "/../../app/console package:released {$package} {$version} -e=test";
+        return __DIR__ . "/../../app/console release {$package} {$version} -e=test";
     }
 
     private function fileExistsInRepositoryVersion(Package $package, Version $version, $path)
