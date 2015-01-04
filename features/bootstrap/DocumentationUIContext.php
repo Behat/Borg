@@ -139,6 +139,12 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
             return 1 === preg_match('#"for-package":\s*"' . preg_quote((string)$package) . '"#', $content);
         }
 
+        if ($this->existsInRepositoryVersion($repository, $version, 'composer.json')) {
+            $content = $this->contentInRepositoryVersion($repository, $version, 'composer.json');
+
+            return 1 === preg_match('#"name":\s*"' . preg_quote((string)$package) . '"#', $content);
+        }
+
         return false;
     }
 
