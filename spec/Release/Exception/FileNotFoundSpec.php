@@ -1,17 +1,17 @@
 <?php
 
-namespace spec\Behat\Borg\Filesystem\Exception;
+namespace spec\Behat\Borg\Release\Exception;
 
-use Behat\Borg\Filesystem\Exception\FilesystemException;
+use Behat\Borg\Release\Exception\ReleaseException;
 use LogicException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class FileNotFoundSpec extends ObjectBehavior
 {
-    function it_is_a_filesystem_exception()
+    function it_is_a_release_exception()
     {
-        $this->shouldHaveType(FilesystemException::class);
+        $this->shouldHaveType(ReleaseException::class);
     }
 
     function it_also_is_a_logic_exception()

@@ -5,6 +5,6 @@ namespace Behat\Borg\Release\Exception;
 /**
  * All release exceptions must implement this interface.
  */
-interface RepositoryException
+interface ReleaseException
 {
 }

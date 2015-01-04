@@ -2,7 +2,6 @@
 
 namespace spec\Behat\Borg\GitHub;
 
-use Behat\Borg\Filesystem\Directory;
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubRepository;
 use Behat\Borg\Release\Downloader\Download;
@@ -31,11 +30,6 @@ class GitHubDownloadSpec extends ObjectBehavior
     function it_is_a_download()
     {
         $this->shouldHaveType(Download::class);
-    }
-
-    function it_also_is_a_directory()
-    {
-        $this->shouldHaveType(Directory::class);
     }
 
     function it_holds_a_commit()

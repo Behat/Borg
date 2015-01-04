@@ -2,8 +2,8 @@
 
 namespace Behat\Borg\GitHub\Exception;
 
-use Behat\Borg\Release\Exception\RepositoryException;
+use Behat\Borg\Release\Exception\ReleaseException;
 
-interface GitHubException extends RepositoryException
+interface GitHubException extends ReleaseException
 {
 }

@@ -2,7 +2,7 @@
 
 namespace Fake\Release;
 
-use Behat\Borg\Filesystem\Exception\FileNotFound;
+use Behat\Borg\Release\Exception\FileNotFound;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Release;
 use DateTimeImmutable;

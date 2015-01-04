@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\Release\Exception;
 
-use Behat\Borg\Release\Exception\RepositoryException;
+use Behat\Borg\Release\Exception\ReleaseException;
 use LogicException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -11,7 +11,7 @@ class BadOrganisationNameGivenSpec extends ObjectBehavior
 {
     function it_is_a_repository_exception()
     {
-        $this->shouldHaveType(RepositoryException::class);
+        $this->shouldHaveType(ReleaseException::class);
     }
 
     function it_is_also_a_logic_exception()
