@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="release.release_downloader.path">%kernel.root_dir%/../build/repositories</parameter>
+        <parameter key="package.release_downloader.path">%kernel.root_dir%/../build/repositories</parameter>
     </parameters>
 
     <services>
