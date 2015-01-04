@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\BorgPackage;
+namespace Behat\Borg\Package\Documentation;
 
 use Behat\Borg\Package\Exception\BadPackageNameGiven;
 use Behat\Borg\Package\Package;
@@ -8,7 +8,7 @@ use Behat\Borg\Package\Package;
 /**
  * borg.json-based package.
  */
-final class BorgPackage implements Package
+final class DocumentationPackage implements Package
 {
     /**
      * @var string

@@ -1,14 +1,14 @@
 <?php
 
-namespace spec\Behat\Borg\BorgPackage;
+namespace spec\Behat\Borg\Package\Documentation;
 
-use Behat\Borg\BorgPackage\BorgPackage;
+use Behat\Borg\Package\Documentation\DocumentationPackage;
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Release\Downloader\Download;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class BorgPackageFinderSpec extends ObjectBehavior
+class DocumentationPackageFinderSpec extends ObjectBehavior
 {
     function it_is_a_package_finder()
     {
@@ -20,7 +20,7 @@ class BorgPackageFinderSpec extends ObjectBehavior
         $download->getPath()->willReturn(__DIR__);
         $download->hasFile('borg.json')->willReturn(true);
 
-        $this->findPackage($download)->shouldBeLike(new BorgPackage('behat/behat'));
+        $this->findPackage($download)->shouldBeLike(new DocumentationPackage('behat/behat'));
     }
 
     function it_finds_nothing_if_download_does_not_have_a_borg_json(Download $download)
