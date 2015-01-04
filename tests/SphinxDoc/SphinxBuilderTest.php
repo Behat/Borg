@@ -57,9 +57,37 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
             $this->tempOutputPath . '/my/doc/v1.3/index.html', $built->getIndexPath()
         );
 
-        $this->assertContains('<h1>Docs', file_get_contents($built->getIndexPath()));
-        $this->assertContains('my/doc', file_get_contents($built->getIndexPath()));
-        $this->assertContains('v1.3', file_get_contents($built->getIndexPath()));
+        $output = file_get_contents($built->getIndexPath());
+
+        $this->assertContains('<h1>Docs', $output);
+        $this->assertContains('my/doc', $output);
+        $this->assertContains('v1.3', $output);
+        $this->assertValidTwigSyntax($output);
+    }
+
+    /** @test */
+    function it_builds_valid_template_when_doc_contains_Twig_like_content()
+    {
+        $sourceContent = <<<DOC
+Trying to hack the twig-bridge theme {{
+=======================================
+
+.. code-block:: jinja
+
+    foo {% raw %}
+
+DOC;
+
+        $anId = $this->createDocumentationId('my/doc', 'v1.3');
+        $source = $this->createRstDocumentationSourceWithIndex($sourceContent);
+        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
+
+        $built = $this->builder->build($documentation);
+
+        $output = file_get_contents($built->getIndexPath());
+
+        $this->assertContains('<h1>Trying to hack the twig-bridge theme {{', $output);
+        $this->assertValidTwigSyntax($output);
     }
 
     /**
@@ -117,5 +145,20 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
     private function createRstDocumentationSourceWithoutIndex()
     {
         return Rst::atPath($this->tempInputPath);
+    }
+
+    private function assertValidTwigSyntax($template)
+    {
+        $loader = new \Twig_Loader_Array(array('build_output' => $template));
+        $twig = new \Twig_Environment($loader);
+
+        $this->addToAssertionCount(1);
+
+        try {
+            $nodeTree = $twig->parse($twig->tokenize($template, 'build_output'));
+            $twig->compile($nodeTree);
+        } catch (\Twig_Error $e) {
+            throw new \PHPUnit_Framework_AssertionFailedError('The Twig template is invalid: '.$template, 0, $e);
+        }
     }
 }
