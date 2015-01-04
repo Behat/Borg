@@ -3,8 +3,6 @@
 namespace Behat\Borg\Package;
 
 use Behat\Borg\Release\Downloader\Download;
-use Behat\Borg\Release\Version;
-use DateTimeImmutable;
 
 /**
  * Represents a downloaded version of a package.
@@ -25,16 +23,11 @@ final class PackageDownload
      *
      * @param Package  $package
      * @param Download $download
-     *
-     * @return PackageDownload
      */
-    public static function packageWasDownloaded(Package $package, Download $download)
+    public function __construct(Package $package, Download $download)
     {
-        $packageDownload = new PackageDownload();
-        $packageDownload->package = $package;
-        $packageDownload->download = $download;
-
-        return $packageDownload;
+        $this->package = $package;
+        $this->download = $download;
     }
 
     /**
@@ -48,16 +41,6 @@ final class PackageDownload
     }
 
     /**
-     * Returns package version.
-     *
-     * @return Version
-     */
-    public function getVersion()
-    {
-        return $this->download->getVersion();
-    }
-
-    /**
      * Returns download.
      *
      * @return Download
@@ -66,16 +49,4 @@ final class PackageDownload
     {
         return $this->download;
     }
-
-    /**
-     * Returns package release time.
-     *
-     * @return DateTimeImmutable
-     */
-    public function getReleaseTime()
-    {
-        return $this->download->getReleaseTime();
-    }
-
-    private function __construct() { }
 }

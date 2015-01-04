@@ -37,9 +37,7 @@ class PackageDocumentationBuilderSpec extends ObjectBehavior
         Builder $builder,
         BuiltDocumentation $builtDocumentation
     ) {
-        $packageDownload = PackageDownload::packageWasDownloaded(
-            $package->getWrappedObject(), $download->getWrappedObject()
-        );
+        $packageDownload = new PackageDownload($package->getWrappedObject(), $download->getWrappedObject());
         $finder->findSource($download)->willReturn($source);
         $download->getVersion()->willReturn(Version::string('v2.5'));
         $download->getReleaseTime()->willReturn(new \DateTimeImmutable());
@@ -58,9 +56,7 @@ class PackageDocumentationBuilderSpec extends ObjectBehavior
         SourceFinder $finder,
         Builder $builder
     ) {
-        $packageDownload = PackageDownload::packageWasDownloaded(
-            $package->getWrappedObject(), $download->getWrappedObject()
-        );
+        $packageDownload = new PackageDownload($package->getWrappedObject(), $download->getWrappedObject());
         $finder->findSource($download)->willReturn(null);
 
         $builder->build(Argument::any())->shouldNotBeCalled();
