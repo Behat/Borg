@@ -17,11 +17,6 @@ final class FakeDownload implements Download
         $this->time = $time;
     }
 
-    public function getRelease()
-    {
-        return $this->release;
-    }
-
     public function getVersion()
     {
         return $this->release->getVersion();

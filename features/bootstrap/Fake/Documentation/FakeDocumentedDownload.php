@@ -23,11 +23,6 @@ final class FakeDocumentedDownload implements Download, DocumentedDownload, Pack
         $this->package = $package;
     }
 
-    public function getRelease()
-    {
-        return $this->original->getRelease();
-    }
-
     public function getVersion()
     {
         return $this->original->getVersion();

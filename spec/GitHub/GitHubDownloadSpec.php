@@ -32,16 +32,6 @@ class GitHubDownloadSpec extends ObjectBehavior
         $this->shouldHaveType(Download::class);
     }
 
-    function it_holds_a_release()
-    {
-        $this->getRelease()->shouldBeLike(
-            new Release(
-                GitHubRepository::named('behat/docs'),
-                Version::string('v2.5')
-            )
-        );
-    }
-
     function it_holds_a_commit()
     {
         $this->getCommit()->shouldBeLike(

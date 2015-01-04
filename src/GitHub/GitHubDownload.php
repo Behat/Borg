@@ -41,14 +41,6 @@ final class GitHubDownload implements Download
     /**
      * {@inheritdoc}
      */
-    public function getRelease()
-    {
-        return $this->release;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getVersion()
     {
         return $this->release->getVersion();
