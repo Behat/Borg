@@ -5,24 +5,19 @@ namespace spec\Behat\Borg\Documentation;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Repository;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class DocumentationSpec extends ObjectBehavior
 {
-    function let(DocumentationId $anId, Source $source)
+    function let(DocumentationId $anId, DateTimeImmutable $time, Source $source)
     {
-        $this->beConstructedWith($anId, new DateTimeImmutable(), $source);
-    }
-
-    function it_represents_documentation()
-    {
-        $this->shouldHaveType(Documentation::class);
+        $this->beConstructedWith($anId, $time, $source);
     }
 
     function it_has_an_id(DocumentationId $anId)
@@ -35,13 +30,8 @@ class DocumentationSpec extends ObjectBehavior
         $this->getSource()->shouldReturn($source);
     }
 
-    function it_provides_time_it_was_created_at()
+    function it_holds_a_time_it_was_created_at(DateTimeImmutable $time)
     {
-        $this->getTime()->shouldHaveType(DateTimeImmutable::class);
-    }
-
-    function its_time_does_not_change_over_time()
-    {
-        $this->getTime()->shouldReturn($this->getTime());
+        $this->getTime()->shouldReturn($time);
     }
 }

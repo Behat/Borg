@@ -5,7 +5,7 @@ namespace tests\Behat\Borg\SphinxDoc;
 use Behat\Borg\Documentation\Documentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
-use Behat\Borg\Package\Downloader\Download;
+use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\SphinxDoc\Rst;
 use Behat\Borg\SphinxDoc\SphinxBuilder;
 use DateTimeImmutable;

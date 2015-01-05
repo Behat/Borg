@@ -20,7 +20,7 @@ final class FakePackage implements Package
         return $package;
     }
 
-    public function getOrganisation()
+    public function getOrganisationName()
     {
         return explode('/', $this->name)[0];
     }
@@ -35,5 +35,5 @@ final class FakePackage implements Package
         return $this->name;
     }
 
-    private function __construct(){}
+    private function __construct() { }
 }

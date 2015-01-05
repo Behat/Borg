@@ -3,7 +3,7 @@
 namespace Behat\Borg\Documentation\Finder;
 
 use Behat\Borg\Documentation\Source;
-use Behat\Borg\Package\Downloader\Download;
+use Behat\Borg\Release\Downloader\Download;
 
 /**
  * Finds documentation source in provided downloaded release.

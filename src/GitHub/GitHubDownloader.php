@@ -3,9 +3,9 @@
 namespace Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Exception\ReleaseWasNotFound;
-use Behat\Borg\Package\Downloader\Downloader;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Release\Downloader\Downloader;
+use Behat\Borg\Release\Repository;
+use Behat\Borg\Release\Release;
 use DateTimeImmutable;
 use Github\Client;
 use Github\Exception\RuntimeException;
@@ -49,8 +49,8 @@ final class GitHubDownloader implements Downloader
 
     private function fetchLatestCommit(Release $release)
     {
-        $organisation = $release->getPackage()->getOrganisation();
-        $repository = $release->getPackage()->getName();
+        $organisation = $release->getRepository()->getOrganisationName();
+        $repository = $release->getRepository()->getName();
         $version = (string)$release->getVersion();
 
         $commit = $this->client->repo()->commits()->all($organisation, $repository, array('sha' => $version))[0];
@@ -89,13 +89,13 @@ final class GitHubDownloader implements Downloader
 
     private function downloadArchive(Release $release, Commit $commit, $releasePath)
     {
-        $archivePath = $this->getArchivePath($release->getPackage(), $commit);
+        $archivePath = $this->getArchivePath($release->getRepository(), $commit);
         $content = ResponseMediator::getContent(
             $this->client->getHttpClient()->get(
                 'repos/' .
-                rawurlencode($release->getPackage()->getOrganisation()) .
+                rawurlencode($release->getRepository()->getOrganisationName()) .
                 '/' .
-                rawurlencode($release->getPackage()->getName()) .
+                rawurlencode($release->getRepository()->getName()) .
                 '/zipball/' .
                 $commit->getSha()
             )
@@ -104,10 +104,10 @@ final class GitHubDownloader implements Downloader
 
         $archive = new \ZipArchive();
         $archive->open($archivePath);
-        $archive->extractTo($this->getOrganisationPath($release->getPackage()));
+        $archive->extractTo($this->getOrganisationPath($release->getRepository()));
         $archive->close();
 
-        $unzippedPath = $this->getUnzippedCommitPath($release->getPackage(), $commit);
+        $unzippedPath = $this->getUnzippedCommitPath($release->getRepository(), $commit);
         $this->filesystem->rename($unzippedPath, $releasePath, true);
         $this->filesystem->remove($archivePath);
     }
@@ -119,25 +119,25 @@ final class GitHubDownloader implements Downloader
 
     private function getCommitMetaPath(Release $release)
     {
-        return "{$this->getDownloadPath($release)}/commit.meta";
+        return $this->getDownloadPath($release) . '/commit.meta';
     }
 
-    private function getArchivePath(Package $package, Commit $commit)
+    private function getArchivePath(Repository $package, Commit $commit)
     {
-        return "{$this->downloadPath}/{$package}/{$commit->getSha()}.zip";
+        return $this->downloadPath . '/' . $package . '/' . $commit->getSha() . '.zip';
     }
 
-    private function getOrganisationPath(Package $package)
+    private function getOrganisationPath(Repository $package)
     {
-        return "{$this->downloadPath}/{$package->getOrganisation()}";
+        return $this->downloadPath . '/' . $package->getOrganisationName();
     }
 
-    private function getUnzippedCommitPath(Package $package, Commit $commit)
+    private function getUnzippedCommitPath(Repository $package, Commit $commit)
     {
         $shortSha = mb_substr($commit->getSha(), 0, 7);
-        $organisation = $package->getOrganisation();
+        $organisation = $package->getOrganisationName();
         $repository = $package->getName();
 
-        return "{$this->getOrganisationPath($package)}/{$organisation}-{$repository}-{$shortSha}";
+        return $this->getOrganisationPath($package) . '/' . "{$organisation}-{$repository}-{$shortSha}";
     }
 }

@@ -2,8 +2,9 @@
 
 namespace Behat\Borg\GitHub;
 
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Release;
+use Behat\Borg\Release\Exception\FileNotFound;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Release;
 
 /**
  * Represents downloaded GitHub release.
@@ -41,9 +42,9 @@ final class GitHubDownload implements Download
     /**
      * {@inheritdoc}
      */
-    public function getRelease()
+    public function getVersion()
     {
-        return $this->release;
+        return $this->release->getVersion();
     }
 
     /**
@@ -67,6 +68,20 @@ final class GitHubDownload implements Download
      */
     public function hasFile($relativePath)
     {
-        return file_exists($this->path . '/' . $relativePath);
+        return file_exists($this->getPath() . '/' . $relativePath);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFilePath($relativePath)
+    {
+        if (!$this->hasFile($relativePath)) {
+            throw new FileNotFound(
+                "Requested file `{$relativePath}` is not found in downloaded folder."
+            );
+        }
+
+        return $this->getPath() . '/' . $relativePath;
     }
 }

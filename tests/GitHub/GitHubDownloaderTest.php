@@ -4,10 +4,10 @@ namespace tests\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
 use Behat\Borg\GitHub\GitHubDownloader;
-use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\GitHub\GitHubRepository;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use Github\Client;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
@@ -37,7 +37,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_can_download_a_specific_release_of_tracked_repository()
     {
-        $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
+        $release = new Release(GitHubRepository::named('Behat/docs'), Version::string('v3.0'));
         $releasePath = $this->tempDownloadPath . '/' . $release;
 
         $downloadedRelease = $this->downloader->download($release);
@@ -53,7 +53,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_replaces_existing_release_if_newer_commits_found()
     {
-        $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
+        $release = new Release(GitHubRepository::named('Behat/docs'), Version::string('v3.0'));
         $oldCommit = Commit::committedWithShaAtTime(
             'eda4feb1fb814faf3ab334c2b26b9e61eb7a3940',
             new \DateTimeImmutable('2014-05-10T12:35:02Z')
@@ -73,7 +73,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_does_not_touch_existing_release_if_newer_commits_not_found()
     {
-        $release = new Release(GitHubPackage::named('Behat/docs'), Version::string('v3.0'));
+        $release = new Release(GitHubRepository::named('Behat/docs'), Version::string('v3.0'));
         $oldCommit = $this->getLatestCommit($release);
 
         $releasePath = "{$this->tempDownloadPath}/{$release}";
@@ -90,7 +90,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     /** @test @expectedException RuntimeException */
     function it_throws_an_exception_when_trying_to_download_nonexistent_release()
     {
-        $release = new Release(GitHubPackage::named('Behat/Behat'), Version::string('v1.0'));
+        $release = new Release(GitHubRepository::named('Behat/Behat'), Version::string('v1.0'));
 
         $this->downloader->download($release);
     }
@@ -98,8 +98,8 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     private function getLatestCommit(Release $release)
     {
         $commit = $this->client->repo()->commits()->all(
-            $release->getPackage()->getOrganisation(),
-            $release->getPackage()->getName(),
+            $release->getRepository()->getOrganisationName(),
+            $release->getRepository()->getName(),
             array('sha' => (string)$release->getVersion())
         )[0];
 

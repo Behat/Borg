@@ -3,16 +3,18 @@
 namespace Behat\Borg\Package;
 
 /**
- * Represents software package.
+ * Represents a software package.
  */
 interface Package
 {
+    const PACKAGE_NAME_REGEX = '#^[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*$#u';
+
     /**
      * Returns package organisation name.
      *
      * @return string
      */
-    public function getOrganisation();
+    public function getOrganisationName();
 
     /**
      * Returns package name.

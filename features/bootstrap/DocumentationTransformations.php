@@ -1,11 +1,20 @@
 <?php
 
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Package\Version;
+use Behat\Borg\Release\Version;
 use Fake\Package\FakePackage;
+use Fake\Release\FakeRepository;
 
 trait DocumentationTransformations
 {
+    /**
+     * @Transform :repository
+     */
+    public function transformStringToRepository($string)
+    {
+        return FakeRepository::named($string);
+    }
+
     /**
      * @Transform :package
      */

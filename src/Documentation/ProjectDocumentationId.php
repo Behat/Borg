@@ -43,6 +43,6 @@ final class ProjectDocumentationId implements DocumentationId
      */
     public function __toString()
     {
-        return "{$this->projectName}/{$this->versionString}";
+        return $this->projectName . '/' . $this->versionString;
     }
 }

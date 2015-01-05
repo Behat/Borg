@@ -19,12 +19,12 @@ class DocumentationController extends Controller
      *     requirements={ "version": "v\d++\.\d++" }
      * )
      * @Route(
-     *     "/behat/docs/{version}",
+     *     "/behat/behat/{version}",
      *     name="behat_documentation_fullpath_index",
      *     requirements={ "version": "v\d++\.\d++" }
      * )
      * @Route(
-     *     "/behat/docs/{version}/{path}",
+     *     "/behat/behat/{version}/{path}",
      *     name="behat_documentation_fullpath_page",
      *     requirements={
      *         "version": "v\d++\.\d++",
@@ -59,7 +59,7 @@ class DocumentationController extends Controller
      */
     public function behatDocumentationPageAction($version, $path)
     {
-        return $this->documentationPageAction('behat/docs', $version, $path);
+        return $this->documentationPageAction('behat/behat', $version, $path);
     }
 
     /**
@@ -67,7 +67,7 @@ class DocumentationController extends Controller
      *     "/{project}/{version}",
      *     name="documentation_index",
      *     requirements={
-     *         "project": "[\w\-]++\/[\w\-]++",
+     *         "project": "[^\/]++\/[^\/]++",
      *         "version": "v\d++\.\d++"
      *     }
      * )
@@ -88,7 +88,7 @@ class DocumentationController extends Controller
      *     "/{project}/{version}/{path}",
      *     name="documentation_page",
      *     requirements={
-     *         "project": "[\w\-]++\/[\w\-]++",
+     *         "project": "[^\/]++\/[^\/]++",
      *         "version": "v\d++\.\d++",
      *         "path":    ".*\.html"
      *     }

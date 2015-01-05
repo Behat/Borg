@@ -3,10 +3,10 @@
 namespace spec\Behat\Borg\GitHub;
 
 use Behat\Borg\GitHub\Commit;
-use Behat\Borg\GitHub\GitHubPackage;
-use Behat\Borg\Package\Downloader\Download;
-use Behat\Borg\Package\Release;
-use Behat\Borg\Package\Version;
+use Behat\Borg\GitHub\GitHubRepository;
+use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -16,7 +16,7 @@ class GitHubDownloadSpec extends ObjectBehavior
     {
         $this->beConstructedWith(
             new Release(
-                GitHubPackage::named('behat/docs'),
+                GitHubRepository::named('behat/docs'),
                 Version::string('v2.5')
             ),
             Commit::committedWithShaAtTime(
@@ -32,16 +32,6 @@ class GitHubDownloadSpec extends ObjectBehavior
         $this->shouldHaveType(Download::class);
     }
 
-    function it_holds_a_release()
-    {
-        $this->getRelease()->shouldBeLike(
-            new Release(
-                GitHubPackage::named('behat/docs'),
-                Version::string('v2.5')
-            )
-        );
-    }
-
     function it_holds_a_commit()
     {
         $this->getCommit()->shouldBeLike(
@@ -52,19 +42,34 @@ class GitHubDownloadSpec extends ObjectBehavior
         );
     }
 
-    function its_release_time_is_a_time_of_commit()
+    function its_release_time_is_a_time_of_the_commit()
     {
         $this->getReleaseTime()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
     }
 
-    function its_path_is_a_path_it_was_constructed_with()
+    function its_version_is_the_release_version()
+    {
+        $this->getVersion()->shouldBeLike(Version::string('v2.5'));
+    }
+
+    function its_path_is_the_path_it_was_constructed_with()
     {
         $this->getPath()->shouldReturn(__DIR__);
     }
 
-    function it_could_say_if_file_is_included_in_release()
+    function it_could_say_if_given_file_is_included_in_the_release()
     {
         $this->shouldHaveFile(basename(__FILE__));
         $this->shouldNotHaveFile('any_file');
+    }
+
+    function it_could_provide_an_absolute_path_to_the_file_using_relative_one()
+    {
+        $this->getFilePath(basename(__FILE__))->shouldReturn(__FILE__);
+    }
+
+    function it_should_throw_an_exception_when_trying_to_get_path_for_inexistent_file()
+    {
+        $this->shouldThrow()->duringGetFilePath('any_file');
     }
 }

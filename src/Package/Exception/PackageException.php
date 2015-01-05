@@ -3,7 +3,7 @@
 namespace Behat\Borg\Package\Exception;
 
 /**
- * All package exceptions must implement this interface.
+ * All package exceptions should implement this interface.
  */
 interface PackageException
 {
