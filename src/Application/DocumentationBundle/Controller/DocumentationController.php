@@ -31,7 +31,7 @@ class DocumentationController extends Controller
      *
      * @return RedirectResponse
      */
-    public function behatDocumentationIndexAction($version = 'v3.0', $path = 'index.html')
+    public function behatDocumentationIndexAction($version = 'v3.0.x', $path = 'index.html')
     {
         return $this->redirectToRoute('behat_documentation_page', compact('version', 'path'));
     }
