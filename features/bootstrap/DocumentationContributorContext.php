@@ -144,16 +144,14 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function documentationVersionShouldBeInTheList($project, $versionString)
     {
         PHPUnit_Framework_Assert::assertContains(
-            new ProjectDocumentationId($project, $versionString),
+            (string)(new ProjectDocumentationId($project, $versionString)),
             array_map(
                 function (PublishedDocumentation $documentation) {
-                    return $documentation->getDocumentationId();
+                    return (string)$documentation->getDocumentationId();
                 },
                 $this->documentationManager->getAvailableDocumentation($project)
             ),
-            'Documentation for provided version not found in the list.',
-            false,
-            false
+            'Documentation for provided version not found in the list.'
         );
     }
 }

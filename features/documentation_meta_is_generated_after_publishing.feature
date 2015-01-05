@@ -19,5 +19,5 @@ Feature: Documentation meta is generated after publishing
     And "behat/behat" version "v3.0" was documented in "Behat/docs"
     When I release "Behat/docs" version "v2.5"
     And I release "Behat/docs" version "v3.0"
-    Then documentation for "v2.5" should be in the list of available documentation for "behat/behat"
-    And documentation for "v3.0" should be in the list of available documentation for "behat/behat"
+    Then documentation for "v2.5.x" should be in the list of available documentation for "behat/behat"
+    And documentation for "v3.0.x" should be in the list of available documentation for "behat/behat"
