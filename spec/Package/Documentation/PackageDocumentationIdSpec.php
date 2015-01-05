@@ -27,9 +27,16 @@ class PackageDocumentationIdSpec extends ObjectBehavior
         $this->getProjectName()->shouldReturn('behat/behat');
     }
 
-    function it_uses_minor_version_as_a_version_string()
+    function it_uses_minor_version_as_a_version_string_for_stable_packages()
     {
         $this->getVersionString()->shouldReturn('v1.0');
+    }
+
+    function it_uses_minor_version_plus_x_as_a_version_string_for_unstable_packages(Package $package)
+    {
+        $this->beConstructedWith($package, Version::string('v1.0.x'));
+
+        $this->getVersionString()->shouldReturn('v1.0.x');
     }
 
     function it_can_be_converted_to_a_string_combining_both_package_name_and_its_version_minor()

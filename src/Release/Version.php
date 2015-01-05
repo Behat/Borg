@@ -25,7 +25,7 @@ final class Version
      */
     public static function string($string)
     {
-        if (!preg_match('/^[vV]?+(\d++)\.(\d++)(?:\.(\d++.*+))?$/', $string, $matches)) {
+        if (!preg_match('/^[vV]?+(\d++)\.(\d++)(?:\.(\d++.*+|x))?$/', $string, $matches)) {
             throw new BadVersionStringGiven("`{$string}` is not a supported version string.");
         }
 
@@ -76,6 +76,16 @@ final class Version
     public function getSemVer()
     {
         return sprintf('v%s', $this->getPatch());
+    }
+
+    /**
+     * Checks if version is stable.
+     *
+     * @return Boolean
+     */
+    public function isStable()
+    {
+        return is_numeric($this->patch);
     }
 
     /**

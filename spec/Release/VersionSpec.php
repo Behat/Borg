@@ -31,6 +31,18 @@ class VersionSpec extends ObjectBehavior
         $this->shouldNotThrow()->during('string', ['v1.0.0-beta']);
     }
 
+    function it_can_be_created_using_develop_version_string()
+    {
+        $this->shouldNotThrow()->during('string', ['1.2.x']);
+    }
+
+    function it_can_tell_if_it_is_stable()
+    {
+        $this->string('1.2.3-rc1')->isStable()->shouldBe(false);
+        $this->string('1.2.x')->isStable()->shouldBe(false);
+        $this->string('1.2.3')->isStable()->shouldBe(true);
+    }
+
     function it_can_not_be_created_using_anything_but_a_proper_version_string()
     {
         $this->shouldThrow()->during('string', ['master']);
