@@ -4,7 +4,6 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\GitHub\GitHubRepository;
-use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
@@ -98,24 +97,22 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     }
 
     /**
-     * @Then :package version :version documentation should have been published
+     * @Then :project version :versionString documentation should have been published
      */
-    public function packageDocumentationShouldHaveBeenPublished(Package $package, Version $version)
+    public function packageDocumentationShouldHaveBeenPublished($project, $versionString)
     {
-        $anId = new PackageDocumentationId($package, $version);
-        $this->visitPath('/docs/' . $anId . '/index.html');
+        $this->visitPath("/docs/$project/$versionString/index.html");
 
-        $this->assertSession()->pageTextContains($package);
-        $this->assertSession()->pageTextContains($version);
+        $this->assertSession()->pageTextContains($project);
+        $this->assertSession()->pageTextContains($versionString);
     }
 
     /**
-     * @Then :package version :version documentation should not be published
+     * @Then :project version :versionString documentation should not be published
      */
-    public function packageDocumentationShouldNotBePublished(Package $package, Version $version)
+    public function packageDocumentationShouldNotBePublished($project, $versionString)
     {
-        $anId = new PackageDocumentationId($package, $version);
-        $this->visitPath('/docs/' . $anId . '/index.html');
+        $this->visitPath("/docs/$project/$versionString/index.html");
 
         $this->assertSession()->statusCodeEquals(404);
     }

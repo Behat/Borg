@@ -3,9 +3,9 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Page\PageId;
+use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Package\ReleasePackager;
-use Behat\Borg\Package\Documentation\PackageDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\Documentation\PackageDocumentationBuilder;
 use Behat\Borg\DocumentationManager;
@@ -91,63 +91,65 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
-     * @Then :package version :version documentation should have been published
+     * @Then :project version :versionString documentation should have been published
      */
-    public function releaseDocumentationShouldHaveBeenPublished(Package $package, Version $version)
+    public function releaseDocumentationShouldHaveBeenPublished($project, $versionString)
     {
         PHPUnit::assertNotNull(
             $this->documentationManager->findPage(
-                new PackageDocumentationId($package, $version), new PageId('index.html')
+                new ProjectDocumentationId($project, $versionString), new PageId('index.html')
             )
         );
     }
 
     /**
-     * @Then :package version :version documentation should not be published
+     * @Then :project version :versionString documentation should not be published
      */
-    public function versionDocumentationShouldNotBePublished(Package $package, Version $version)
+    public function versionDocumentationShouldNotBePublished($project, $versionString)
     {
         PHPUnit::assertNull(
             $this->documentationManager->findPage(
-                new PackageDocumentationId($package, $version), new PageId('index.html')
+                new ProjectDocumentationId($project, $versionString), new PageId('index.html')
             )
         );
     }
 
     /**
-     * @Then package name of :pageId page for :package version :version should be :name
+     * @Then package name of :pageId page for :project version :versionString should be :name
      */
-    public function packageNameOfPageShouldBe(PageId $pageId, Package $package, Version $version, $name)
+    public function packageNameOfPageShouldBe(PageId $pageId, $project, $versionString, $name)
     {
-        $page = $this->documentationManager->findPage(new PackageDocumentationId($package, $version), $pageId);
+        $documentationId = new ProjectDocumentationId($project, $versionString);
+        $page = $this->documentationManager->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($name, $page->getProjectName());
     }
 
     /**
-     * @Then documentation time of :pageId page for :package version :version should be :time
+     * @Then documentation time of :pageId page for :project version :versionString should be :time
      */
-    public function timeOfPageShouldBe(PageId $pageId, Package $package, Version $version, DateTimeImmutable $time)
+    public function timeOfPageShouldBe(PageId $pageId, $project, $versionString, DateTimeImmutable $time)
     {
-        $page = $this->documentationManager->findPage(new PackageDocumentationId($package, $version), $pageId);
+        $documentationId = new ProjectDocumentationId($project, $versionString);
+        $page = $this->documentationManager->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($time, $page->getDocumentationTime());
     }
 
     /**
-     * @Then documentation for :version should be in the list of available documentation for :package
+     * @Then documentation for :versionString should be in the list of available documentation for :project
      */
-    public function documentationVersionShouldBeInTheList(Package $package, Version $version)
+    public function documentationVersionShouldBeInTheList($project, $versionString)
     {
         PHPUnit_Framework_Assert::assertContains(
-            new PackageDocumentationId($package, $version),
+            new ProjectDocumentationId($project, $versionString),
             array_map(
                 function (PublishedDocumentation $documentation) {
                     return $documentation->getDocumentationId();
                 },
-                $this->documentationManager->getAvailableDocumentation($package)
+                $this->documentationManager->getAvailableDocumentation($project)
             ),
             'Documentation for provided version not found in the list.',
             false,
