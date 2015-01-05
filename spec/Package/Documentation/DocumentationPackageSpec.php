@@ -38,6 +38,14 @@ class DocumentationPackageSpec extends ObjectBehavior
         $this->getName()->shouldReturn('docs');
     }
 
+    function it_lowercases_provided_organisation_and_package_name()
+    {
+        $this->beConstructedWith('Behat/Docs');
+
+        $this->getOrganisationName()->shouldReturn('behat');
+        $this->getName()->shouldReturn('docs');
+    }
+
     function its_string_representation_is_the_name_of_the_package()
     {
         $this->__toString()->shouldReturn('behat/docs');

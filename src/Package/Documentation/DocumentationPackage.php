@@ -24,11 +24,11 @@ final class DocumentationPackage implements Package
     {
         if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $string)) {
             throw new BadPackageNameGiven(
-                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
+                "Documentation package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
             );
         }
 
-        $this->string = $string;
+        $this->string = strtolower($string);
     }
 
     /**
