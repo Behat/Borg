@@ -39,6 +39,13 @@ class PackageDocumentationIdSpec extends ObjectBehavior
         $this->getVersionString()->shouldReturn('v1.0.x');
     }
 
+    function it_uses_branch_name_as_a_version_string_for_branch_based_versions(Package $package)
+    {
+        $this->beConstructedWith($package, Version::string('master'));
+
+        $this->getVersionString()->shouldReturn('master');
+    }
+
     function it_can_be_converted_to_a_string_combining_both_package_name_and_its_version_minor()
     {
         $this->__toString()->shouldReturn('behat/behat/v1.0');
