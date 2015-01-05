@@ -10,6 +10,8 @@ use Behat\Borg\Package\Package;
  */
 final class DocumentationPackage implements Package
 {
+    const PACKAGE_NAME_REGEX = '#^[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*$#u';
+
     /**
      * @var string
      */
@@ -22,9 +24,9 @@ final class DocumentationPackage implements Package
      */
     public function __construct($string)
     {
-        if (2 !== count(explode('/', $string))) {
+        if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $string)) {
             throw new BadPackageNameGiven(
-                "Borg package name should look like `organisation/name`, but {$string} given."
+                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
             );
         }
 
