@@ -20,7 +20,6 @@
         <service id="twig.loader.documentation"
                  class="Behat\Borg\Application\DocumentationBundle\Twig\DocumentationLoader"
                  public="false">
-            <argument type="service" id="documentation.publisher"/>
             <tag name="twig.loader"/>
         </service>
 
