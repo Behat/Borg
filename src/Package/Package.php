@@ -7,6 +7,8 @@ namespace Behat\Borg\Package;
  */
 interface Package
 {
+    const PACKAGE_NAME_REGEX = '#^[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*$#u';
+
     /**
      * Returns package organisation name.
      *

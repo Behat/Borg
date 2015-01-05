@@ -10,8 +10,6 @@ use Behat\Borg\Package\Package;
  */
 final class ComposerPackage implements Package
 {
-    const PACKAGE_NAME_REGEX = '#^[A-Za-z0-9][A-Za-z0-9_.-]*/[A-Za-z0-9][A-Za-z0-9_.-]*$#u';
-
     /**
      * @var string
      */
