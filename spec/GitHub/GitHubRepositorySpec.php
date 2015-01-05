@@ -25,7 +25,7 @@ class GitHubRepositorySpec extends ObjectBehavior
 
     function it_can_be_created_using_github_repository_name_with_dashes_and_underscores()
     {
-        $this->shouldNotThrow()->during('named', ['everzet/basket-by-example']);
+        $this->shouldNotThrow()->during('named', ['everzet/basket-by_example']);
     }
 
     function it_can_be_created_using_github_repository_name_with_periods()
