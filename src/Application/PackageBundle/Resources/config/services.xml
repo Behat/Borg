@@ -17,14 +17,14 @@
         </service>
 
         <service id="release.manager"
-                 class="Behat\Borg\ReleaseManager">
+                 class="Behat\Borg\ReleaseManager" public="false">
             <call method="registerListener">
                 <argument type="service" id="package.listener.release.downloading"/>
             </call>
         </service>
 
         <service id="package.listener.release.downloading"
-                class="Behat\Borg\Package\ReleaseDownloader">
+                class="Behat\Borg\Package\ReleaseDownloader" public="false">
             <argument type="service" id="package.release_downloader"/>
             <call method="registerListener">
                 <argument type="service" id="package.listener.download.documenting"/>
@@ -32,12 +32,9 @@
         </service>
 
         <service id="package.release_downloader"
-                 class="Behat\Borg\GitHub\GitHubDownloader">
+                 class="Behat\Borg\GitHub\GitHubDownloader" public="false">
             <argument type="service" id="github.client"/>
             <argument>%package.release_downloader.path%</argument>
-            <argument type="collection">
-                <argument>Behat/docs</argument>
-            </argument>
         </service>
 
         <service id="github.client"
