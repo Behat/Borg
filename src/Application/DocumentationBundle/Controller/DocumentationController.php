@@ -67,7 +67,7 @@ class DocumentationController extends Controller
      *     "/{project}/{version}",
      *     name="documentation_index",
      *     requirements={
-     *         "project": "[\w\-]++\/[\w\-]++",
+     *         "project": "[^\/]++\/[^\/]++",
      *         "version": "v\d++\.\d++"
      *     }
      * )
@@ -88,7 +88,7 @@ class DocumentationController extends Controller
      *     "/{project}/{version}/{path}",
      *     name="documentation_page",
      *     requirements={
-     *         "project": "[\w\-]++\/[\w\-]++",
+     *         "project": "[^\/]++\/[^\/]++",
      *         "version": "v\d++\.\d++",
      *         "path":    ".*\.html"
      *     }
