@@ -24,7 +24,7 @@
         </service>
 
         <service id="release.listener.release.downloading"
-                 class="Behat\Borg\Package\ReleaseDownloader" public="false">
+                 class="Behat\Borg\Release\ReleaseDownloader" public="false">
             <argument type="service" id="release.release_downloader"/>
             <call method="registerListener">
                 <argument type="service" id="release.listener.download.packaging"/>
