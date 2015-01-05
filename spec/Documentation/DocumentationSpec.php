@@ -32,6 +32,6 @@ class DocumentationSpec extends ObjectBehavior
 
     function it_holds_a_time_it_was_created_at(DateTimeImmutable $time)
     {
-        $this->getTime()->shouldHaveType($time);
+        $this->getTime()->shouldReturn($time);
     }
 }
