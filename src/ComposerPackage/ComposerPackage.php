@@ -28,7 +28,7 @@ final class ComposerPackage implements Package
             );
         }
 
-        $this->string = $string;
+        $this->string = strtolower($string);
     }
 
     /**
