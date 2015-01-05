@@ -5,9 +5,20 @@ Feature: Documentation is published on repository release
 
   Rules:
   - Extensions documentation is published
+  - `master` and `develop` branches documentation should also be published (if documented)
 
   @critical
   Scenario: Publishing extension release documentation
     Given "behat/symfony2-extension" version "v2.0.0" was documented in "Behat/Symfony2Extension"
     When I release "Behat/Symfony2Extension" version "v2.0.0"
     Then "behat/symfony2-extension" version "v2.0" documentation should have been published
+
+  Scenario: Publishing extension master-branch documentation
+    Given "behat/symfony2-extension" version "master" was documented in "Behat/Symfony2Extension"
+    When I release "Behat/Symfony2Extension" version "master"
+    Then "behat/symfony2-extension" version "master" documentation should have been published
+
+  Scenario: Publishing extension develop-branch documentation
+    Given "behat/symfony2-extension" version "develop" was documented in "Behat/Symfony2Extension"
+    When I release "Behat/Symfony2Extension" version "develop"
+    Then "behat/symfony2-extension" version "develop" documentation should have been published
