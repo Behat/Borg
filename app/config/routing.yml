@@ -11,3 +11,7 @@ documentation:
     prefix:   /docs
     defaults:
         section: 'documentation'
+    requirements:
+        project: '[\w\-]++\/[\w\-]++'
+        version: 'v\d++\.\d++'
+        path: '.*\.html'
