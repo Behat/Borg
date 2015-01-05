@@ -2,18 +2,18 @@
 {% extends 'DocumentationBundle::page.html.twig' %}
 {% endraw %}
 
-{{ '{% block title %}' }}
+{{ '{% block title %}{% verbatim %}' }}
     {{ title|striptags|e }} &mdash; {{ docstitle }}
-{{ '{% endblock title %}' }}
+{{ '{% endverbatim %}{% endblock title %}' }}
 
-{{ '{% block toc %}' }}
+{{ '{% block toc %}{% verbatim %}' }}
     {{ toc }}
-{{ '{% endblock toc %}' }}
+{{ '{% endverbatim %}{% endblock toc %}' }}
 
-{{ '{% block text %}' }}
+{{ '{% block text %}{% verbatim %}' }}
     <section class="text">
         {% block body %}
             {{ body }}
         {% endblock %}
     </section>
-{{ '{% endblock text %}' }}
+{{ '{% endverbatim %}{% endblock text %}' }}
