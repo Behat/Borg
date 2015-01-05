@@ -57,7 +57,7 @@ final class DirectoryPublisher implements Publisher
             throw new RequestedDocumentationWasNotPublished("Documentation `{$anId}` was not published.");
         }
 
-        return unserialize(file_get_contents("{$this->publishPath}/{$anId}/publish.meta"));
+        return $this->readPublishingMeta($this->publishPath . '/' . $anId);
     }
 
     /**
@@ -66,7 +66,9 @@ final class DirectoryPublisher implements Publisher
     public function findForProject($projectName)
     {
         $documentation = [];
-        foreach (Finder::create()->depth(0)->directories()->in("{$this->publishPath}/{$projectName}") as $dir) {
+        $projectPath = $this->publishPath . '/' . $projectName;
+
+        foreach (Finder::create()->depth(0)->directories()->in($projectPath) as $dir) {
             $documentation[] = unserialize(file_get_contents($dir . '/publish.meta'));
         }
 
@@ -82,6 +84,11 @@ final class DirectoryPublisher implements Publisher
 
     private function writePublishingMeta($publishPath, PublishedDocumentation $documentation)
     {
-        file_put_contents("{$publishPath}/publish.meta", serialize($documentation));
+        file_put_contents($publishPath . '/publish.meta', serialize($documentation));
+    }
+
+    private function readPublishingMeta($publishPath)
+    {
+        return unserialize(file_get_contents($publishPath . '/publish.meta'));
     }
 }

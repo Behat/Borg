@@ -68,7 +68,7 @@ final class GitHubDownload implements Download
      */
     public function hasFile($relativePath)
     {
-        return file_exists("{$this->getPath()}/{$relativePath}");
+        return file_exists($this->getPath() . '/' . $relativePath);
     }
 
     /**
@@ -82,6 +82,6 @@ final class GitHubDownload implements Download
             );
         }
 
-        return "{$this->getPath()}/{$relativePath}";
+        return $this->getPath() . '/' . $relativePath;
     }
 }

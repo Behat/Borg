@@ -119,17 +119,17 @@ final class GitHubDownloader implements Downloader
 
     private function getCommitMetaPath(Release $release)
     {
-        return "{$this->getDownloadPath($release)}/commit.meta";
+        return $this->getDownloadPath($release) . '/commit.meta';
     }
 
     private function getArchivePath(Repository $package, Commit $commit)
     {
-        return "{$this->downloadPath}/{$package}/{$commit->getSha()}.zip";
+        return $this->downloadPath . '/' . $package . '/' . $commit->getSha() . '.zip';
     }
 
     private function getOrganisationPath(Repository $package)
     {
-        return "{$this->downloadPath}/{$package->getOrganisationName()}";
+        return $this->downloadPath . '/' . $package->getOrganisationName();
     }
 
     private function getUnzippedCommitPath(Repository $package, Commit $commit)
@@ -138,6 +138,6 @@ final class GitHubDownloader implements Downloader
         $organisation = $package->getOrganisationName();
         $repository = $package->getName();
 
-        return "{$this->getOrganisationPath($package)}/{$organisation}-{$repository}-{$shortSha}";
+        return $this->getOrganisationPath($package) . '/' . "{$organisation}-{$repository}-{$shortSha}";
     }
 }

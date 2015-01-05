@@ -45,7 +45,7 @@ final class PackageDocumentationId implements DocumentationId
      */
     public function getVersionString()
     {
-        return "v{$this->version->getMinor()}";
+        return 'v' . $this->version->getMinor();
     }
 
     /**
@@ -53,6 +53,6 @@ final class PackageDocumentationId implements DocumentationId
      */
     public function __toString()
     {
-        return "{$this->getProjectName()}/{$this->getVersionString()}";
+        return $this->getProjectName() . '/' . $this->getVersionString();
     }
 }

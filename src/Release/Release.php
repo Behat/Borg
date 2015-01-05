@@ -55,6 +55,6 @@ final class Release
      */
     public function __toString()
     {
-        return sprintf('%s/%s', $this->repository, $this->version);
+        return $this->repository . '/' . $this->version;
     }
 }
