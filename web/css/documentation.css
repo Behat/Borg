@@ -21,6 +21,10 @@ body > section {
   margin-left: 10px;
 }
 
+.toc {
+  margin-top: 50px;
+}
+
 .toc ul {
   list-style: square;
 }
