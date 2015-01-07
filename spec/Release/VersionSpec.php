@@ -31,9 +31,36 @@ class VersionSpec extends ObjectBehavior
         $this->shouldNotThrow()->during('string', ['v1.0.0-beta']);
     }
 
-    function it_can_not_be_created_using_anything_but_a_proper_version_string()
+    function it_can_be_created_using_develop_version_string()
     {
-        $this->shouldThrow()->during('string', ['master']);
+        $this->shouldNotThrow()->during('string', ['1.2.x']);
+    }
+
+    function it_can_be_created_using_develop_or_master()
+    {
+        $this->shouldNotThrow()->during('string', ['master']);
+        $this->shouldNotThrow()->during('string', ['develop']);
+    }
+
+    function it_can_not_be_created_using_anything_else()
+    {
+        $this->shouldThrow()->during('string', ['anything-else']);
+    }
+
+    function it_can_tell_if_it_is_stable()
+    {
+        $this->string('1.2.3-rc1')->isStable()->shouldBe(false);
+        $this->string('1.2.x')->isStable()->shouldBe(false);
+        $this->string('develop')->isStable()->shouldBe(false);
+        $this->string('master')->isStable()->shouldBe(false);
+        $this->string('1.2.3')->isStable()->shouldBe(true);
+    }
+
+    function it_can_tell_if_it_is_branch()
+    {
+        $this->string('develop')->isBranch()->shouldBe(true);
+        $this->string('master')->isBranch()->shouldBe(true);
+        $this->string('1.2.3')->isBranch()->shouldBe(false);
     }
 
     function it_can_represent_a_major_version()
@@ -56,6 +83,22 @@ class VersionSpec extends ObjectBehavior
         $this->beConstructedThrough('string', ['v1.2']);
 
         $this->getPatch()->shouldReturn('1.2.x');
+    }
+
+    function its_branch_name_should_be_a_branch_it_was_created_with()
+    {
+        $this->beConstructedThrough('string', ['develop']);
+
+        $this->getBranchName()->shouldReturn('develop');
+    }
+
+    function its_major_minor_and_patch_are_nulls_if_it_is_a_branch_version()
+    {
+        $this->beConstructedThrough('string', ['develop']);
+
+        $this->getMajor()->shouldReturn(null);
+        $this->getMinor()->shouldReturn(null);
+        $this->getPatch()->shouldReturn(null);
     }
 
     function it_can_represent_canonical_SemVer()

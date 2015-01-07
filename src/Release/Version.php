@@ -13,6 +13,7 @@ final class Version
     private $major;
     private $minor;
     private $patch;
+    private $branchName;
 
     /**
      * Constructs version from a string.
@@ -25,7 +26,15 @@ final class Version
      */
     public static function string($string)
     {
-        if (!preg_match('/^[vV]?+(\d++)\.(\d++)(?:\.(\d++.*+))?$/', $string, $matches)) {
+        if (in_array($string, ['master', 'develop'])) {
+            $version = new Version();
+            $version->versionString = $string;
+            $version->branchName = $string;
+
+            return $version;
+        }
+
+        if (!preg_match('/^[vV]?+(\d++)\.(\d++)(?:\.(\d++.*+|x))?$/', $string, $matches)) {
             throw new BadVersionStringGiven("`{$string}` is not a supported version string.");
         }
 
@@ -41,31 +50,41 @@ final class Version
     /**
      * Returns major version string without the leading "v".
      *
-     * @return string
+     * @return null|string
      */
     public function getMajor()
     {
-        return $this->major;
+        return $this->isBranch() ? null : $this->major;
     }
 
     /**
      * Returns minor version string without the leading "v".
      *
-     * @return string
+     * @return null|string
      */
     public function getMinor()
     {
-        return sprintf('%d.%d', $this->major, $this->minor);
+        return $this->isBranch() ? null : sprintf('%d.%d', $this->major, $this->minor);
     }
 
     /**
      * Returns patch version string without the leading "v".
      *
-     * @return string
+     * @return null|string
      */
     public function getPatch()
     {
-        return sprintf('%d.%d.%s', $this->major, $this->minor, $this->patch);
+        return $this->isBranch() ? null : sprintf('%d.%d.%s', $this->major, $this->minor, $this->patch);
+    }
+
+    /**
+     * Returns branch name if version is a branch.
+     *
+     * @return null|string
+     */
+    public function getBranchName()
+    {
+        return $this->branchName;
     }
 
     /**
@@ -76,6 +95,26 @@ final class Version
     public function getSemVer()
     {
         return sprintf('v%s', $this->getPatch());
+    }
+
+    /**
+     * Checks if version is stable.
+     *
+     * @return Boolean
+     */
+    public function isStable()
+    {
+        return is_numeric($this->patch);
+    }
+
+    /**
+     * Checks if version is a branch.
+     *
+     * @return Boolean
+     */
+    public function isBranch()
+    {
+        return null !== $this->branchName;
     }
 
     /**

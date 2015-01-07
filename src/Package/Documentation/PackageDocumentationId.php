@@ -45,6 +45,14 @@ final class PackageDocumentationId implements DocumentationId
      */
     public function getVersionString()
     {
+        if ($this->version->isBranch()) {
+            return $this->version->getBranchName();
+        }
+
+        if (!$this->version->isStable()) {
+            return 'v' . $this->version->getPatch();
+        }
+
         return 'v' . $this->version->getMinor();
     }
 
