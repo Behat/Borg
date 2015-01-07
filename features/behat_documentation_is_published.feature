@@ -1,4 +1,4 @@
-Feature: Documentation is published on repository release
+Feature: Behat documentation is published
   In order to help newcomers start using behat quicker
   As a documentation contributor
   I want behat documentation to be published after we release a new version of it

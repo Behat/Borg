@@ -1,4 +1,4 @@
-Feature: Documentation meta is generated after publishing
+Feature: Documentation meta is generated
   In order to help users find relevant information quicker
   As a documentation contributor
   I want documentation meta to be available after publishing
