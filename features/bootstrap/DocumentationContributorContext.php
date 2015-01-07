@@ -139,6 +139,18 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     }
 
     /**
+     * @Then current version of :project documentation should point to version :versionString
+     */
+    public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
+    {
+        $documentationId = new ProjectDocumentationId($project, 'current');
+        $page = $this->documentationManager->findPage($documentationId, new PageId('index.html'));
+
+        PHPUnit::assertNotNull($page, 'Page not found.');
+        PHPUnit::assertEquals($versionString, $page->getVersionString());
+    }
+
+    /**
      * @Then documentation for :versionString should be in the list of available documentation for :project
      */
     public function documentationVersionShouldBeInTheList($project, $versionString)
