@@ -28,9 +28,14 @@
 
     "autoload": {
         "psr-4": {
-            "Behat\\Borg\\": "src/",
-            "spec\\Behat\\Borg\\": ".",
-            "tests\\Behat\\Borg\\": "."
+            "Behat\\Borg\\": "src/"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "spec\\Behat\\Borg\\": "spec/",
+            "tests\\Behat\\Borg\\": "tests/"
         }
     },
 
