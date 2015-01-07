@@ -7,7 +7,7 @@ use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 /**
  * Stores published documentation.
  */
-interface DocumentationRepository
+interface Repository
 {
     /**
      * Saves published documentation to the repository.
