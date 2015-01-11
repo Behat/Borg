@@ -48,8 +48,29 @@
 
         <service id="documentation.manager"
                  class="Behat\Borg\DocumentationManager">
+            <argument type="service" id="documentation.processor"/>
+            <argument type="service" id="documentation.page_finder"/>
+            <argument type="service" id="documentation.repository"/>
+        </service>
+
+        <service id="documentation.repository"
+                 class="Behat\Borg\Application\Infrastructure\Documentation\FilesystemRepository"
+                 public="false">
+            <argument>%documentation.publisher.path%/published.meta</argument>
+        </service>
+
+        <service id="documentation.page_finder"
+                 class="Behat\Borg\Documentation\Finder\RepositoryPageFinder"
+                 public="false">
+            <argument type="service" id="documentation.repository"/>
+        </service>
+
+        <service id="documentation.processor"
+                 class="Behat\Borg\Documentation\Processor\BuildingProcessor"
+                 public="false">
             <argument type="service" id="documentation.builder.sphinx"/>
             <argument type="service" id="documentation.publisher"/>
+            <argument type="service" id="documentation.repository"/>
         </service>
 
         <service id="documentation.source_finder.rst"
