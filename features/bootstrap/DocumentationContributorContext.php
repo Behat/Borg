@@ -43,21 +43,16 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function __construct()
     {
         $this->downloader = new FakeDownloader();
-        $sourceFinder = new FakeSourceFinder();
-        $packageFinder = new FakePackageFinder();
-        $builder = new FakeBuilder();
-        $publisher = new FakePublisher();
         $repository = new FakeRepository();
-
-        $processor = new BuildingProcessor($builder, $publisher, $repository);
+        $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
         $pageFinder = new RepositoryPageFinder($repository);
 
-        $this->releaseManager = new ReleaseManager();
         $this->documentationManager = new DocumentationManager($processor, $pageFinder, $repository);
+        $this->releaseManager = new ReleaseManager();
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);
-        $releasePackager = new ReleasePackager($packageFinder);
-        $documentingBuilder = new PackagedDocumentationBuilder($sourceFinder, $this->documentationManager);
+        $releasePackager = new ReleasePackager(new FakePackageFinder());
+        $documentingBuilder = new PackagedDocumentationBuilder(new FakeSourceFinder(), $this->documentationManager);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
