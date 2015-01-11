@@ -4,7 +4,7 @@ namespace spec\Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
@@ -21,21 +21,21 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->beConstructedWith($builder, $publisher);
     }
 
-    function it_builds_documentation_using_builder_and_publishes_it_using_publisher(
+    function it_processes_documentation_using_builder_and_publishes_it_using_publisher(
         Builder $builder,
         DocumentationId $anId,
         Source $source,
         BuiltDocumentation $builtDocumentation,
         Publisher $publisher
     ) {
-        $documentation = new Documentation(
+        $documentation = new RawDocumentation(
             $anId->getWrappedObject(), new \DateTimeImmutable(), $source->getWrappedObject()
         );
 
         $builder->build($documentation)->willReturn($builtDocumentation);
         $publisher->publish($builtDocumentation)->shouldBeCalled();
 
-        $this->build($documentation);
+        $this->process($documentation);
     }
 
     function it_can_find_all_published_documentation_for_a_provided_project_name(

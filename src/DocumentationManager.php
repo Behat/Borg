@@ -3,7 +3,7 @@
 namespace Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\Builder;
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
@@ -37,11 +37,11 @@ final class DocumentationManager
     }
 
     /**
-     * Builds provided documentation.
+     * Processes raw documentation.
      *
-     * @param Documentation $documentation
+     * @param RawDocumentation $documentation
      */
-    public function build(Documentation $documentation)
+    public function process(RawDocumentation $documentation)
     {
         $builtDocumentation = $this->builder->build($documentation);
         $this->publisher->publish($builtDocumentation);
