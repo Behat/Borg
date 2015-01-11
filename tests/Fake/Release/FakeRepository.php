@@ -1,10 +1,10 @@
 <?php
 
-namespace Fake\Package;
+namespace tests\Behat\Borg\Fake\Release;
 
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Repository;
 
-final class FakePackage implements Package
+final class FakeRepository implements Repository
 {
     private $name;
 
@@ -14,7 +14,7 @@ final class FakePackage implements Package
             throw new \InvalidArgumentException('Package should include organisation and name.');
         }
 
-        $package = new FakePackage();
+        $package = new FakeRepository();
         $package->name = $name;
 
         return $package;
@@ -35,5 +35,5 @@ final class FakePackage implements Package
         return $this->name;
     }
 
-    private function __construct() { }
+    private function __construct(){}
 }

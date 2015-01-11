@@ -1,6 +1,6 @@
 <?php
 
-namespace Fake\Package;
+namespace tests\Behat\Borg\Fake\Package;
 
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Release\Downloader\Download;

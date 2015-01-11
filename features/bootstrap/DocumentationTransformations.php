@@ -2,8 +2,8 @@
 
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Release\Version;
-use Fake\Package\FakePackage;
-use Fake\Release\FakeRepository;
+use tests\Behat\Borg\Fake\Package\FakePackage;
+use tests\Behat\Borg\Fake\Release\FakeRepository;
 
 trait DocumentationTransformations
 {
