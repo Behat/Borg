@@ -1,15 +1,15 @@
 <?php
 
-namespace Behat\Borg\Package\Documentation;
+namespace Behat\Borg\PackageDocumentation;
 
-use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\DocumentationId as DocumentationIdInterface;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Version;
 
 /**
  * Links documentation to a specific package.
  */
-final class PackageDocumentationId implements DocumentationId
+final class PackagedDocumentationId implements DocumentationIdInterface
 {
     /**
      * @var Package

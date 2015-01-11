@@ -20,7 +20,7 @@
         </service>
 
         <service id="package.finder.documentation"
-                 class="Behat\Borg\Package\Documentation\DocumentationPackageFinder" public="false"/>
+                 class="Behat\Borg\PackageDocumentation\DocumentationPackageFinder" public="false"/>
 
         <service id="package.finder.composer"
                  class="Behat\Borg\ComposerPackage\ComposerPackageFinder" public="false"/>
@@ -34,7 +34,7 @@
         </service>
 
         <service id="package.listener.package.documenting"
-                 class="Behat\Borg\Package\Documentation\PackageDocumentationBuilder"
+                 class="Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.manager"/>

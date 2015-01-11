@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Package\Documentation;
+namespace spec\Behat\Borg\PackageDocumentation;
 
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
@@ -16,7 +16,7 @@ use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class PackageDocumentationBuilderSpec extends ObjectBehavior
+class PackagedDocumentationBuilderSpec extends ObjectBehavior
 {
     function let(SourceFinder $finder, Publisher $publisher, Builder $builder)
     {

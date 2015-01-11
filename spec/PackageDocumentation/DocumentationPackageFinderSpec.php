@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Behat\Borg\Package\Documentation;
+namespace spec\Behat\Borg\PackageDocumentation;
 
-use Behat\Borg\Package\Documentation\DocumentationPackage;
+use Behat\Borg\PackageDocumentation\DocumentationPackage;
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Release\Downloader\Download;
 use PhpSpec\ObjectBehavior;

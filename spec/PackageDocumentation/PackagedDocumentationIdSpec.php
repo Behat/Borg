@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\Package\Documentation;
+namespace spec\Behat\Borg\PackageDocumentation;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Package\Package;
@@ -8,7 +8,7 @@ use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class PackageDocumentationIdSpec extends ObjectBehavior
+class PackagedDocumentationIdSpec extends ObjectBehavior
 {
     function let(Package $package)
     {
