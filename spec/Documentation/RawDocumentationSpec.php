@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\Documentation;
 
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\Release\Downloader\Download;
@@ -13,7 +13,7 @@ use DateTimeImmutable;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DocumentationSpec extends ObjectBehavior
+class RawDocumentationSpec extends ObjectBehavior
 {
     function let(DocumentationId $anId, DateTimeImmutable $time, Source $source)
     {

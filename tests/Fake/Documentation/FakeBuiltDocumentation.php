@@ -3,7 +3,7 @@
 namespace tests\Behat\Borg\Fake\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use DateTimeImmutable;
 
 final class FakeBuiltDocumentation implements BuiltDocumentation
@@ -11,7 +11,7 @@ final class FakeBuiltDocumentation implements BuiltDocumentation
     private $documentation;
     private $buildTime;
 
-    public function __construct(Documentation $documentation, DateTimeImmutable $buildTime)
+    public function __construct(RawDocumentation $documentation, DateTimeImmutable $buildTime)
     {
         $this->documentation = $documentation;
         $this->buildTime = $buildTime;

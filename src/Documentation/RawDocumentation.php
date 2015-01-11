@@ -7,7 +7,7 @@ use DateTimeImmutable;
 /**
  * Represents raw, unprocessed documentation.
  */
-final class Documentation
+final class RawDocumentation
 {
     private $anId;
     private $time;

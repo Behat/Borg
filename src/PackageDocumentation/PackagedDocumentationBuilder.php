@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\PackageDocumentation;
 
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\DocumentationManager;
 use Behat\Borg\Package\Listener\PackageListener;
@@ -52,6 +52,6 @@ final class PackagedDocumentationBuilder implements PackageListener
         $time = $download->getReleaseTime();
         $anId = new PackagedDocumentationId($package, $version);
 
-        $this->manager->build(new Documentation($anId, $time, $source));
+        $this->manager->process(new RawDocumentation($anId, $time, $source));
     }
 }
