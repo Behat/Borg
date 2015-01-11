@@ -13,5 +13,5 @@ documentation:
         section: 'documentation'
     requirements:
         project: '[\w\-]++\/[\w\-]++'
-        version: 'master|develop|v\d++\.\d++(?:\.x)?'
+        version: 'current|master|develop|v\d++\.\d++(?:\.x)?'
         path: '.*\.html'
