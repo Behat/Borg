@@ -2,7 +2,9 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Documentation\Finder\RepositoryPageFinder;
 use Behat\Borg\Documentation\Page\PageId;
+use Behat\Borg\Documentation\Processor\BuildingProcessor;
 use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Package\ReleasePackager;
@@ -14,14 +16,15 @@ use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
+use PHPUnit_Framework_Assert as PHPUnit;
 use tests\Behat\Borg\Fake\Documentation\FakeBuilder;
 use tests\Behat\Borg\Fake\Documentation\FakeDocumentedDownload;
 use tests\Behat\Borg\Fake\Documentation\FakePublisher;
+use tests\Behat\Borg\Fake\Documentation\FakeRepository;
 use tests\Behat\Borg\Fake\Documentation\FakeSource;
 use tests\Behat\Borg\Fake\Documentation\FakeSourceFinder;
 use tests\Behat\Borg\Fake\Package\FakePackageFinder;
 use tests\Behat\Borg\Fake\Release\FakeDownloader;
-use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -39,14 +42,18 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function __construct()
     {
-        $publisher = new FakePublisher();
+        $this->downloader = new FakeDownloader();
         $sourceFinder = new FakeSourceFinder();
         $packageFinder = new FakePackageFinder();
-        $this->downloader = new FakeDownloader();
         $builder = new FakeBuilder();
+        $publisher = new FakePublisher();
+        $repository = new FakeRepository();
+
+        $processor = new BuildingProcessor($builder, $publisher, $repository);
+        $pageFinder = new RepositoryPageFinder($repository);
 
         $this->releaseManager = new ReleaseManager();
-        $this->documentationManager = new DocumentationManager($builder, $publisher);
+        $this->documentationManager = new DocumentationManager($processor, $pageFinder, $repository);
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);
         $releasePackager = new ReleasePackager($packageFinder);
