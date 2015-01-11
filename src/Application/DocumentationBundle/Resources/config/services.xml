@@ -49,7 +49,6 @@
         <service id="documentation.documenter"
                  class="Behat\Borg\Documenter">
             <argument type="service" id="documentation.processor"/>
-            <argument type="service" id="documentation.page_finder"/>
             <argument type="service" id="documentation.repository"/>
         </service>
 
@@ -57,12 +56,6 @@
                  class="Behat\Borg\Application\Infrastructure\Documentation\FilesystemRepository"
                  public="false">
             <argument>%documentation.publisher.path%/published.meta</argument>
-        </service>
-
-        <service id="documentation.page_finder"
-                 class="Behat\Borg\Documentation\Finder\RepositoryPageFinder"
-                 public="false">
-            <argument type="service" id="documentation.repository"/>
         </service>
 
         <service id="documentation.processor"

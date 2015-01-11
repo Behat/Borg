@@ -3,7 +3,6 @@
 namespace spec\Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\Finder\PageFinder;
 use Behat\Borg\Documentation\Processor\Processor;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
@@ -15,11 +14,11 @@ use Behat\Borg\Documentation\Source;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DocumentationManagerSpec extends ObjectBehavior
+class DocumenterSpec extends ObjectBehavior
 {
-    function let(Processor $processor, PageFinder $pageFinder, Repository $repository)
+    function let(Processor $processor, Repository $repository)
     {
-        $this->beConstructedWith($processor, $pageFinder, $repository);
+        $this->beConstructedWith($processor, $repository);
     }
 
     function it_processes_documentation_using_processor(
@@ -36,8 +35,8 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->process($raw);
     }
 
-    function it_finds_pages_using_finder(
-        PageFinder $pageFinder,
+    function it_finds_documentation_page_if_documentation_was_saved_and_has_asked_page(
+        Repository $repository,
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
@@ -46,12 +45,41 @@ class DocumentationManagerSpec extends ObjectBehavior
         $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
 
         $pageId = new PageId(basename(__FILE__));
-        $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
-        $page = new Page($publishedDocumentation, $pageId);
+        $publishedDocumentation = PublishedDocumentation::publish(
+            $built->getWrappedObject(), __DIR__
+        );
 
-        $pageFinder->findPage($anId, $pageId)->willReturn($page);
+        $repository->find($anId)->willReturn($publishedDocumentation);
 
-        $this->findPage($anId, $pageId)->shouldReturn($page);
+        $page = $this->findPage($anId, $pageId);
+        $page->shouldBeAnInstanceOf(Page::class);
+        $page->getPath()->shouldReturn(__FILE__);
+    }
+
+    function it_finds_nothing_if_documentation_was_not_found(
+        Repository $repository,
+        DocumentationId $anId
+    ) {
+        $pageId = new PageId(basename(__FILE__));
+
+        $repository->find($anId)->willReturn(null);
+
+        $this->findPage($anId, $pageId)->shouldReturn(null);
+    }
+
+    function it_finds_nothing_if_documentation_was_found_but_page_was_not(
+        Repository $repository,
+        DocumentationId $anId,
+        BuiltDocumentation $built
+    ) {
+        $pageId = new PageId('no_file');
+        $publishedDocumentation = PublishedDocumentation::publish(
+            $built->getWrappedObject(), __DIR__
+        );
+
+        $repository->find($anId)->willReturn($publishedDocumentation);
+
+        $this->findPage($anId, $pageId)->shouldReturn(null);
     }
 
     function it_finds_all_documentation_for_a_provided_project_name(
@@ -69,6 +97,6 @@ class DocumentationManagerSpec extends ObjectBehavior
 
         $repository->findForProject('my/project')->willReturn([$publishedDocumentation]);
 
-        $this->getAvailableDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
+        $this->findProjectDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
     }
 }

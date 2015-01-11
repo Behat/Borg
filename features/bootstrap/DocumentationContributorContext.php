@@ -2,7 +2,6 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Borg\Documentation\Finder\RepositoryPageFinder;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Processor\BuildingProcessor;
 use Behat\Borg\Documentation\ProjectDocumentationId;
@@ -45,9 +44,8 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         $this->downloader = new FakeDownloader();
         $repository = new FakeRepository();
         $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
-        $pageFinder = new RepositoryPageFinder($repository);
 
-        $this->documentationManager = new Documenter($processor, $pageFinder, $repository);
+        $this->documentationManager = new Documenter($processor, $repository);
         $this->releaseManager = new ReleaseManager();
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);
