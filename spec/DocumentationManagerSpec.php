@@ -10,32 +10,36 @@ use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Publisher\Publisher;
+use Behat\Borg\Documentation\Repository\Repository;
 use Behat\Borg\Documentation\Source;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class DocumentationManagerSpec extends ObjectBehavior
 {
-    function let(Builder $builder, Publisher $publisher)
+    function let(Builder $builder, Publisher $publisher, Repository $repository)
     {
-        $this->beConstructedWith($builder, $publisher);
+        $this->beConstructedWith($builder, $publisher, $repository);
     }
 
-    function it_processes_documentation_using_builder_and_publishes_it_using_publisher(
+    function it_processes_documentation_by_building_publishing_and_then_saving_it_to_repository(
         Builder $builder,
         DocumentationId $anId,
         Source $source,
         BuiltDocumentation $builtDocumentation,
-        Publisher $publisher
+        Publisher $publisher,
+        Repository $repository
     ) {
-        $documentation = new RawDocumentation(
+        $raw = new RawDocumentation(
             $anId->getWrappedObject(), new \DateTimeImmutable(), $source->getWrappedObject()
         );
+        $published = PublishedDocumentation::publish($builtDocumentation->getWrappedObject(), '/');
 
-        $builder->build($documentation)->willReturn($builtDocumentation);
-        $publisher->publish($builtDocumentation)->shouldBeCalled();
+        $builder->build($raw)->willReturn($builtDocumentation);
+        $publisher->publish($builtDocumentation)->willReturn($published);
+        $repository->save($published)->shouldBeCalled();
 
-        $this->process($documentation);
+        $this->process($raw);
     }
 
     function it_can_find_all_published_documentation_for_a_provided_project_name(

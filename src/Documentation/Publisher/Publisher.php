@@ -15,6 +15,8 @@ interface Publisher
      * Publishes provided built documentation.
      *
      * @param BuiltDocumentation $builtDocumentation
+     *
+     * @return PublishedDocumentation
      */
     public function publish(BuiltDocumentation $builtDocumentation);
 
