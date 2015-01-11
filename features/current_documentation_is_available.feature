@@ -15,7 +15,7 @@ Feature: Current documentation is available
     When I release "Behat/Symfony2Extension" version "v2.0.0"
     And I release "Behat/Symfony2Extension" version "master"
     And I release "Behat/Symfony2Extension" version "v1.1.2"
-    Then current version of "behat/symfony2-extension" documentation should point to version "v2.0.0"
+    Then current version of "behat/symfony2-extension" documentation should point to version "v2.0"
 
   Scenario: Having dev versions published
     Given "behat/behat" version "v3.0" was documented in "Behat/docs"
