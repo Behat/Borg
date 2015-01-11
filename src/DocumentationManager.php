@@ -2,6 +2,7 @@
 
 namespace Behat\Borg;
 
+use Behat\Borg\Documentation\Finder\PageFinder;
 use Behat\Borg\Documentation\Processor\Processor;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
@@ -20,6 +21,10 @@ final class DocumentationManager
      */
     private $processor;
     /**
+     * @var PageFinder
+     */
+    private $finder;
+    /**
      * @var Repository
      */
     private $repository;
@@ -28,11 +33,13 @@ final class DocumentationManager
      * Initialize manager.
      *
      * @param Processor  $processor
+     * @param PageFinder $finder
      * @param Repository $repository
      */
-    public function __construct(Processor $processor, Repository $repository)
+    public function __construct(Processor $processor, PageFinder $finder, Repository $repository)
     {
         $this->processor = $processor;
+        $this->finder = $finder;
         $this->repository = $repository;
     }
 
@@ -52,19 +59,11 @@ final class DocumentationManager
      * @param DocumentationId $documentationId
      * @param PageId          $pageId
      *
-     * @return Page|null
+     * @return null|Page
      */
     public function findPage(DocumentationId $documentationId, PageId $pageId)
     {
-        if (!$documentation = $this->repository->find($documentationId)) {
-            return null;
-        }
-
-        if (!$documentation->hasPage($pageId)) {
-            return null;
-        }
-
-        return $documentation->getPage($pageId);
+        return $this->finder->findPage($documentationId, $pageId);
     }
 
     /**
