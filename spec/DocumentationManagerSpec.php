@@ -4,6 +4,7 @@ namespace spec\Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Processor\Processor;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
@@ -17,27 +18,21 @@ use Prophecy\Argument;
 
 class DocumentationManagerSpec extends ObjectBehavior
 {
-    function let(Builder $builder, Publisher $publisher, Repository $repository)
+    function let(Processor $processor, Repository $repository)
     {
-        $this->beConstructedWith($builder, $publisher, $repository);
+        $this->beConstructedWith($processor, $repository);
     }
 
-    function it_processes_documentation_by_building_publishing_and_then_saving_it_to_repository(
-        Builder $builder,
+    function it_processes_documentation_using_processor(
         DocumentationId $anId,
         Source $source,
-        BuiltDocumentation $builtDocumentation,
-        Publisher $publisher,
-        Repository $repository
+        Processor $processor
     ) {
         $raw = new RawDocumentation(
             $anId->getWrappedObject(), new \DateTimeImmutable(), $source->getWrappedObject()
         );
-        $published = PublishedDocumentation::publish($builtDocumentation->getWrappedObject(), '/');
 
-        $builder->build($raw)->willReturn($builtDocumentation);
-        $publisher->publish($builtDocumentation)->willReturn($published);
-        $repository->save($published)->shouldBeCalled();
+        $processor->process($raw)->shouldBeCalled();
 
         $this->process($raw);
     }
