@@ -29,16 +29,28 @@ final class FakeRepository implements Repository, ObjectIdentifier
 
     public function findForProject($projectName)
     {
-        return array_filter(
+        $documentation = array_filter(
             $this->repository->getAll(),
             function (PublishedDocumentation $documentation) use ($projectName) {
                 return strtolower($projectName) == $documentation->getDocumentationId()->getProjectName();
             }
         );
+
+        usort($documentation, [$this, 'compareVersions']);
+
+        return $documentation;
     }
 
     public function getIdentity($object)
     {
         return (string)$object->getDocumentationId();
+    }
+
+    private function compareVersions(PublishedDocumentation $a, PublishedDocumentation $b)
+    {
+        $versionA = $a->getDocumentationId()->getVersionString();
+        $versionB = $b->getDocumentationId()->getVersionString();
+
+        return version_compare($versionB, $versionA);
     }
 }

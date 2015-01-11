@@ -84,6 +84,6 @@ class CurrentDocumentationRepositorySpec extends ObjectBehavior
 
         $decoratedRepo->findForProject('my/project')->willReturn([$doc1, $doc2, $doc3]);
 
-        $this->find(new ProjectDocumentationId('my/project', 'current'))->shouldReturn($doc2);
+        $this->find(new ProjectDocumentationId('my/project', 'current'))->shouldReturn($doc1);
     }
 }

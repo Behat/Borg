@@ -38,14 +38,11 @@ final class CurrentDocumentationRepository implements Repository
      */
     public function find(DocumentationId $documentationId)
     {
-        if ('current' != $documentationId->getVersionString()) {
-            return $this->decorated->find($documentationId);
+        if ('current' === $documentationId->getVersionString()) {
+            return current($this->findForProject($documentationId->getProjectName()));
         }
 
-        $documentation = $this->findForProject($documentationId->getProjectName());
-        usort($documentation, [$this, 'compareVersions']);
-
-        return end($documentation);
+        return $this->decorated->find($documentationId);
     }
 
     /**
@@ -54,13 +51,5 @@ final class CurrentDocumentationRepository implements Repository
     public function findForProject($projectName)
     {
         return $this->decorated->findForProject($projectName);
-    }
-
-    private function compareVersions(PublishedDocumentation $a, PublishedDocumentation $b)
-    {
-        $versionA = $a->getDocumentationId()->getVersionString();
-        $versionB = $b->getDocumentationId()->getVersionString();
-
-        return version_compare($versionA, $versionB);
     }
 }
