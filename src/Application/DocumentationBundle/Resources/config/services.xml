@@ -37,7 +37,7 @@
                  class="Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
-            <argument type="service" id="documentation.manager"/>
+            <argument type="service" id="documentation.documenter"/>
         </service>
 
         <service id="twig.loader.documentation"
@@ -46,8 +46,8 @@
             <tag name="twig.loader"/>
         </service>
 
-        <service id="documentation.manager"
-                 class="Behat\Borg\DocumentationManager">
+        <service id="documentation.documenter"
+                 class="Behat\Borg\Documenter">
             <argument type="service" id="documentation.processor"/>
             <argument type="service" id="documentation.page_finder"/>
             <argument type="service" id="documentation.repository"/>

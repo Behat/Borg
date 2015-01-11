@@ -10,7 +10,7 @@ use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Package\Package;
 use Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder;
-use Behat\Borg\DocumentationManager;
+use Behat\Borg\Documenter;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
@@ -47,7 +47,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
         $pageFinder = new RepositoryPageFinder($repository);
 
-        $this->documentationManager = new DocumentationManager($processor, $pageFinder, $repository);
+        $this->documentationManager = new Documenter($processor, $pageFinder, $repository);
         $this->releaseManager = new ReleaseManager();
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);

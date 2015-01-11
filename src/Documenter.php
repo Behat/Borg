@@ -14,7 +14,7 @@ use Behat\Borg\Documentation\Repository\Repository;
 /**
  * Manages documentation by providing high-level accessor methods.
  */
-final class DocumentationManager
+final class Documenter
 {
     /**
      * @var Processor

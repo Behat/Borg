@@ -4,7 +4,7 @@ namespace Behat\Borg\PackageDocumentation;
 
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
-use Behat\Borg\DocumentationManager;
+use Behat\Borg\Documenter;
 use Behat\Borg\Package\Listener\PackageListener;
 use Behat\Borg\Package\PackageDownload;
 
@@ -18,7 +18,7 @@ final class PackagedDocumentationBuilder implements PackageListener
      */
     private $finder;
     /**
-     * @var DocumentationManager
+     * @var Documenter
      */
     private $manager;
 
@@ -26,9 +26,9 @@ final class PackagedDocumentationBuilder implements PackageListener
      * Initializes listener.
      *
      * @param SourceFinder         $finder
-     * @param DocumentationManager $manager
+     * @param Documenter $manager
      */
-    public function __construct(SourceFinder $finder, DocumentationManager $manager)
+    public function __construct(SourceFinder $finder, Documenter $manager)
     {
         $this->finder = $finder;
         $this->manager = $manager;
