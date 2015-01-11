@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Documentation\Repository;
 
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 
 /**
@@ -15,6 +16,15 @@ interface Repository
      * @param PublishedDocumentation $documentation
      */
     public function save(PublishedDocumentation $documentation);
+
+    /**
+     * Finds documentation by its id.
+     *
+     * @param DocumentationId $documentationId
+     *
+     * @return null|PublishedDocumentation
+     */
+    public function find(DocumentationId $documentationId);
 
     /**
      * Finds all documentation for particular project.

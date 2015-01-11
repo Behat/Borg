@@ -42,24 +42,8 @@ class DocumentationManagerSpec extends ObjectBehavior
         $this->process($raw);
     }
 
-    function it_can_find_all_published_documentation_for_a_provided_project_name(
-        DocumentationId $anId,
-        Publisher $publisher,
-        BuiltDocumentation $built
-    ) {
-        $built->getDocumentationId()->willReturn($anId);
-        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
-        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
-
-        $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
-
-        $publisher->findForProject('my/project')->willReturn([$publishedDocumentation]);
-
-        $this->getAvailableDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
-    }
-
-    function it_locates_documentation_file_if_it_is_published_and_file_exists(
-        Publisher $publisher,
+    function it_finds_documentation_page_if_documentation_was_saved_and_has_asked_page(
+        Repository $repository,
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
@@ -70,27 +54,26 @@ class DocumentationManagerSpec extends ObjectBehavior
         $pageId = new PageId(basename(__FILE__));
         $publishedDocumentation = PublishedDocumentation::publish($built->getWrappedObject(), __DIR__);
 
-        $publisher->hasPublished($anId)->willReturn(true);
-        $publisher->getPublished($anId)->willReturn($publishedDocumentation);
+        $repository->find($anId)->willReturn($publishedDocumentation);
 
         $page = $this->findPage($anId, $pageId);
         $page->shouldBeAnInstanceOf(Page::class);
         $page->getPath()->shouldReturn(__FILE__);
     }
 
-    function it_returns_null_if_documentation_was_not_published(
-        Publisher $publisher,
+    function it_finds_nothing_if_documentation_was_not_found(
+        Repository $repository,
         DocumentationId $anId
     ) {
         $pageId = new PageId(basename(__FILE__));
 
-        $publisher->hasPublished($anId)->willReturn(false);
+        $repository->find($anId)->willReturn(null);
 
         $this->findPage($anId, $pageId)->shouldReturn(null);
     }
 
-    function it_returns_null_if_documentation_is_published_but_file_does_not_exist(
-        Publisher $publisher,
+    function it_finds_nothing_if_documentation_was_found_but_page_was_not(
+        Repository $repository,
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
@@ -99,9 +82,26 @@ class DocumentationManagerSpec extends ObjectBehavior
             $built->getWrappedObject(), __DIR__
         );
 
-        $publisher->hasPublished($anId)->willReturn(true);
-        $publisher->getPublished($anId)->willReturn($publishedDocumentation);
+        $repository->find($anId)->willReturn($publishedDocumentation);
 
         $this->findPage($anId, $pageId)->shouldReturn(null);
+    }
+
+    function it_finds_all_documentation_for_a_provided_project_name(
+        Repository $repository,
+        DocumentationId $anId,
+        BuiltDocumentation $built
+    ) {
+        $built->getDocumentationId()->willReturn($anId);
+        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
+        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
+
+        $publishedDocumentation = PublishedDocumentation::publish(
+            $built->getWrappedObject(), __DIR__
+        );
+
+        $repository->findForProject('my/project')->willReturn([$publishedDocumentation]);
+
+        $this->getAvailableDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
     }
 }

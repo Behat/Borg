@@ -65,11 +65,10 @@ final class DocumentationManager
      */
     public function findPage(DocumentationId $documentationId, PageId $pageId)
     {
-        if (!$this->publisher->hasPublished($documentationId)) {
+        if (!$documentation = $this->repository->find($documentationId)) {
             return null;
         }
 
-        $documentation = $this->publisher->getPublished($documentationId);
         if (!$documentation->hasPage($pageId)) {
             return null;
         }
@@ -86,6 +85,6 @@ final class DocumentationManager
      */
     public function getAvailableDocumentation($projectName)
     {
-        return $this->publisher->findForProject($projectName);
+        return $this->repository->findForProject($projectName);
     }
 }
