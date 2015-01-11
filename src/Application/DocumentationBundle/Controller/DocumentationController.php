@@ -93,7 +93,7 @@ class DocumentationController extends Controller
 
         return $this->render("documentation:{$page}", [
             'page'         => $page,
-            'allPublished' => $manager->getAvailableDocumentation($project)
+            'allPublished' => $manager->findProjectDocumentation($project)
         ]);
     }
 

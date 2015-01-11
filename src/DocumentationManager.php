@@ -67,13 +67,13 @@ final class DocumentationManager
     }
 
     /**
-     * Tries to find all available documentation for provided project name.
+     * Find all available documentation for a provided project.
      *
      * @param string $projectName
      *
      * @return PublishedDocumentation[]
      */
-    public function getAvailableDocumentation($projectName)
+    public function findProjectDocumentation($projectName)
     {
         return $this->repository->findForProject($projectName);
     }

@@ -163,7 +163,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
                 function (PublishedDocumentation $documentation) {
                     return (string)$documentation->getDocumentationId();
                 },
-                $this->documentationManager->getAvailableDocumentation($project)
+                $this->documentationManager->findProjectDocumentation($project)
             ),
             'Documentation for provided version not found in the list.'
         );
