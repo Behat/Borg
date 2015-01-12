@@ -6,13 +6,14 @@ use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Repository\Repository;
 use Everzet\PersistedObjects\FileRepository;
+use Everzet\PersistedObjects\InMemoryRepository;
 use Everzet\PersistedObjects\ObjectIdentifier;
 
-final class FilesystemRepository implements Repository, ObjectIdentifier
+final class PersistedObjectsRepository implements Repository, ObjectIdentifier
 {
     public function __construct($path)
     {
-        $this->repo = new FileRepository($path, $this);
+        $this->repo = $path ? new FileRepository($path, $this) : new InMemoryRepository($this);
     }
 
     public function save(PublishedDocumentation $documentation)

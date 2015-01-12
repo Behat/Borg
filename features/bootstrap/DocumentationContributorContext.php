@@ -2,6 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Processor\BuildingProcessor;
 use Behat\Borg\Documentation\ProjectDocumentationId;
@@ -20,7 +21,6 @@ use PHPUnit_Framework_Assert as PHPUnit;
 use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakeDocumentedDownload;
 use Fake\Documentation\FakePublisher;
-use Fake\Documentation\FakeRepository;
 use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
 use Fake\Package\FakePackageFinder;
@@ -43,7 +43,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function __construct()
     {
         $this->downloader = new FakeDownloader();
-        $repository = new CurrentDocumentationRepository(new FakeRepository());
+        $repository = new CurrentDocumentationRepository(new PersistedObjectsRepository(null));
         $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
 
         $this->documentationManager = new Documenter($processor, $repository);

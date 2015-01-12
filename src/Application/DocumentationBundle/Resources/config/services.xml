@@ -56,7 +56,7 @@
                 class="Behat\Borg\Documentation\Repository\CurrentDocumentationRepository"
                 public="false">
             <argument type="service">
-                <service class="Behat\Borg\Application\Infrastructure\Documentation\FilesystemRepository">
+                <service class="Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository">
                     <argument>%documentation.publisher.path%/published.meta</argument>
                 </service>
             </argument>
