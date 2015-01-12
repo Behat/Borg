@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Behat\Borg\Fake\Documentation;
+namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;

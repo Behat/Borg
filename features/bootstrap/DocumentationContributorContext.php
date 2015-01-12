@@ -17,14 +17,14 @@ use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use PHPUnit_Framework_Assert as PHPUnit;
-use tests\Behat\Borg\Fake\Documentation\FakeBuilder;
-use tests\Behat\Borg\Fake\Documentation\FakeDocumentedDownload;
-use tests\Behat\Borg\Fake\Documentation\FakePublisher;
-use tests\Behat\Borg\Fake\Documentation\FakeRepository;
-use tests\Behat\Borg\Fake\Documentation\FakeSource;
-use tests\Behat\Borg\Fake\Documentation\FakeSourceFinder;
-use tests\Behat\Borg\Fake\Package\FakePackageFinder;
-use tests\Behat\Borg\Fake\Release\FakeDownloader;
+use Fake\Documentation\FakeBuilder;
+use Fake\Documentation\FakeDocumentedDownload;
+use Fake\Documentation\FakePublisher;
+use Fake\Documentation\FakeRepository;
+use Fake\Documentation\FakeSource;
+use Fake\Documentation\FakeSourceFinder;
+use Fake\Package\FakePackageFinder;
+use Fake\Release\FakeDownloader;
 
 /**
  * Describes documentation-related features from the documentation manager context.

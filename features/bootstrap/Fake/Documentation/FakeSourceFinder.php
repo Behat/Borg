@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Behat\Borg\Fake\Documentation;
+namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Release\Downloader\Download;

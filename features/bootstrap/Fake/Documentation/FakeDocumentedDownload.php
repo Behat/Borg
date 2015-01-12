@@ -1,14 +1,14 @@
 <?php
 
-namespace tests\Behat\Borg\Fake\Documentation;
+namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Release;
 use DateTimeImmutable;
-use tests\Behat\Borg\Fake\Package\PackagedDownload;
-use tests\Behat\Borg\Fake\Release\FakeDownload;
+use Fake\Package\PackagedDownload;
+use Fake\Release\FakeDownload;
 
 final class FakeDocumentedDownload implements Download, DocumentedDownload, PackagedDownload
 {

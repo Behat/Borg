@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Behat\Borg\Fake\Release;
+namespace Fake\Release;
 
 use Behat\Borg\Release\Exception\FileNotFound;
 use Behat\Borg\Release\Downloader\Download;
