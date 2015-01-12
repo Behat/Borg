@@ -7,7 +7,6 @@ use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Processor\BuildingProcessor;
 use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
-use Behat\Borg\Documentation\Repository\CurrentDocumentationRepository;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Package\Package;
 use Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder;
@@ -43,7 +42,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function __construct()
     {
         $this->downloader = new FakeDownloader();
-        $repository = new CurrentDocumentationRepository(new PersistedObjectsRepository(null));
+        $repository = new PersistedObjectsRepository(null);
         $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
 
         $this->documentationManager = new Documenter($processor, $repository);

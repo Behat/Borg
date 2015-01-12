@@ -56,7 +56,7 @@ final class Documenter
      */
     public function findPage(DocumentationId $documentationId, PageId $pageId)
     {
-        if (!$documentation = $this->repository->find($documentationId)) {
+        if (!$documentation = $this->findDocumentation($documentationId)) {
             return null;
         }
 
@@ -76,6 +76,22 @@ final class Documenter
      */
     public function findProjectDocumentation($projectName)
     {
-        return $this->repository->findForProject($projectName);
+        return $this->repository->findAll($projectName);
+    }
+
+    /**
+     * Tries to find provided documentation in the repository.
+     *
+     * @param DocumentationId $documentationId
+     *
+     * @return null|PublishedDocumentation
+     */
+    private function findDocumentation(DocumentationId $documentationId)
+    {
+        if ('current' === $documentationId->getVersionString()) {
+            return $this->repository->findCurrent($documentationId->getProjectName());
+        }
+
+        return $this->repository->find($documentationId);
     }
 }

@@ -53,13 +53,9 @@
         </service>
 
         <service id="documentation.repository"
-                class="Behat\Borg\Documentation\Repository\CurrentDocumentationRepository"
-                public="false">
-            <argument type="service">
-                <service class="Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository">
-                    <argument>%documentation.publisher.path%/published.meta</argument>
-                </service>
-            </argument>
+                 class="Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository"
+                 public="false">
+            <argument>%documentation.publisher.path%/published.meta</argument>
         </service>
 
         <service id="documentation.processor"

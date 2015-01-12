@@ -26,7 +26,12 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         return $this->repo->findById((string)$documentationId);
     }
 
-    public function findForProject($projectName)
+    public function findCurrent($projectName)
+    {
+        return current($this->findAll($projectName));
+    }
+
+    public function findAll($projectName)
     {
         $documentation = array_filter(
             $this->repo->getAll(),
