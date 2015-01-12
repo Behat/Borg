@@ -32,7 +32,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
 {
     private $downloader;
     private $releaseManager;
-    private $documentationManager;
+    private $documenter;
 
     use DocumentationTransformations;
 
@@ -45,12 +45,12 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         $repository = new PersistedObjectsRepository(null);
         $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
 
-        $this->documentationManager = new Documenter($processor, $repository);
+        $this->documenter = new Documenter($processor, $repository);
         $this->releaseManager = new ReleaseManager();
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $documentingBuilder = new PackagedDocumentationBuilder(new FakeSourceFinder(), $this->documentationManager);
+        $documentingBuilder = new PackagedDocumentationBuilder(new FakeSourceFinder(), $this->documenter);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
@@ -96,7 +96,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function releaseDocumentationShouldHaveBeenPublished($project, $versionString)
     {
         PHPUnit::assertNotNull(
-            $this->documentationManager->findPage(
+            $this->documenter->findPage(
                 new ProjectDocumentationId($project, $versionString), new PageId('index.html')
             )
         );
@@ -108,7 +108,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function versionDocumentationShouldNotBePublished($project, $versionString)
     {
         PHPUnit::assertNull(
-            $this->documentationManager->findPage(
+            $this->documenter->findPage(
                 new ProjectDocumentationId($project, $versionString), new PageId('index.html')
             )
         );
@@ -120,7 +120,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function packageNameOfPageShouldBe(PageId $pageId, $project, $versionString, $name)
     {
         $documentationId = new ProjectDocumentationId($project, $versionString);
-        $page = $this->documentationManager->findPage($documentationId, $pageId);
+        $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($name, $page->getProjectName());
@@ -132,7 +132,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function timeOfPageShouldBe(PageId $pageId, $project, $versionString, DateTimeImmutable $time)
     {
         $documentationId = new ProjectDocumentationId($project, $versionString);
-        $page = $this->documentationManager->findPage($documentationId, $pageId);
+        $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($time, $page->getDocumentationTime());
@@ -144,7 +144,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
     {
         $documentationId = new ProjectDocumentationId($project, 'current');
-        $page = $this->documentationManager->findPage($documentationId, new PageId('index.html'));
+        $page = $this->documenter->findPage($documentationId, new PageId('index.html'));
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($versionString, $page->getVersionString());
@@ -161,7 +161,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
                 function (PublishedDocumentation $documentation) {
                     return (string)$documentation->getDocumentationId();
                 },
-                $this->documentationManager->findProjectDocumentation($project)
+                $this->documenter->findProjectDocumentation($project)
             ),
             'Documentation for provided version not found in the list.'
         );
