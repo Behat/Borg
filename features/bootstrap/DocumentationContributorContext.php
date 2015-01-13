@@ -4,7 +4,6 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Documentation\Processor\BuildingProcessor;
 use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Package\ReleasePackager;
@@ -43,9 +42,8 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     {
         $this->downloader = new FakeDownloader();
         $repository = new PersistedObjectsRepository(null);
-        $processor = new BuildingProcessor(new FakeBuilder(), new FakePublisher(), $repository);
 
-        $this->documenter = new Documenter($processor, $repository);
+        $this->documenter = new Documenter(new FakeBuilder(), new FakePublisher(), $repository);
         $this->releaseManager = new ReleaseManager();
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);

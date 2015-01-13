@@ -2,7 +2,8 @@
 
 namespace Behat\Borg;
 
-use Behat\Borg\Documentation\Processor\Processor;
+use Behat\Borg\Documentation\Builder\Builder;
+use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
@@ -16,23 +17,29 @@ use Behat\Borg\Documentation\Repository\Repository;
 final class Documenter
 {
     /**
-     * @var Processor
-     */
-    private $processor;
-    /**
      * @var Repository
      */
     private $repository;
+    /**
+     * @var Builder
+     */
+    private $builder;
+    /**
+     * @var Publisher
+     */
+    private $publisher;
 
     /**
      * Initialize manager.
      *
-     * @param Processor  $processor
+     * @param Builder    $builder
+     * @param Publisher  $publisher
      * @param Repository $repository
      */
-    public function __construct(Processor $processor, Repository $repository)
+    public function __construct(Builder $builder, Publisher $publisher, Repository $repository)
     {
-        $this->processor = $processor;
+        $this->builder = $builder;
+        $this->publisher = $publisher;
         $this->repository = $repository;
     }
 
@@ -43,7 +50,9 @@ final class Documenter
      */
     public function process(RawDocumentation $documentation)
     {
-        $this->processor->process($documentation);
+        $built = $this->builder->build($documentation);
+        $published = $this->publisher->publish($built);
+        $this->repository->save($published);
     }
 
     /**
