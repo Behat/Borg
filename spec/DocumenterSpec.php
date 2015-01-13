@@ -63,29 +63,6 @@ class DocumenterSpec extends ObjectBehavior
         $page->getPath()->shouldReturn(__FILE__);
     }
 
-    function it_finds_current_documentation_page_if_current_documentation_has_asked_page(
-        Repository $repository,
-        DocumentationId $anId,
-        BuiltDocumentation $built
-    ) {
-        $anId->getVersionString()->willReturn('current');
-        $anId->getProjectName()->willReturn('my/project');
-        $built->getDocumentationId()->willReturn($anId);
-        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
-        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
-
-        $pageId = new PageId(basename(__FILE__));
-        $publishedDocumentation = PublishedDocumentation::publish(
-            $built->getWrappedObject(), __DIR__
-        );
-
-        $repository->findCurrent('my/project')->willReturn($publishedDocumentation);
-
-        $page = $this->findPage($anId, $pageId);
-        $page->shouldBeAnInstanceOf(Page::class);
-        $page->getPath()->shouldReturn(__FILE__);
-    }
-
     function it_finds_nothing_if_documentation_was_not_found(
         Repository $repository,
         DocumentationId $anId

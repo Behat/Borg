@@ -27,15 +27,6 @@ interface Repository
     public function find(DocumentationId $documentationId);
 
     /**
-     * Finds current documentation for particular project.
-     *
-     * @param string $projectName
-     *
-     * @return null|PublishedDocumentation
-     */
-    public function findCurrent($projectName);
-
-    /**
      * Finds all documentation for particular project.
      *
      * @param string $projectName
