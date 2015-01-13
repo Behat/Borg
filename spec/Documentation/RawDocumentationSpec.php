@@ -22,7 +22,7 @@ class RawDocumentationSpec extends ObjectBehavior
 
     function it_has_an_id(DocumentationId $anId)
     {
-        $this->getId()->shouldReturn($anId);
+        $this->getDocumentationId()->shouldReturn($anId);
     }
 
     function it_has_a_source(Source $source)

@@ -32,7 +32,7 @@ final class RawDocumentation
      *
      * @return DocumentationId
      */
-    public function getId()
+    public function getDocumentationId()
     {
         return $this->anId;
     }

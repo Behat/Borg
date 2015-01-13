@@ -54,18 +54,18 @@ final class SphinxBuilder implements Builder
 
         $sourcePath = $source->getPath();
         $buildPath = $this->getWritableBuildPath($documentation);
-        $commandLine = $this->getCommandLine($documentation->getId(), $sourcePath, $buildPath);
+        $commandLine = $this->getCommandLine($documentation->getDocumentationId(), $sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
 
         return new BuiltSphinx(
-            $documentation->getId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
+            $documentation->getDocumentationId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
         );
     }
 
     private function getWritableBuildPath(RawDocumentation $documentation)
     {
-        $buildPath = $this->buildPath . '/' . $documentation->getId();
+        $buildPath = $this->buildPath . '/' . $documentation->getDocumentationId();
         $this->filesystem->mkdir($buildPath);
 
         return $buildPath;

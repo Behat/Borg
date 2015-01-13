@@ -19,7 +19,7 @@ final class FakeBuiltDocumentation implements BuiltDocumentation
 
     public function getDocumentationId()
     {
-        return $this->documentation->getId();
+        return $this->documentation->getDocumentationId();
     }
 
     public function getBuildPath()
