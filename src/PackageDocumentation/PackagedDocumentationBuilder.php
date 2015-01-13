@@ -20,18 +20,18 @@ final class PackagedDocumentationBuilder implements PackageListener
     /**
      * @var Documenter
      */
-    private $manager;
+    private $documenter;
 
     /**
      * Initializes listener.
      *
-     * @param SourceFinder         $finder
-     * @param Documenter $manager
+     * @param SourceFinder $finder
+     * @param Documenter   $documenter
      */
-    public function __construct(SourceFinder $finder, Documenter $manager)
+    public function __construct(SourceFinder $finder, Documenter $documenter)
     {
         $this->finder = $finder;
-        $this->manager = $manager;
+        $this->documenter = $documenter;
     }
 
     /**
@@ -52,6 +52,6 @@ final class PackagedDocumentationBuilder implements PackageListener
         $time = $download->getReleaseTime();
         $anId = new PackagedDocumentationId($package, $version);
 
-        $this->manager->process(new RawDocumentation($anId, $time, $source));
+        $this->documenter->process(new RawDocumentation($anId, $time, $source));
     }
 }
