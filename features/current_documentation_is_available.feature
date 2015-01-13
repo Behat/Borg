@@ -8,6 +8,7 @@ Feature: Current documentation is available
   - If there are no stable releases, but there are some dev releases (v2.0.x) - use the latest
   - If there are no stable or dev releases, then use branches in this order: master, develop
 
+  @critical
   Scenario: Having some stable versions published
     Given "behat/symfony2-extension" version "v2.0.0" was documented in "Behat/Symfony2Extension"
     And "behat/symfony2-extension" version "master" was documented in "Behat/Symfony2Extension"
