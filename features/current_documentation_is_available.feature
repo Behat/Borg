@@ -31,4 +31,4 @@ Feature: Current documentation is available
     And "behat/behat" version "develop" was documented in "Behat/docs"
     When I release "Behat/docs" version "master"
     And I release "Behat/docs" version "develop"
-    Then current version of "behat/behat" documentation should point to version "develop"
+    Then current version of "behat/behat" documentation should point to version "master"
