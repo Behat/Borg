@@ -2,18 +2,20 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Package\Package;
-use Behat\Borg\Package\Documentation\PackageDocumentationBuilder;
-use Behat\Borg\DocumentationManager;
+use Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder;
+use Behat\Borg\Documenter;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
+use PHPUnit_Framework_Assert as PHPUnit;
 use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakeDocumentedDownload;
 use Fake\Documentation\FakePublisher;
@@ -21,7 +23,6 @@ use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
 use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
-use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Describes documentation-related features from the documentation manager context.
@@ -30,7 +31,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
 {
     private $downloader;
     private $releaseManager;
-    private $documentationManager;
+    private $documenter;
 
     use DocumentationTransformations;
 
@@ -39,18 +40,15 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function __construct()
     {
-        $publisher = new FakePublisher();
-        $sourceFinder = new FakeSourceFinder();
-        $packageFinder = new FakePackageFinder();
         $this->downloader = new FakeDownloader();
-        $builder = new FakeBuilder();
+        $repository = new PersistedObjectsRepository(null);
 
+        $this->documenter = new Documenter(new FakeBuilder(), new FakePublisher(), $repository);
         $this->releaseManager = new ReleaseManager();
-        $this->documentationManager = new DocumentationManager($builder, $publisher);
 
         $releaseDownloader = new ReleaseDownloader($this->downloader);
-        $releasePackager = new ReleasePackager($packageFinder);
-        $documentingBuilder = new PackageDocumentationBuilder($sourceFinder, $this->documentationManager);
+        $releasePackager = new ReleasePackager(new FakePackageFinder());
+        $documentingBuilder = new PackagedDocumentationBuilder(new FakeSourceFinder(), $this->documenter);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
@@ -96,7 +94,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function releaseDocumentationShouldHaveBeenPublished($project, $versionString)
     {
         PHPUnit::assertNotNull(
-            $this->documentationManager->findPage(
+            $this->documenter->findPage(
                 new ProjectDocumentationId($project, $versionString), new PageId('index.html')
             )
         );
@@ -108,7 +106,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function versionDocumentationShouldNotBePublished($project, $versionString)
     {
         PHPUnit::assertNull(
-            $this->documentationManager->findPage(
+            $this->documenter->findPage(
                 new ProjectDocumentationId($project, $versionString), new PageId('index.html')
             )
         );
@@ -120,7 +118,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function packageNameOfPageShouldBe(PageId $pageId, $project, $versionString, $name)
     {
         $documentationId = new ProjectDocumentationId($project, $versionString);
-        $page = $this->documentationManager->findPage($documentationId, $pageId);
+        $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($name, $page->getProjectName());
@@ -132,10 +130,22 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     public function timeOfPageShouldBe(PageId $pageId, $project, $versionString, DateTimeImmutable $time)
     {
         $documentationId = new ProjectDocumentationId($project, $versionString);
-        $page = $this->documentationManager->findPage($documentationId, $pageId);
+        $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($time, $page->getDocumentationTime());
+    }
+
+    /**
+     * @Then current version of :project documentation should point to version :versionString
+     */
+    public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
+    {
+        $documentationId = new ProjectDocumentationId($project, 'current');
+        $page = $this->documenter->findPage($documentationId, new PageId('index.html'));
+
+        PHPUnit::assertNotNull($page, 'Page not found.');
+        PHPUnit::assertEquals($versionString, $page->getVersionString());
     }
 
     /**
@@ -149,7 +159,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
                 function (PublishedDocumentation $documentation) {
                     return (string)$documentation->getDocumentationId();
                 },
-                $this->documentationManager->getAvailableDocumentation($project)
+                $this->documenter->findProjectDocumentation($project)
             ),
             'Documentation for provided version not found in the list.'
         );

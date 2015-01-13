@@ -3,18 +3,23 @@
 namespace Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\Builder;
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\Publisher\Publisher;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
-use Behat\Borg\Documentation\Publisher\Publisher;
+use Behat\Borg\Documentation\Repository\Repository;
 
 /**
  * Manages documentation by providing high-level accessor methods.
  */
-final class DocumentationManager
+final class Documenter
 {
+    /**
+     * @var Repository
+     */
+    private $repository;
     /**
      * @var Builder
      */
@@ -27,24 +32,27 @@ final class DocumentationManager
     /**
      * Initialize manager.
      *
-     * @param Builder   $builder
-     * @param Publisher $publisher
+     * @param Builder    $builder
+     * @param Publisher  $publisher
+     * @param Repository $repository
      */
-    public function __construct(Builder $builder, Publisher $publisher)
+    public function __construct(Builder $builder, Publisher $publisher, Repository $repository)
     {
-        $this->publisher = $publisher;
         $this->builder = $builder;
+        $this->publisher = $publisher;
+        $this->repository = $repository;
     }
 
     /**
-     * Builds provided documentation.
+     * Processes raw documentation.
      *
-     * @param Documentation $documentation
+     * @param RawDocumentation $documentation
      */
-    public function build(Documentation $documentation)
+    public function process(RawDocumentation $documentation)
     {
-        $builtDocumentation = $this->builder->build($documentation);
-        $this->publisher->publish($builtDocumentation);
+        $built = $this->builder->build($documentation);
+        $published = $this->publisher->publish($built);
+        $this->repository->save($published);
     }
 
     /**
@@ -53,15 +61,14 @@ final class DocumentationManager
      * @param DocumentationId $documentationId
      * @param PageId          $pageId
      *
-     * @return Page|null
+     * @return null|Page
      */
     public function findPage(DocumentationId $documentationId, PageId $pageId)
     {
-        if (!$this->publisher->hasPublished($documentationId)) {
+        if (!$documentation = $this->repository->find($documentationId)) {
             return null;
         }
 
-        $documentation = $this->publisher->getPublished($documentationId);
         if (!$documentation->hasPage($pageId)) {
             return null;
         }
@@ -70,14 +77,14 @@ final class DocumentationManager
     }
 
     /**
-     * Tries to find all available documentation for provided project name.
+     * Find all available documentation for a provided project.
      *
      * @param string $projectName
      *
      * @return PublishedDocumentation[]
      */
-    public function getAvailableDocumentation($projectName)
+    public function findProjectDocumentation($projectName)
     {
-        return $this->publisher->findForProject($projectName);
+        return $this->repository->findAll($projectName);
     }
 }

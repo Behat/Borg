@@ -1,4 +1,4 @@
-Feature: Extension documentation is published on it's release
+Feature: Extension documentation is published
   In order to help newcomers start extending behat quicker
   As a documentation contributor
   I want extensions documentation to be published after contributors release a new versions of them

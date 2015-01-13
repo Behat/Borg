@@ -1,37 +1,37 @@
 <?php
 
-namespace Behat\Borg\Package\Documentation;
+namespace Behat\Borg\PackageDocumentation;
 
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;
-use Behat\Borg\DocumentationManager;
+use Behat\Borg\Documenter;
 use Behat\Borg\Package\Listener\PackageListener;
 use Behat\Borg\Package\PackageDownload;
 
 /**
  * Builds documentation after package was been downloaded.
  */
-final class PackageDocumentationBuilder implements PackageListener
+final class PackagedDocumentationBuilder implements PackageListener
 {
     /**
      * @var SourceFinder
      */
     private $finder;
     /**
-     * @var DocumentationManager
+     * @var Documenter
      */
-    private $manager;
+    private $documenter;
 
     /**
      * Initializes listener.
      *
-     * @param SourceFinder         $finder
-     * @param DocumentationManager $manager
+     * @param SourceFinder $finder
+     * @param Documenter   $documenter
      */
-    public function __construct(SourceFinder $finder, DocumentationManager $manager)
+    public function __construct(SourceFinder $finder, Documenter $documenter)
     {
         $this->finder = $finder;
-        $this->manager = $manager;
+        $this->documenter = $documenter;
     }
 
     /**
@@ -50,8 +50,8 @@ final class PackageDocumentationBuilder implements PackageListener
 
         $version = $download->getVersion();
         $time = $download->getReleaseTime();
-        $anId = new PackageDocumentationId($package, $version);
+        $anId = new PackagedDocumentationId($package, $version);
 
-        $this->manager->build(new Documentation($anId, $time, $source));
+        $this->documenter->process(new RawDocumentation($anId, $time, $source));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace tests\Behat\Borg\SphinxDoc;
 
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Source;
 use Behat\Borg\Release\Downloader\Download;
@@ -38,7 +38,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
     {
         $anId = $this->createDocumentationId('my/doc', '1.3');
         $source = $this->createDocumentationSource();
-        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
+        $documentation = new RawDocumentation($anId, new DateTimeImmutable(), $source);
 
         $this->builder->build($documentation);
     }
@@ -48,7 +48,7 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
     {
         $anId = $this->createDocumentationId('my/doc', 'v1.3');
         $source = $this->createRstDocumentationSourceWithIndex("Docs\n====");
-        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
+        $documentation = new RawDocumentation($anId, new DateTimeImmutable(), $source);
 
         $built = $this->builder->build($documentation);
 
@@ -80,7 +80,7 @@ DOC;
 
         $anId = $this->createDocumentationId('my/doc', 'v1.3');
         $source = $this->createRstDocumentationSourceWithIndex($sourceContent);
-        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
+        $documentation = new RawDocumentation($anId, new DateTimeImmutable(), $source);
 
         $built = $this->builder->build($documentation);
 
@@ -98,7 +98,7 @@ DOC;
     {
         $anId = $this->createDocumentationId('my/doc', '1.3');
         $source = $this->createRstDocumentationSourceWithoutIndex();
-        $documentation = new Documentation($anId, new DateTimeImmutable(), $source);
+        $documentation = new RawDocumentation($anId, new DateTimeImmutable(), $source);
 
         $this->builder->build($documentation);
     }

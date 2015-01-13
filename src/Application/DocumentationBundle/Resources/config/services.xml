@@ -20,7 +20,7 @@
         </service>
 
         <service id="package.finder.documentation"
-                 class="Behat\Borg\Package\Documentation\DocumentationPackageFinder" public="false"/>
+                 class="Behat\Borg\PackageDocumentation\DocumentationPackageFinder" public="false"/>
 
         <service id="package.finder.composer"
                  class="Behat\Borg\ComposerPackage\ComposerPackageFinder" public="false"/>
@@ -34,10 +34,10 @@
         </service>
 
         <service id="package.listener.package.documenting"
-                 class="Behat\Borg\Package\Documentation\PackageDocumentationBuilder"
+                 class="Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
-            <argument type="service" id="documentation.manager"/>
+            <argument type="service" id="documentation.documenter"/>
         </service>
 
         <service id="twig.loader.documentation"
@@ -46,10 +46,17 @@
             <tag name="twig.loader"/>
         </service>
 
-        <service id="documentation.manager"
-                 class="Behat\Borg\DocumentationManager">
+        <service id="documentation.documenter"
+                 class="Behat\Borg\Documenter">
             <argument type="service" id="documentation.builder.sphinx"/>
             <argument type="service" id="documentation.publisher"/>
+            <argument type="service" id="documentation.repository"/>
+        </service>
+
+        <service id="documentation.repository"
+                 class="Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository"
+                 public="false">
+            <argument>%documentation.publisher.path%/published.meta</argument>
         </service>
 
         <service id="documentation.source_finder.rst"

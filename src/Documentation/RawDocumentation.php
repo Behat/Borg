@@ -7,7 +7,7 @@ use DateTimeImmutable;
 /**
  * Represents raw, unprocessed documentation.
  */
-final class Documentation
+final class RawDocumentation
 {
     private $anId;
     private $time;
@@ -32,7 +32,7 @@ final class Documentation
      *
      * @return DocumentationId
      */
-    public function getId()
+    public function getDocumentationId()
     {
         return $this->anId;
     }

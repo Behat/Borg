@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\Documentation\Builder;
 
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\Exception\BuildFailed;
 
 /**
@@ -13,11 +13,11 @@ interface Builder
     /**
      * Builds provided documentation.
      *
-     * @param Documentation $documentation
+     * @param RawDocumentation $documentation
      *
      * @return BuiltDocumentation
      *
      * @throws BuildFailed
      */
-    public function build(Documentation $documentation);
+    public function build(RawDocumentation $documentation);
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
@@ -115,6 +116,16 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         $this->visitPath("/docs/$project/$versionString/index.html");
 
         $this->assertSession()->statusCodeEquals(404);
+    }
+
+    /**
+     * @Then current version of :project documentation should point to version :versionString
+     */
+    public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
+    {
+        $this->visitPath("/docs/$project/current/index.html");
+
+        $this->assertSession()->elementTextContains('css', '.version.current', $versionString);
     }
 
     private function releaseCommand(Repository $repository, Version $version)

@@ -3,7 +3,7 @@
 namespace Behat\Borg\SphinxDoc;
 
 use Behat\Borg\Documentation\Builder\Builder;
-use Behat\Borg\Documentation\Documentation;
+use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\BuildFailed;
 use Behat\Borg\Documentation\Exception\IncompatibleDocumentationGiven;
@@ -39,7 +39,7 @@ final class SphinxBuilder implements Builder
     /**
      * {@inheritdoc}
      */
-    public function build(Documentation $documentation)
+    public function build(RawDocumentation $documentation)
     {
         $source = $documentation->getSource();
 
@@ -54,18 +54,18 @@ final class SphinxBuilder implements Builder
 
         $sourcePath = $source->getPath();
         $buildPath = $this->getWritableBuildPath($documentation);
-        $commandLine = $this->getCommandLine($documentation->getId(), $sourcePath, $buildPath);
+        $commandLine = $this->getCommandLine($documentation->getDocumentationId(), $sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
 
         return new BuiltSphinx(
-            $documentation->getId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
+            $documentation->getDocumentationId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
         );
     }
 
-    private function getWritableBuildPath(Documentation $documentation)
+    private function getWritableBuildPath(RawDocumentation $documentation)
     {
-        $buildPath = $this->buildPath . '/' . $documentation->getId();
+        $buildPath = $this->buildPath . '/' . $documentation->getDocumentationId();
         $this->filesystem->mkdir($buildPath);
 
         return $buildPath;

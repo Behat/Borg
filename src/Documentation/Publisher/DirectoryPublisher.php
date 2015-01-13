@@ -3,10 +3,7 @@
 namespace Behat\Borg\Documentation\Publisher;
 
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
-use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Exception\RequestedDocumentationWasNotPublished;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 /**
  * Documentation publisher that simply moves built docs into a public directory.
@@ -35,44 +32,8 @@ final class DirectoryPublisher implements Publisher
         $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, $publishPath);
 
         $this->moveDocumentation($buildPath, $publishPath);
-        $this->writePublishingMeta($publishPath, $publishedDocumentation);
 
         return $publishedDocumentation;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasPublished(DocumentationId $anId)
-    {
-        return file_exists("{$this->publishPath}/{$anId}/publish.meta");
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPublished(DocumentationId $anId)
-    {
-        if (!$this->hasPublished($anId)) {
-            throw new RequestedDocumentationWasNotPublished("Documentation `{$anId}` was not published.");
-        }
-
-        return $this->readPublishingMeta($this->publishPath . '/' . $anId);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findForProject($projectName)
-    {
-        $documentation = [];
-        $projectPath = $this->publishPath . '/' . $projectName;
-
-        foreach (Finder::create()->depth(0)->directories()->in($projectPath) as $dir) {
-            $documentation[] = unserialize(file_get_contents($dir . '/publish.meta'));
-        }
-
-        return $documentation;
     }
 
     private function moveDocumentation($buildPath, $publishPath)
@@ -80,15 +41,5 @@ final class DirectoryPublisher implements Publisher
         $filesystem = new Filesystem();
         $filesystem->mirror($buildPath, $publishPath);
         $filesystem->remove($buildPath);
-    }
-
-    private function writePublishingMeta($publishPath, PublishedDocumentation $documentation)
-    {
-        file_put_contents($publishPath . '/publish.meta', serialize($documentation));
-    }
-
-    private function readPublishingMeta($publishPath)
-    {
-        return unserialize(file_get_contents($publishPath . '/publish.meta'));
     }
 }
