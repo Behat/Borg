@@ -40,7 +40,7 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
             }
         );
 
-        usort($documentation, [$this, 'compareVersions']);
+        usort($documentation, [$this, 'compareDocumentation']);
 
         return $documentation;
     }
@@ -50,10 +50,17 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         return (string)$object->getDocumentationId();
     }
 
-    private function compareVersions(PublishedDocumentation $a, PublishedDocumentation $b)
+    private function compareDocumentation(PublishedDocumentation $a, PublishedDocumentation $b)
     {
         $versionA = $a->getDocumentationId()->getVersionString();
         $versionB = $b->getDocumentationId()->getVersionString();
+
+        if ($versionB == 'master' && $versionA == 'develop') {
+            return 1;
+        }
+        if ($versionB == 'develop' && $versionA == 'master') {
+            return -1;
+        }
 
         return version_compare($versionB, $versionA);
     }
