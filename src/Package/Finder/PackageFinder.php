@@ -17,5 +17,5 @@ interface PackageFinder
      *
      * @return null|Package
      */
-    public function findPackage(Download $download);
+    public function find(Download $download);
 }

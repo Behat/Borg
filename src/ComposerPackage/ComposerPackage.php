@@ -34,7 +34,7 @@ final class ComposerPackage implements Package
     /**
      * {@inheritdoc]
      */
-    public function getOrganisationName()
+    public function organisationName()
     {
         return explode('/', $this->string)[0];
     }
@@ -42,7 +42,7 @@ final class ComposerPackage implements Package
     /**
      * {@inheritdoc]
      */
-    public function getName()
+    public function name()
     {
         return explode('/', $this->string)[1];
     }

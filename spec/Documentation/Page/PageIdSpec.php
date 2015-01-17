@@ -14,7 +14,7 @@ class PageIdSpec extends ObjectBehavior
 
     function it_holds_a_page_path_it_was_constructed_with()
     {
-        $this->getPath()->shouldReturn('/doc/path');
+        $this->path()->shouldReturn('/doc/path');
     }
 
     function its_string_representation_is_a_page_path_it_was_constructed_with()

@@ -41,7 +41,7 @@ final class SphinxBuilder implements Builder
      */
     public function build(RawDocumentation $documentation)
     {
-        $source = $documentation->getSource();
+        $source = $documentation->source();
 
         if (!$source instanceof Rst) {
             throw new IncompatibleDocumentationGiven(
@@ -52,34 +52,34 @@ final class SphinxBuilder implements Builder
             );
         }
 
-        $sourcePath = $source->getPath();
-        $buildPath = $this->getWritableBuildPath($documentation);
-        $commandLine = $this->getCommandLine($documentation->getDocumentationId(), $sourcePath, $buildPath);
+        $sourcePath = $source->path();
+        $buildPath = $this->writableBuildPath($documentation);
+        $commandLine = $this->commandLine($documentation->documentationId(), $sourcePath, $buildPath);
 
         $this->executeCommand($commandLine);
 
         return new BuiltSphinx(
-            $documentation->getDocumentationId(), $documentation->getTime(), new DateTimeImmutable(), $buildPath
+            $documentation->documentationId(), $documentation->documentedAt(), new DateTimeImmutable(), $buildPath
         );
     }
 
-    private function getWritableBuildPath(RawDocumentation $documentation)
+    private function writableBuildPath(RawDocumentation $documentation)
     {
-        $buildPath = $this->buildPath . '/' . $documentation->getDocumentationId();
+        $buildPath = $this->buildPath . '/' . $documentation->documentationId();
         $this->filesystem->mkdir($buildPath);
 
         return $buildPath;
     }
 
-    private function getCommandLine(DocumentationId $anId, $sourcePath, $buildPath)
+    private function commandLine(DocumentationId $anId, $sourcePath, $buildPath)
     {
         return sprintf(
             '%s -b html -c %s -D project="%s" -D version="%s" -D release="%s" %s %s',
             self::COMMAND_LINE,
             $this->configPath,
-            $anId->getProjectName(),
-            $anId->getVersionString(),
-            $anId->getVersionString(),
+            $anId->projectName(),
+            $anId->versionString(),
+            $anId->versionString(),
             $sourcePath,
             $buildPath
         );

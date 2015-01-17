@@ -32,7 +32,7 @@ final class RawDocumentation
      *
      * @return DocumentationId
      */
-    public function getDocumentationId()
+    public function documentationId()
     {
         return $this->anId;
     }
@@ -42,7 +42,7 @@ final class RawDocumentation
      *
      * @return Source
      */
-    public function getSource()
+    public function source()
     {
         return $this->source;
     }
@@ -52,7 +52,7 @@ final class RawDocumentation
      *
      * @return DateTimeImmutable
      */
-    public function getTime()
+    public function documentedAt()
     {
         return $this->time;
     }

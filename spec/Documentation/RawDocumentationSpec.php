@@ -22,16 +22,16 @@ class RawDocumentationSpec extends ObjectBehavior
 
     function it_has_an_id(DocumentationId $anId)
     {
-        $this->getDocumentationId()->shouldReturn($anId);
+        $this->documentationId()->shouldReturn($anId);
     }
 
     function it_has_a_source(Source $source)
     {
-        $this->getSource()->shouldReturn($source);
+        $this->source()->shouldReturn($source);
     }
 
     function it_holds_a_time_it_was_created_at(DateTimeImmutable $time)
     {
-        $this->getTime()->shouldReturn($time);
+        $this->documentedAt()->shouldReturn($time);
     }
 }

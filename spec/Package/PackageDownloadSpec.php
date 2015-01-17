@@ -12,18 +12,18 @@ class PackageDownloadSpec extends ObjectBehavior
 {
     function let(Package $package, Download $download)
     {
-        $download->getVersion()->willReturn(Version::string('v2.5.3'));
+        $download->version()->willReturn(Version::string('v2.5.3'));
 
         $this->beConstructedWith($package, $download);
     }
 
     function it_holds_a_package(Package $package)
     {
-        $this->getPackage()->shouldReturn($package);
+        $this->package()->shouldReturn($package);
     }
 
     function it_holds_a_download(Download $download)
     {
-        $this->getDownload()->shouldReturn($download);
+        $this->download()->shouldReturn($download);
     }
 }

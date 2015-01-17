@@ -52,7 +52,7 @@ final class Version
      *
      * @return null|string
      */
-    public function getMajor()
+    public function major()
     {
         return $this->isBranch() ? null : $this->major;
     }
@@ -62,7 +62,7 @@ final class Version
      *
      * @return null|string
      */
-    public function getMinor()
+    public function minor()
     {
         return $this->isBranch() ? null : sprintf('%d.%d', $this->major, $this->minor);
     }
@@ -72,7 +72,7 @@ final class Version
      *
      * @return null|string
      */
-    public function getPatch()
+    public function patch()
     {
         return $this->isBranch() ? null : sprintf('%d.%d.%s', $this->major, $this->minor, $this->patch);
     }
@@ -82,7 +82,7 @@ final class Version
      *
      * @return null|string
      */
-    public function getBranchName()
+    public function branchName()
     {
         return $this->branchName;
     }
@@ -92,9 +92,9 @@ final class Version
      *
      * @return string
      */
-    public function getSemVer()
+    public function semVer()
     {
-        return sprintf('v%s', $this->getPatch());
+        return sprintf('v%s', $this->patch());
     }
 
     /**

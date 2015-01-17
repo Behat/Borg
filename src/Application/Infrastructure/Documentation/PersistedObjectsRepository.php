@@ -23,8 +23,8 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
 
     public function find(DocumentationId $documentationId)
     {
-        if ('current' === $documentationId->getVersionString()) {
-            return current($this->findAll($documentationId->getProjectName()));
+        if ('current' === $documentationId->versionString()) {
+            return current($this->findAll($documentationId->projectName()));
         }
 
         return $this->repo->findById((string)$documentationId);
@@ -35,7 +35,7 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         $documentation = array_filter(
             $this->repo->getAll(),
             function (PublishedDocumentation $documentation) use ($projectName) {
-                return strtolower($projectName) == $documentation->getDocumentationId()->getProjectName();
+                return strtolower($projectName) == $documentation->documentationId()->projectName();
             }
         );
 
@@ -46,13 +46,13 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
 
     public function getIdentity($object)
     {
-        return (string)$object->getDocumentationId();
+        return (string)$object->documentationId();
     }
 
     private function compareDocumentation(PublishedDocumentation $a, PublishedDocumentation $b)
     {
-        $versionA = $a->getDocumentationId()->getVersionString();
-        $versionB = $b->getDocumentationId()->getVersionString();
+        $versionA = $a->documentationId()->versionString();
+        $versionB = $b->documentationId()->versionString();
 
         if ($versionB == 'master' && $versionA == 'develop') {
             return 1;

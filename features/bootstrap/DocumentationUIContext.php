@@ -76,7 +76,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     {
         $this->packageWasDocumented($package, $version, $repository);
 
-        PHPUnit::assertEquals($time, $this->getLatestCommitDate($repository, $version));
+        PHPUnit::assertEquals($time, $this->lastCommitDate($repository, $version));
     }
 
     /**
@@ -159,21 +159,21 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private function existsInRepositoryVersion(Repository $repository, Version $version, $path)
     {
         return $this->client->repo()->contents()->exists(
-            (string)$repository->getOrganisationName(), (string)$repository->getName(), $path, (string)$version
+            (string)$repository->organisationName(), (string)$repository->name(), $path, (string)$version
         );
     }
 
     private function contentInRepositoryVersion(Repository $repository, Version $version, $path)
     {
         return file_get_contents($this->client->repo()->contents()->show(
-            (string)$repository->getOrganisationName(), (string)$repository->getName(), $path, (string)$version
+            (string)$repository->organisationName(), (string)$repository->name(), $path, (string)$version
         )['download_url']);
     }
 
-    private function getLatestCommitDate(Repository $package, Version $version)
+    private function lastCommitDate(Repository $package, Version $version)
     {
         $commit = $this->client->repo()->commits()->all(
-            $package->getOrganisationName(), $package->getName(), ['sha' => (string)$version]
+            $package->organisationName(), $package->name(), ['sha' => (string)$version]
         );
 
         return new \DateTimeImmutable($commit[0]['commit']['author']['date']);

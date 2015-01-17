@@ -13,13 +13,13 @@ final class ComposerPackageFinder implements PackageFinder
     /**
      * {@inheritdoc}
      */
-    public function findPackage(Download $download)
+    public function find(Download $download)
     {
         if (!$download->hasFile('composer.json')) {
             return null;
         }
 
-        $path = $download->getFilePath('composer.json');
+        $path = $download->filePath('composer.json');
         $meta = json_decode(file_get_contents($path), true);
 
         return new ComposerPackage($meta['name']);

@@ -27,7 +27,7 @@ final class PageId
      *
      * @return string
      */
-    public function getPath()
+    public function path()
     {
         return $this->path;
     }

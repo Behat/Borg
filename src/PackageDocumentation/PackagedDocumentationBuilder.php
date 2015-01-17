@@ -41,15 +41,15 @@ final class PackagedDocumentationBuilder implements PackageListener
      */
     public function packageWasDownloaded(PackageDownload $packageDownload)
     {
-        $package = $packageDownload->getPackage();
-        $download = $packageDownload->getDownload();
+        $package = $packageDownload->package();
+        $download = $packageDownload->download();
 
-        if (null === $source = $this->finder->findSource($download)) {
+        if (null === $source = $this->finder->find($download)) {
             return;
         }
 
-        $version = $download->getVersion();
-        $time = $download->getReleaseTime();
+        $version = $download->version();
+        $time = $download->releasedAt();
         $anId = new PackagedDocumentationId($package, $version);
 
         $this->documenter->process(new RawDocumentation($anId, $time, $source));

@@ -27,10 +27,10 @@ final class CompoundFinder implements PackageFinder
     /**
      * {@inheritdoc}
      */
-    public function findPackage(Download $download)
+    public function find(Download $download)
     {
         foreach ($this->finders as $finder) {
-            if ($package = $finder->findPackage($download)) {
+            if ($package = $finder->find($download)) {
                 return $package;
             }
         }

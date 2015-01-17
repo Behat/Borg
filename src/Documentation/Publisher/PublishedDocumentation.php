@@ -30,9 +30,9 @@ final class PublishedDocumentation
     public static function publish(BuiltDocumentation $builtDocumentation, $path)
     {
         $documentation = new PublishedDocumentation();
-        $documentation->id = $builtDocumentation->getDocumentationId();
-        $documentation->buildTime = $builtDocumentation->getBuildTime();
-        $documentation->documentationTime = $builtDocumentation->getDocumentationTime();
+        $documentation->id = $builtDocumentation->documentationId();
+        $documentation->buildTime = $builtDocumentation->builtAt();
+        $documentation->documentationTime = $builtDocumentation->documentedAt();
         $documentation->path = $path;
 
         return $documentation;
@@ -43,7 +43,7 @@ final class PublishedDocumentation
      *
      * @return DocumentationId
      */
-    public function getDocumentationId()
+    public function documentationId()
     {
         return $this->id;
     }
@@ -53,7 +53,7 @@ final class PublishedDocumentation
      *
      * @return DateTimeImmutable
      */
-    public function getBuildTime()
+    public function builtAt()
     {
         return $this->buildTime;
     }
@@ -63,7 +63,7 @@ final class PublishedDocumentation
      *
      * @return DateTimeImmutable
      */
-    public function getDocumentationTime()
+    public function documentedAt()
     {
         return $this->documentationTime;
     }
@@ -87,10 +87,10 @@ final class PublishedDocumentation
      *
      * @return Page
      */
-    public function getPage(PageId $anId)
+    public function page(PageId $anId)
     {
         if (!$this->hasPage($anId)) {
-            throw new PageNotFound("Documentation page `{$anId->getPath()}` was not found.");
+            throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
         }
 
         return new Page($this, $anId);
@@ -103,10 +103,10 @@ final class PublishedDocumentation
      *
      * @return string
      */
-    public function getPagePath(PageId $anId)
+    public function pagePath(PageId $anId)
     {
         if (!$this->hasPage($anId)) {
-            throw new PageNotFound("Documentation page `{$anId->getPath()}` was not found.");
+            throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
         }
 
         return $this->path . '/' . $anId;

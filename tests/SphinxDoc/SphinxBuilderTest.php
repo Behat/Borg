@@ -54,10 +54,10 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
 
         $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3/index.html');
         $this->assertEquals(
-            $this->tempOutputPath . '/my/doc/v1.3/index.html', $built->getIndexPath()
+            $this->tempOutputPath . '/my/doc/v1.3/index.html', $built->indexPath()
         );
 
-        $output = file_get_contents($built->getIndexPath());
+        $output = file_get_contents($built->indexPath());
 
         $this->assertContains('<h1>Docs', $output);
         $this->assertContains('my/doc', $output);
@@ -84,7 +84,7 @@ DOC;
 
         $built = $this->builder->build($documentation);
 
-        $output = file_get_contents($built->getIndexPath());
+        $output = file_get_contents($built->indexPath());
 
         $this->assertContains('<h1>Trying to hack the twig-bridge theme {{', $output);
         $this->assertValidTwigSyntax($output);
@@ -112,8 +112,8 @@ DOC;
     private function createDocumentationId($projectName, $versionString)
     {
         $anId = $this->getMock(DocumentationId::class);
-        $anId->method('getProjectName')->willReturn($projectName);
-        $anId->method('getVersionString')->willReturn($versionString);
+        $anId->method('projectName')->willReturn($projectName);
+        $anId->method('versionString')->willReturn($versionString);
         $anId->method('__toString')->willReturn("{$projectName}/{$versionString}");
 
         return $anId;

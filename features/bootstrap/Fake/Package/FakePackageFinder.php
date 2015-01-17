@@ -7,7 +7,7 @@ use Behat\Borg\Release\Downloader\Download;
 
 final class FakePackageFinder implements PackageFinder
 {
-    public function findPackage(Download $download)
+    public function find(Download $download)
     {
         if ($download instanceof PackagedDownload) {
             return $download->getPackage();

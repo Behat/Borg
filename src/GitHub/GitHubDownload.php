@@ -34,7 +34,7 @@ final class GitHubDownload implements Download
      *
      * @return Commit
      */
-    public function getCommit()
+    public function commit()
     {
         return $this->commit;
     }
@@ -42,23 +42,23 @@ final class GitHubDownload implements Download
     /**
      * {@inheritdoc}
      */
-    public function getVersion()
+    public function version()
     {
-        return $this->release->getVersion();
+        return $this->release->version();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getReleaseTime()
+    public function releasedAt()
     {
-        return $this->commit->getTime();
+        return $this->commit->committedAt();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPath()
+    public function path()
     {
         return $this->path;
     }
@@ -68,13 +68,13 @@ final class GitHubDownload implements Download
      */
     public function hasFile($relativePath)
     {
-        return file_exists($this->getPath() . '/' . $relativePath);
+        return file_exists($this->path() . '/' . $relativePath);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFilePath($relativePath)
+    public function filePath($relativePath)
     {
         if (!$this->hasFile($relativePath)) {
             throw new FileNotFound(
@@ -82,6 +82,6 @@ final class GitHubDownload implements Download
             );
         }
 
-        return $this->getPath() . '/' . $relativePath;
+        return $this->path() . '/' . $relativePath;
     }
 }

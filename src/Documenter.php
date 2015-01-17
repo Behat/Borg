@@ -73,7 +73,7 @@ final class Documenter
             return null;
         }
 
-        return $documentation->getPage($pageId);
+        return $documentation->page($pageId);
     }
 
     /**

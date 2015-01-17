@@ -12,14 +12,14 @@ interface DocumentationId
      *
      * @return string
      */
-    public function getProjectName();
+    public function projectName();
 
     /**
      * Returns documentation version string.
      *
      * @return string
      */
-    public function getVersionString();
+    public function versionString();
 
     /**
      * Returns unique documentation ID string.

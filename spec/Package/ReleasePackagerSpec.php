@@ -30,7 +30,7 @@ class ReleasePackagerSpec extends ObjectBehavior
         PackageListener $listener1,
         PackageListener $listener2
     ) {
-        $finder->findPackage($download)->willReturn($package);
+        $finder->find($download)->willReturn($package);
         $packageDownload = new PackageDownload($package->getWrappedObject(), $download->getWrappedObject());
 
         $listener1->packageWasDownloaded($packageDownload)->shouldBeCalled();
@@ -47,7 +47,7 @@ class ReleasePackagerSpec extends ObjectBehavior
         PackageFinder $finder,
         PackageListener $listener
     ) {
-        $finder->findPackage($download)->willReturn(null);
+        $finder->find($download)->willReturn(null);
 
         $listener->packageWasDownloaded(Argument::any())->shouldNotBeCalled();
 

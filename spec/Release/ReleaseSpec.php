@@ -19,8 +19,8 @@ class ReleaseSpec extends ObjectBehavior
         $version = Version::string('1.0.0');
         $this->beConstructedWith($repository, $version);
 
-        $this->getRepository()->shouldReturn($repository);
-        $this->getVersion()->shouldReturn($version);
+        $this->repository()->shouldReturn($repository);
+        $this->version()->shouldReturn($version);
     }
 
     function its_string_representation_is_a_repository_and_version_separated_by_slash(Repository $repository)

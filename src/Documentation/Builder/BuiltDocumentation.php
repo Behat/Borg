@@ -15,26 +15,26 @@ interface BuiltDocumentation
      *
      * @return DocumentationId
      */
-    public function getDocumentationId();
+    public function documentationId();
 
     /**
      * Returns documentation build path.
      *
      * @return string
      */
-    public function getBuildPath();
+    public function buildPath();
 
     /**
-     * Returns time documentation was built at.
+     * Returns the time documentation was built at.
      *
      * @return DateTimeImmutable
      */
-    public function getBuildTime();
+    public function builtAt();
 
     /**
-     * Returns time documentation was created/updated.
+     * Returns the time documentation was created/updated.
      *
      * @return DateTimeImmutable
      */
-    public function getDocumentationTime();
+    public function documentedAt();
 }

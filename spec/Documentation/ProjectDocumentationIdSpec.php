@@ -20,12 +20,12 @@ class ProjectDocumentationIdSpec extends ObjectBehavior
 
     function its_project_name_is_the_first_argument_it_was_constructed_with()
     {
-        $this->getProjectName()->shouldReturn('behat/docs');
+        $this->projectName()->shouldReturn('behat/docs');
     }
 
     function its_version_string_is_the_second_argument_it_was_constructed_with()
     {
-        $this->getVersionString()->shouldReturn('v3.0');
+        $this->versionString()->shouldReturn('v3.0');
     }
 
     function its_string_representation_is_the_project_name_and_version_string_separated_by_slash()

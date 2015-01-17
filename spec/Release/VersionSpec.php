@@ -65,52 +65,52 @@ class VersionSpec extends ObjectBehavior
 
     function it_can_represent_a_major_version()
     {
-        $this->getMajor()->shouldReturn('1');
+        $this->major()->shouldReturn('1');
     }
 
     function it_can_represent_a_minor_version()
     {
-        $this->getMinor()->shouldReturn('1.2');
+        $this->minor()->shouldReturn('1.2');
     }
 
     function it_can_represent_a_patch_version()
     {
-        $this->getPatch()->shouldReturn('1.2.3-rc1');
+        $this->patch()->shouldReturn('1.2.3-rc1');
     }
 
     function its_patch_version_is_x_if_no_patch_part_provided()
     {
         $this->beConstructedThrough('string', ['v1.2']);
 
-        $this->getPatch()->shouldReturn('1.2.x');
+        $this->patch()->shouldReturn('1.2.x');
     }
 
     function its_branch_name_should_be_a_branch_it_was_created_with()
     {
         $this->beConstructedThrough('string', ['develop']);
 
-        $this->getBranchName()->shouldReturn('develop');
+        $this->branchName()->shouldReturn('develop');
     }
 
     function its_major_minor_and_patch_are_nulls_if_it_is_a_branch_version()
     {
         $this->beConstructedThrough('string', ['develop']);
 
-        $this->getMajor()->shouldReturn(null);
-        $this->getMinor()->shouldReturn(null);
-        $this->getPatch()->shouldReturn(null);
+        $this->major()->shouldReturn(null);
+        $this->minor()->shouldReturn(null);
+        $this->patch()->shouldReturn(null);
     }
 
     function it_can_represent_canonical_SemVer()
     {
-        $this->getSemVer()->shouldReturn('v1.2.3-rc1');
+        $this->semVer()->shouldReturn('v1.2.3-rc1');
     }
 
     function it_can_present_minor_version_even_if_it_is_prefixed()
     {
         $this->beConstructedThrough('string', ['v1.2.3']);
 
-        $this->getMinor()->shouldReturn('1.2');
+        $this->minor()->shouldReturn('1.2');
     }
 
     function it_can_be_converted_to_that_string_later()
