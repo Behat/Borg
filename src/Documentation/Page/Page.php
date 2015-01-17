@@ -35,10 +35,10 @@ final class Page
      */
     public function __construct(PublishedDocumentation $documentation, PageId $pageId)
     {
-        $this->path = $documentation->getPagePath($pageId);
-        $this->projectName = $documentation->getDocumentationId()->getProjectName();
-        $this->versionString = $documentation->getDocumentationId()->getVersionString();
-        $this->time = $documentation->getDocumentationTime();
+        $this->path = $documentation->pagePath($pageId);
+        $this->projectName = $documentation->documentationId()->projectName();
+        $this->versionString = $documentation->documentationId()->versionString();
+        $this->time = $documentation->documentedAt();
     }
 
     /**
@@ -46,7 +46,7 @@ final class Page
      *
      * @return string
      */
-    public function getProjectName()
+    public function projectName()
     {
         return $this->projectName;
     }
@@ -56,17 +56,17 @@ final class Page
      *
      * @return string
      */
-    public function getVersionString()
+    public function versionString()
     {
         return $this->versionString;
     }
 
     /**
-     * Returns time at which documentation was last edited.
+     * Returns the time at which documentation was last edited.
      *
      * @return DateTimeImmutable
      */
-    public function getDocumentationTime()
+    public function documentedAt()
     {
         return $this->time;
     }
@@ -76,7 +76,7 @@ final class Page
      *
      * @return string
      */
-    public function getPath()
+    public function path()
     {
         return $this->path;
     }
@@ -88,6 +88,6 @@ final class Page
      */
     public function __toString()
     {
-        return $this->getPath();
+        return $this->path();
     }
 }

@@ -46,7 +46,7 @@ final class ReleasePackager implements DownloadListener
      */
     public function releaseWasDownloaded(Download $download)
     {
-        if (!$package = $this->finder->findPackage($download)) {
+        if (!$package = $this->finder->find($download)) {
             return;
         }
 

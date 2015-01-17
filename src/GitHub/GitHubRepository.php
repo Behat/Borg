@@ -41,7 +41,7 @@ final class GitHubRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function getOrganisationName()
+    public function organisationName()
     {
         return $this->organisation;
     }
@@ -49,7 +49,7 @@ final class GitHubRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function name()
     {
         return $this->repository;
     }

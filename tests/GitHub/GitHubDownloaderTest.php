@@ -45,7 +45,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Download::class, $downloadedRelease);
         $this->assertFileExists($releasePath . '/index.rst');
         $this->assertEquals(
-            $downloadedRelease->getCommit(),
+            $downloadedRelease->commit(),
             unserialize(file_get_contents("{$releasePath}/commit.meta"))
         );
     }
@@ -66,7 +66,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
 
         $downloadedRelease = $this->downloader->download($release);
 
-        $this->assertNotEquals($oldCommit, $downloadedRelease->getCommit());
+        $this->assertNotEquals($oldCommit, $downloadedRelease->commit());
         $this->assertFileNotExists("{$releasePath}/some_file");
     }
 
@@ -83,7 +83,7 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
 
         $downloadedRelease = $this->downloader->download($release);
 
-        $this->assertEquals($oldCommit, $downloadedRelease->getCommit());
+        $this->assertEquals($oldCommit, $downloadedRelease->commit());
         $this->assertFileExists("{$releasePath}/some_file");
     }
 
@@ -98,9 +98,9 @@ class GitHubDownloaderTest extends PHPUnit_Framework_TestCase
     private function getLatestCommit(Release $release)
     {
         $commit = $this->client->repo()->commits()->all(
-            $release->getRepository()->getOrganisationName(),
-            $release->getRepository()->getName(),
-            array('sha' => (string)$release->getVersion())
+            $release->repository()->organisationName(),
+            $release->repository()->name(),
+            array('sha' => (string)$release->version())
         )[0];
 
         $date = new \DateTimeImmutable($commit['commit']['author']['date']);

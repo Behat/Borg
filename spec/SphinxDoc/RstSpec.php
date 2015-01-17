@@ -20,6 +20,6 @@ class RstSpec extends ObjectBehavior
 
     function it_holds_the_path_to_all_its_RST_documents()
     {
-        $this->getPath()->shouldReturn(__DIR__);
+        $this->path()->shouldReturn(__DIR__);
     }
 }

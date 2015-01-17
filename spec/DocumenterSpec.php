@@ -47,9 +47,9 @@ class DocumenterSpec extends ObjectBehavior
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
-        $built->getDocumentationId()->willReturn($anId);
-        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
-        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
+        $built->documentationId()->willReturn($anId);
+        $built->builtAt()->willReturn(new \DateTimeImmutable());
+        $built->documentedAt()->willReturn(new \DateTimeImmutable());
 
         $pageId = new PageId(basename(__FILE__));
         $publishedDocumentation = PublishedDocumentation::publish(
@@ -60,7 +60,6 @@ class DocumenterSpec extends ObjectBehavior
 
         $page = $this->findPage($anId, $pageId);
         $page->shouldBeAnInstanceOf(Page::class);
-        $page->getPath()->shouldReturn(__FILE__);
     }
 
     function it_finds_nothing_if_documentation_was_not_found(
@@ -94,9 +93,9 @@ class DocumenterSpec extends ObjectBehavior
         DocumentationId $anId,
         BuiltDocumentation $built
     ) {
-        $built->getDocumentationId()->willReturn($anId);
-        $built->getBuildTime()->willReturn(new \DateTimeImmutable());
-        $built->getDocumentationTime()->willReturn(new \DateTimeImmutable());
+        $built->documentationId()->willReturn($anId);
+        $built->builtAt()->willReturn(new \DateTimeImmutable());
+        $built->documentedAt()->willReturn(new \DateTimeImmutable());
 
         $publishedDocumentation = PublishedDocumentation::publish(
             $built->getWrappedObject(), __DIR__

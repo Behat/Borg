@@ -20,11 +20,11 @@ class CommitSpec extends ObjectBehavior
 
     function it_holds_a_sha()
     {
-        $this->getSha()->shouldReturn('839e5185da9434753db47959bee16642bb4f2ce4');
+        $this->sha()->shouldReturn('839e5185da9434753db47959bee16642bb4f2ce4');
     }
 
     function it_holds_a_time()
     {
-        $this->getTime()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
+        $this->committedAt()->shouldBeLike(new \DateTimeImmutable('2011-04-14T16:00:49Z'));
     }
 }

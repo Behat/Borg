@@ -18,27 +18,27 @@ final class FakeDownload implements Download
         $this->time = $time;
     }
 
-    public function getVersion()
+    public function version()
     {
-        return $this->release->getVersion();
+        return $this->release->version();
     }
 
-    public function getReleaseTime()
+    public function releasedAt()
     {
         return $this->time;
     }
 
-    public function getPath()
+    public function path()
     {
         return __DIR__;
     }
 
     public function hasFile($relativePath)
     {
-        return file_exists("{$this->getPath()}/{$relativePath}");
+        return file_exists("{$this->path()}/{$relativePath}");
     }
 
-    public function getFilePath($relativePath)
+    public function filePath($relativePath)
     {
         if (!$this->hasFile($relativePath)) {
             throw new FileNotFound(
@@ -46,6 +46,6 @@ final class FakeDownload implements Download
             );
         }
 
-        return "{$this->getPath()}/{$relativePath}";
+        return "{$this->path()}/{$relativePath}";
     }
 }

@@ -34,7 +34,7 @@ final class Commit
      *
      * @return string
      */
-    public function getSha()
+    public function sha()
     {
         return $this->sha;
     }
@@ -44,7 +44,7 @@ final class Commit
      *
      * @return DateTimeImmutable
      */
-    public function getTime()
+    public function committedAt()
     {
         return $this->time;
     }

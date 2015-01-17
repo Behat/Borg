@@ -27,8 +27,8 @@ final class DirectoryPublisher implements Publisher
      */
     public function publish(BuiltDocumentation $builtDocumentation)
     {
-        $buildPath = $builtDocumentation->getBuildPath();
-        $publishPath = "{$this->publishPath}/{$builtDocumentation->getDocumentationId()}";
+        $buildPath = $builtDocumentation->buildPath();
+        $publishPath = "{$this->publishPath}/{$builtDocumentation->documentationId()}";
         $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, $publishPath);
 
         $this->moveDocumentation($buildPath, $publishPath);

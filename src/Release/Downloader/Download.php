@@ -16,21 +16,21 @@ interface Download
      *
      * @return Version
      */
-    public function getVersion();
+    public function version();
 
     /**
      * Returns release time.
      *
      * @return DateTimeImmutable
      */
-    public function getReleaseTime();
+    public function releasedAt();
 
     /**
      * Returns path to downloaded release.
      *
      * @return string
      */
-    public function getPath();
+    public function path();
 
     /**
      * Checks if downloaded release has provided file.
@@ -50,5 +50,5 @@ interface Download
      *
      * @throws FileNotFound
      */
-    public function getFilePath($relativePath);
+    public function filePath($relativePath);
 }

@@ -17,12 +17,12 @@ class PageSpec extends ObjectBehavior
         DocumentationId $documentationId,
         DateTimeImmutable $documentationTime
     ) {
-        $documentationId->getProjectName()->willReturn('behat/docs');
-        $documentationId->getVersionString()->willReturn('v3.1');
+        $documentationId->projectName()->willReturn('behat/docs');
+        $documentationId->versionString()->willReturn('v3.1');
 
-        $built->getDocumentationId()->willReturn($documentationId);
-        $built->getBuildTime()->willReturn(new DateTimeImmutable());
-        $built->getDocumentationTime()->willReturn($documentationTime);
+        $built->documentationId()->willReturn($documentationId);
+        $built->builtAt()->willReturn(new DateTimeImmutable());
+        $built->documentedAt()->willReturn($documentationTime);
 
         $this->beConstructedWith(
             PublishedDocumentation::publish($built->getWrappedObject(), __DIR__),
@@ -32,22 +32,22 @@ class PageSpec extends ObjectBehavior
 
     function its_project_name_is_the_project_name_of_the_published_documentation()
     {
-        $this->getProjectName()->shouldReturn('behat/docs');
+        $this->projectName()->shouldReturn('behat/docs');
     }
 
     function its_version_string_is_the_version_string_of_the_published_documentation()
     {
-        $this->getVersionString()->shouldReturn('v3.1');
+        $this->versionString()->shouldReturn('v3.1');
     }
 
     function its_documentation_time_is_the_time_of_the_published_documentation(DateTimeImmutable $documentationTime)
     {
-        $this->getDocumentationTime()->shouldReturn($documentationTime);
+        $this->documentedAt()->shouldReturn($documentationTime);
     }
 
     function it_has_a_full_path_to_the_page()
     {
-        $this->getPath()->shouldReturn(__FILE__);
+        $this->path()->shouldReturn(__FILE__);
     }
 
     function its_string_representation_is_a_full_path_to_the_page()

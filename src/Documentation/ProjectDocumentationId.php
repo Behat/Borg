@@ -25,7 +25,7 @@ final class ProjectDocumentationId implements DocumentationId
     /**
      * {@inheritdoc}
      */
-    public function getProjectName()
+    public function projectName()
     {
         return $this->projectName;
     }
@@ -33,7 +33,7 @@ final class ProjectDocumentationId implements DocumentationId
     /**
      * {@inheritdoc}
      */
-    public function getVersionString()
+    public function versionString()
     {
         return $this->versionString;
     }

@@ -121,7 +121,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
-        PHPUnit::assertEquals($name, $page->getProjectName());
+        PHPUnit::assertEquals($name, $page->projectName());
     }
 
     /**
@@ -133,7 +133,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
-        PHPUnit::assertEquals($time, $page->getDocumentationTime());
+        PHPUnit::assertEquals($time, $page->documentedAt());
     }
 
     /**
@@ -145,7 +145,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
         $page = $this->documenter->findPage($documentationId, new PageId('index.html'));
 
         PHPUnit::assertNotNull($page, 'Page not found.');
-        PHPUnit::assertEquals($versionString, $page->getVersionString());
+        PHPUnit::assertEquals($versionString, $page->versionString());
     }
 
     /**
@@ -157,7 +157,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
             (string)(new ProjectDocumentationId($project, $versionString)),
             array_map(
                 function (PublishedDocumentation $documentation) {
-                    return (string)$documentation->getDocumentationId();
+                    return (string)$documentation->documentationId();
                 },
                 $this->documenter->findProjectDocumentation($project)
             ),

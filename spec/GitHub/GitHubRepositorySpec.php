@@ -35,12 +35,12 @@ class GitHubRepositorySpec extends ObjectBehavior
 
     function its_organisation_is_the_first_segment_of_the_string_it_was_constructed_with()
     {
-        $this->getOrganisationName()->shouldReturn('behat');
+        $this->organisationName()->shouldReturn('behat');
     }
 
     function its_name_is_the_second_segment_of_the_string_it_was_constructed_with()
     {
-        $this->getName()->shouldReturn('docs');
+        $this->name()->shouldReturn('docs');
     }
 
     function its_string_representation_is_the_string_it_was_constructed_with()

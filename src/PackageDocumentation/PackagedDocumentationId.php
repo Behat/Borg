@@ -35,7 +35,7 @@ final class PackagedDocumentationId implements DocumentationIdInterface
     /**
      * {@inheritdoc}
      */
-    public function getProjectName()
+    public function projectName()
     {
         return (string)$this->package;
     }
@@ -43,17 +43,17 @@ final class PackagedDocumentationId implements DocumentationIdInterface
     /**
      * {@inheritdoc}
      */
-    public function getVersionString()
+    public function versionString()
     {
         if ($this->version->isBranch()) {
-            return $this->version->getBranchName();
+            return $this->version->branchName();
         }
 
         if (!$this->version->isStable()) {
-            return 'v' . $this->version->getPatch();
+            return 'v' . $this->version->patch();
         }
 
-        return 'v' . $this->version->getMinor();
+        return 'v' . $this->version->minor();
     }
 
     /**
@@ -61,6 +61,6 @@ final class PackagedDocumentationId implements DocumentationIdInterface
      */
     public function __toString()
     {
-        return $this->getProjectName() . '/' . $this->getVersionString();
+        return $this->projectName() . '/' . $this->versionString();
     }
 }

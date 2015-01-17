@@ -14,14 +14,14 @@ interface Package
      *
      * @return string
      */
-    public function getOrganisationName();
+    public function organisationName();
 
     /**
      * Returns package name.
      *
      * @return string
      */
-    public function getName();
+    public function name();
 
     /**
      * Returns string representation of package.

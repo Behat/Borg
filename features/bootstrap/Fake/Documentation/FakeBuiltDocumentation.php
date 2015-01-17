@@ -17,12 +17,12 @@ final class FakeBuiltDocumentation implements BuiltDocumentation
         $this->buildTime = $buildTime;
     }
 
-    public function getDocumentationId()
+    public function documentationId()
     {
-        return $this->documentation->getDocumentationId();
+        return $this->documentation->documentationId();
     }
 
-    public function getBuildPath()
+    public function buildPath()
     {
         return '/tmp';
     }
@@ -32,13 +32,13 @@ final class FakeBuiltDocumentation implements BuiltDocumentation
         return '/tmp/index.html';
     }
 
-    public function getBuildTime()
+    public function builtAt()
     {
         return $this->buildTime;
     }
 
-    public function getDocumentationTime()
+    public function documentedAt()
     {
-        return $this->documentation->getTime();
+        return $this->documentation->documentedAt();
     }
 }

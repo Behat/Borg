@@ -23,19 +23,19 @@ final class FakeDocumentedDownload implements Download, DocumentedDownload, Pack
         $this->package = $package;
     }
 
-    public function getVersion()
+    public function version()
     {
-        return $this->original->getVersion();
+        return $this->original->version();
     }
 
-    public function getReleaseTime()
+    public function releasedAt()
     {
-        return $this->original->getReleaseTime();
+        return $this->original->releasedAt();
     }
 
-    public function getPath()
+    public function path()
     {
-        return $this->original->getPath();
+        return $this->original->path();
     }
 
     public function hasFile($relativePath)
@@ -43,9 +43,9 @@ final class FakeDocumentedDownload implements Download, DocumentedDownload, Pack
         return $this->original->hasFile($relativePath);
     }
 
-    public function getFilePath($relativePath)
+    public function filePath($relativePath)
     {
-        return $this->original->getFilePath($relativePath);
+        return $this->original->filePath($relativePath);
     }
 
     public function getPackage()

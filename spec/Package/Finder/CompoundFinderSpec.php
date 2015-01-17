@@ -26,10 +26,10 @@ class CompoundFinderSpec extends ObjectBehavior
         Download $download,
         Package $package
     ) {
-        $finder1->findPackage($download)->willReturn(null);
-        $finder2->findPackage($download)->willReturn($package);
+        $finder1->find($download)->willReturn(null);
+        $finder2->find($download)->willReturn($package);
 
-        $this->findPackage($download)->shouldReturn($package);
+        $this->find($download)->shouldReturn($package);
     }
 
     function it_stops_searching_when_first_finder_finds_a_package(
@@ -38,14 +38,14 @@ class CompoundFinderSpec extends ObjectBehavior
         Download $download,
         Package $package
     ) {
-        $finder1->findPackage($download)->willReturn($package);
-        $finder2->findPackage($download)->shouldNotBeCalled();
+        $finder1->find($download)->willReturn($package);
+        $finder2->find($download)->shouldNotBeCalled();
 
-        $this->findPackage($download);
+        $this->find($download);
     }
 
     function it_returns_null_if_all_finders_find_nothing(Download $download)
     {
-        $this->findPackage($download)->shouldReturn(null);
+        $this->find($download)->shouldReturn(null);
     }
 }

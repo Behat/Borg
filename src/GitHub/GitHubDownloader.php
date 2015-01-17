@@ -49,9 +49,9 @@ final class GitHubDownloader implements Downloader
 
     private function fetchLatestCommit(Release $release)
     {
-        $organisation = $release->getRepository()->getOrganisationName();
-        $repository = $release->getRepository()->getName();
-        $version = (string)$release->getVersion();
+        $organisation = $release->repository()->organisationName();
+        $repository = $release->repository()->name();
+        $version = (string)$release->version();
 
         $commit = $this->client->repo()->commits()->all($organisation, $repository, array('sha' => $version))[0];
         $time = new DateTimeImmutable($commit['commit']['author']['date']);
@@ -89,25 +89,25 @@ final class GitHubDownloader implements Downloader
 
     private function downloadArchive(Release $release, Commit $commit, $releasePath)
     {
-        $archivePath = $this->getArchivePath($release->getRepository(), $commit);
+        $archivePath = $this->getArchivePath($release->repository(), $commit);
         $content = ResponseMediator::getContent(
             $this->client->getHttpClient()->get(
                 'repos/' .
-                rawurlencode($release->getRepository()->getOrganisationName()) .
+                rawurlencode($release->repository()->organisationName()) .
                 '/' .
-                rawurlencode($release->getRepository()->getName()) .
+                rawurlencode($release->repository()->name()) .
                 '/zipball/' .
-                $commit->getSha()
+                $commit->sha()
             )
         );
         file_put_contents($archivePath, $content);
 
         $archive = new \ZipArchive();
         $archive->open($archivePath);
-        $archive->extractTo($this->getOrganisationPath($release->getRepository()));
+        $archive->extractTo($this->getOrganisationPath($release->repository()));
         $archive->close();
 
-        $unzippedPath = $this->getUnzippedCommitPath($release->getRepository(), $commit);
+        $unzippedPath = $this->getUnzippedCommitPath($release->repository(), $commit);
         $this->filesystem->rename($unzippedPath, $releasePath, true);
         $this->filesystem->remove($archivePath);
     }
@@ -124,19 +124,19 @@ final class GitHubDownloader implements Downloader
 
     private function getArchivePath(Repository $package, Commit $commit)
     {
-        return $this->downloadPath . '/' . $package . '/' . $commit->getSha() . '.zip';
+        return $this->downloadPath . '/' . $package . '/' . $commit->sha() . '.zip';
     }
 
     private function getOrganisationPath(Repository $package)
     {
-        return $this->downloadPath . '/' . $package->getOrganisationName();
+        return $this->downloadPath . '/' . $package->organisationName();
     }
 
     private function getUnzippedCommitPath(Repository $package, Commit $commit)
     {
-        $shortSha = mb_substr($commit->getSha(), 0, 7);
-        $organisation = $package->getOrganisationName();
-        $repository = $package->getName();
+        $shortSha = mb_substr($commit->sha(), 0, 7);
+        $organisation = $package->organisationName();
+        $repository = $package->name();
 
         return $this->getOrganisationPath($package) . '/' . "{$organisation}-{$repository}-{$shortSha}";
     }

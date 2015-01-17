@@ -31,7 +31,7 @@ final class Rst implements Source
     /**
      * @return string
      */
-    public function getPath()
+    public function path()
     {
         return $this->path;
     }

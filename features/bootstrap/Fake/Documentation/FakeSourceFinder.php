@@ -7,7 +7,7 @@ use Behat\Borg\Release\Downloader\Download;
 
 final class FakeSourceFinder implements SourceFinder
 {
-    public function findSource(Download $download)
+    public function find(Download $download)
     {
         if ($download instanceof DocumentedDownload) {
             return $download->getSource();

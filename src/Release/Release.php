@@ -33,7 +33,7 @@ final class Release
      *
      * @return Repository
      */
-    public function getRepository()
+    public function repository()
     {
         return $this->repository;
     }
@@ -43,7 +43,7 @@ final class Release
      *
      * @return Version
      */
-    public function getVersion()
+    public function version()
     {
         return $this->version;
     }

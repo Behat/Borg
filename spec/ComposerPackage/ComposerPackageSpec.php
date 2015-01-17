@@ -30,20 +30,20 @@ class ComposerPackageSpec extends ObjectBehavior
 
     function its_organisation_name_is_a_first_segment_of_the_constructor_argument()
     {
-        $this->getOrganisationName()->shouldReturn('behat');
+        $this->organisationName()->shouldReturn('behat');
     }
 
     function it_lowercases_provided_organisation_and_package_name()
     {
         $this->beConstructedWith('Behat/Docs');
 
-        $this->getOrganisationName()->shouldReturn('behat');
-        $this->getName()->shouldReturn('docs');
+        $this->organisationName()->shouldReturn('behat');
+        $this->name()->shouldReturn('docs');
     }
 
     function its_name_is_a_second_segment_of_the_constructor_argument()
     {
-        $this->getName()->shouldReturn('docs');
+        $this->name()->shouldReturn('docs');
     }
 
     function its_string_representation_is_the_name_of_the_package()

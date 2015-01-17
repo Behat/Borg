@@ -35,7 +35,7 @@ final class PackageDownload
      *
      * @return Package
      */
-    public function getPackage()
+    public function package()
     {
         return $this->package;
     }
@@ -45,7 +45,7 @@ final class PackageDownload
      *
      * @return Download
      */
-    public function getDownload()
+    public function download()
     {
         return $this->download;
     }
