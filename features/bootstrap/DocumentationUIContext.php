@@ -76,7 +76,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     {
         $this->packageWasDocumented($package, $version, $repository);
 
-        PHPUnit::assertEquals($time, $this->getLatestCommitDate($repository, $version));
+        PHPUnit::assertEquals($time, $this->lastCommitDate($repository, $version));
     }
 
     /**
@@ -170,7 +170,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
         )['download_url']);
     }
 
-    private function getLatestCommitDate(Repository $package, Version $version)
+    private function lastCommitDate(Repository $package, Version $version)
     {
         $commit = $this->client->repo()->commits()->all(
             $package->organisationName(), $package->name(), ['sha' => (string)$version]

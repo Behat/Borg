@@ -92,8 +92,8 @@ class DocumentationController extends Controller
         }
 
         return $this->render("documentation:{$page}", [
-            'page'         => $page,
-            'allPublished' => $manager->findProjectDocumentation($project)
+            'page'        => $page,
+            'projectDocs' => $manager->findProjectDocumentation($project)
         ]);
     }
 
