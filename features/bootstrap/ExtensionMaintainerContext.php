@@ -6,10 +6,16 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\ExtensionCatalogue;
+use Behat\Borg\ExtensionPackage\ExtensionCataloguer;
+use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Release\Release;
+use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Extension\FakeExtension;
+use Fake\Extension\FakeExtractor;
+use Fake\Package\FakePackageFinder;
+use Fake\Release\FakeDownloader;
 use Fake\Release\FakeRepository;
 use PHPUnit_Framework_Assert as PHPUnit;
 
@@ -21,7 +27,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     use ContextHelper\ReleaseTransformations;
 
     private $releaseManager;
-    private $extensionCatalogue;
+    private $catalogue;
 
     /**
      * Initializes context.
@@ -29,7 +35,15 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->releaseManager = new ReleaseManager();
-        $this->extensionCatalogue = new ExtensionCatalogue(new PersistedObjectsRepository(null));
+        $this->catalogue = new ExtensionCatalogue(new PersistedObjectsRepository(null));
+
+        $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
+        $releasePackager = new ReleasePackager(new FakePackageFinder());
+        $extensionCataloguer = new ExtensionCataloguer(new FakeExtractor(), $this->catalogue);
+
+        $this->releaseManager->registerListener($releaseDownloader);
+        $releaseDownloader->registerListener($releasePackager);
+        $releasePackager->registerListener($extensionCataloguer);
     }
 
     /**
@@ -61,7 +75,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
      */
     public function extensionCatalogueShouldContainExtension($extensionName)
     {
-        PHPUnit::assertNotNull($this->extensionCatalogue->find($extensionName), 'Extension not found.');
+        PHPUnit::assertNotNull($this->catalogue->find($extensionName), 'Extension not found.');
     }
 
     /**
