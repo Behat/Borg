@@ -4,6 +4,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Extension\Extension;
+use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
@@ -59,7 +60,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
      */
     public function extensionCatalogueShouldContainExtension($extensionName)
     {
-        PHPUnit::assertNotNull($this->extensionCatalogue->find($extensionName));
+        PHPUnit::assertNotNull($this->extensionCatalogue->find($extensionName), 'Extension not found.');
     }
 
     /**
