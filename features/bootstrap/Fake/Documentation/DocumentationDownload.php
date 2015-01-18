@@ -4,7 +4,7 @@ namespace Fake\Documentation;
 
 use Behat\Borg\Release\Downloader\Download;
 
-interface DocumentedDownload extends Download
+interface DocumentationDownload extends Download
 {
-    public function getSource();
+    public function source();
 }

@@ -9,8 +9,8 @@ final class FakeSourceFinder implements SourceFinder
 {
     public function find(Download $download)
     {
-        if ($download instanceof DocumentedDownload) {
-            return $download->getSource();
+        if ($download instanceof DocumentationDownload) {
+            return $download->source();
         }
 
         return null;
