@@ -11,15 +11,13 @@ use Behat\Borg\Package\Package;
 use Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder;
 use Behat\Borg\Documenter;
 use Behat\Borg\Release\ReleaseDownloader;
-use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
+use Fake\Release\FakeRepository;
 use PHPUnit_Framework_Assert as PHPUnit;
 use Fake\Documentation\FakeBuilder;
-use Fake\Documentation\FakeDocumentedDownload;
 use Fake\Documentation\FakePublisher;
-use Fake\Documentation\FakeSource;
 use Fake\Documentation\FakeSourceFinder;
 use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
@@ -29,7 +27,6 @@ use Fake\Release\FakeDownloader;
  */
 class DocumentationContributorContext implements Context, SnippetAcceptingContext
 {
-    private $downloader;
     private $releaseManager;
     private $documenter;
 
@@ -40,13 +37,10 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
      */
     public function __construct()
     {
-        $this->downloader = new FakeDownloader();
-        $repository = new PersistedObjectsRepository(null);
-
-        $this->documenter = new Documenter(new FakeBuilder(), new FakePublisher(), $repository);
+        $this->documenter = new Documenter(new FakeBuilder(), new FakePublisher(), new PersistedObjectsRepository(null));
         $this->releaseManager = new ReleaseManager();
 
-        $releaseDownloader = new ReleaseDownloader($this->downloader);
+        $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
         $documentingBuilder = new PackagedDocumentationBuilder(new FakeSourceFinder(), $this->documenter);
 
@@ -58,19 +52,17 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Given :package version :version was documented in :repository on :time
      */
-    public function packageWasDocumentedOn(Package $package, Version $version, Repository $repository, DateTimeImmutable $time)
+    public function packageWasDocumentedOn(FakeRepository $repository, Package $package, Version $version, DateTimeImmutable $time)
     {
-        $release = new Release($repository, $version);
-        $download = new FakeDocumentedDownload($release, $time, $package, new FakeSource());
-        $this->downloader->addReleaseDownload($release, $download);
+        $repository->documentPackage($package, $version, $time);
     }
 
     /**
      * @Given :package version :version was documented in :repository
      */
-    public function packageWasDocumented(Package $package, Version $version, Repository $repository)
+    public function packageWasDocumented(FakeRepository $repository, Package $package, Version $version)
     {
-        $this->packageWasDocumentedOn($package, $version, $repository, new DateTimeImmutable());
+        $repository->documentPackage($package, $version, new DateTimeImmutable());
     }
 
     /**
@@ -83,7 +75,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @When I release :repository version :version
      */
-    public function iReleaseRelease(Repository $repository, Version $version)
+    public function iReleaseRelease(FakeRepository $repository, Version $version)
     {
         $this->releaseManager->release(new Release($repository, $version));
     }
