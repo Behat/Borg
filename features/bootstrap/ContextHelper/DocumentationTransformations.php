@@ -1,6 +1,10 @@
 <?php
 
+namespace ContextHelper;
+
 use Behat\Borg\Documentation\Page\PageId;
+use DateTimeImmutable;
+use DateTimeZone;
 
 trait DocumentationTransformations
 {

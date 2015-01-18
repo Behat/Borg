@@ -21,8 +21,8 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private $publisher;
     private $client;
 
-    use ReleaseTransformations;
-    use DocumentationTransformations;
+    use ContextHelper\ReleaseTransformations;
+    use ContextHelper\DocumentationTransformations;
 
     /**
      * Initializes context.

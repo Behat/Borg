@@ -1,5 +1,7 @@
 <?php
 
+namespace ContextHelper;
+
 use Behat\Borg\Release\Version;
 use Fake\Package\FakePackage;
 use Fake\Release\FakeRepository;

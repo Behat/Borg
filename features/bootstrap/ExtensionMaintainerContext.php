@@ -12,7 +12,7 @@ use Fake\Release\FakeRepository;
  */
 class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 {
-    use ReleaseTransformations;
+    use ContextHelper\ReleaseTransformations;
 
     /**
      * Initializes context.
