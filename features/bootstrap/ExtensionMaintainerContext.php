@@ -70,6 +70,13 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given extension was not created in :repository
+     */
+    public function extensionWasNotCreated()
+    {
+    }
+
+    /**
      * @When I release :repository version :version
      */
     public function iReleaseVersion(FakeRepository $repository, Version $version)
@@ -80,8 +87,9 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     /**
      * @Then the extension catalogue should contain :count extension(s)
      * @Then the extension catalogue should still contain :count extension(s)
+     * @Then the extension catalogue should be empty
      */
-    public function extensionCatalogueShouldContainExtension($count)
+    public function extensionCatalogueShouldContainExtension($count = 0)
     {
         PHPUnit::assertCount($count, $this->catalogue->getAll());
     }
