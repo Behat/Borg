@@ -79,6 +79,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 
     /**
      * @Then the extension catalogue should contain :count extension(s)
+     * @Then the extension catalogue should still contain :count extension(s)
      */
     public function extensionCatalogueShouldContainExtension($count)
     {
