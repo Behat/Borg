@@ -1,6 +1,5 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
@@ -22,6 +21,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private $publisher;
     private $client;
 
+    use ReleaseTransformations;
     use DocumentationTransformations;
 
     /**

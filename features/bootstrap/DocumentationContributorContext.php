@@ -30,6 +30,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     private $releaseManager;
     private $documenter;
 
+    use ReleaseTransformations;
     use DocumentationTransformations;
 
     /**
