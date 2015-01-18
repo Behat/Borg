@@ -4,6 +4,10 @@ default:
             contexts: [ 'DocumentationContributorContext' ]
             filters:  { role: 'documentation contributor' }
 
+        extension_maintainer:
+            contexts: [ 'ExtensionMaintainerContext' ]
+            filters:  { role: 'extension maintainer' }
+
         smoke:
             contexts:
                 - DocumentationUIContext:
