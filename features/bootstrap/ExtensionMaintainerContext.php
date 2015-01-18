@@ -3,6 +3,7 @@
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\Release\Release;
@@ -28,7 +29,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->releaseManager = new ReleaseManager();
-        $this->extensionCatalogue = new ExtensionCatalogue();
+        $this->extensionCatalogue = new ExtensionCatalogue(new PersistedObjectsRepository(null));
     }
 
     /**
