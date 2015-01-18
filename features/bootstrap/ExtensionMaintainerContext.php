@@ -4,6 +4,9 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Extension\Extension;
+use Behat\Borg\Release\Release;
+use Behat\Borg\Release\Version;
+use Behat\Borg\ReleaseManager;
 use Fake\Extension\FakeExtension;
 use Fake\Release\FakeRepository;
 
@@ -14,11 +17,14 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 {
     use ContextHelper\ReleaseTransformations;
 
+    private $releaseManager;
+
     /**
      * Initializes context.
      */
     public function __construct()
     {
+        $this->releaseManager = new ReleaseManager();
     }
 
     /**
@@ -38,11 +44,11 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @When I release :arg1 version :arg2
+     * @When I release :repository version :version
      */
-    public function iReleaseVersion($arg1, $arg2)
+    public function iReleaseVersion(FakeRepository $repository, Version $version)
     {
-        throw new PendingException();
+        $this->releaseManager->release(new Release($repository, $version));
     }
 
     /**
