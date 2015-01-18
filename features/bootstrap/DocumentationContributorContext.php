@@ -8,7 +8,7 @@ use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Package\Package;
-use Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder;
+use Behat\Borg\PackageDocumentation\PackageDocumenter;
 use Behat\Borg\Documenter;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Release;
@@ -42,11 +42,11 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $documentingBuilder = new PackagedDocumentationBuilder(new FakeSourceFinder(), $this->documenter);
+        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), $this->documenter);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
-        $releasePackager->registerListener($documentingBuilder);
+        $releasePackager->registerListener($packageDocumenter);
     }
 
     /**

@@ -15,7 +15,7 @@
                  class="Behat\Borg\Package\ReleasePackager" public="false">
             <argument type="service" id="package.finder.compound"/>
             <call method="registerListener">
-                <argument type="service" id="package.listener.package.documenting"/>
+                <argument type="service" id="package.listener.package.documenter"/>
             </call>
         </service>
 
@@ -33,8 +33,8 @@
             </argument>
         </service>
 
-        <service id="package.listener.package.documenting"
-                 class="Behat\Borg\PackageDocumentation\PackagedDocumentationBuilder"
+        <service id="package.listener.package.documenter"
+                 class="Behat\Borg\PackageDocumentation\PackageDocumenter"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.documenter"/>

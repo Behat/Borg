@@ -9,9 +9,9 @@ use Behat\Borg\Package\Listener\PackageListener;
 use Behat\Borg\Package\PackageDownload;
 
 /**
- * Builds documentation after package was been downloaded.
+ * Processes packaged documentation.
  */
-final class PackagedDocumentationBuilder implements PackageListener
+final class PackageDocumenter implements PackageListener
 {
     /**
      * @var SourceFinder
