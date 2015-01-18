@@ -24,3 +24,8 @@ Feature: Extensions are catalogued
     When I release "Behat/MinkExtension" version "v2.0.0"
     And I release "Behat/MinkExtension" version "v2.0.1"
     Then extension catalogue should still contain 1 extension
+
+  Scenario: Releasing repository that has no extensions
+    Given extension was not created in "Behat/MinkExtension"
+    When I release "Behat/MinkExtension" version "v2.0.0"
+    Then extension catalogue should be empty
