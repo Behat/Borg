@@ -1,6 +1,5 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
@@ -87,10 +86,10 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then :arg1 extension should be in the catalogue
+     * @Then :extensionName extension should be in the catalogue
      */
-    public function extensionShouldBeInIt($arg1)
+    public function extensionShouldBeInIt($extensionName)
     {
-        throw new PendingException();
+        PHPUnit::assertNotNull($this->catalogue->find($extensionName), 'Extension not found.');
     }
 }
