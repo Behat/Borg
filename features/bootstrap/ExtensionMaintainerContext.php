@@ -55,6 +55,14 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Transform :count
+     */
+    public function transformStringToCount($string)
+    {
+        return (int)$string;
+    }
+
+    /**
      * @Given :extension extension was created in :repository
      */
     public function extensionWasCreatedIn(Extension $extension, FakeRepository $repository)
@@ -71,11 +79,11 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then the extension catalogue should contain :extensionName extension
+     * @Then the extension catalogue should contain :count extension(s)
      */
-    public function extensionCatalogueShouldContainExtension($extensionName)
+    public function extensionCatalogueShouldContainExtension($count)
     {
-        PHPUnit::assertNotNull($this->catalogue->find($extensionName), 'Extension not found.');
+        PHPUnit::assertCount($count, $this->catalogue->getAll());
     }
 
     /**
