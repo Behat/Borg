@@ -56,7 +56,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then extension catalogue should contain :extensionName extension
+     * @Then the extension catalogue should contain :extensionName extension
      */
     public function extensionCatalogueShouldContainExtension($extensionName)
     {
@@ -64,7 +64,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then :arg1 extension should be in it
+     * @Then :arg1 extension should be in the catalogue
      */
     public function extensionShouldBeInIt($arg1)
     {
