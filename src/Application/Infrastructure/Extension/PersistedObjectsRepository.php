@@ -42,6 +42,6 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
 
     public function getIdentity($object)
     {
-        return $object->name();
+        return (string)$object;
     }
 }
