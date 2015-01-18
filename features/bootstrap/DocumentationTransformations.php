@@ -7,12 +7,16 @@ use Fake\Release\FakeRepository;
 
 trait DocumentationTransformations
 {
+    private $scenarioRepositories = [];
+
     /**
      * @Transform :repository
      */
     public function transformStringToRepository($string)
     {
-        return FakeRepository::named($string);
+        return $this->scenarioRepositories[$string] = isset($this->scenarioRepositories[$string])
+            ? $this->scenarioRepositories[$string]
+            : FakeRepository::named($string);
     }
 
     /**
