@@ -6,21 +6,21 @@ use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsReposito
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
-use Behat\Borg\Package\ReleasePackager;
-use Behat\Borg\Package\Package;
-use Behat\Borg\PackageDocumentation\PackageDocumenter;
+use Behat\Borg\DocumentationPackage\PackageDocumenter;
 use Behat\Borg\Documenter;
-use Behat\Borg\Release\ReleaseDownloader;
+use Behat\Borg\Package\Package;
+use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Release\Release;
+use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
-use Fake\Release\FakeRepository;
-use PHPUnit_Framework_Assert as PHPUnit;
 use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSourceFinder;
 use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
+use Fake\Release\FakeRepository;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Describes documentation-related features from the documentation manager context.

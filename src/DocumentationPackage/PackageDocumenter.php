@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\PackageDocumentation;
+namespace Behat\Borg\DocumentationPackage;
 
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\Finder\SourceFinder;

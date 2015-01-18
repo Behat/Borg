@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Behat\Borg\PackageDocumentation;
+namespace spec\Behat\Borg\DocumentationPackage;
 
 use Behat\Borg\Package\Package;
 use PhpSpec\ObjectBehavior;

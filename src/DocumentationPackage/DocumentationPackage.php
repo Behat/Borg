@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\PackageDocumentation;
+namespace Behat\Borg\DocumentationPackage;
 
 use Behat\Borg\Package\Exception\BadPackageNameGiven;
 use Behat\Borg\Package\Package;
