@@ -4,7 +4,9 @@ Feature: Extensions are catalogued
   I want my extensions to be catalogued when I release a new versions of them
 
   Rules:
-  - Extension release causes extension to be added to the extension catalogue
+  - Extension repository release causes extension to be added to the extension catalogue
+  - If repository has no extensions, releasing it doesn't change the catalogue
+  - If repository has documentation, but no extensions, releasing it still doesn't change the catalogue
 
   Scenario: Releasing a stable extension
     Given "behat/symfony2-extension" extension was created in "Behat/Symfony2Extension"
@@ -28,4 +30,9 @@ Feature: Extensions are catalogued
   Scenario: Releasing repository that has no extensions
     Given extension was not created in "Behat/MinkExtension"
     When I release "Behat/MinkExtension" version "v2.0.0"
+    Then the extension catalogue should be empty
+
+  Scenario: Releasing repository that has documentation, but no extensions
+    Given "behat/behat" version "v3.0" was documented in "Behat/docs"
+    When I release "Behat/docs" version "v3.0"
     Then the extension catalogue should be empty
