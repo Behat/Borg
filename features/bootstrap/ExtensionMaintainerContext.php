@@ -3,6 +3,8 @@
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Borg\Extension\Extension;
+use Fake\Release\FakeRepository;
 
 /**
  * Defines application features from the specific context.
@@ -17,11 +19,11 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given :arg1 extension was created in :arg2
+     * @Given :extension extension was created in :repository
      */
-    public function extensionWasCreatedIn($arg1, $arg2)
+    public function extensionWasCreatedIn(Extension $extension, FakeRepository $repository)
     {
-        throw new PendingException();
+        $repository->createExtension($extension);
     }
 
     /**

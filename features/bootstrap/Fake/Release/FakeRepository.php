@@ -2,6 +2,7 @@
 
 namespace Fake\Release;
 
+use Behat\Borg\Extension\Extension;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Repository;
@@ -14,6 +15,7 @@ final class FakeRepository implements Repository
 {
     private $name;
     private $downloads = [];
+    private $extension;
 
     public static function named($name)
     {
@@ -46,6 +48,11 @@ final class FakeRepository implements Repository
     {
         $release = new Release($this, $version);
         $this->downloads[(string)$release] = new FakeDocumentedDownload($release, $time, $package, new FakeSource());
+    }
+
+    public function createExtension(Extension $extension)
+    {
+        $this->extension = $extension;
     }
 
     public function download(Release $release)
