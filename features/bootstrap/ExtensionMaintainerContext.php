@@ -9,6 +9,7 @@ use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Extension\FakeExtension;
 use Fake\Release\FakeRepository;
+use PHPUnit_Framework_Assert as PHPUnit;
 
 /**
  * Defines application features from the specific context.
@@ -18,6 +19,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     use ContextHelper\ReleaseTransformations;
 
     private $releaseManager;
+    private $extensionCatalogue;
 
     /**
      * Initializes context.
@@ -25,6 +27,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
         $this->releaseManager = new ReleaseManager();
+        $this->extensionCatalogue = new ExtensionCatalogue();
     }
 
     /**
@@ -52,11 +55,11 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then extension catalogue should contain :arg1 extension
+     * @Then extension catalogue should contain :extensionName extension
      */
-    public function extensionCatalogueShouldContainExtension($arg1)
+    public function extensionCatalogueShouldContainExtension($extensionName)
     {
-        throw new PendingException();
+        PHPUnit::assertNotNull($this->extensionCatalogue->find($extensionName));
     }
 
     /**
