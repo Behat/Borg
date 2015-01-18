@@ -4,6 +4,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Extension\Extension;
+use Fake\Extension\FakeExtension;
 use Fake\Release\FakeRepository;
 
 /**
@@ -11,11 +12,21 @@ use Fake\Release\FakeRepository;
  */
 class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 {
+    use ReleaseTransformations;
+
     /**
      * Initializes context.
      */
     public function __construct()
     {
+    }
+
+    /**
+     * @Transform :extension
+     */
+    public function transformStringToExtension($string)
+    {
+        return FakeExtension::named($string);
     }
 
     /**
