@@ -6,6 +6,7 @@ use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\ExtensionPackage\ExtensionCataloguer;
+use Behat\Borg\Package\Package;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
@@ -23,6 +24,7 @@ use PHPUnit_Framework_Assert as PHPUnit;
  */
 class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 {
+    use ContextHelper\DocumentationTransformations;
     use ContextHelper\ReleaseTransformations;
 
     private $releaseManager;
@@ -74,6 +76,14 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
      */
     public function extensionWasNotCreated()
     {
+    }
+
+    /**
+     * @Given :package version :version was documented in :repository
+     */
+    public function packageWasDocumented(FakeRepository $repository, Package $package, Version $version)
+    {
+        $repository->documentPackage($package, $version, new DateTimeImmutable());
     }
 
     /**
