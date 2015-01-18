@@ -35,6 +35,11 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         return $this->repo->findById($name);
     }
 
+    public function findAll()
+    {
+        return $this->repo->getAll();
+    }
+
     public function getIdentity($object)
     {
         return $object->name();

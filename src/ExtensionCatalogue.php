@@ -21,6 +21,16 @@ final class ExtensionCatalogue
     }
 
     /**
+     * Registers provided extension.
+     *
+     * @param Extension $extension
+     */
+    public function register(Extension $extension)
+    {
+        $this->repository->save($extension);
+    }
+
+    /**
      * Tries to find extension by name.
      *
      * @param string $name
@@ -30,5 +40,13 @@ final class ExtensionCatalogue
     public function find($name)
     {
         return $this->repository->find($name);
+    }
+
+    /**
+     * Returns all catalogued extensions.
+     */
+    public function getAll()
+    {
+        return $this->repository->findAll();
     }
 }

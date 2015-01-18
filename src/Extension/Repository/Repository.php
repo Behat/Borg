@@ -24,4 +24,11 @@ interface Repository
      * @return null|Extension
      */
     public function find($name);
+
+    /**
+     * Returns all stored extensions.
+     *
+     * @return Extension[]
+     */
+    public function findAll();
 }
