@@ -23,9 +23,9 @@ use PHPUnit_Framework_Assert as PHPUnit;
  */
 class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 {
-    use Dictionaries\Documentation;
-    use Dictionaries\Release;
-    use Dictionaries\Extension;
+    use Transformation\Release;
+    use Transformation\Extension;
+    use Transformation\Documentation;
 
     private $releaseManager;
     private $catalogue;

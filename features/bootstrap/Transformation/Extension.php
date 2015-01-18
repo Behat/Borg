@@ -1,6 +1,6 @@
 <?php
 
-namespace Dictionaries;
+namespace Transformation;
 
 use Fake\Extension\FakeExtension;
 

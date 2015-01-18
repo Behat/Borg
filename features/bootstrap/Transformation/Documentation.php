@@ -1,6 +1,6 @@
 <?php
 
-namespace Dictionaries;
+namespace Transformation;
 
 use Behat\Borg\Documentation\Page\PageId;
 use DateTimeImmutable;

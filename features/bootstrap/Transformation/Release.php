@@ -1,6 +1,6 @@
 <?php
 
-namespace Dictionaries;
+namespace Transformation;
 
 use Behat\Borg\Release\Version;
 use Fake\Package\FakePackage;
