@@ -27,11 +27,11 @@ use PHPUnit_Framework_Assert as PHPUnit;
  */
 class DocumentationContributorContext implements Context, SnippetAcceptingContext
 {
-    private $releaseManager;
-    private $documenter;
-
     use ContextHelper\ReleaseTransformations;
     use ContextHelper\DocumentationTransformations;
+
+    private $releaseManager;
+    private $documenter;
 
     /**
      * Initializes context.

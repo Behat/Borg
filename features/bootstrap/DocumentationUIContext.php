@@ -18,11 +18,11 @@ use Symfony\Component\Process\Process;
  */
 class DocumentationUIContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    private $publisher;
-    private $client;
-
     use ContextHelper\ReleaseTransformations;
     use ContextHelper\DocumentationTransformations;
+
+    private $publisher;
+    private $client;
 
     /**
      * Initializes context.
