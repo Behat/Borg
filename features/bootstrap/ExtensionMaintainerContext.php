@@ -12,7 +12,6 @@ use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
-use Fake\Extension\FakeExtension;
 use Fake\Extension\FakeExtractor;
 use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
@@ -24,8 +23,9 @@ use PHPUnit_Framework_Assert as PHPUnit;
  */
 class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
 {
-    use ContextHelper\DocumentationTransformations;
-    use ContextHelper\ReleaseTransformations;
+    use Dictionaries\Documentation;
+    use Dictionaries\Release;
+    use Dictionaries\Extension;
 
     private $releaseManager;
     private $catalogue;
@@ -45,22 +45,6 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
         $releasePackager->registerListener($extensionCataloguer);
-    }
-
-    /**
-     * @Transform :extension
-     */
-    public function transformStringToExtension($string)
-    {
-        return FakeExtension::named($string);
-    }
-
-    /**
-     * @Transform :count
-     */
-    public function transformStringToCount($string)
-    {
-        return (int)$string;
     }
 
     /**

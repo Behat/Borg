@@ -1,12 +1,12 @@
 <?php
 
-namespace ContextHelper;
+namespace Dictionaries;
 
 use Behat\Borg\Documentation\Page\PageId;
 use DateTimeImmutable;
 use DateTimeZone;
 
-trait DocumentationTransformations
+trait Documentation
 {
     /**
      * @Transform :pageId
