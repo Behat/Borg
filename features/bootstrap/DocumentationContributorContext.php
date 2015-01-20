@@ -69,9 +69,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Given :package version :version was not documented
      */
-    public function packageWasNotDocumented()
-    {
-    }
+    public function packageWasNotDocumented() { }
 
     /**
      * @When I release :repository version :version

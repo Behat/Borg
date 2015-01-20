@@ -3,7 +3,6 @@
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
-use Behat\Borg\Extension\Extension;
 use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\ExtensionPackage\ExtensionCataloguer;
 use Behat\Borg\Package\Package;
@@ -12,6 +11,7 @@ use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
+use Fake\Extension\FakeExtension;
 use Fake\Extension\FakeExtractor;
 use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
@@ -50,7 +50,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     /**
      * @Given :extension extension was created in :repository
      */
-    public function extensionWasCreatedIn(Extension $extension, FakeRepository $repository)
+    public function extensionWasCreated(FakeRepository $repository, FakeExtension $extension)
     {
         $repository->createExtension($extension);
     }
@@ -58,9 +58,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     /**
      * @Given extension was not created in :repository
      */
-    public function extensionWasNotCreated()
-    {
-    }
+    public function extensionWasNotCreated() { }
 
     /**
      * @Given :package version :version was documented in :repository
@@ -83,7 +81,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
      * @Then the extension catalogue should still contain :count extension(s)
      * @Then the extension catalogue should be empty
      */
-    public function extensionCatalogueShouldContainExtension($count = 0)
+    public function extensionCatalogueShouldHaveCount($count = 0)
     {
         PHPUnit::assertCount($count, $this->catalogue->getAll());
     }
@@ -91,7 +89,7 @@ class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
     /**
      * @Then :extensionName extension should be in the catalogue
      */
-    public function extensionShouldBeInIt($extensionName)
+    public function extensionShouldBeInCatalogue($extensionName)
     {
         PHPUnit::assertNotNull($this->catalogue->find($extensionName), 'Extension not found.');
     }
