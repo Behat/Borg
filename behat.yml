@@ -15,3 +15,12 @@ default:
         Behat\Symfony2Extension: ~
         Behat\MinkExtension:
             sessions: { default: { symfony2: ~ } }
+
+domain:
+    suites:
+        smoke: false
+
+smoke:
+    suites:
+        documentation_contributor: false
+        extension_maintainer: false
