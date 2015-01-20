@@ -41,7 +41,7 @@
     },
 
     "scripts": {
-        "test": "phpspec run && behat --format progress && phpunit",
+        "test": "phpspec run && behat --profile=domain --format=progress && phpunit && behat --profile=smoke --format=progress",
 
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"

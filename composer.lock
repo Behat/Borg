@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3c42e9ef2e156f12bf5cbad58a42bcdc",
+    "hash": "bac14b2d878cb89a93da23dc0ee2d225",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -76,16 +76,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7"
+                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/cf483685798a72c93bf4206e3dd6358ea07d64e7",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/2346085d2b027b233ae1d5de59b07440b9f288c8",
+                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8",
                 "shasum": ""
             },
             "require": {
@@ -96,6 +96,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.7",
+                "predis/predis": "~0.8",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
@@ -141,7 +142,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-09-17 14:24:04"
+            "time": "2015-01-15 20:38:55"
         },
         {
             "name": "doctrine/collections",
@@ -858,12 +859,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "fb895af1cf8b4cf77f9154277a90e7b8e6132017"
+                "reference": "8919ab6093ca028bbf54167088b476cc39bf9d3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/fb895af1cf8b4cf77f9154277a90e7b8e6132017",
-                "reference": "fb895af1cf8b4cf77f9154277a90e7b8e6132017",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8919ab6093ca028bbf54167088b476cc39bf9d3b",
+                "reference": "8919ab6093ca028bbf54167088b476cc39bf9d3b",
                 "shasum": ""
             },
             "conflict": {
@@ -876,7 +877,9 @@
                 "illuminate/auth": ">=4.0.0,<4.0.99|>=4.1.0,<4.1.26",
                 "illuminate/database": ">=4.0.0,<4.0.99|>=4.1.0,<4.1.29",
                 "laravel/framework": ">=4.0.0,<4.0.99|>=4.1.0,<4.1.26|>=4.0.0,<4.0.99|>=4.1.0,<4.1.29",
+                "monolog/monolog": ">=1.8.0,<1.12.0",
                 "sabre/dav": ">=1.6.0,<1.6.9|>=1.7.0,<1.7.7|>=1.8.0,<1.8.5",
+                "socalnick/scn-social-auth": "<1.15.2",
                 "swiftmailer/swiftmailer": ">=4.0.0,<4.99.99|>=5.0.0,<5.2.1",
                 "symfony/dependency-injection": ">=2.0.0,<2.0.17",
                 "symfony/framework-bundle": ">=2.0.0,<2.1.0|>=2.1.0,<2.2.0|>=2.2.0,<2.3.0|>=2.3.0,<2.3.18|>=2.4.0,<2.4.8|>=2.5.0,<2.5.2",
@@ -896,11 +899,13 @@
                 "zendframework/zend-form": ">=2.0.0,<2.2.7|>=2.3.0,<2.3.1",
                 "zendframework/zend-json": ">=2.1.0,<2.1.6|>=2.2.0,<2.2.6",
                 "zendframework/zend-navigation": ">=2.0.0,<2.2.7|>=2.3.0,<2.3.1",
+                "zendframework/zend-session": ">=2.0.0,<2.0.99|>=2.1.0,<2.1.99|>=2.2.0,<2.2.9|>=2.3.0,<2.3.4",
                 "zendframework/zend-view": ">=2.0.0,<2.2.7|>=2.3.0,<2.3.1",
                 "zendframework/zend-xmlrpc": ">=2.1.0,<2.1.6|>=2.2.0,<2.2.6",
-                "zendframework/zendframework": ">=2.0.0,<2.0.1|>=2.0.0,<2.0.5|>=2.0.0,<2.0.8|>=2.1.0,<2.1.4|>=2.0.0,<2.0.8|>=2.1.0,<2.1.4|>=2.0.0,<2.0.8|>=2.1.0,<2.1.4|>=2.2.0,<2.2.5|>=2.1.0,<2.1.6|>=2.2.0,<2.2.6|>=2.0.0,<2.2.7|>=2.3.0,<2.3.1|>=2.0.0,<2.0.99|>=2.1.0,<2.1.99|>=2.2.0,<2.2.8|>=2.3.0,<2.3.3|>=2.0.0,<2.0.99|>=2.1.0,<2.1.99|>=2.2.0,<2.2.8|>=2.3.0,<2.3.3",
+                "zendframework/zendframework": ">=2.0.0,<2.0.1|>=2.0.0,<2.0.5|>=2.0.0,<2.0.8|>=2.1.0,<2.1.4|>=2.0.0,<2.0.8|>=2.1.0,<2.1.4|>=2.0.0,<2.0.8|>=2.1.0,<2.1.4|>=2.2.0,<2.2.5|>=2.1.0,<2.1.6|>=2.2.0,<2.2.6|>=2.0.0,<2.2.7|>=2.3.0,<2.3.1|>=2.0.0,<2.0.99|>=2.1.0,<2.1.99|>=2.2.0,<2.2.8|>=2.3.0,<2.3.3|>=2.0.0,<2.0.99|>=2.1.0,<2.1.99|>=2.2.0,<2.2.8|>=2.3.0,<2.3.3|>=2.0.0,<2.0.99|>=2.1.0,<2.1.99|>=2.2.0,<2.2.9|>=2.3.0,<2.3.4",
                 "zendframework/zendframework1": ">=1.7.0,<1.7.5|>=1.7.0,<1.7.6|>=1.9.0,<1.9.7|>=1.7.0,<1.7.9|>=1.8.0,<1.8.5|>=1.9.0,<1.9.7|>=1.7.0,<1.7.9|>=1.8.0,<1.8.5|>=1.9.0,<1.9.7|>=1.8.0,<1.8.5|>=1.9.0,<1.9.7|>=1.7.0,<1.7.9|>=1.8.0,<1.8.5|>=1.9.0,<1.9.7|>=1.7.0,<1.7.9|>=1.8.0,<1.8.5|>=1.9.0,<1.9.7|>=1.9.0,<1.9.8|>=1.10.0,<1.10.3|>=1.0.0,<1.11.4|>=1.10.0,<1.10.9|>=1.11.0,<1.11.6|>=1.0.0,<1.11.13|>=1.0.0,<1.11.13|>=1.11.0,<1.11.15|>=1.12.0,<1.12.1|>=1.12.0,<1.12.4|>=1.12.0,<1.12.4|>=1.12.0,<1.12.7|>=1.12.0,<1.12.9|>=1.12.0,<1.12.9",
                 "zendframework/zendopenid": ">=2.0.0,<2.0.2",
+                "zf-commons/zfc-user": "<1.2.2",
                 "zfr/zfr-oauth2-server-module": "<0.1.2"
             },
             "type": "metapackage",
@@ -916,7 +921,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2014-12-14 19:07:00"
+            "time": "2015-01-16 16:20:00"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -1473,16 +1478,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.16.3",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af"
+                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
-                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
+                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
                 "shasum": ""
             },
             "require": {
@@ -1491,7 +1496,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.16-dev"
+                    "dev-master": "1.17-dev"
                 }
             },
             "autoload": {
@@ -1526,7 +1531,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-12-25 19:58:19"
+            "time": "2015-01-14 10:15:49"
         }
     ],
     "packages-dev": [
@@ -2410,16 +2415,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876"
+                "reference": "db32c18eba00b121c145575fcbcd4d4d24e6db74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/f8d5d08c56de5cfd592b3340424a81733259a876",
-                "reference": "f8d5d08c56de5cfd592b3340424a81733259a876",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/db32c18eba00b121c145575fcbcd4d4d24e6db74",
+                "reference": "db32c18eba00b121c145575fcbcd4d4d24e6db74",
                 "shasum": ""
             },
             "require": {
@@ -2432,7 +2437,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -2455,7 +2460,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2014-08-31 06:12:13"
+            "time": "2015-01-17 09:51:32"
         },
         {
             "name": "phpunit/phpunit",
@@ -2854,17 +2859,17 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "0225fcd08e94de2165ffa85de50c3c9d9592e96b"
+                "reference": "9e23fc3de265ae013690d84aab98e7a84f46edcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/0225fcd08e94de2165ffa85de50c3c9d9592e96b",
-                "reference": "0225fcd08e94de2165ffa85de50c3c9d9592e96b",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/9e23fc3de265ae013690d84aab98e7a84f46edcd",
+                "reference": "9e23fc3de265ae013690d84aab98e7a84f46edcd",
                 "shasum": ""
             },
             "require": {
@@ -2898,7 +2903,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-12-07 18:30:52"
+            "time": "2015-01-13 07:33:46"
         }
     ],
     "aliases": [],
