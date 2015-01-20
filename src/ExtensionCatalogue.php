@@ -15,6 +15,11 @@ final class ExtensionCatalogue
      */
     private $repository;
 
+    /**
+     * Initializes catalogue.
+     *
+     * @param Repository $repository
+     */
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
@@ -44,6 +49,8 @@ final class ExtensionCatalogue
 
     /**
      * Returns all catalogued extensions.
+     *
+     * @return Extension[]
      */
     public function getAll()
     {
