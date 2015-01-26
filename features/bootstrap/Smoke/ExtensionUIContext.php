@@ -1,17 +1,19 @@
 <?php
 
+namespace Smoke;
+
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\Release\Repository;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Github\Client;
 use PHPUnit_Framework_Assert as PHPUnit;
+use Transformation;
 
 /**
  * Defines application features from the specific context.
  */
-class ExtensionUIContext extends RawMinkContext implements Context, SnippetAcceptingContext
+class ExtensionUIContext extends RawMinkContext implements Context
 {
     use Transformation\Extension;
 

@@ -1,19 +1,22 @@
 <?php
 
+namespace Smoke;
+
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
 use Behat\MinkExtension\Context\RawMinkContext;
+use DateTimeImmutable;
 use Github\Client;
 use PHPUnit_Framework_Assert as PHPUnit;
+use Transformation;
 
 /**
  * Defines application features from the specific context.
  */
-class DocumentationUIContext extends RawMinkContext implements Context, SnippetAcceptingContext
+class DocumentationUIContext extends RawMinkContext implements Context
 {
     use Transformation\Release;
     use Transformation\Documentation;
@@ -52,8 +55,12 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     /**
      * @Given :package version :version was documented in :repository on :time
      */
-    public function packageWasDocumentedOn(Package $package, Version $version, Repository $repository, DateTimeImmutable $time)
-    {
+    public function packageWasDocumentedOn(
+        Package $package,
+        Version $version,
+        Repository $repository,
+        DateTimeImmutable $time
+    ) {
         $this->packageWasDocumented($package, $version, $repository);
 
         PHPUnit::assertEquals($time, $this->lastCommitDate($repository, $version));
@@ -100,7 +107,7 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
     private function repositoryContainsDocs(Repository $repository, Version $version)
     {
         return $this->existsInRepositoryVersion($repository, $version, 'index.rst')
-            || $this->existsInRepositoryVersion($repository, $version, 'doc/index.rst');
+        || $this->existsInRepositoryVersion($repository, $version, 'doc/index.rst');
     }
 
     private function repositoryPackageIs(Repository $repository, Version $version, Package $package)
@@ -129,9 +136,11 @@ class DocumentationUIContext extends RawMinkContext implements Context, SnippetA
 
     private function contentInRepositoryVersion(Repository $repository, Version $version, $path)
     {
-        return file_get_contents($this->client->repo()->contents()->show(
-            (string)$repository->organisationName(), (string)$repository->name(), $path, (string)$version
-        )['download_url']);
+        return file_get_contents(
+            $this->client->repo()->contents()->show(
+                (string)$repository->organisationName(), (string)$repository->name(), $path, (string)$version
+            )['download_url']
+        );
     }
 
     private function lastCommitDate(Repository $package, Version $version)

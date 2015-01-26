@@ -1,7 +1,6 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
 use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\ExtensionPackage\ExtensionCataloguer;
@@ -21,7 +20,7 @@ use PHPUnit_Framework_Assert as PHPUnit;
 /**
  * Defines application features from the specific context.
  */
-class ExtensionMaintainerContext implements Context, SnippetAcceptingContext
+class ExtensionMaintainerContext implements Context
 {
     use Transformation\Release;
     use Transformation\Extension;

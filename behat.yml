@@ -1,4 +1,6 @@
 default:
+    autoload: false
+
     suites:
         documentation_contributor:
             contexts: [ 'DocumentationContributorContext' ]
@@ -10,12 +12,12 @@ default:
 
         smoke:
             contexts:
-                - ExtensionUIContext:
+                - Smoke\ReleaseUIContext
+                - Smoke\ExtensionUIContext:
                     client: @github.client
-                - DocumentationUIContext:
+                - Smoke\DocumentationUIContext:
                     publisher: @documentation.publisher
                     client:    @github.client
-                - ReleaseUIContext
 
             filters:  { tags: 'critical' }
 

@@ -36,7 +36,8 @@
     "autoload-dev": {
         "psr-4": {
             "spec\\Behat\\Borg\\": "spec/",
-            "tests\\Behat\\Borg\\": "tests/"
+            "tests\\Behat\\Borg\\": "tests/",
+            "": "features/bootstrap/"
         }
     },
 

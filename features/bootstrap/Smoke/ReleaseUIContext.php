@@ -1,17 +1,19 @@
 <?php
 
+namespace Smoke;
+
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
 use PHPUnit_Framework_Assert as PHPUnit;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use Transformation;
 
 /**
  * Defines application features from the specific context.
  */
-class ReleaseUIContext implements Context, SnippetAcceptingContext
+class ReleaseUIContext implements Context
 {
     use Transformation\Release;
 
