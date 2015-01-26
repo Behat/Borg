@@ -10,9 +10,13 @@ default:
 
         smoke:
             contexts:
+                - ExtensionUIContext:
+                    client: @github.client
                 - DocumentationUIContext:
                     publisher: @documentation.publisher
                     client:    @github.client
+                - ReleaseUIContext
+
             filters:  { tags: 'critical' }
 
     extensions:
