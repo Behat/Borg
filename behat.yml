@@ -18,8 +18,7 @@ default:
                 - Smoke\DocumentationUIContext:
                      publisher: @documentation.publisher
                      client:    @github.client
-
-            filters:  { tags: 'critical' }
+            filters: { tags: 'critical' }
 
     extensions:
         Behat\Symfony2Extension: ~
