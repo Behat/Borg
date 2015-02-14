@@ -22,7 +22,7 @@ class ReleaseUIContext implements Context
      */
     public function cleanBuildAndWebFolders()
     {
-        $cacheDir = __DIR__ . '/../../app/cache/test';
+        $cacheDir = __DIR__ . '/../../../app/cache/test';
         (new Filesystem())->remove(["{$cacheDir}/build", "{$cacheDir}/docs"]);
     }
 
@@ -39,6 +39,6 @@ class ReleaseUIContext implements Context
 
     private function releaseCommand(Repository $repository, Version $version)
     {
-        return __DIR__ . "/../../app/console release {$repository} {$version} -e=test";
+        return __DIR__ . "/../../../app/console release {$repository} {$version} -e=test";
     }
 }
