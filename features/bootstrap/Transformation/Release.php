@@ -1,11 +1,12 @@
 <?php
 
-use Behat\Borg\Documentation\Page\PageId;
+namespace Transformation;
+
 use Behat\Borg\Release\Version;
 use Fake\Package\FakePackage;
 use Fake\Release\FakeRepository;
 
-trait DocumentationTransformations
+trait Release
 {
     private $scenarioRepositories = [];
 
@@ -33,21 +34,5 @@ trait DocumentationTransformations
     public function transformStringToVersion($string)
     {
         return Version::string($string);
-    }
-
-    /**
-     * @Transform :pageId
-     */
-    public function transformStringToPageId($string)
-    {
-        return new PageId($string);
-    }
-
-    /**
-     * @Transform :time
-     */
-    public function transformStringToDate($string)
-    {
-        return DateTimeImmutable::createFromFormat('d.m.Y, H:i:s', $string, new DateTimeZone('Z'));
     }
 }

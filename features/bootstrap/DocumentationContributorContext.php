@@ -1,7 +1,6 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\ProjectDocumentationId;
@@ -25,12 +24,13 @@ use PHPUnit_Framework_Assert as PHPUnit;
 /**
  * Describes documentation-related features from the documentation manager context.
  */
-class DocumentationContributorContext implements Context, SnippetAcceptingContext
+class DocumentationContributorContext implements Context
 {
+    use Transformation\Release;
+    use Transformation\Documentation;
+
     private $releaseManager;
     private $documenter;
-
-    use DocumentationTransformations;
 
     /**
      * Initializes context.
@@ -68,9 +68,7 @@ class DocumentationContributorContext implements Context, SnippetAcceptingContex
     /**
      * @Given :package version :version was not documented
      */
-    public function packageWasNotDocumented()
-    {
-    }
+    public function packageWasNotDocumented() { }
 
     /**
      * @When I release :repository version :version

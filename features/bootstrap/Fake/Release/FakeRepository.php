@@ -7,13 +7,16 @@ use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
 use DateTimeImmutable;
-use Fake\Documentation\FakeDocumentedDownload;
+use Fake\Documentation\FakeDocumentationDownload;
 use Fake\Documentation\FakeSource;
+use Fake\Extension\FakeExtension;
+use Fake\Package\FakePackageDownload;
 
 final class FakeRepository implements Repository
 {
     private $name;
     private $downloads = [];
+    private $extension;
 
     public static function named($name)
     {
@@ -45,13 +48,22 @@ final class FakeRepository implements Repository
     public function documentPackage(Package $package, Version $version, DateTimeImmutable $time)
     {
         $release = new Release($this, $version);
-        $this->downloads[(string)$release] = new FakeDocumentedDownload($release, $time, $package, new FakeSource());
+        $this->downloads[(string)$release] = new FakeDocumentationDownload($release, $time, $package, new FakeSource());
+    }
+
+    public function createExtension(FakeExtension $extension)
+    {
+        $this->extension = $extension;
     }
 
     public function download(Release $release)
     {
         if (isset($this->downloads[(string)$release])) {
             return $this->downloads[(string)$release];
+        }
+
+        if ($this->extension) {
+            return new FakePackageDownload($release, new DateTimeImmutable(), $this->extension);
         }
 
         return new FakeDownload($release, new DateTimeImmutable());

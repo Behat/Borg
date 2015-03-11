@@ -1,15 +1,24 @@
 default:
+    autoload: false
+
     suites:
         documentation_contributor:
-            contexts: [ 'DocumentationContributorContext' ]
+            contexts: [ DocumentationContributorContext ]
             filters:  { role: 'documentation contributor' }
+
+        extension_maintainer:
+            contexts: [ ExtensionMaintainerContext ]
+            filters:  { role: 'extension maintainer' }
 
         smoke:
             contexts:
-                - DocumentationUIContext:
-                    publisher: @documentation.publisher
-                    client:    @github.client
-            filters:  { tags: 'critical' }
+                - Smoke\ReleaseUIContext: ~
+                - Smoke\ExtensionUIContext:
+                     client:    @github.client
+                - Smoke\DocumentationUIContext:
+                     publisher: @documentation.publisher
+                     client:    @github.client
+            filters: { tags: 'critical' }
 
     extensions:
         Behat\Symfony2Extension: ~
