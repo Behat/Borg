@@ -55,7 +55,7 @@ class ExtensionUIContext extends RawMinkContext implements Context
     {
         $content = $this->contentInRepository($repository, 'composer.json');
 
-        return 1 === preg_match('#"name":\s*"' . preg_quote((string)$extension) . '"#', $content);
+        return 1 === preg_match('#"name"\s*:\s*"' . preg_quote((string)$extension) . '"#', $content);
     }
 
     private function contentInRepository(Repository $repository, $path)
