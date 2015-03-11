@@ -38,6 +38,9 @@
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.documenter"/>
+            <argument type="service">
+                <service class="Behat\Borg\DocumentationPackage\DocumentationIdFactory" />
+            </argument>
         </service>
 
         <service id="twig.loader.documentation"

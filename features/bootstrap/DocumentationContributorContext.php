@@ -5,6 +5,7 @@ use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsReposito
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
+use Behat\Borg\DocumentationPackage\DocumentationIdFactory;
 use Behat\Borg\DocumentationPackage\PackageDocumenter;
 use Behat\Borg\Documenter;
 use Behat\Borg\Package\Package;
@@ -42,7 +43,7 @@ class DocumentationContributorContext implements Context
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), $this->documenter);
+        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), $this->documenter, new DocumentationIdFactory());
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);

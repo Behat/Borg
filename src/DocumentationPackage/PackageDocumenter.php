@@ -21,17 +21,23 @@ final class PackageDocumenter implements PackageListener
      * @var Documenter
      */
     private $documenter;
+    /**
+     * @var DocumentationIdFactory
+     */
+    private $idFactory;
 
     /**
      * Initializes listener.
      *
-     * @param SourceFinder $finder
-     * @param Documenter   $documenter
+     * @param SourceFinder           $finder
+     * @param Documenter             $documenter
+     * @param DocumentationIdFactory $idFactory
      */
-    public function __construct(SourceFinder $finder, Documenter $documenter)
+    public function __construct(SourceFinder $finder, Documenter $documenter, DocumentationIdFactory $idFactory)
     {
         $this->finder = $finder;
         $this->documenter = $documenter;
+        $this->idFactory = $idFactory;
     }
 
     /**
@@ -50,7 +56,7 @@ final class PackageDocumenter implements PackageListener
 
         $version = $download->version();
         $time = $download->releasedAt();
-        $anId = new PackagedDocumentationId($package, $version);
+        $anId = $this->idFactory->createDocumentationId($package, $version);
 
         $this->documenter->process(new RawDocumentation($anId, $time, $source));
     }
