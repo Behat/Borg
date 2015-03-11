@@ -3,28 +3,46 @@
 namespace Behat\Borg\Documentation;
 
 /**
- * Represents a unique way to identify any documentation.
+ * Very simple project documentation ID.
  */
-interface DocumentationId
+final class DocumentationId
 {
-    /**
-     * Returns documented project name.
-     *
-     * @return string
-     */
-    public function projectName();
+    private $projectName;
+    private $versionString;
 
     /**
-     * Returns documentation version string.
+     * Initializes an ID.
      *
-     * @return string
+     * @param string $projectName
+     * @param string $versionString
      */
-    public function versionString();
+    public function __construct($projectName, $versionString)
+    {
+        $this->projectName = $projectName;
+        $this->versionString = $versionString;
+    }
 
     /**
-     * Returns unique documentation ID string.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function __toString();
+    public function projectName()
+    {
+        return $this->projectName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function versionString()
+    {
+        return $this->versionString;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return $this->projectName . '/' . $this->versionString;
+    }
 }

@@ -3,8 +3,9 @@
 use Behat\Behat\Context\Context;
 use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Documentation\ProjectDocumentationId;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
+use Behat\Borg\DocumentationPackage\DocumentationIdFactory;
 use Behat\Borg\DocumentationPackage\PackageDocumenter;
 use Behat\Borg\Documenter;
 use Behat\Borg\Package\Package;
@@ -42,7 +43,7 @@ class DocumentationContributorContext implements Context
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), $this->documenter);
+        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), $this->documenter, new DocumentationIdFactory());
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
@@ -85,7 +86,7 @@ class DocumentationContributorContext implements Context
     {
         PHPUnit::assertNotNull(
             $this->documenter->findPage(
-                new ProjectDocumentationId($project, $versionString), new PageId('index.html')
+                new DocumentationId($project, $versionString), new PageId('index.html')
             )
         );
     }
@@ -97,7 +98,7 @@ class DocumentationContributorContext implements Context
     {
         PHPUnit::assertNull(
             $this->documenter->findPage(
-                new ProjectDocumentationId($project, $versionString), new PageId('index.html')
+                new DocumentationId($project, $versionString), new PageId('index.html')
             )
         );
     }
@@ -107,7 +108,7 @@ class DocumentationContributorContext implements Context
      */
     public function packageNameOfPageShouldBe(PageId $pageId, $project, $versionString, $name)
     {
-        $documentationId = new ProjectDocumentationId($project, $versionString);
+        $documentationId = new DocumentationId($project, $versionString);
         $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
@@ -119,7 +120,7 @@ class DocumentationContributorContext implements Context
      */
     public function timeOfPageShouldBe(PageId $pageId, $project, $versionString, DateTimeImmutable $time)
     {
-        $documentationId = new ProjectDocumentationId($project, $versionString);
+        $documentationId = new DocumentationId($project, $versionString);
         $page = $this->documenter->findPage($documentationId, $pageId);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
@@ -131,7 +132,7 @@ class DocumentationContributorContext implements Context
      */
     public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
     {
-        $documentationId = new ProjectDocumentationId($project, 'current');
+        $documentationId = new DocumentationId($project, 'current');
         $page = $this->documenter->findPage($documentationId, new PageId('index.html'));
 
         PHPUnit::assertNotNull($page, 'Page not found.');
@@ -144,7 +145,7 @@ class DocumentationContributorContext implements Context
     public function documentationVersionShouldBeInTheList($project, $versionString)
     {
         PHPUnit_Framework_Assert::assertContains(
-            (string)(new ProjectDocumentationId($project, $versionString)),
+            (string)(new DocumentationId($project, $versionString)),
             array_map(
                 function (PublishedDocumentation $documentation) {
                     return (string)$documentation->documentationId();

@@ -3,7 +3,7 @@
 namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Documentation\ProjectDocumentationId;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documenter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -84,7 +84,7 @@ class DocumentationController extends Controller
     public function documentationPageAction($project, $version, $path)
     {
         $manager = $this->getDocumenter();
-        $documentationId = new ProjectDocumentationId($project, $version);
+        $documentationId = new DocumentationId($project, $version);
         $pageId = new PageId($path);
 
         if (!$page = $manager->findPage($documentationId, $pageId)) {

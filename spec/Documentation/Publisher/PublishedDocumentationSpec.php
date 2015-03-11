@@ -13,20 +13,19 @@ class PublishedDocumentationSpec extends ObjectBehavior
 {
     function let(
         BuiltDocumentation $builtDocumentation,
-        DocumentationId $anId,
         \DateTimeImmutable $buildTime,
         \DateTimeImmutable $docTime
     ) {
-        $builtDocumentation->documentationId()->willReturn($anId);
+        $builtDocumentation->documentationId()->willReturn(new DocumentationId('behat/behat', 'v1.0'));
         $builtDocumentation->builtAt()->willReturn($buildTime);
         $builtDocumentation->documentedAt()->willReturn($docTime);
 
         $this->beConstructedThrough('publish', [$builtDocumentation, __DIR__]);
     }
 
-    function it_has_a_documentation_id(DocumentationId $anId)
+    function it_has_a_documentation_id()
     {
-        $this->documentationId()->shouldReturn($anId);
+        $this->documentationId()->shouldBeLike(new DocumentationId('behat/behat', 'v1.0'));
     }
 
     function it_has_the_same_build_time_as_the_built_documentation(\DateTimeImmutable $buildTime)
@@ -39,7 +38,7 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->documentedAt()->shouldReturn($docTime);
     }
 
-    function it_can_tell_if_it_contains_a_page(DocumentationId $anId)
+    function it_can_tell_if_it_contains_a_page()
     {
         $this->shouldHavePage(new PageId(basename(__FILE__)));
         $this->shouldNotHavePage(new PageId('any file'));

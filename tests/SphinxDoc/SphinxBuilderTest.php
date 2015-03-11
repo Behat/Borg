@@ -107,16 +107,11 @@ DOC;
      * @param string $projectName
      * @param string $versionString
      *
-     * @return Download
+     * @return DocumentationId
      */
     private function createDocumentationId($projectName, $versionString)
     {
-        $anId = $this->getMock(DocumentationId::class);
-        $anId->method('projectName')->willReturn($projectName);
-        $anId->method('versionString')->willReturn($versionString);
-        $anId->method('__toString')->willReturn("{$projectName}/{$versionString}");
-
-        return $anId;
+        return new DocumentationId($projectName, $versionString);
     }
 
     /**

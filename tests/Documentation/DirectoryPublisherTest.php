@@ -30,19 +30,18 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
     /** @test */
     function it_publishes_documentation_by_moving_it_to_appropriate_folder()
     {
-        $anId = $this->getMock(DocumentationId::class);
-        $anId->method('__toString')->willReturn('built_doc');
+        $anId = new DocumentationId('built_doc', 'v1.0');
         $builtDoc = $this->getMock(BuiltDocumentation::class);
         $builtDoc->method('documentationId')->willReturn($anId);
-        $builtDoc->method('buildPath')->willReturn($this->tempBuildPath . '/built_doc');
+        $builtDoc->method('buildPath')->willReturn($this->tempBuildPath . '/built_doc/v1.0');
 
-        (new Filesystem())->mkdir($this->tempBuildPath . '/built_doc');
-        (new Filesystem())->touch($this->tempBuildPath . '/built_doc/my_file');
+        (new Filesystem())->mkdir($this->tempBuildPath . '/built_doc/v1.0');
+        (new Filesystem())->touch($this->tempBuildPath . '/built_doc/v1.0/my_file');
 
         $publishedDoc = $this->publisher->publish($builtDoc);
 
         $this->assertEquals(
-            PublishedDocumentation::publish($builtDoc, $this->tempPublishPath . '/built_doc'),
+            PublishedDocumentation::publish($builtDoc, $this->tempPublishPath . '/built_doc/v1.0'),
             $publishedDoc
         );
     }
