@@ -14,13 +14,9 @@ class PageSpec extends ObjectBehavior
 {
     function let(
         BuiltDocumentation $built,
-        DocumentationId $documentationId,
         DateTimeImmutable $documentationTime
     ) {
-        $documentationId->projectName()->willReturn('behat/docs');
-        $documentationId->versionString()->willReturn('v3.1');
-
-        $built->documentationId()->willReturn($documentationId);
+        $built->documentationId()->willReturn(new DocumentationId('behat/docs', 'v3.1'));
         $built->builtAt()->willReturn(new DateTimeImmutable());
         $built->documentedAt()->willReturn($documentationTime);
 

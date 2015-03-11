@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\DocumentationPackage;
 
-use Behat\Borg\Documentation\ProjectDocumentationId;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
@@ -18,21 +18,21 @@ class DocumentationIdFactorySpec extends ObjectBehavior
     function it_creates_documentation_id_using_provided_package_and_version(Package $package)
     {
         $this->createDocumentationId($package, Version::string('v1.0.2'))->shouldBeLike(
-            new ProjectDocumentationId('behat/behat', 'v1.0')
+            new DocumentationId('behat/behat', 'v1.0')
         );
     }
 
     function it_uses_minor_version_plus_x_as_a_version_string_for_unstable_packages(Package $package)
     {
         $this->createDocumentationId($package, Version::string('v1.0.x'))->shouldBeLike(
-            new ProjectDocumentationId('behat/behat', 'v1.0.x')
+            new DocumentationId('behat/behat', 'v1.0.x')
         );
     }
 
     function it_uses_branch_name_as_a_version_string_for_branch_based_versions(Package $package)
     {
         $this->createDocumentationId($package, Version::string('master'))->shouldBeLike(
-            new ProjectDocumentationId('behat/behat', 'master')
+            new DocumentationId('behat/behat', 'master')
         );
     }
 }

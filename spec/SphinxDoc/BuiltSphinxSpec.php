@@ -11,11 +11,10 @@ use Prophecy\Argument;
 class BuiltSphinxSpec extends ObjectBehavior
 {
     function let(
-        DocumentationId $anId,
         DateTimeImmutable $documentationTime,
         DateTimeImmutable $buildTime
     ) {
-        $this->beConstructedWith($anId, $documentationTime, $buildTime, __DIR__);
+        $this->beConstructedWith(new DocumentationId('behat/behat', 'v1.0'), $documentationTime, $buildTime, __DIR__);
     }
 
     function it_is_a_built_documentation()
@@ -23,9 +22,9 @@ class BuiltSphinxSpec extends ObjectBehavior
         $this->shouldHaveType(BuiltDocumentation::class);
     }
 
-    function it_has_a_documentation_id(DocumentationId $anId)
+    function it_has_a_documentation_id()
     {
-        $this->documentationId()->shouldReturn($anId);
+        $this->documentationId()->shouldBeLike(new DocumentationId('behat/behat', 'v1.0'));
     }
 
     function it_has_a_path_documentation_was_built_into()

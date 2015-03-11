@@ -3,7 +3,6 @@
 namespace Behat\Borg\DocumentationPackage;
 
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\ProjectDocumentationId;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Version;
 
@@ -22,7 +21,7 @@ final class DocumentationIdFactory
      */
     public function createDocumentationId(Package $package, Version $version)
     {
-        return new ProjectDocumentationId((string)$package, $this->versionString($version));
+        return new DocumentationId((string)$package, $this->versionString($version));
     }
 
     /**

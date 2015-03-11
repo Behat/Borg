@@ -24,14 +24,14 @@ class DocumenterSpec extends ObjectBehavior
 
     function it_processes_documentation_by_building_and_publishing_it(
         Builder $builder,
-        DocumentationId $anId,
         Source $source,
         BuiltDocumentation $builtDocumentation,
         Publisher $publisher,
         Repository $repository
     ) {
+        $anId = new DocumentationId('behat/behat', 'v1.0');
         $raw = new RawDocumentation(
-            $anId->getWrappedObject(), new \DateTimeImmutable(), $source->getWrappedObject()
+            $anId, new \DateTimeImmutable(), $source->getWrappedObject()
         );
         $published = PublishedDocumentation::publish($builtDocumentation->getWrappedObject(), '/');
 
@@ -44,9 +44,10 @@ class DocumenterSpec extends ObjectBehavior
 
     function it_finds_documentation_page_if_documentation_was_saved_and_has_asked_page(
         Repository $repository,
-        DocumentationId $anId,
         BuiltDocumentation $built
     ) {
+
+        $anId = new DocumentationId('behat/behat', 'v1.0');
         $built->documentationId()->willReturn($anId);
         $built->builtAt()->willReturn(new \DateTimeImmutable());
         $built->documentedAt()->willReturn(new \DateTimeImmutable());
@@ -62,10 +63,9 @@ class DocumenterSpec extends ObjectBehavior
         $page->shouldBeAnInstanceOf(Page::class);
     }
 
-    function it_finds_nothing_if_documentation_was_not_found(
-        Repository $repository,
-        DocumentationId $anId
-    ) {
+    function it_finds_nothing_if_documentation_was_not_found(Repository $repository)
+    {
+        $anId = new DocumentationId('behat/behat', 'v1.0');
         $pageId = new PageId(basename(__FILE__));
 
         $repository->find($anId)->willReturn(null);
@@ -75,9 +75,9 @@ class DocumenterSpec extends ObjectBehavior
 
     function it_finds_nothing_if_documentation_was_found_but_page_was_not(
         Repository $repository,
-        DocumentationId $anId,
         BuiltDocumentation $built
     ) {
+        $anId = new DocumentationId('behat/behat', 'v1.0');
         $pageId = new PageId('no_file');
         $publishedDocumentation = PublishedDocumentation::publish(
             $built->getWrappedObject(), __DIR__
@@ -90,9 +90,9 @@ class DocumenterSpec extends ObjectBehavior
 
     function it_finds_all_documentation_for_a_provided_project_name(
         Repository $repository,
-        DocumentationId $anId,
         BuiltDocumentation $built
     ) {
+        $anId = new DocumentationId('behat/behat', 'v1.0');
         $built->documentationId()->willReturn($anId);
         $built->builtAt()->willReturn(new \DateTimeImmutable());
         $built->documentedAt()->willReturn(new \DateTimeImmutable());

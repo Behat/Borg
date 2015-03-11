@@ -15,14 +15,14 @@ use Prophecy\Argument;
 
 class RawDocumentationSpec extends ObjectBehavior
 {
-    function let(DocumentationId $anId, DateTimeImmutable $time, Source $source)
+    function let(DateTimeImmutable $time, Source $source)
     {
-        $this->beConstructedWith($anId, $time, $source);
+        $this->beConstructedWith(new DocumentationId('behat/behat', 'v1.0'), $time, $source);
     }
 
-    function it_has_an_id(DocumentationId $anId)
+    function it_has_an_id()
     {
-        $this->documentationId()->shouldReturn($anId);
+        $this->documentationId()->shouldBeLike(new DocumentationId('behat/behat', 'v1.0'));
     }
 
     function it_has_a_source(Source $source)

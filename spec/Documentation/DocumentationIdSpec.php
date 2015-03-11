@@ -6,7 +6,7 @@ use Behat\Borg\Documentation\DocumentationId;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class ProjectDocumentationIdSpec extends ObjectBehavior
+class DocumentationIdSpec extends ObjectBehavior
 {
     function let()
     {
