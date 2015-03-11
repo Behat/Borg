@@ -107,7 +107,7 @@ class DocumentationUIContext extends RawMinkContext implements Context
     private function repositoryContainsDocs(Repository $repository, Version $version)
     {
         return $this->existsInRepositoryVersion($repository, $version, 'index.rst')
-        || $this->existsInRepositoryVersion($repository, $version, 'doc/index.rst');
+            || $this->existsInRepositoryVersion($repository, $version, 'doc/index.rst');
     }
 
     private function repositoryPackageIs(Repository $repository, Version $version, Package $package)
