@@ -14,7 +14,6 @@ Feature: Extensions are catalogued
     Then the extension catalogue should contain 1 extension
     And "behat/symfony2-extension" extension should be in the catalogue
 
-  @critical
   Scenario: Releasing multiple stable extensions
     Given "behat/symfony2-extension" extension was created in "Behat/Symfony2Extension"
     And "behat/mink-extension" extension was created in "Behat/MinkExtension"
