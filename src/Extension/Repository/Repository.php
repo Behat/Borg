@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Extension\Repository;
 
+use Behat\Borg\Extension\Exception\ExtensionNotFound;
 use Behat\Borg\Extension\Extension;
 
 /**
@@ -14,21 +15,23 @@ interface Repository
      *
      * @param Extension $extension
      */
-    public function save(Extension $extension);
+    public function add(Extension $extension);
 
     /**
      * Find stored extension by name.
      *
      * @param string $name
      *
-     * @return null|Extension
+     * @return Extension
+     *
+     * @throws ExtensionNotFound
      */
-    public function find($name);
+    public function extension($name);
 
     /**
      * Returns all stored extensions.
      *
      * @return Extension[]
      */
-    public function findAll();
+    public function all();
 }

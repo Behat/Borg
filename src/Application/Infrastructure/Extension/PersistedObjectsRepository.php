@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Application\Infrastructure\Extension;
 
+use Behat\Borg\Extension\Exception\ExtensionNotFound;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\Extension\Repository\Repository;
 use Everzet\PersistedObjects\FileRepository;
@@ -17,17 +18,23 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         $this->repo = $path ? new FileRepository($path, $this) : new InMemoryRepository($this);
     }
 
-    public function save(Extension $extension)
+    public function add(Extension $extension)
     {
         $this->repo->save($extension);
     }
 
-    public function find($name)
+    public function extension($name)
     {
-        return $this->repo->findById($name);
+        $extension = $this->repo->findById($name);
+
+        if (!$extension) {
+            throw new ExtensionNotFound('Extension was not found.');
+        }
+
+        return $extension;
     }
 
-    public function findAll()
+    public function all()
     {
         return $this->repo->getAll();
     }

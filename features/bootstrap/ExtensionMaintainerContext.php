@@ -82,7 +82,7 @@ class ExtensionMaintainerContext implements Context
      */
     public function extensionCatalogueShouldHaveCount($count = 0)
     {
-        PHPUnit::assertCount($count, $this->catalogue->getAll());
+        PHPUnit::assertCount($count, $this->catalogue->all());
     }
 
     /**
@@ -90,6 +90,6 @@ class ExtensionMaintainerContext implements Context
      */
     public function extensionShouldBeInCatalogue($extensionName)
     {
-        PHPUnit::assertNotNull($this->catalogue->find($extensionName), 'Extension not found.');
+        $this->catalogue->extension($extensionName);
     }
 }

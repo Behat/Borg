@@ -3,6 +3,7 @@
 namespace Behat\Borg\Application\Infrastructure\Documentation;
 
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Repository\Repository;
 use Everzet\PersistedObjects\FileRepository;
@@ -16,21 +17,28 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         $this->repo = $path ? new FileRepository($path, $this) : new InMemoryRepository($this);
     }
 
-    public function save(PublishedDocumentation $documentation)
+    public function add(PublishedDocumentation $documentation)
     {
         $this->repo->save($documentation);
     }
 
-    public function find(DocumentationId $documentationId)
+    public function documentation(DocumentationId $documentationId)
     {
         if ('current' === $documentationId->versionString()) {
-            return current($this->findAll($documentationId->projectName()));
+            $projectDocumentation = $this->projectDocumentation($documentationId->projectName());
+            $documentation = current($projectDocumentation);
+        } else {
+            $documentation = $this->repo->findById((string)$documentationId);
         }
 
-        return $this->repo->findById((string)$documentationId);
+        if (!$documentation) {
+            throw new PageNotFound('Documentation was not found.');
+        }
+
+        return $documentation;
     }
 
-    public function findAll($projectName)
+    public function projectDocumentation($projectName)
     {
         $documentation = array_filter(
             $this->repo->getAll(),
