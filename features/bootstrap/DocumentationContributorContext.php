@@ -2,6 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
+use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
@@ -96,11 +97,11 @@ class DocumentationContributorContext implements Context
      */
     public function versionDocumentationShouldNotBePublished($project, $versionString)
     {
-        PHPUnit::assertNull(
-            $this->documenter->findPage(
-                new DocumentationId($project, $versionString), new PageId('index.html')
-            )
-        );
+        try {
+            $this->documenter->findPage(new DocumentationId($project, $versionString), new PageId('index.html'));
+            PHPUnit_Framework_Assert::fail('Documentation was actually found.');
+        } catch (PageNotFound $e) {
+        }
     }
 
     /**

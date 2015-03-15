@@ -3,6 +3,7 @@
 namespace Behat\Borg\Documentation\Repository;
 
 use Behat\Borg\Documentation\DocumentationId;
+use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 
 /**
@@ -11,27 +12,29 @@ use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 interface Repository
 {
     /**
-     * Saves published documentation to the repository.
+     * Adds published documentation to the repository.
      *
      * @param PublishedDocumentation $documentation
      */
-    public function save(PublishedDocumentation $documentation);
+    public function add(PublishedDocumentation $documentation);
 
     /**
-     * Finds documentation by its id.
+     * Gets documentation by its id.
      *
      * @param DocumentationId $documentationId
      *
-     * @return null|PublishedDocumentation
+     * @return PublishedDocumentation
+     *
+     * @throws PageNotFound
      */
-    public function find(DocumentationId $documentationId);
+    public function documentation(DocumentationId $documentationId);
 
     /**
-     * Finds all documentation for particular project.
+     * Gets all documentation for a particular project.
      *
      * @param string $projectName
      *
      * @return PublishedDocumentation[]
      */
-    public function findAll($projectName);
+    public function projectDocumentation($projectName);
 }

@@ -3,6 +3,7 @@
 namespace Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\Builder;
+use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
@@ -52,7 +53,7 @@ final class Documenter
     {
         $built = $this->builder->build($documentation);
         $published = $this->publisher->publish($built);
-        $this->repository->save($published);
+        $this->repository->add($published);
     }
 
     /**
@@ -65,12 +66,10 @@ final class Documenter
      */
     public function findPage(DocumentationId $documentationId, PageId $pageId)
     {
-        if (!$documentation = $this->repository->find($documentationId)) {
-            return null;
-        }
+        $documentation = $this->repository->documentation($documentationId);
 
         if (!$documentation->hasPage($pageId)) {
-            return null;
+            throw new PageNotFound('Page was not found.');
         }
 
         return $documentation->page($pageId);
@@ -85,6 +84,6 @@ final class Documenter
      */
     public function findProjectDocumentation($projectName)
     {
-        return $this->repository->findAll($projectName);
+        return $this->repository->projectDocumentation($projectName);
     }
 }

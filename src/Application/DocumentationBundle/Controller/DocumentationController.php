@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Application\DocumentationBundle\Controller;
 
+use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documenter;
@@ -87,7 +88,9 @@ class DocumentationController extends Controller
         $documentationId = new DocumentationId($project, $version);
         $pageId = new PageId($path);
 
-        if (!$page = $manager->findPage($documentationId, $pageId)) {
+        try {
+            $page = $manager->findPage($documentationId, $pageId);
+        } catch (PageNotFound $e) {
             throw $this->createNotFoundException();
         }
 

@@ -4,6 +4,7 @@ namespace spec\Behat\Borg;
 
 use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
+use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Publisher\Publisher;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
@@ -37,7 +38,7 @@ class DocumenterSpec extends ObjectBehavior
 
         $builder->build($raw)->willReturn($builtDocumentation);
         $publisher->publish($builtDocumentation)->willReturn($published);
-        $repository->save($published)->shouldBeCalled();
+        $repository->add($published)->shouldBeCalled();
 
         $this->process($raw);
     }
@@ -57,23 +58,13 @@ class DocumenterSpec extends ObjectBehavior
             $built->getWrappedObject(), __DIR__
         );
 
-        $repository->find($anId)->willReturn($publishedDocumentation);
+        $repository->documentation($anId)->willReturn($publishedDocumentation);
 
         $page = $this->findPage($anId, $pageId);
         $page->shouldBeAnInstanceOf(Page::class);
     }
 
-    function it_finds_nothing_if_documentation_was_not_found(Repository $repository)
-    {
-        $anId = new DocumentationId('behat/behat', 'v1.0');
-        $pageId = new PageId(basename(__FILE__));
-
-        $repository->find($anId)->willReturn(null);
-
-        $this->findPage($anId, $pageId)->shouldReturn(null);
-    }
-
-    function it_finds_nothing_if_documentation_was_found_but_page_was_not(
+    function it_finds_nothing_if_documentation_was_found_but_the_page_was_not(
         Repository $repository,
         BuiltDocumentation $built
     ) {
@@ -83,9 +74,9 @@ class DocumenterSpec extends ObjectBehavior
             $built->getWrappedObject(), __DIR__
         );
 
-        $repository->find($anId)->willReturn($publishedDocumentation);
+        $repository->documentation($anId)->willReturn($publishedDocumentation);
 
-        $this->findPage($anId, $pageId)->shouldReturn(null);
+        $this->shouldThrow(PageNotFound::class)->duringFindPage($anId, $pageId);
     }
 
     function it_finds_all_documentation_for_a_provided_project_name(
@@ -101,7 +92,7 @@ class DocumenterSpec extends ObjectBehavior
             $built->getWrappedObject(), __DIR__
         );
 
-        $repository->findAll('my/project')->willReturn([$publishedDocumentation]);
+        $repository->projectDocumentation('my/project')->willReturn([$publishedDocumentation]);
 
         $this->findProjectDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
     }
