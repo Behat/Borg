@@ -14,18 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class DocumentationController extends Controller
 {
     /**
-     * @Route(
-     *     "/{version}",
-     *     name="behat_documentation_index"
-     * )
-     * @Route(
-     *     "/behat/behat/{version}",
-     *     name="behat_documentation_fullpath_index"
-     * )
-     * @Route(
-     *     "/behat/behat/{version}/{path}",
-     *     name="behat_documentation_fullpath_page"
-     * )
+     * @Route("/{version}", name="behat_documentation_index")
+     * @Route("/behat/behat/{version}", name="behat_documentation_fullpath_index")
+     * @Route("/behat/behat/{version}/{path}", name="behat_documentation_fullpath_page")
      *
      * @param string $version
      * @param string $path
@@ -38,10 +29,7 @@ class DocumentationController extends Controller
     }
 
     /**
-     * @Route(
-     *     "/{version}/{path}",
-     *     name="behat_documentation_page"
-     * )
+     * @Route("/{version}/{path}", name="behat_documentation_page")
      *
      * @param string $version
      * @param string $path
@@ -54,10 +42,7 @@ class DocumentationController extends Controller
     }
 
     /**
-     * @Route(
-     *     "/{project}/{version}",
-     *     name="documentation_index"
-     * )
+     * @Route("/{project}/{version}", name="documentation_index")
      *
      * @param string $project
      * @param string $version
@@ -71,10 +56,7 @@ class DocumentationController extends Controller
     }
 
     /**
-     * @Route(
-     *     "/{project}/{version}/{path}",
-     *     name="documentation_page"
-     * )
+     * @Route("/{project}/{version}/{path}", name="documentation_page")
      *
      * @param string $project
      * @param string $version
@@ -84,26 +66,20 @@ class DocumentationController extends Controller
      */
     public function documentationPageAction($project, $version, $path)
     {
-        $manager = $this->getDocumenter();
-        $documentationId = new DocumentationId($project, $version);
-        $pageId = new PageId($path);
-
         try {
-            $page = $manager->documentationPage($documentationId, $pageId);
+            $documentationPage = $this->documenter()->documentationPage(new DocumentationId($project, $version), new PageId($path));
+            $projectDocumentation = $this->documenter()->projectDocumentation($project);
         } catch (PageNotFound $e) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException('Documentation page was not found.');
         }
 
-        return $this->render("documentation:{$page}", [
-            'page'        => $page,
-            'projectDocs' => $manager->projectDocumentation($project)
-        ]);
+        return $this->render("documentation:{$documentationPage}", compact('documentationPage', 'projectDocumentation'));
     }
 
     /**
      * @return Documenter
      */
-    private function getDocumenter()
+    private function documenter()
     {
         return $this->get('documentation.documenter');
     }
