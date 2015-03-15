@@ -50,10 +50,10 @@ final class ReleasePackager implements DownloadListener
             return;
         }
 
-        $packageDownload = new PackageDownload($package, $download);
+        $downloadedPackage = new DownloadedPackage($package, $download);
 
         foreach ($this->listeners as $listener) {
-            $listener->packageWasDownloaded($packageDownload);
+            $listener->packageWasDownloaded($downloadedPackage);
         }
     }
 }

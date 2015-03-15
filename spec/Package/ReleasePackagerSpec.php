@@ -5,7 +5,7 @@ namespace spec\Behat\Borg\Package;
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Package\Listener\PackageListener;
 use Behat\Borg\Package\Package;
-use Behat\Borg\Package\PackageDownload;
+use Behat\Borg\Package\DownloadedPackage;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Listener\DownloadListener;
 use PhpSpec\ObjectBehavior;
@@ -31,7 +31,7 @@ class ReleasePackagerSpec extends ObjectBehavior
         PackageListener $listener2
     ) {
         $finder->find($download)->willReturn($package);
-        $packageDownload = new PackageDownload($package->getWrappedObject(), $download->getWrappedObject());
+        $packageDownload = new DownloadedPackage($package->getWrappedObject(), $download->getWrappedObject());
 
         $listener1->packageWasDownloaded($packageDownload)->shouldBeCalled();
         $listener2->packageWasDownloaded($packageDownload)->shouldBeCalled();

@@ -5,7 +5,7 @@ namespace Behat\Borg\Integration\Extension\Package;
 use Behat\Borg\Extension\Extractor\Extractor;
 use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\Package\Listener\PackageListener;
-use Behat\Borg\Package\PackageDownload;
+use Behat\Borg\Package\DownloadedPackage;
 
 /**
  * Catalogues extension package.
@@ -36,9 +36,9 @@ final class ExtensionCataloguer implements PackageListener
     /**
      * {@inheritdoc}
      */
-    public function packageWasDownloaded(PackageDownload $packageDownload)
+    public function packageWasDownloaded(DownloadedPackage $downloadedPackage)
     {
-        if (null === $extension = $this->extractor->extract($packageDownload->package())) {
+        if (null === $extension = $this->extractor->extract($downloadedPackage->package())) {
             return;
         }
 

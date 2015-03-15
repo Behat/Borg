@@ -7,7 +7,7 @@ use Behat\Borg\Release\Downloader\Download;
 /**
  * Represents a downloaded version of a package.
  */
-final class PackageDownload
+final class DownloadedPackage
 {
     /**
      * @var Package

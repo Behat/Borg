@@ -6,7 +6,7 @@ use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documenter;
 use Behat\Borg\Package\Listener\PackageListener;
-use Behat\Borg\Package\PackageDownload;
+use Behat\Borg\Package\DownloadedPackage;
 
 /**
  * Processes packaged documentation.
@@ -43,12 +43,12 @@ final class PackageDocumenter implements PackageListener
     /**
      * Notifies listeners that package was downloaded.
      *
-     * @param PackageDownload $packageDownload
+     * @param DownloadedPackage $downloadedPackage
      */
-    public function packageWasDownloaded(PackageDownload $packageDownload)
+    public function packageWasDownloaded(DownloadedPackage $downloadedPackage)
     {
-        $package = $packageDownload->package();
-        $download = $packageDownload->download();
+        $package = $downloadedPackage->package();
+        $download = $downloadedPackage->download();
 
         if (null === $source = $this->finder->find($download)) {
             return;

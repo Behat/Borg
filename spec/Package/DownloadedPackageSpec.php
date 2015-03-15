@@ -8,7 +8,7 @@ use Behat\Borg\Release\Version;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class PackageDownloadSpec extends ObjectBehavior
+class DownloadedPackageSpec extends ObjectBehavior
 {
     function let(Package $package, Download $download)
     {
