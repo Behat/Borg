@@ -1,19 +1,19 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
 use Behat\Borg\ExtensionCatalogue;
-use Behat\Borg\ExtensionPackage\ExtensionCataloguer;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\ReleasePackager;
+use Behat\Borg\Integration\Extension\Package\ExtensionCataloguer;
+use Behat\Borg\Integration\Extension\PersistedObjectsRepository;
+use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
+use Behat\Borg\Release\ReleasePackager;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Extension\FakeExtension;
 use Fake\Extension\FakeExtractor;
-use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
+use Fake\Release\FakePackageFinder;
 use Fake\Release\FakeRepository;
 use PHPUnit_Framework_Assert as PHPUnit;
 

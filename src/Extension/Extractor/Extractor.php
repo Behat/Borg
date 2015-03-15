@@ -3,7 +3,7 @@
 namespace Behat\Borg\Extension\Extractor;
 
 use Behat\Borg\Extension\Extension;
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 
 /**
  * Extracts extension from the package.

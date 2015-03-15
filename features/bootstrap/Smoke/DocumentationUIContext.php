@@ -4,7 +4,7 @@ namespace Smoke;
 
 use Behat\Behat\Context\Context;
 use Behat\Borg\Documentation\Publisher\Publisher;
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
 use Behat\MinkExtension\Context\RawMinkContext;

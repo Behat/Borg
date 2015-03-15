@@ -3,7 +3,7 @@
 namespace Fake\Extension;
 
 use Behat\Borg\Extension\Extractor\Extractor;
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 
 final class FakeExtractor implements Extractor
 {

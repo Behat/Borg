@@ -11,35 +11,13 @@
 
     <services>
 
-        <service id="release.listener.download.packaging"
-                 class="Behat\Borg\Package\ReleasePackager" public="false">
-            <argument type="service" id="package.finder.compound"/>
-            <call method="registerListener">
-                <argument type="service" id="package.listener.package.documenter"/>
-            </call>
-        </service>
-
-        <service id="package.finder.documentation"
-                 class="Behat\Borg\DocumentationPackage\DocumentationPackageFinder" public="false"/>
-
-        <service id="package.finder.composer"
-                 class="Behat\Borg\ComposerPackage\ComposerPackageFinder" public="false"/>
-
-        <service id="package.finder.compound"
-                 class="Behat\Borg\Package\Finder\CompoundFinder" public="false">
-            <argument type="collection">
-                <argument type="service" id="package.finder.documentation"/>
-                <argument type="service" id="package.finder.composer"/>
-            </argument>
-        </service>
-
         <service id="package.listener.package.documenter"
-                 class="Behat\Borg\DocumentationPackage\PackageDocumenter"
+                 class="Behat\Borg\Integration\Documentation\Package\PackageDocumenter"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
             <argument type="service" id="documentation.documenter"/>
             <argument type="service">
-                <service class="Behat\Borg\DocumentationPackage\DocumentationIdFactory" />
+                <service class="Behat\Borg\Integration\Documentation\Package\DocumentationIdFactory" />
             </argument>
         </service>
 
@@ -57,16 +35,16 @@
         </service>
 
         <service id="documentation.repository"
-                 class="Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository"
+                 class="Behat\Borg\Integration\Documentation\PersistedObjectsRepository"
                  public="false">
             <argument>%documentation.publisher.path%/published.meta</argument>
         </service>
 
         <service id="documentation.source_finder.rst"
-                 class="Behat\Borg\SphinxDoc\RstFinder" public="false"/>
+                 class="Behat\Borg\Integration\Documentation\SphinxDoc\RstFinder" public="false"/>
 
         <service id="documentation.builder.sphinx"
-                 class="Behat\Borg\SphinxDoc\SphinxBuilder" public="false">
+                 class="Behat\Borg\Integration\Documentation\SphinxDoc\SphinxBuilder" public="false">
             <argument>%documentation.build.path%</argument>
             <argument>%kernel.root_dir%/../src/Application/DocumentationBundle/Resources/sphinx</argument>
             <argument type="service">
@@ -75,7 +53,7 @@
         </service>
 
         <service id="documentation.publisher"
-                 class="Behat\Borg\Documentation\Publisher\DirectoryPublisher">
+                 class="Behat\Borg\Integration\Documentation\Filesystem\DirectoryPublisher">
             <argument>%documentation.publisher.path%</argument>
         </service>
 

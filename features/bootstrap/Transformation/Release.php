@@ -3,7 +3,7 @@
 namespace Transformation;
 
 use Behat\Borg\Release\Version;
-use Fake\Package\FakePackage;
+use Fake\Release\FakePackage;
 use Fake\Release\FakeRepository;
 
 trait Release

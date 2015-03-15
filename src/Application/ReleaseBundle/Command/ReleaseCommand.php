@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\Application\ReleaseBundle\Command;
 
-use Behat\Borg\GitHub\GitHubRepository;
+use Behat\Borg\Integration\Release\GitHub\GitHubRepository;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;

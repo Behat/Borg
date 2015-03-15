@@ -3,7 +3,7 @@
 namespace Fake\Extension;
 
 use Behat\Borg\Extension\Extension;
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 
 final class FakeExtension implements Extension, Package
 {

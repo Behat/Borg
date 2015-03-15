@@ -1,25 +1,25 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
-use Behat\Borg\DocumentationPackage\DocumentationIdFactory;
-use Behat\Borg\DocumentationPackage\PackageDocumenter;
 use Behat\Borg\Documenter;
-use Behat\Borg\Package\Package;
-use Behat\Borg\Package\ReleasePackager;
+use Behat\Borg\Integration\Documentation\Package\DocumentationIdFactory;
+use Behat\Borg\Integration\Documentation\Package\PackageDocumenter;
+use Behat\Borg\Integration\Documentation\PersistedObjectsRepository;
+use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
+use Behat\Borg\Release\ReleasePackager;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Fake\Documentation\FakeBuilder;
 use Fake\Documentation\FakePublisher;
 use Fake\Documentation\FakeSourceFinder;
-use Fake\Package\FakePackageFinder;
 use Fake\Release\FakeDownloader;
+use Fake\Release\FakePackageFinder;
 use Fake\Release\FakeRepository;
 use PHPUnit_Framework_Assert as PHPUnit;
 

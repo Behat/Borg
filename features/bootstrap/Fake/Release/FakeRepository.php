@@ -2,7 +2,7 @@
 
 namespace Fake\Release;
 
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Repository;
 use Behat\Borg\Release\Version;
@@ -10,7 +10,6 @@ use DateTimeImmutable;
 use Fake\Documentation\FakeDocumentationDownload;
 use Fake\Documentation\FakeSource;
 use Fake\Extension\FakeExtension;
-use Fake\Package\FakePackageDownload;
 
 final class FakeRepository implements Repository
 {

@@ -3,12 +3,12 @@
 namespace Fake\Documentation;
 
 use Behat\Borg\Documentation\Source;
-use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Downloader\Download;
+use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use DateTimeImmutable;
-use Fake\Package\FakePackageDownload;
-use Fake\Package\PackageDownload;
+use Fake\Release\FakePackageDownload;
+use Fake\Release\PackageDownload;
 
 final class FakeDocumentationDownload implements Download, DocumentationDownload, PackageDownload
 {
