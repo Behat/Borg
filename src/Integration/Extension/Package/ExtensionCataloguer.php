@@ -4,8 +4,8 @@ namespace Behat\Borg\Integration\Extension\Package;
 
 use Behat\Borg\Extension\Extractor\Extractor;
 use Behat\Borg\ExtensionCatalogue;
+use Behat\Borg\Integration\Package\Release\DownloadedPackage;
 use Behat\Borg\Package\Listener\PackageListener;
-use Behat\Borg\Package\DownloadedPackage;
 
 /**
  * Catalogues extension package.

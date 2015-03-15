@@ -12,7 +12,7 @@
     <services>
 
         <service id="release.listener.download.packaging"
-                 class="Behat\Borg\Package\ReleasePackager" public="false">
+                 class="Behat\Borg\Integration\Package\Release\ReleasePackager" public="false">
             <argument type="service" id="package.finder.compound"/>
             <call method="registerListener">
                 <argument type="service" id="package.listener.package.documenter"/>

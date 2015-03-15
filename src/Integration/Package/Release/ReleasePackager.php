@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Package;
+namespace Behat\Borg\Integration\Package\Release;
 
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Package\Listener\PackageListener;
