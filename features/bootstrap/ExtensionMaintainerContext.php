@@ -1,9 +1,9 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Borg\Application\Infrastructure\Extension\PersistedObjectsRepository;
 use Behat\Borg\ExtensionCatalogue;
-use Behat\Borg\ExtensionPackage\ExtensionCataloguer;
+use Behat\Borg\Integration\Extension\Package\ExtensionCataloguer;
+use Behat\Borg\Integration\Extension\PersistedObjectsRepository;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Release\Release;

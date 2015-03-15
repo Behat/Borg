@@ -1,14 +1,14 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Borg\Application\Infrastructure\Documentation\PersistedObjectsRepository;
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
-use Behat\Borg\DocumentationPackage\DocumentationIdFactory;
-use Behat\Borg\DocumentationPackage\PackageDocumenter;
 use Behat\Borg\Documenter;
+use Behat\Borg\Integration\Documentation\Package\DocumentationIdFactory;
+use Behat\Borg\Integration\Documentation\Package\PackageDocumenter;
+use Behat\Borg\Integration\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Package\Package;
 use Behat\Borg\Package\ReleasePackager;
 use Behat\Borg\Release\Release;

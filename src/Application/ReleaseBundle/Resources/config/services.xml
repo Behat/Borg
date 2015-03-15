@@ -32,7 +32,7 @@
         </service>
 
         <service id="release.release_downloader"
-                 class="Behat\Borg\GitHub\GitHubDownloader" public="false">
+                 class="Behat\Borg\Integration\Release\GitHub\GitHubDownloader" public="false">
             <argument type="service" id="github.client"/>
             <argument>%package.release_downloader.path%</argument>
         </service>
