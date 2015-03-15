@@ -2,7 +2,7 @@
 
 namespace Behat\Borg\Package\Listener;
 
-use Behat\Borg\Integration\Package\Release\DownloadedPackage;
+use Behat\Borg\Package\DownloadedPackage;
 
 /**
  * Listens to package release events.

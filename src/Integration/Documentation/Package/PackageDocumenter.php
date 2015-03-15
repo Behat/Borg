@@ -5,7 +5,7 @@ namespace Behat\Borg\Integration\Documentation\Package;
 use Behat\Borg\Documentation\Finder\SourceFinder;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documenter;
-use Behat\Borg\Integration\Package\Release\DownloadedPackage;
+use Behat\Borg\Package\DownloadedPackage;
 use Behat\Borg\Package\Listener\PackageListener;
 
 /**

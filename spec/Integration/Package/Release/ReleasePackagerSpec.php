@@ -2,7 +2,7 @@
 
 namespace spec\Behat\Borg\Integration\Package\Release;
 
-use Behat\Borg\Integration\Package\Release\DownloadedPackage;
+use Behat\Borg\Package\DownloadedPackage;
 use Behat\Borg\Package\Finder\PackageFinder;
 use Behat\Borg\Package\Listener\PackageListener;
 use Behat\Borg\Package\Package;

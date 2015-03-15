@@ -1,8 +1,7 @@
 <?php
 
-namespace Behat\Borg\Integration\Package\Release;
+namespace Behat\Borg\Package;
 
-use Behat\Borg\Package\Package;
 use Behat\Borg\Release\Downloader\Download;
 
 /**
