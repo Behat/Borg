@@ -25,13 +25,13 @@ class ExtensionCatalogueSpec extends ObjectBehavior
     {
         $repository->extension('some/extension')->willReturn($extension);
 
-        $this->find('some/extension')->shouldReturn($extension);
+        $this->extension('some/extension')->shouldReturn($extension);
     }
 
     function it_finds_all_registered_extensions_using_repository(Repository $repository, Extension $extension)
     {
         $repository->all()->willReturn([$extension]);
 
-        $this->getAll()->shouldReturn([$extension]);
+        $this->all()->shouldReturn([$extension]);
     }
 }

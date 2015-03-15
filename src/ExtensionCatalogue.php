@@ -2,6 +2,7 @@
 
 namespace Behat\Borg;
 
+use Behat\Borg\Extension\Exception\ExtensionNotFound;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\Extension\Repository\Repository;
 
@@ -40,9 +41,11 @@ final class ExtensionCatalogue
      *
      * @param string $name
      *
-     * @return null|Extension
+     * @return Extension
+     *
+     * @throws ExtensionNotFound
      */
-    public function find($name)
+    public function extension($name)
     {
         return $this->repository->extension($name);
     }
@@ -52,7 +55,7 @@ final class ExtensionCatalogue
      *
      * @return Extension[]
      */
-    public function getAll()
+    public function all()
     {
         return $this->repository->all();
     }
