@@ -22,3 +22,4 @@ parameters:
     package.release_downloader.path: %kernel.cache_dir%/build/repositories
     documentation.build.path: %kernel.cache_dir%/build/docs
     documentation.publisher.path: %kernel.cache_dir%/docs
+    extension.repo.path: %kernel.cache_dir%%/extensions
