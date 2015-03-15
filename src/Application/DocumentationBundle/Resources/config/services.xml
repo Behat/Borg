@@ -19,8 +19,8 @@
             </call>
         </service>
 
-        <service id="package.finder.documentation"
-                 class="Behat\Borg\DocumentationPackage\DocumentationPackageFinder" public="false"/>
+        <service id="package.finder.borg"
+                 class="Behat\Borg\BorgPackage\BorgPackageFinder" public="false"/>
 
         <service id="package.finder.composer"
                  class="Behat\Borg\ComposerPackage\ComposerPackageFinder" public="false"/>
@@ -28,7 +28,7 @@
         <service id="package.finder.compound"
                  class="Behat\Borg\Package\Finder\CompoundFinder" public="false">
             <argument type="collection">
-                <argument type="service" id="package.finder.documentation"/>
+                <argument type="service" id="package.finder.borg"/>
                 <argument type="service" id="package.finder.composer"/>
             </argument>
         </service>

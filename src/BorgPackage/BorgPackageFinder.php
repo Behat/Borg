@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\DocumentationPackage;
+namespace Behat\Borg\BorgPackage;
 
 use Behat\Borg\Package\Finder\PackageFinder as PackageFinderInterface;
 use Behat\Borg\Release\Downloader\Download;
@@ -8,7 +8,7 @@ use Behat\Borg\Release\Downloader\Download;
 /**
  * Finds borg.json-based package information in the download.
  */
-final class DocumentationPackageFinder implements PackageFinderInterface
+final class BorgPackageFinder implements PackageFinderInterface
 {
     /**
      * {@inheritdoc}
@@ -22,6 +22,6 @@ final class DocumentationPackageFinder implements PackageFinderInterface
         $path = $download->filePath('borg.json');
         $meta = json_decode(file_get_contents($path), true);
 
-        return new DocumentationPackage($meta['for-package']);
+        return new BorgPackage($meta['for-package']);
     }
 }

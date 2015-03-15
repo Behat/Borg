@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Behat\Borg\DocumentationPackage;
+namespace spec\Behat\Borg\BorgPackage;
 
 use Behat\Borg\Package\Package;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class DocumentationPackageSpec extends ObjectBehavior
+class BorgPackageSpec extends ObjectBehavior
 {
     function let()
     {
