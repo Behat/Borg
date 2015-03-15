@@ -85,11 +85,7 @@ class DocumentationContributorContext implements Context
      */
     public function releaseDocumentationShouldHaveBeenPublished($project, $versionString)
     {
-        PHPUnit::assertNotNull(
-            $this->documenter->documentationPage(
-                new DocumentationId($project, $versionString), new PageId('index.html')
-            )
-        );
+        $this->documenter->documentationPage(new DocumentationId($project, $versionString), new PageId('index.html'));
     }
 
     /**
