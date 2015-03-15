@@ -32,7 +32,7 @@ final class ExtensionCatalogue
      */
     public function register(Extension $extension)
     {
-        $this->repository->save($extension);
+        $this->repository->add($extension);
     }
 
     /**
@@ -44,7 +44,7 @@ final class ExtensionCatalogue
      */
     public function find($name)
     {
-        return $this->repository->find($name);
+        return $this->repository->extension($name);
     }
 
     /**
@@ -54,6 +54,6 @@ final class ExtensionCatalogue
      */
     public function getAll()
     {
-        return $this->repository->findAll();
+        return $this->repository->all();
     }
 }

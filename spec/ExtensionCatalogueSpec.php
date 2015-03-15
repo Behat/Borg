@@ -16,21 +16,21 @@ class ExtensionCatalogueSpec extends ObjectBehavior
 
     function it_saves_extensions_to_repository_during_registration(Repository $repository, Extension $extension)
     {
-        $repository->save($extension)->shouldBeCalled();
+        $repository->add($extension)->shouldBeCalled();
 
         $this->register($extension);
     }
 
     function it_finds_registered_extensions_using_repository(Repository $repository, Extension $extension)
     {
-        $repository->find('some/extension')->willReturn($extension);
+        $repository->extension('some/extension')->willReturn($extension);
 
         $this->find('some/extension')->shouldReturn($extension);
     }
 
     function it_finds_all_registered_extensions_using_repository(Repository $repository, Extension $extension)
     {
-        $repository->findAll()->willReturn([$extension]);
+        $repository->all()->willReturn([$extension]);
 
         $this->getAll()->shouldReturn([$extension]);
     }
