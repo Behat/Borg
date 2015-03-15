@@ -4,13 +4,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
+    <parameters>
+        <parameter key="extension.repo.path">%kernel.root_dir%/../extensions</parameter>
+    </parameters>
+
     <services>
-        <service id="extension.example" class="Behat\Borg\Application\ExtensionBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+
+        <service id="extension.catalogue" class="Behat\Borg\ExtensionCatalogue">
+            <argument type="service" id="extension.repository"/>
         </service>
+
+        <service id="extension.repository"
+                 class="Behat\Borg\Integration\Extension\PersistedObjectsRepository"
+                 public="false">
+            <argument>%extension.repo.path%/catalogue.meta</argument>
+        </service>
+
     </services>
-    -->
+
 </container>
