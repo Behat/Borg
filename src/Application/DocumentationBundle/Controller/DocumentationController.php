@@ -89,14 +89,14 @@ class DocumentationController extends Controller
         $pageId = new PageId($path);
 
         try {
-            $page = $manager->findPage($documentationId, $pageId);
+            $page = $manager->documentationPage($documentationId, $pageId);
         } catch (PageNotFound $e) {
             throw $this->createNotFoundException();
         }
 
         return $this->render("documentation:{$page}", [
             'page'        => $page,
-            'projectDocs' => $manager->findProjectDocumentation($project)
+            'projectDocs' => $manager->projectDocumentation($project)
         ]);
     }
 

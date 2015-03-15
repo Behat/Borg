@@ -60,7 +60,7 @@ class DocumenterSpec extends ObjectBehavior
 
         $repository->documentation($anId)->willReturn($publishedDocumentation);
 
-        $page = $this->findPage($anId, $pageId);
+        $page = $this->documentationPage($anId, $pageId);
         $page->shouldBeAnInstanceOf(Page::class);
     }
 
@@ -76,7 +76,7 @@ class DocumenterSpec extends ObjectBehavior
 
         $repository->documentation($anId)->willReturn($publishedDocumentation);
 
-        $this->shouldThrow(PageNotFound::class)->duringFindPage($anId, $pageId);
+        $this->shouldThrow(PageNotFound::class)->duringDocumentationPage($anId, $pageId);
     }
 
     function it_finds_all_documentation_for_a_provided_project_name(
@@ -94,6 +94,6 @@ class DocumenterSpec extends ObjectBehavior
 
         $repository->projectDocumentation('my/project')->willReturn([$publishedDocumentation]);
 
-        $this->findProjectDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
+        $this->projectDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
     }
 }

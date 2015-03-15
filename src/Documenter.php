@@ -57,14 +57,16 @@ final class Documenter
     }
 
     /**
-     * Tries to find the documentation page using its ID.
+     * Gets the documentation page using its ID.
      *
      * @param DocumentationId $documentationId
      * @param PageId          $pageId
      *
-     * @return null|Page
+     * @return Page
+     *
+     * @throws PageNotFound
      */
-    public function findPage(DocumentationId $documentationId, PageId $pageId)
+    public function documentationPage(DocumentationId $documentationId, PageId $pageId)
     {
         $documentation = $this->repository->documentation($documentationId);
 
@@ -76,13 +78,13 @@ final class Documenter
     }
 
     /**
-     * Find all available documentation for a provided project.
+     * Gets all available documentation for a provided project.
      *
      * @param string $projectName
      *
      * @return PublishedDocumentation[]
      */
-    public function findProjectDocumentation($projectName)
+    public function projectDocumentation($projectName)
     {
         return $this->repository->projectDocumentation($projectName);
     }
