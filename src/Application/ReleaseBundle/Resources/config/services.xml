@@ -10,6 +10,28 @@
 
     <services>
 
+        <service id="release.listener.download.packaging"
+                 class="Behat\Borg\Release\ReleasePackager" public="false">
+            <argument type="service" id="package.finder.compound"/>
+            <call method="registerListener">
+                <argument type="service" id="package.listener.package.documenter"/>
+            </call>
+        </service>
+
+        <service id="package.finder.borg"
+                 class="Behat\Borg\Integration\Release\BorgPackage\BorgPackageFinder" public="false"/>
+
+        <service id="package.finder.composer"
+                 class="Behat\Borg\Integration\Release\ComposerPackage\ComposerPackageFinder" public="false"/>
+
+        <service id="package.finder.compound"
+                 class="Behat\Borg\Release\PackageFinder\CompoundFinder" public="false">
+            <argument type="collection">
+                <argument type="service" id="package.finder.borg"/>
+                <argument type="service" id="package.finder.composer"/>
+            </argument>
+        </service>
+
         <service
                 class="Behat\Borg\Application\ReleaseBundle\Command\ReleaseCommand">
             <argument type="service" id="release.manager"/>

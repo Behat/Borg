@@ -1,24 +1,21 @@
 <?php
 
-namespace Fake\Documentation;
+namespace Fake\Release;
 
-use Behat\Borg\Documentation\Source;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use DateTimeImmutable;
-use Fake\Release\FakePackageDownload;
-use Fake\Release\PackageDownload;
 
-final class FakeDocumentationDownload implements Download, DocumentationDownload, PackageDownload
+final class FakePackageDownload implements Download, PackageDownload
 {
     private $original;
-    private $source;
+    private $package;
 
-    public function __construct(Release $release, DateTimeImmutable $time, Package $package, Source $source)
+    public function __construct(Release $release, DateTimeImmutable $time, Package $package)
     {
-        $this->original = new FakePackageDownload($release, $time, $package);
-        $this->source = $source;
+        $this->original = new FakeDownload($release, $time);
+        $this->package = $package;
     }
 
     public function version()
@@ -48,11 +45,6 @@ final class FakeDocumentationDownload implements Download, DocumentationDownload
 
     public function package()
     {
-        return $this->original->package();
-    }
-
-    public function source()
-    {
-        return $this->source;
+        return $this->package;
     }
 }

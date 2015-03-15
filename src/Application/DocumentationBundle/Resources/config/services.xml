@@ -11,28 +11,6 @@
 
     <services>
 
-        <service id="release.listener.download.packaging"
-                 class="Behat\Borg\Integration\Package\Release\ReleasePackager" public="false">
-            <argument type="service" id="package.finder.compound"/>
-            <call method="registerListener">
-                <argument type="service" id="package.listener.package.documenter"/>
-            </call>
-        </service>
-
-        <service id="package.finder.borg"
-                 class="Behat\Borg\Integration\Package\BorgPackage\BorgPackageFinder" public="false"/>
-
-        <service id="package.finder.composer"
-                 class="Behat\Borg\Integration\Package\ComposerPackage\ComposerPackageFinder" public="false"/>
-
-        <service id="package.finder.compound"
-                 class="Behat\Borg\Package\Finder\CompoundFinder" public="false">
-            <argument type="collection">
-                <argument type="service" id="package.finder.borg"/>
-                <argument type="service" id="package.finder.composer"/>
-            </argument>
-        </service>
-
         <service id="package.listener.package.documenter"
                  class="Behat\Borg\Integration\Documentation\Package\PackageDocumenter"
                  public="false">

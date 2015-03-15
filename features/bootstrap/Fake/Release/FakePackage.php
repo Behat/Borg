@@ -1,21 +1,20 @@
 <?php
 
-namespace Fake\Extension;
+namespace Fake\Release;
 
-use Behat\Borg\Extension\Extension;
 use Behat\Borg\Release\Package;
 
-final class FakeExtension implements Extension, Package
+final class FakePackage implements Package
 {
     private $name;
 
     public static function named($name)
     {
         if (2 !== count(explode('/', $name))) {
-            throw new \InvalidArgumentException('Extension should include organisation and name.');
+            throw new \InvalidArgumentException('Package should include organisation and name.');
         }
 
-        $package = new FakeExtension();
+        $package = new FakePackage();
         $package->name = $name;
 
         return $package;

@@ -3,7 +3,7 @@
 namespace Behat\Borg\Integration\Documentation\Package;
 
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Package\Package;
+use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Version;
 
 /**
