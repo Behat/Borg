@@ -33,13 +33,13 @@ class ReleasePackagerSpec extends ObjectBehavior
         $finder->find($download)->willReturn($package);
         $packageDownload = new DownloadedPackage($package->getWrappedObject(), $download->getWrappedObject());
 
-        $listener1->packageWasDownloaded($packageDownload)->shouldBeCalled();
-        $listener2->packageWasDownloaded($packageDownload)->shouldBeCalled();
+        $listener1->packageDownloaded($packageDownload)->shouldBeCalled();
+        $listener2->packageDownloaded($packageDownload)->shouldBeCalled();
 
         $this->registerListener($listener1);
         $this->registerListener($listener2);
 
-        $this->releaseWasDownloaded($download);
+        $this->releaseDownloaded($download);
     }
 
     function it_does_not_notify_listeners_when_package_is_not_found_inside_a_download(
@@ -49,10 +49,10 @@ class ReleasePackagerSpec extends ObjectBehavior
     ) {
         $finder->find($download)->willReturn(null);
 
-        $listener->packageWasDownloaded(Argument::any())->shouldNotBeCalled();
+        $listener->packageDownloaded(Argument::any())->shouldNotBeCalled();
 
         $this->registerListener($listener);
 
-        $this->releaseWasDownloaded($download);
+        $this->releaseDownloaded($download);
     }
 }

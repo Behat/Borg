@@ -75,7 +75,7 @@ final class PublishedDocumentation
      *
      * @return Boolean
      */
-    public function hasPage(PageId $anId)
+    public function has(PageId $anId)
     {
         return file_exists($this->path . '/' . $anId);
     }
@@ -89,7 +89,7 @@ final class PublishedDocumentation
      */
     public function page(PageId $anId)
     {
-        if (!$this->hasPage($anId)) {
+        if (!$this->has($anId)) {
             throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
         }
 
@@ -103,9 +103,9 @@ final class PublishedDocumentation
      *
      * @return string
      */
-    public function pagePath(PageId $anId)
+    public function path(PageId $anId)
     {
-        if (!$this->hasPage($anId)) {
+        if (!$this->has($anId)) {
             throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
         }
 

@@ -6,9 +6,9 @@ use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documenter;
+use Behat\Borg\Integration\Documentation\Filesystem\PersistedObjectsRepository;
 use Behat\Borg\Integration\Documentation\Package\DocumentationIdFactory;
 use Behat\Borg\Integration\Documentation\Package\PackageDocumenter;
-use Behat\Borg\Integration\Documentation\PersistedObjectsRepository;
 use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
@@ -96,8 +96,7 @@ class DocumentationContributorContext implements Context
         try {
             $this->documenter->documentationPage(new DocumentationId($project, $versionString), new PageId('index.html'));
             PHPUnit_Framework_Assert::fail('Documentation was actually found.');
-        } catch (PageNotFound $e) {
-        }
+        } catch (PageNotFound $e) { /* Passes, do nothing */ }
     }
 
     /**

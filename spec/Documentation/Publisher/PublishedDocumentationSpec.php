@@ -40,8 +40,8 @@ class PublishedDocumentationSpec extends ObjectBehavior
 
     function it_can_tell_if_it_contains_a_page()
     {
-        $this->shouldHavePage(new PageId(basename(__FILE__)));
-        $this->shouldNotHavePage(new PageId('any file'));
+        $this->has(new PageId(basename(__FILE__)))->shouldReturn(true);
+        $this->has(new PageId('any file'))->shouldReturn(false);
     }
 
     function it_can_get_a_page_by_its_id()
@@ -58,11 +58,11 @@ class PublishedDocumentationSpec extends ObjectBehavior
 
     function it_can_provide_absolute_path_for_the_page_by_its_id()
     {
-        $this->pagePath(new PageId(basename(__FILE__)))->shouldReturn(__FILE__);
+        $this->path(new PageId(basename(__FILE__)))->shouldReturn(__FILE__);
     }
 
     function it_throws_an_exception_when_trying_to_get_path_for_inexistent_page()
     {
-        $this->shouldThrow()->duringPagePath(new PageId('any file'));
+        $this->shouldThrow()->duringPath(new PageId('any file'));
     }
 }

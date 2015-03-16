@@ -14,5 +14,5 @@ interface ReleaseListener
      *
      * @param Release $release
      */
-    public function releaseReceived(Release $release);
+    public function releaseReleased(Release $release);
 }
