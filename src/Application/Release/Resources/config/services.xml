@@ -33,7 +33,7 @@
         </service>
 
         <service
-                class="Behat\Borg\Application\ReleaseBundle\Command\ReleaseCommand">
+                class="Behat\Borg\Application\Release\Command\ReleaseCommand">
             <argument type="service" id="release.manager"/>
             <tag name="console.command"/>
         </service>
