@@ -70,7 +70,7 @@ final class Documenter
     {
         $documentation = $this->repository->documentation($documentationId);
 
-        if (!$documentation->hasPage($pageId)) {
+        if (!$documentation->has($pageId)) {
             throw new PageNotFound('Page was not found.');
         }
 
