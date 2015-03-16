@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Behat\Borg\Integration\Release\BorgPackage;
+namespace spec\Behat\Borg\Integration\Release\Composer;
 
 use Behat\Borg\Release\Package;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class BorgPackageSpec extends ObjectBehavior
+class ComposerPackageSpec extends ObjectBehavior
 {
     function let()
     {
@@ -33,16 +33,16 @@ class BorgPackageSpec extends ObjectBehavior
         $this->organisationName()->shouldReturn('behat');
     }
 
-    function its_name_is_a_second_segment_of_the_constructor_argument()
-    {
-        $this->name()->shouldReturn('docs');
-    }
-
     function it_lowercases_provided_organisation_and_package_name()
     {
         $this->beConstructedWith('Behat/Docs');
 
         $this->organisationName()->shouldReturn('behat');
+        $this->name()->shouldReturn('docs');
+    }
+
+    function its_name_is_a_second_segment_of_the_constructor_argument()
+    {
         $this->name()->shouldReturn('docs');
     }
 

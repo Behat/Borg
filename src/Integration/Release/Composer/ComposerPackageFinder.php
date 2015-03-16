@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Integration\Release\ComposerPackage;
+namespace Behat\Borg\Integration\Release\Composer;
 
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\PackageFinder\PackageFinder;

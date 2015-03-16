@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Integration\Release\BorgPackage;
+namespace Behat\Borg\Integration\Release\Borg;
 
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\PackageFinder\PackageFinder as PackageFinderInterface;

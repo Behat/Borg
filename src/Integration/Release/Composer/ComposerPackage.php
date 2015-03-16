@@ -1,14 +1,14 @@
 <?php
 
-namespace Behat\Borg\Integration\Release\BorgPackage;
+namespace Behat\Borg\Integration\Release\Composer;
 
 use Behat\Borg\Release\Exception\BadPackageNameGiven;
 use Behat\Borg\Release\Package;
 
 /**
- * borg.json-based package.
+ * composer.json-based package.
  */
-final class BorgPackage implements Package
+final class ComposerPackage implements Package
 {
     /**
      * @var string
@@ -24,7 +24,7 @@ final class BorgPackage implements Package
     {
         if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $string)) {
             throw new BadPackageNameGiven(
-                "Documentation package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
+                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
             );
         }
 

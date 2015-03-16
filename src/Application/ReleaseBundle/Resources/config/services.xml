@@ -19,10 +19,10 @@
         </service>
 
         <service id="package.finder.borg"
-                 class="Behat\Borg\Integration\Release\BorgPackage\BorgPackageFinder" public="false"/>
+                 class="Behat\Borg\Integration\Release\Borg\BorgPackageFinder" public="false"/>
 
         <service id="package.finder.composer"
-                 class="Behat\Borg\Integration\Release\ComposerPackage\ComposerPackageFinder" public="false"/>
+                 class="Behat\Borg\Integration\Release\Composer\ComposerPackageFinder" public="false"/>
 
         <service id="package.finder.compound"
                  class="Behat\Borg\Release\PackageFinder\CompoundFinder" public="false">
