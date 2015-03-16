@@ -13,22 +13,24 @@ final class ComposerPackage implements Package
     /**
      * @var string
      */
-    private $string;
+    private $name;
 
     /**
      * Initializes package.
      *
-     * @param string $string
+     * @param array $data
      */
-    public function __construct($string)
+    public function __construct(array $data)
     {
-        if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $string)) {
+        $name = $data['name'];
+
+        if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $name)) {
             throw new BadPackageNameGiven(
-                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
+                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$name}` given."
             );
         }
 
-        $this->string = strtolower($string);
+        $this->name = strtolower($name);
     }
 
     /**
@@ -36,7 +38,7 @@ final class ComposerPackage implements Package
      */
     public function organisationName()
     {
-        return explode('/', $this->string)[0];
+        return explode('/', $this->name)[0];
     }
 
     /**
@@ -44,7 +46,7 @@ final class ComposerPackage implements Package
      */
     public function name()
     {
-        return explode('/', $this->string)[1];
+        return explode('/', $this->name)[1];
     }
 
     /**
@@ -52,6 +54,6 @@ final class ComposerPackage implements Package
      */
     public function __toString()
     {
-        return $this->string;
+        return $this->name;
     }
 }
