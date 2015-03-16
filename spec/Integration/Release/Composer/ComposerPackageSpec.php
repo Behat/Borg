@@ -10,7 +10,7 @@ class ComposerPackageSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('behat/docs');
+        $this->beConstructedWith(['name' => 'behat/docs', 'type' => 'library']);
     }
 
     function it_is_a_package()
@@ -20,12 +20,12 @@ class ComposerPackageSpec extends ObjectBehavior
 
     function it_can_not_be_constructed_with_a_name_that_has_less_than_2_segments_in_it()
     {
-        $this->shouldThrow()->during('__construct', ['behat']);
+        $this->shouldThrow()->during('__construct', [['name' => 'behat', 'type' => 'library']]);
     }
 
     function it_can_not_be_constructed_with_a_name_that_has_more_than_2_segments_in_it()
     {
-        $this->shouldThrow()->during('__construct', ['behat/docs/v2']);
+        $this->shouldThrow()->during('__construct', [['name' => 'behat/docs/v2', 'type' => 'library']]);
     }
 
     function its_organisation_name_is_a_first_segment_of_the_constructor_argument()
@@ -35,7 +35,7 @@ class ComposerPackageSpec extends ObjectBehavior
 
     function it_lowercases_provided_organisation_and_package_name()
     {
-        $this->beConstructedWith('Behat/Docs');
+        $this->beConstructedWith(['name' => 'Behat/Docs', 'type' => 'library']);
 
         $this->organisationName()->shouldReturn('behat');
         $this->name()->shouldReturn('docs');
