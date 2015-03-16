@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Integration\Extension;
+namespace Behat\Borg\Integration\Extension\Filesystem;
 
 use Behat\Borg\Extension\Exception\ExtensionNotFound;
 use Behat\Borg\Extension\Extension;

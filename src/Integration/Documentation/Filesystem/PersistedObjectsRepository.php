@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Integration\Documentation;
+namespace Behat\Borg\Integration\Documentation\Filesystem;
 
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\PageNotFound;

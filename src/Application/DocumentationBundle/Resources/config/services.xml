@@ -35,7 +35,7 @@
         </service>
 
         <service id="documentation.repository"
-                 class="Behat\Borg\Integration\Documentation\PersistedObjectsRepository"
+                 class="Behat\Borg\Integration\Documentation\Filesystem\PersistedObjectsRepository"
                  public="false">
             <argument>%documentation.publisher.path%/published.meta</argument>
         </service>
