@@ -45,7 +45,7 @@ final class PackageDocumenter implements PackageListener
      *
      * @param DownloadedPackage $downloadedPackage
      */
-    public function packageWasDownloaded(DownloadedPackage $downloadedPackage)
+    public function packageDownloaded(DownloadedPackage $downloadedPackage)
     {
         $package = $downloadedPackage->package();
         $download = $downloadedPackage->download();

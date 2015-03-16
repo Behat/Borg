@@ -36,7 +36,7 @@ final class ExtensionCataloguer implements PackageListener
     /**
      * {@inheritdoc}
      */
-    public function packageWasDownloaded(DownloadedPackage $downloadedPackage)
+    public function packageDownloaded(DownloadedPackage $downloadedPackage)
     {
         if (null === $extension = $this->extractor->extract($downloadedPackage->package())) {
             return;

@@ -34,12 +34,12 @@ class ReleaseDownloaderSpec extends ObjectBehavior
         $release = new Release($repository->getWrappedObject(), Version::string('v2.5'));
         $downloader->download($release)->willReturn($downloadedRelease);
 
-        $listener1->releaseWasDownloaded($downloadedRelease)->shouldBeCalled();
-        $listener2->releaseWasDownloaded($downloadedRelease)->shouldBeCalled();
+        $listener1->releaseDownloaded($downloadedRelease)->shouldBeCalled();
+        $listener2->releaseDownloaded($downloadedRelease)->shouldBeCalled();
 
         $this->registerListener($listener1);
         $this->registerListener($listener2);
 
-        $this->releaseReceived($release);
+        $this->releaseReleased($release);
     }
 }

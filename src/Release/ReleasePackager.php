@@ -45,7 +45,7 @@ final class ReleasePackager implements DownloadListener
     /**
      * {@inheritdoc}
      */
-    public function releaseWasDownloaded(Download $download)
+    public function releaseDownloaded(Download $download)
     {
         if (!$package = $this->finder->find($download)) {
             return;
@@ -54,7 +54,7 @@ final class ReleasePackager implements DownloadListener
         $downloadedPackage = new DownloadedPackage($package, $download);
 
         foreach ($this->listeners as $listener) {
-            $listener->packageWasDownloaded($downloadedPackage);
+            $listener->packageDownloaded($downloadedPackage);
         }
     }
 }

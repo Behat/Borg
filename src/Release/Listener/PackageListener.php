@@ -14,5 +14,5 @@ interface PackageListener
      *
      * @param DownloadedPackage $downloadedPackage
      */
-    public function packageWasDownloaded(DownloadedPackage $downloadedPackage);
+    public function packageDownloaded(DownloadedPackage $downloadedPackage);
 }

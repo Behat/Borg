@@ -14,5 +14,5 @@ interface DownloadListener
      *
      * @param Download $download
      */
-    public function releaseWasDownloaded(Download $download);
+    public function releaseDownloaded(Download $download);
 }
