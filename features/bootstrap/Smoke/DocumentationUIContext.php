@@ -55,12 +55,8 @@ class DocumentationUIContext extends RawMinkContext implements Context
     /**
      * @Given :package version :version was documented in :repository on :time
      */
-    public function packageWasDocumentedOn(
-        Package $package,
-        Version $version,
-        Repository $repository,
-        DateTimeImmutable $time
-    ) {
+    public function packageWasDocumentedOn(Package $package, Version $version, Repository $repository, DateTimeImmutable $time)
+    {
         $this->packageWasDocumented($package, $version, $repository);
 
         PHPUnit::assertEquals($time, $this->lastCommitDate($repository, $version));

@@ -34,10 +34,7 @@ class ExtensionUIContext extends RawMinkContext implements Context
      */
     public function extensionWasCreated(Repository $repository, Extension $extension)
     {
-        PHPUnit::assertTrue(
-            $this->repositoryExtensionIs($repository, $extension),
-            'Repository does not contain expected extension.'
-        );
+        PHPUnit::assertTrue($this->repositoryExtensionIs($repository, $extension), 'Repository does not contain expected extension.');
     }
 
     /**

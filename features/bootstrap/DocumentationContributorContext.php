@@ -96,8 +96,7 @@ class DocumentationContributorContext implements Context
         try {
             $this->documenter->documentationPage(new DocumentationId($project, $versionString), new PageId('index.html'));
             PHPUnit_Framework_Assert::fail('Documentation was actually found.');
-        } catch (PageNotFound $e) {
-        }
+        } catch (PageNotFound $e) { /* Passes, do nothing */ }
     }
 
     /**
