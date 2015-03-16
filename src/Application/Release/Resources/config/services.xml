@@ -16,6 +16,9 @@
             <call method="registerListener">
                 <argument type="service" id="package.listener.package.documenter"/>
             </call>
+            <call method="registerListener">
+                <argument type="service" id="package.listener.extension.cataloguer"/>
+            </call>
         </service>
 
         <service id="package.finder.borg"

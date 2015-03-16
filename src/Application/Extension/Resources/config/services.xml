@@ -20,6 +20,15 @@
             <argument>%extension.repo.path%/catalogue.meta</argument>
         </service>
 
+        <service id="package.listener.extension.cataloguer"
+                 class="Behat\Borg\Integration\Extension\Package\ExtensionCataloguer"
+                 public="false">
+            <argument type="service">
+                <service class="Behat\Borg\Integration\Extension\Composer\ComposerExtractor" />
+            </argument>
+            <argument type="service" id="extension.catalogue"/>
+        </service>
+
     </services>
 
 </container>
