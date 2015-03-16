@@ -15,7 +15,7 @@
         </service>
 
         <service id="extension.repository"
-                 class="Behat\Borg\Integration\Extension\PersistedObjectsRepository"
+                 class="Behat\Borg\Integration\Extension\Filesystem\PersistedObjectsRepository"
                  public="false">
             <argument>%extension.repo.path%/catalogue.meta</argument>
         </service>

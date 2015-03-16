@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\ExtensionBundle\Controller;
+namespace Behat\Borg\Application\Extension\Controller;
 
 use Behat\Borg\ExtensionCatalogue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Behat\Borg\Integration\Symfony\Release\ReleaseBundle(),
             new Behat\Borg\Integration\Symfony\Documentation\DocumentationBundle(),
-            new Behat\Borg\Application\ExtensionBundle\ExtensionBundle(),
+            new Behat\Borg\Application\Extension\ExtensionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
