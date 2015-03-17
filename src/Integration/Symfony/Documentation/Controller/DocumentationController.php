@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\Documentation\Controller;
+namespace Behat\Borg\Integration\Symfony\Documentation\Controller;
 
 use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;

@@ -16,7 +16,7 @@ swiftmailer:
     disable_delivery: true
 
 twig:
-    exception_controller: Behat\Borg\Application\Debug\Controller\ExceptionController::showAction
+    exception_controller: Behat\Borg\Integration\Symfony\Debug\Controller\ExceptionController::showAction
 
 parameters:
     package.release_downloader.path: %kernel.cache_dir%/build/repositories
