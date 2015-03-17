@@ -28,7 +28,7 @@ class ComposerPackageSpec extends ObjectBehavior
         $this->shouldThrow()->during('__construct', [['name' => 'behat/docs/v2', 'type' => 'library']]);
     }
 
-    function its_organisation_name_is_a_first_segment_of_the_constructor_argument()
+    function its_organisation_name_is_a_first_segment_of_the_composer_package_name()
     {
         $this->organisationName()->shouldReturn('behat');
     }
@@ -41,9 +41,14 @@ class ComposerPackageSpec extends ObjectBehavior
         $this->name()->shouldReturn('docs');
     }
 
-    function its_name_is_a_second_segment_of_the_constructor_argument()
+    function its_name_is_a_second_segment_of_the_composer_package_name()
     {
         $this->name()->shouldReturn('docs');
+    }
+
+    function it_has_type()
+    {
+        $this->type()->shouldReturn('library');
     }
 
     function its_string_representation_is_the_name_of_the_package()

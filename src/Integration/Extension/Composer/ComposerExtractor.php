@@ -3,6 +3,7 @@
 namespace Behat\Borg\Integration\Extension\Composer;
 
 use Behat\Borg\Extension\Extractor\Extractor;
+use Behat\Borg\Integration\Release\Composer\ComposerPackage;
 use Behat\Borg\Release\Package;
 
 /**
@@ -15,6 +16,14 @@ final class ComposerExtractor implements Extractor
      */
     public function extract(Package $package)
     {
-        // TODO: Implement extract() method.
+        if (!$package instanceof ComposerPackage) {
+            return null;
+        }
+
+        if ('behat-extension' != $package->type()) {
+            return null;
+        }
+
+        return new ComposerExtension($package->organisationName(), $package->name());
     }
 }
