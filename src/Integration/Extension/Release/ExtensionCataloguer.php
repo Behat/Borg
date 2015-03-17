@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Integration\Extension\Package;
+namespace Behat\Borg\Integration\Extension\Release;
 
 use Behat\Borg\Extension\Extractor\Extractor;
 use Behat\Borg\ExtensionCatalogue;
