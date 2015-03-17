@@ -14,6 +14,10 @@ final class ComposerPackage implements Package
      * @var string
      */
     private $name;
+    /**
+     * @var string
+     */
+    private $type;
 
     /**
      * Initializes package.
@@ -31,6 +35,7 @@ final class ComposerPackage implements Package
         }
 
         $this->name = strtolower($name);
+        $this->type = $data['type'];
     }
 
     /**
@@ -47,6 +52,16 @@ final class ComposerPackage implements Package
     public function name()
     {
         return explode('/', $this->name)[1];
+    }
+
+    /**
+     * Returns composer package type.
+     *
+     * @return string
+     */
+    public function type()
+    {
+        return $this->type;
     }
 
     /**
