@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\Extension\DependencyInjection;
+namespace Behat\Borg\Integration\Symfony\Extension\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
