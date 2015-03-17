@@ -21,7 +21,7 @@
         </service>
 
         <service id="package.listener.extension.cataloguer"
-                 class="Behat\Borg\Integration\Extension\Package\ExtensionCataloguer"
+                 class="Behat\Borg\Integration\Extension\Release\ExtensionCataloguer"
                  public="false">
             <argument type="service">
                 <service class="Behat\Borg\Integration\Extension\Composer\ComposerExtractor" />
