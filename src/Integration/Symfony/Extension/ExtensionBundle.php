@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\Extension;
+namespace Behat\Borg\Integration\Symfony\Extension;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
