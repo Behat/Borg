@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\Release\Command;
+namespace Behat\Borg\Integration\Symfony\Release\Command;
 
 use Behat\Borg\Integration\Release\GitHub\GitHubRepository;
 use Behat\Borg\Release\Release;

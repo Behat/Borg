@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\Documentation\Twig;
+namespace Behat\Borg\Integration\Symfony\Documentation\Twig;
 
 use Twig_Error_Loader;
 use Twig_ExistsLoaderInterface;

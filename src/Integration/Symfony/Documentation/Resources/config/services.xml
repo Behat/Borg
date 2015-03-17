@@ -22,7 +22,7 @@
         </service>
 
         <service id="twig.loader.documentation"
-                 class="Behat\Borg\Application\Documentation\Twig\DocumentationLoader"
+                 class="Behat\Borg\Integration\Symfony\Documentation\Twig\DocumentationLoader"
                  public="false">
             <tag name="twig.loader"/>
         </service>
@@ -46,7 +46,7 @@
         <service id="documentation.builder.sphinx"
                  class="Behat\Borg\Integration\Documentation\SphinxDoc\SphinxBuilder" public="false">
             <argument>%documentation.build.path%</argument>
-            <argument>%kernel.root_dir%/../src/Application/Documentation/Resources/sphinx</argument>
+            <argument>%kernel.root_dir%/../src/Integration/Symfony/Documentation/Resources/sphinx</argument>
             <argument type="service">
                 <service class="Symfony\Component\Filesystem\Filesystem"/>
             </argument>

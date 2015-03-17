@@ -36,7 +36,7 @@
         </service>
 
         <service
-                class="Behat\Borg\Application\Release\Command\ReleaseCommand">
+                class="Behat\Borg\Integration\Symfony\Release\Command\ReleaseCommand">
             <argument type="service" id="release.manager"/>
             <tag name="console.command"/>
         </service>

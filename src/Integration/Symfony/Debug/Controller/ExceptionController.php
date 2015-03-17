@@ -1,6 +1,6 @@
 <?php
 
-namespace Behat\Borg\Application\Debug\Controller;
+namespace Behat\Borg\Integration\Symfony\Debug\Controller;
 
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;
