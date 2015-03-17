@@ -3,7 +3,7 @@
 use Behat\Behat\Context\Context;
 use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\Integration\Extension\Filesystem\PersistedObjectsRepository;
-use Behat\Borg\Integration\Extension\Package\ExtensionCataloguer;
+use Behat\Borg\Integration\Extension\Release\ExtensionCataloguer;
 use Behat\Borg\Release\Package;
 use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
