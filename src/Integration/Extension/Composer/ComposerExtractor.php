@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Integration\Extension\Composer;
 
+use Behat\Borg\Extension\Extension;
 use Behat\Borg\Extension\Extractor\Extractor;
 use Behat\Borg\Integration\Release\Composer\ComposerPackage;
 use Behat\Borg\Release\Package;
@@ -24,6 +25,6 @@ final class ComposerExtractor implements Extractor
             return null;
         }
 
-        return new ComposerExtension($package->organisationName(), $package->name());
+        return new Extension($package->organisationName(), $package->name());
     }
 }
