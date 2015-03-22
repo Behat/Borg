@@ -5,35 +5,42 @@ namespace Fake\Extension;
 use Behat\Borg\Extension\Extension;
 use Behat\Borg\Release\Package;
 
-final class FakeExtension implements Extension, Package
+final class FakeExtensionPackage implements Package
 {
-    private $name;
+    private $parts;
 
     public static function named($name)
     {
-        if (2 !== count(explode('/', $name))) {
+        $parts = explode('/', $name);
+
+        if (2 !== count($parts)) {
             throw new \InvalidArgumentException('Extension should include organisation and name.');
         }
 
-        $package = new FakeExtension();
-        $package->name = $name;
+        $package = new FakeExtensionPackage();
+        $package->parts = $parts;
 
         return $package;
     }
 
     public function organisationName()
     {
-        return explode('/', $this->name)[0];
+        return $this->parts[0];
     }
 
     public function name()
     {
-        return explode('/', $this->name)[1];
+        return $this->parts[1];
     }
 
     public function __toString()
     {
-        return $this->name;
+        return implode('/', $this->parts);
+    }
+
+    public function extension()
+    {
+        return new Extension($this->organisationName(), $this->name());
     }
 
     private function __construct() { }

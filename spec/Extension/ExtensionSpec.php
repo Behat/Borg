@@ -1,21 +1,15 @@
 <?php
 
-namespace spec\Behat\Borg\Integration\Extension\Composer;
+namespace spec\Behat\Borg\Extension;
 
-use Behat\Borg\Extension\Extension;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class ComposerExtensionSpec extends ObjectBehavior
+class ExtensionSpec extends ObjectBehavior
 {
     function let()
     {
         $this->beConstructedWith('behat', 'symfony2-extension');
-    }
-
-    function it_is_extension()
-    {
-        $this->shouldHaveType(Extension::class);
     }
 
     function it_has_an_organisation_name()

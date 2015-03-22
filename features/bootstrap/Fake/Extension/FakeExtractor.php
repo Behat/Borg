@@ -9,8 +9,8 @@ final class FakeExtractor implements Extractor
 {
     public function extract(Package $package)
     {
-        if ($package instanceof FakeExtension) {
-            return $package;
+        if ($package instanceof FakeExtensionPackage) {
+            return $package->extension();
         }
 
         return null;

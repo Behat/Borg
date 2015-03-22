@@ -14,15 +14,19 @@ class ExtensionCatalogueSpec extends ObjectBehavior
         $this->beConstructedWith($repository);
     }
 
-    function it_finds_registered_extensions_using_repository(Repository $repository, Extension $extension)
+    function it_finds_registered_extensions_using_repository(Repository $repository)
     {
+        $extension = new Extension('some', 'extension');
+
         $repository->extension('some/extension')->willReturn($extension);
 
         $this->extension('some/extension')->shouldReturn($extension);
     }
 
-    function it_finds_all_registered_extensions_using_repository(Repository $repository, Extension $extension)
+    function it_finds_all_registered_extensions_using_repository(Repository $repository)
     {
+        $extension = new Extension('some', 'extension');
+
         $repository->all()->willReturn([$extension]);
 
         $this->all()->shouldReturn([$extension]);

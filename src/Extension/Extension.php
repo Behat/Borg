@@ -5,26 +5,50 @@ namespace Behat\Borg\Extension;
 /**
  * Represents Behat extension.
  */
-interface Extension
+final class Extension
 {
     /**
-     * Returns extension organisation name.
-     *
-     * @return string
+     * @var string
      */
-    public function organisationName();
+    private $organisationName;
+    /**
+     * @var string
+     */
+    private $name;
 
     /**
-     * Returns extension name.
+     * Initializes extension.
      *
-     * @return string
+     * @param string $organisationName
+     * @param string $name
      */
-    public function name();
+    public function __construct($organisationName, $name)
+    {
+        $this->organisationName = $organisationName;
+        $this->name = $name;
+    }
 
     /**
-     * Returns string representation of extension.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function __toString();
+    public function organisationName()
+    {
+        return $this->organisationName;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function name()
+    {
+        return $this->name;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return sprintf('%s/%s', $this->organisationName, $this->name);
+    }
 }

@@ -2,16 +2,16 @@
 
 namespace Transformation;
 
-use Fake\Extension\FakeExtension;
+use Fake\Extension\FakeExtensionPackage;
 
 trait Extension
 {
     /**
-     * @Transform :extension
+     * @Transform :extensionPackage
      */
-    public function transformStringToExtension($string)
+    public function transformStringToExtensionPackage($string)
     {
-        return FakeExtension::named($string);
+        return FakeExtensionPackage::named($string);
     }
 
     /**

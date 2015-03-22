@@ -9,7 +9,7 @@ use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\ReleasePackager;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
-use Fake\Extension\FakeExtension;
+use Fake\Extension\FakeExtensionPackage;
 use Fake\Extension\FakeExtractor;
 use Fake\Release\FakeDownloader;
 use Fake\Release\FakePackageFinder;
@@ -47,17 +47,17 @@ class ExtensionMaintainerContext implements Context
     }
 
     /**
-     * @Given :extension extension was created in :repository
+     * @Given :extensionPackage extension package was created in :repository
      */
-    public function extensionWasCreated(FakeRepository $repository, FakeExtension $extension)
+    public function extensionPackageWasCreated(FakeRepository $repository, FakeExtensionPackage $extensionPackage)
     {
-        $repository->createExtension($extension);
+        $repository->createPackage($extensionPackage);
     }
 
     /**
-     * @Given extension was not created in :repository
+     * @Given extension package was not created in :repository
      */
-    public function extensionWasNotCreated() { }
+    public function extensionPackageWasNotCreated() { }
 
     /**
      * @Given :package version :version was documented in :repository
