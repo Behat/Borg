@@ -4,9 +4,6 @@ namespace Smoke;
 
 use Behat\Behat\Context\Context;
 use Behat\Borg\Documentation\Publisher\Publisher;
-use Behat\Borg\Release\Package;
-use Behat\Borg\Release\Repository;
-use Behat\Borg\Release\Version;
 use Behat\MinkExtension\Context\RawMinkContext;
 use DateTimeImmutable;
 use Github\Client;
@@ -18,9 +15,6 @@ use Transformation;
  */
 class DocumentationUIContext extends RawMinkContext implements Context
 {
-    use Transformation\Release;
-    use Transformation\Documentation;
-
     private $publisher;
     private $client;
 
@@ -39,15 +33,13 @@ class DocumentationUIContext extends RawMinkContext implements Context
     /**
      * @Given :package version :version was documented in :repository
      */
-    public function packageWasDocumented(Package $package, Version $version, Repository $repository)
+    public function packageWasDocumented($package, $version, $repository)
     {
-        PHPUnit::assertTrue(
-            $this->repositoryPackageIs($repository, $version, $package),
+        PHPUnit::assertTrue($this->repositoryPackageIs($repository, $version, $package),
             "Repository `{$repository}` {$version} package name is not `{$package}`."
         );
 
-        PHPUnit::assertTrue(
-            $this->repositoryContainsDocs($repository, $version),
+        PHPUnit::assertTrue($this->repositoryContainsDocs($repository, $version),
             'Documentation is not found in the provided repository version.'
         );
     }
@@ -55,19 +47,17 @@ class DocumentationUIContext extends RawMinkContext implements Context
     /**
      * @Given :package version :version was documented in :repository on :time
      */
-    public function packageWasDocumentedOn(Package $package, Version $version, Repository $repository, DateTimeImmutable $time)
+    public function packageWasDocumentedOn($package, $version, $repository, $time)
     {
         $this->packageWasDocumented($package, $version, $repository);
 
-        PHPUnit::assertEquals($time, $this->lastCommitDate($repository, $version));
+        PHPUnit::assertEquals($time, $this->lastCommitTime($repository, $version));
     }
 
     /**
      * @Given :package version :version was not documented
      */
-    public function packageWasNotDocumented()
-    {
-    }
+    public function packageWasNotDocumented() { }
 
     /**
      * @Then :project version :versionString documentation should have been published
@@ -100,51 +90,49 @@ class DocumentationUIContext extends RawMinkContext implements Context
         $this->assertSession()->elementTextContains('css', '.version.current', $versionString);
     }
 
-    private function repositoryContainsDocs(Repository $repository, Version $version)
+    private function repositoryContainsDocs($repository, $version)
     {
         return $this->existsInRepositoryVersion($repository, $version, 'index.rst')
             || $this->existsInRepositoryVersion($repository, $version, 'doc/index.rst');
     }
 
-    private function repositoryPackageIs(Repository $repository, Version $version, Package $package)
+    private function repositoryPackageIs($repository, $version, $package)
     {
         if ($this->existsInRepositoryVersion($repository, $version, 'borg.json')) {
             $content = $this->contentInRepositoryVersion($repository, $version, 'borg.json');
 
-            return 1 === preg_match('#"for-package":\s*"' . preg_quote((string)$package) . '"#', $content);
+            return 1 === preg_match('#"for-package":\s*"' . preg_quote($package) . '"#', $content);
         }
 
         if ($this->existsInRepositoryVersion($repository, $version, 'composer.json')) {
             $content = $this->contentInRepositoryVersion($repository, $version, 'composer.json');
 
-            return 1 === preg_match('#"name":\s*"' . preg_quote((string)$package) . '"#', $content);
+            return 1 === preg_match('#"name":\s*"' . preg_quote($package) . '"#', $content);
         }
 
         return false;
     }
 
-    private function existsInRepositoryVersion(Repository $repository, Version $version, $path)
+    private function existsInRepositoryVersion($repository, $version, $path)
     {
-        return $this->client->repo()->contents()->exists(
-            (string)$repository->organisationName(), (string)$repository->name(), $path, (string)$version
-        );
+        $repositoryParts = explode('/', $repository);
+
+        return $this->client->repo()->contents()->exists($repositoryParts[0], $repositoryParts[1], $path, $version);
     }
 
-    private function contentInRepositoryVersion(Repository $repository, Version $version, $path)
+    private function contentInRepositoryVersion($repository, $version, $path)
     {
-        return file_get_contents(
-            $this->client->repo()->contents()->show(
-                (string)$repository->organisationName(), (string)$repository->name(), $path, (string)$version
-            )['download_url']
-        );
+        $repositoryParts = explode('/', $repository);
+
+        return file_get_contents($this->client->repo()->contents()->show($repositoryParts[0], $repositoryParts[1], $path, $version)['download_url']);
     }
 
-    private function lastCommitDate(Repository $package, Version $version)
+    private function lastCommitTime($package, $version)
     {
-        $commit = $this->client->repo()->commits()->all(
-            $package->organisationName(), $package->name(), ['sha' => (string)$version]
-        );
+        $packageParts = explode('/', $package);
 
-        return new \DateTimeImmutable($commit[0]['commit']['author']['date']);
+        $commit = $this->client->repo()->commits()->all($packageParts[0], $packageParts[1], ['sha' => $version]);
+
+        return (new \DateTimeImmutable($commit[0]['commit']['author']['date']))->format('d.m.Y, H:i:s');
     }
 }

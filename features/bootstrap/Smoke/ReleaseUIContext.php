@@ -3,8 +3,6 @@
 namespace Smoke;
 
 use Behat\Behat\Context\Context;
-use Behat\Borg\Release\Repository;
-use Behat\Borg\Release\Version;
 use PHPUnit_Framework_Assert as PHPUnit;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
@@ -15,8 +13,6 @@ use Transformation;
  */
 class ReleaseUIContext implements Context
 {
-    use Transformation\Release;
-
     /**
      * @BeforeScenario
      */
@@ -29,7 +25,7 @@ class ReleaseUIContext implements Context
     /**
      * @When I release :repository version :version
      */
-    public function iReleaseRelease(Repository $repository, Version $version)
+    public function iReleaseRelease($repository, $version)
     {
         $process = new Process($this->releaseCommand($repository, $version));
         $process->run();
@@ -37,7 +33,7 @@ class ReleaseUIContext implements Context
         PHPUnit::assertTrue($process->isSuccessful(), "{$process->getOutput()}\n{$process->getErrorOutput()}");
     }
 
-    private function releaseCommand(Repository $repository, Version $version)
+    private function releaseCommand($repository, $version)
     {
         return __DIR__ . "/../../../app/console release {$repository} {$version} -e=test";
     }
