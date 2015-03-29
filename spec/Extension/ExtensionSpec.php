@@ -9,7 +9,7 @@ class ExtensionSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith('behat', 'symfony2-extension');
+        $this->beConstructedWith('behat', 'symfony2-extension', 'Symfony2 framework extension for Behat', 'Konstantin Kudryashov');
     }
 
     function it_has_an_organisation_name()
@@ -25,5 +25,15 @@ class ExtensionSpec extends ObjectBehavior
     function it_can_be_converted_to_string()
     {
         $this->__toString()->shouldReturn('behat/symfony2-extension');
+    }
+
+    function it_has_a_description()
+    {
+        $this->description()->shouldReturn('Symfony2 framework extension for Behat');
+    }
+
+    function it_has_author()
+    {
+        $this->author()->shouldReturn('Konstantin Kudryashov');
     }
 }
