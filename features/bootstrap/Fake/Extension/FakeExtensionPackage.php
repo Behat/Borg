@@ -40,7 +40,7 @@ final class FakeExtensionPackage implements Package
 
     public function extension()
     {
-        return new Extension($this->organisationName(), $this->name());
+        return new Extension($this->organisationName(), $this->name(), 'some package', 'anonymous');
     }
 
     private function __construct() { }

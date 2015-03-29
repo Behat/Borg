@@ -5,9 +5,14 @@
 
 {% block page %}
     <section class="extensions">
+        <h1>Extensions</h1>
         {% for extension in extensions %}
             <div class="extension">
-                {{ extension }}
+                <h2>{{ extension }}</h2>
+                <span class="by">by</span> <span class="author">{{ extension.author }}</span>
+                <p>
+                    {{ extension.description }}
+                </p>
             </div>
         {% endfor %}
     </section>

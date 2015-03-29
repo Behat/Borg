@@ -16,7 +16,7 @@ class ExtensionCatalogueSpec extends ObjectBehavior
 
     function it_saves_extensions_to_repository_during_registration(Repository $repository)
     {
-        $extension = new Extension('behat', 'symfony2-extension');
+        $extension = new Extension('behat', 'symfony2-extension', 'sf2 extension for behat', 'everzet');
 
         $repository->add($extension)->shouldBeCalled();
 
@@ -25,7 +25,7 @@ class ExtensionCatalogueSpec extends ObjectBehavior
 
     function it_finds_registered_extensions_using_repository(Repository $repository)
     {
-        $extension = new Extension('some', 'extension');
+        $extension = new Extension('some', 'extension', 'sf2 extension for behat', 'everzet');
 
         $repository->extension('some/extension')->willReturn($extension);
 
@@ -34,7 +34,7 @@ class ExtensionCatalogueSpec extends ObjectBehavior
 
     function it_finds_all_registered_extensions_using_repository(Repository $repository)
     {
-        $extension = new Extension('some', 'extension');
+        $extension = new Extension('some', 'extension', 'sf2 extension for behat', 'everzet');
 
         $repository->all()->willReturn([$extension]);
 

@@ -10,7 +10,17 @@ class ComposerPackageSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beConstructedWith(['name' => 'behat/docs', 'type' => 'library']);
+        $this->beConstructedWith(
+            [
+                'name'        => 'behat/docs',
+                'type'        => 'library',
+                'description' => 'behat documentation',
+                'authors'     => [
+                    ['name' => 'Konstantin Kudryashov', 'email' => 'ever.zet@gmail.com'],
+                    ['name' => 'Christophe Coevoet', 'email' => 'stof@notk.org']
+                ]
+            ]
+        );
     }
 
     function it_is_a_package()
@@ -49,6 +59,39 @@ class ComposerPackageSpec extends ObjectBehavior
     function it_has_type()
     {
         $this->type()->shouldReturn('library');
+    }
+
+    function it_has_a_description()
+    {
+        $this->description()->shouldReturn('behat documentation');
+    }
+
+    function it_has_authors()
+    {
+        $this->authors()->shouldReturn(
+            [
+                ['name' => 'Konstantin Kudryashov', 'email' => 'ever.zet@gmail.com'],
+                ['name' => 'Christophe Coevoet', 'email' => 'stof@notk.org']
+            ]
+        );
+    }
+
+    function its_primary_author_is_the_first_one()
+    {
+        $this->primaryAuthor()->shouldReturn(['name' => 'Konstantin Kudryashov', 'email' => 'ever.zet@gmail.com']);
+    }
+
+    function its_primary_author_is_null_if_none_authors_found()
+    {
+        $this->beConstructedWith(
+            [
+                'name'        => 'behat/docs',
+                'type'        => 'library',
+                'description' => 'behat documentation'
+            ]
+        );
+
+        $this->primaryAuthor()->shouldReturn(null);
     }
 
     function its_string_representation_is_the_name_of_the_package()

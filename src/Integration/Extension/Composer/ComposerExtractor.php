@@ -25,6 +25,22 @@ final class ComposerExtractor implements Extractor
             return null;
         }
 
-        return new Extension($package->organisationName(), $package->name());
+        return new Extension($package->organisationName(), $package->name(), $package->description(), $this->primaryAuthorName($package));
+    }
+
+    /**
+     * Gets primary author name from the composer package.
+     *
+     * @param ComposerPackage $package
+     *
+     * @return string
+     */
+    private function primaryAuthorName(ComposerPackage $package)
+    {
+        if (!$package->primaryAuthor()) {
+            return 'Anonymous';
+        }
+
+        return $package->primaryAuthor()['name'];
     }
 }

@@ -18,6 +18,14 @@ final class ComposerPackage implements Package
      * @var string
      */
     private $type;
+    /**
+     * @var string
+     */
+    private $description;
+    /**
+     * @var array
+     */
+    private $authors;
 
     /**
      * Initializes package.
@@ -36,6 +44,8 @@ final class ComposerPackage implements Package
 
         $this->name = strtolower($name);
         $this->type = $data['type'];
+        $this->description = isset($data['description']) ? $data['description'] : null;
+        $this->authors = isset($data['authors']) ? $data['authors'] : [];
     }
 
     /**
@@ -62,6 +72,36 @@ final class ComposerPackage implements Package
     public function type()
     {
         return $this->type;
+    }
+
+    /**
+     * Returns package description.
+     *
+     * @return string
+     */
+    public function description()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Hash of the primary package author or null if no authors defined.
+     *
+     * @return array|null
+     */
+    public function primaryAuthor()
+    {
+        return count($this->authors) ? $this->authors[0] : null;
+    }
+
+    /**
+     * Returns package authors.
+     *
+     * @return array
+     */
+    public function authors()
+    {
+        return $this->authors;
     }
 
     /**
