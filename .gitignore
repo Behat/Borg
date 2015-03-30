@@ -1,5 +1,6 @@
 vendor/
 web/bundles/
+extensions/*
 docs/*
 app/cache/*
 app/logs/*
@@ -7,6 +8,7 @@ build/repositories/*
 build/docs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
+!extensions/.gitkeep
 !build/repositories/.gitkeep
 !build/docs/.gitkeep
 !docs/.gitkeep
