@@ -92,8 +92,8 @@ class DocumenterSpec extends ObjectBehavior
             $built->getWrappedObject(), __DIR__
         );
 
-        $repository->projectDocumentation('my/project')->willReturn([$publishedDocumentation]);
+        $repository->allProjectDocumentation('my/project')->willReturn([$publishedDocumentation]);
 
-        $this->projectDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
+        $this->allProjectDocumentation('my/project')->shouldReturn([$publishedDocumentation]);
     }
 }

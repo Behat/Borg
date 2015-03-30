@@ -68,7 +68,7 @@ class DocumentationController extends Controller
     {
         try {
             $documentationPage = $this->documenter()->documentationPage(new DocumentationId($project, $version), new PageId($path));
-            $projectDocumentation = $this->documenter()->projectDocumentation($project);
+            $projectDocumentation = $this->documenter()->allProjectDocumentation($project);
         } catch (PageNotFound $e) {
             throw $this->createNotFoundException('Documentation page was not found.');
         }

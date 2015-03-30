@@ -78,8 +78,8 @@ final class Documenter
      *
      * @return PublishedDocumentation[]
      */
-    public function projectDocumentation($projectName)
+    public function allProjectDocumentation($projectName)
     {
-        return $this->repository->projectDocumentation($projectName);
+        return $this->repository->allProjectDocumentation($projectName);
     }
 }

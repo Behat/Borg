@@ -25,7 +25,7 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
     public function documentation(DocumentationId $documentationId)
     {
         if ('current' === $documentationId->versionString()) {
-            $projectDocumentation = $this->projectDocumentation($documentationId->projectName());
+            $projectDocumentation = $this->allProjectDocumentation($documentationId->projectName());
             $documentation = current($projectDocumentation);
         } else {
             $documentation = $this->repo->findById((string)$documentationId);
@@ -38,7 +38,7 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
         return $documentation;
     }
 
-    public function projectDocumentation($projectName)
+    public function allProjectDocumentation($projectName)
     {
         $documentation = array_filter(
             $this->repo->getAll(),

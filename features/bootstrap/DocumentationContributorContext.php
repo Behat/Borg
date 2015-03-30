@@ -146,7 +146,7 @@ class DocumentationContributorContext implements Context
                 function (PublishedDocumentation $documentation) {
                     return (string)$documentation->documentationId();
                 },
-                $this->documenter->projectDocumentation($project)
+                $this->documenter->allProjectDocumentation($project)
             ),
             'Documentation for provided version not found in the list.'
         );
