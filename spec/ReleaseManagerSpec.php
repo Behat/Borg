@@ -14,16 +14,14 @@ class ReleaseManagerSpec extends ObjectBehavior
     function it_notifies_registered_listeners_during_release(
         ReleaseListener $listener1,
         ReleaseListener $listener2,
-        Repository $package
+        Repository $repository
     ) {
-        $aRelease = new Release($package->getWrappedObject(), Version::string('v2.5'));
-
-        $listener1->releaseReleased($aRelease)->shouldBeCalled();
-        $listener2->releaseReleased($aRelease)->shouldBeCalled();
+        $listener1->releaseReleased(Argument::which('repository', $repository->getWrappedObject()))->shouldBeCalled();
+        $listener2->releaseReleased(Argument::which('repository', $repository->getWrappedObject()))->shouldBeCalled();
 
         $this->registerListener($listener1);
         $this->registerListener($listener2);
 
-        $this->release($aRelease);
+        $this->release($repository, Version::string('v2.5'));
     }
 }

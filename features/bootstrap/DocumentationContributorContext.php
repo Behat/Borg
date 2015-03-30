@@ -11,7 +11,6 @@ use Behat\Borg\Integration\Documentation\Filesystem\PersistedObjectsRepository;
 use Behat\Borg\Integration\Documentation\Release\DocumentationIdFactory;
 use Behat\Borg\Integration\Documentation\Release\PackageDocumenter;
 use Behat\Borg\Release\Package;
-use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\ReleasePackager;
 use Behat\Borg\Release\Version;
@@ -80,7 +79,7 @@ class DocumentationContributorContext implements Context
      */
     public function iReleaseRelease(FakeRepository $repository, Version $version)
     {
-        $this->releaseManager->release(new Release($repository, $version));
+        $this->releaseManager->release($repository, $version);
     }
 
     /**

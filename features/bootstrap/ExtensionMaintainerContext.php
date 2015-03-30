@@ -5,7 +5,6 @@ use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\Integration\Extension\Filesystem\PersistedObjectsRepository;
 use Behat\Borg\Integration\Extension\Release\ExtensionCataloguer;
 use Behat\Borg\Release\Package;
-use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\ReleasePackager;
 use Behat\Borg\Release\Version;
@@ -72,7 +71,7 @@ class ExtensionMaintainerContext implements Context
      */
     public function iReleaseVersion(FakeRepository $repository, Version $version)
     {
-        $this->releaseManager->release(new Release($repository, $version));
+        $this->releaseManager->release($repository, $version);
     }
 
     /**
