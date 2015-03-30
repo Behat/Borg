@@ -2,17 +2,12 @@
 
 namespace spec\Behat\Borg;
 
-use Behat\Borg\Documentation\Builder\Builder;
 use Behat\Borg\Documentation\Builder\BuiltDocumentation;
 use Behat\Borg\Documentation\Exception\PageNotFound;
-use Behat\Borg\Documentation\Publisher\Publisher;
-use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\DocumentationId;
-use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Page\Page;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documentation\Repository\Repository;
-use Behat\Borg\Documentation\Source;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -33,14 +28,13 @@ class DocumenterSpec extends ObjectBehavior
         $built->builtAt()->willReturn(new \DateTimeImmutable());
         $built->documentedAt()->willReturn(new \DateTimeImmutable());
 
-        $pageId = new PageId(basename(__FILE__));
         $publishedDocumentation = PublishedDocumentation::publish(
             $built->getWrappedObject(), __DIR__
         );
 
         $repository->documentation($anId)->willReturn($publishedDocumentation);
 
-        $page = $this->documentationPage($anId, $pageId);
+        $page = $this->documentationPage('behat/behat', 'v1.0', basename(__FILE__));
         $page->shouldBeAnInstanceOf(Page::class);
     }
 
@@ -49,14 +43,13 @@ class DocumenterSpec extends ObjectBehavior
         BuiltDocumentation $built
     ) {
         $anId = new DocumentationId('behat/behat', 'v1.0');
-        $pageId = new PageId('no_file');
         $publishedDocumentation = PublishedDocumentation::publish(
             $built->getWrappedObject(), __DIR__
         );
 
         $repository->documentation($anId)->willReturn($publishedDocumentation);
 
-        $this->shouldThrow(PageNotFound::class)->duringDocumentationPage($anId, $pageId);
+        $this->shouldThrow(PageNotFound::class)->duringDocumentationPage('behat/behat', 'v1.0', 'no_file');
     }
 
     function it_finds_all_documentation_for_a_provided_project_name(

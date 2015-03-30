@@ -32,16 +32,20 @@ final class Documenter
     /**
      * Gets the documentation page using its ID.
      *
-     * @param DocumentationId $documentationId
-     * @param PageId          $pageId
+     * @param string $projectName
+     * @param string $versionString
+     * @param string $pageName
      *
      * @return Page
      *
      * @throws PageNotFound
      */
-    public function documentationPage(DocumentationId $documentationId, PageId $pageId)
+    public function documentationPage($projectName, $versionString, $pageName)
     {
-        return $this->repository->documentation($documentationId)->page($pageId);
+        $documentationId = new DocumentationId($projectName, $versionString);
+        $anId = new PageId($pageName);
+
+        return $this->repository->documentation($documentationId)->page($anId);
     }
 
     /**

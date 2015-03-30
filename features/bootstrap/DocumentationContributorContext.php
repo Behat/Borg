@@ -3,7 +3,6 @@
 use Behat\Behat\Context\Context;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\PageNotFound;
-use Behat\Borg\Documentation\Page\PageId;
 use Behat\Borg\Documentation\Processor;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documenter;
@@ -87,7 +86,7 @@ class DocumentationContributorContext implements Context
      */
     public function releaseDocumentationShouldHaveBeenPublished($project, $versionString)
     {
-        $this->documenter->documentationPage(new DocumentationId($project, $versionString), new PageId('index.html'));
+        $this->documenter->documentationPage($project, $versionString, 'index.html');
     }
 
     /**
@@ -96,30 +95,28 @@ class DocumentationContributorContext implements Context
     public function versionDocumentationShouldNotBePublished($project, $versionString)
     {
         try {
-            $this->documenter->documentationPage(new DocumentationId($project, $versionString), new PageId('index.html'));
+            $this->documenter->documentationPage($project, $versionString, 'index.html');
             PHPUnit_Framework_Assert::fail('Documentation was actually found.');
         } catch (PageNotFound $e) { /* Passes, do nothing */ }
     }
 
     /**
-     * @Then package name of :pageId page for :project version :versionString should be :name
+     * @Then package name of :pageString page for :project version :versionString should be :name
      */
-    public function packageNameOfPageShouldBe(PageId $pageId, $project, $versionString, $name)
+    public function packageNameOfPageShouldBe($pageString, $project, $versionString, $name)
     {
-        $documentationId = new DocumentationId($project, $versionString);
-        $page = $this->documenter->documentationPage($documentationId, $pageId);
+        $page = $this->documenter->documentationPage($project, $versionString, $pageString);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($name, $page->projectName());
     }
 
     /**
-     * @Then documentation time of :pageId page for :project version :versionString should be :time
+     * @Then documentation time of :pageString page for :project version :versionString should be :time
      */
-    public function timeOfPageShouldBe(PageId $pageId, $project, $versionString, DateTimeImmutable $time)
+    public function timeOfPageShouldBe($pageString, $project, $versionString, DateTimeImmutable $time)
     {
-        $documentationId = new DocumentationId($project, $versionString);
-        $page = $this->documenter->documentationPage($documentationId, $pageId);
+        $page = $this->documenter->documentationPage($project, $versionString, $pageString);
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($time, $page->documentedAt());
@@ -130,8 +127,7 @@ class DocumentationContributorContext implements Context
      */
     public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
     {
-        $documentationId = new DocumentationId($project, 'current');
-        $page = $this->documenter->documentationPage($documentationId, new PageId('index.html'));
+        $page = $this->documenter->documentationPage($project, $versionString, 'index.html');
 
         PHPUnit::assertNotNull($page, 'Page not found.');
         PHPUnit::assertEquals($versionString, $page->versionString());
