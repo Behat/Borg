@@ -33,12 +33,13 @@ class ExtensionMaintainerContext implements Context
      */
     public function __construct()
     {
+        $repository = new PersistedObjectsRepository(null);
         $this->releaseManager = new ReleaseManager();
-        $this->catalogue = new ExtensionCatalogue(new PersistedObjectsRepository(null));
+        $this->catalogue = new ExtensionCatalogue($repository);
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $extensionCataloguer = new ExtensionCataloguer(new FakeExtractor(), $this->catalogue);
+        $extensionCataloguer = new ExtensionCataloguer(new FakeExtractor(), $repository);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);

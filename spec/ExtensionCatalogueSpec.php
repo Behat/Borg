@@ -14,13 +14,6 @@ class ExtensionCatalogueSpec extends ObjectBehavior
         $this->beConstructedWith($repository);
     }
 
-    function it_saves_extensions_to_repository_during_registration(Repository $repository, Extension $extension)
-    {
-        $repository->add($extension)->shouldBeCalled();
-
-        $this->register($extension);
-    }
-
     function it_finds_registered_extensions_using_repository(Repository $repository, Extension $extension)
     {
         $repository->extension('some/extension')->willReturn($extension);
