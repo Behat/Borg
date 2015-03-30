@@ -15,9 +15,15 @@
                  class="Behat\Borg\Integration\Documentation\Release\PackageDocumenter"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
-            <argument type="service" id="documentation.documenter"/>
             <argument type="service">
                 <service class="Behat\Borg\Integration\Documentation\Release\DocumentationIdFactory" />
+            </argument>
+            <argument type="service">
+                <service class="Behat\Borg\Documentation\Processor">
+                    <argument type="service" id="documentation.builder.sphinx"/>
+                    <argument type="service" id="documentation.publisher"/>
+                    <argument type="service" id="documentation.repository"/>
+                </service>
             </argument>
         </service>
 
@@ -29,8 +35,6 @@
 
         <service id="documentation.documenter"
                  class="Behat\Borg\Documenter">
-            <argument type="service" id="documentation.builder.sphinx"/>
-            <argument type="service" id="documentation.publisher"/>
             <argument type="service" id="documentation.repository"/>
         </service>
 

@@ -3,8 +3,6 @@
 namespace Behat\Borg\Integration\Symfony\Documentation\Controller;
 
 use Behat\Borg\Documentation\Exception\PageNotFound;
-use Behat\Borg\Documentation\Page\PageId;
-use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documenter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -67,7 +65,7 @@ class DocumentationController extends Controller
     public function documentationPageAction($project, $version, $path)
     {
         try {
-            $documentationPage = $this->documenter()->documentationPage(new DocumentationId($project, $version), new PageId($path));
+            $documentationPage = $this->documenter()->documentationPage($project, $version, $path);
             $projectDocumentation = $this->documenter()->allProjectDocumentation($project);
         } catch (PageNotFound $e) {
             throw $this->createNotFoundException('Documentation page was not found.');

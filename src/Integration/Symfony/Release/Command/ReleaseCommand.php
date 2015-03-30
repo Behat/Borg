@@ -3,7 +3,6 @@
 namespace Behat\Borg\Integration\Symfony\Release\Command;
 
 use Behat\Borg\Integration\Release\GitHub\GitHubRepository;
-use Behat\Borg\Release\Release;
 use Behat\Borg\Release\Version;
 use Behat\Borg\ReleaseManager;
 use Symfony\Component\Console\Command\Command;
@@ -32,10 +31,9 @@ final class ReleaseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $aPackage = GitHubRepository::named($input->getArgument('package'));
-        $version = Version::string($input->getArgument('version'));
-        $aRelease = new Release($aPackage, $version);
-
-        $this->manager->release($aRelease);
+        $this->manager->release(
+            GitHubRepository::named($input->getArgument('package')),
+            Version::string($input->getArgument('version'))
+        );
     }
 }
