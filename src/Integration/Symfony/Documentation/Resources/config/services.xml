@@ -15,10 +15,10 @@
                  class="Behat\Borg\Integration\Documentation\Release\PackageDocumenter"
                  public="false">
             <argument type="service" id="documentation.source_finder.rst"/>
-            <argument type="service" id="documentation.documenter"/>
             <argument type="service">
                 <service class="Behat\Borg\Integration\Documentation\Release\DocumentationIdFactory" />
             </argument>
+            <argument type="service" id="documentation.documenter"/>
         </service>
 
         <service id="twig.loader.documentation"

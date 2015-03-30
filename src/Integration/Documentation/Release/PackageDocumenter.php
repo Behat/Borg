@@ -21,26 +21,26 @@ final class PackageDocumenter implements PackageListener
      */
     private $finder;
     /**
-     * @var Documenter
-     */
-    private $documenter;
-    /**
      * @var DocumentationIdFactory
      */
     private $idFactory;
+    /**
+     * @var Documenter
+     */
+    private $documenter;
 
     /**
      * Initializes listener.
      *
      * @param SourceFinder           $finder
-     * @param Documenter             $documenter
      * @param DocumentationIdFactory $idFactory
+     * @param Documenter             $documenter
      */
-    public function __construct(SourceFinder $finder, Documenter $documenter, DocumentationIdFactory $idFactory)
+    public function __construct(SourceFinder $finder, DocumentationIdFactory $idFactory, Documenter $documenter)
     {
         $this->finder = $finder;
-        $this->documenter = $documenter;
         $this->idFactory = $idFactory;
+        $this->documenter = $documenter;
     }
 
     /**

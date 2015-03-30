@@ -44,7 +44,7 @@ class DocumentationContributorContext implements Context
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), $this->documenter, new DocumentationIdFactory());
+        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), new DocumentationIdFactory(), $this->documenter);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
