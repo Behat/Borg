@@ -68,13 +68,7 @@ final class Documenter
      */
     public function documentationPage(DocumentationId $documentationId, PageId $pageId)
     {
-        $documentation = $this->repository->documentation($documentationId);
-
-        if (!$documentation->has($pageId)) {
-            throw new PageNotFound('Page was not found.');
-        }
-
-        return $documentation->page($pageId);
+        return $this->repository->documentation($documentationId)->page($pageId);
     }
 
     /**
