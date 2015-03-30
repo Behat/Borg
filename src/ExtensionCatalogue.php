@@ -27,16 +27,6 @@ final class ExtensionCatalogue
     }
 
     /**
-     * Registers provided extension.
-     *
-     * @param Extension $extension
-     */
-    public function register(Extension $extension)
-    {
-        $this->repository->add($extension);
-    }
-
-    /**
      * Tries to find extension by name.
      *
      * @param string $name

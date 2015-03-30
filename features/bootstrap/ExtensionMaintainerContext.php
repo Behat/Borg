@@ -5,7 +5,6 @@ use Behat\Borg\ExtensionCatalogue;
 use Behat\Borg\Integration\Extension\Filesystem\PersistedObjectsRepository;
 use Behat\Borg\Integration\Extension\Release\ExtensionCataloguer;
 use Behat\Borg\Release\Package;
-use Behat\Borg\Release\Release;
 use Behat\Borg\Release\ReleaseDownloader;
 use Behat\Borg\Release\ReleasePackager;
 use Behat\Borg\Release\Version;
@@ -34,12 +33,13 @@ class ExtensionMaintainerContext implements Context
      */
     public function __construct()
     {
+        $repository = new PersistedObjectsRepository(null);
         $this->releaseManager = new ReleaseManager();
-        $this->catalogue = new ExtensionCatalogue(new PersistedObjectsRepository(null));
+        $this->catalogue = new ExtensionCatalogue($repository);
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $extensionCataloguer = new ExtensionCataloguer(new FakeExtractor(), $this->catalogue);
+        $extensionCataloguer = new ExtensionCataloguer(new FakeExtractor(), $repository);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);
@@ -72,7 +72,7 @@ class ExtensionMaintainerContext implements Context
      */
     public function iReleaseVersion(FakeRepository $repository, Version $version)
     {
-        $this->releaseManager->release(new Release($repository, $version));
+        $this->releaseManager->release($repository, $version);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Behat\Borg\Integration\Extension\Release;
 
 use Behat\Borg\Extension\Extractor\Extractor;
-use Behat\Borg\ExtensionCatalogue;
+use Behat\Borg\Extension\Repository\Repository;
 use Behat\Borg\Release\Downloader\DownloadedPackage;
 use Behat\Borg\Release\Listener\PackageListener;
 
@@ -17,20 +17,20 @@ final class ExtensionCataloguer implements PackageListener
      */
     private $extractor;
     /**
-     * @var ExtensionCatalogue
+     * @var Repository
      */
-    private $catalogue;
+    private $repository;
 
     /**
      * Initializes cataloguer.
      *
-     * @param Extractor          $extractor
-     * @param ExtensionCatalogue $catalogue
+     * @param Extractor  $extractor
+     * @param Repository $repository
      */
-    public function __construct(Extractor $extractor, ExtensionCatalogue $catalogue)
+    public function __construct(Extractor $extractor, Repository $repository)
     {
         $this->extractor = $extractor;
-        $this->catalogue = $catalogue;
+        $this->repository = $repository;
     }
 
     /**
@@ -42,6 +42,6 @@ final class ExtensionCataloguer implements PackageListener
             return;
         }
 
-        $this->catalogue->register($extension);
+        $this->repository->add($extension);
     }
 }

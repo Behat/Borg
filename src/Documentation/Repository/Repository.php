@@ -36,5 +36,5 @@ interface Repository
      *
      * @return PublishedDocumentation[]
      */
-    public function projectDocumentation($projectName);
+    public function allProjectDocumentation($projectName);
 }

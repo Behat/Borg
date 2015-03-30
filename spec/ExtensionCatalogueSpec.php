@@ -14,15 +14,6 @@ class ExtensionCatalogueSpec extends ObjectBehavior
         $this->beConstructedWith($repository);
     }
 
-    function it_saves_extensions_to_repository_during_registration(Repository $repository)
-    {
-        $extension = new Extension('behat', 'symfony2-extension', 'sf2 extension for behat', 'everzet');
-
-        $repository->add($extension)->shouldBeCalled();
-
-        $this->register($extension);
-    }
-
     function it_finds_registered_extensions_using_repository(Repository $repository)
     {
         $extension = new Extension('some', 'extension', 'sf2 extension for behat', 'everzet');
