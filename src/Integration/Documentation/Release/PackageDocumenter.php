@@ -3,9 +3,9 @@
 namespace Behat\Borg\Integration\Documentation\Release;
 
 use Behat\Borg\Documentation\Finder\SourceFinder;
+use Behat\Borg\Documentation\Processor;
 use Behat\Borg\Documentation\RawDocumentation;
 use Behat\Borg\Documentation\Source;
-use Behat\Borg\Documenter;
 use Behat\Borg\Release\Downloader\Download;
 use Behat\Borg\Release\Downloader\DownloadedPackage;
 use Behat\Borg\Release\Listener\PackageListener;
@@ -25,22 +25,22 @@ final class PackageDocumenter implements PackageListener
      */
     private $idFactory;
     /**
-     * @var Documenter
+     * @var Processor
      */
-    private $documenter;
+    private $processor;
 
     /**
      * Initializes listener.
      *
      * @param SourceFinder           $finder
      * @param DocumentationIdFactory $idFactory
-     * @param Documenter             $documenter
+     * @param Processor              $processor
      */
-    public function __construct(SourceFinder $finder, DocumentationIdFactory $idFactory, Documenter $documenter)
+    public function __construct(SourceFinder $finder, DocumentationIdFactory $idFactory, Processor $processor)
     {
         $this->finder = $finder;
         $this->idFactory = $idFactory;
-        $this->documenter = $documenter;
+        $this->processor = $processor;
     }
 
     /**
@@ -58,7 +58,7 @@ final class PackageDocumenter implements PackageListener
         }
 
         $rawDocumentation = $this->rawDocumentation($download, $package, $source);
-        $this->documenter->process($rawDocumentation);
+        $this->processor->process($rawDocumentation);
     }
 
     /**

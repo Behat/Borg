@@ -4,6 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Exception\PageNotFound;
 use Behat\Borg\Documentation\Page\PageId;
+use Behat\Borg\Documentation\Processor;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use Behat\Borg\Documenter;
 use Behat\Borg\Integration\Documentation\Filesystem\PersistedObjectsRepository;
@@ -39,12 +40,14 @@ class DocumentationContributorContext implements Context
      */
     public function __construct()
     {
-        $this->documenter = new Documenter(new FakeBuilder(), new FakePublisher(), new PersistedObjectsRepository(null));
+        $repository = new PersistedObjectsRepository(null);
+        $this->documenter = new Documenter($repository);
         $this->releaseManager = new ReleaseManager();
 
         $releaseDownloader = new ReleaseDownloader(new FakeDownloader());
         $releasePackager = new ReleasePackager(new FakePackageFinder());
-        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), new DocumentationIdFactory(), $this->documenter);
+        $documentationProcessor = new Processor(new FakeBuilder(), new FakePublisher(), $repository);
+        $packageDocumenter = new PackageDocumenter(new FakeSourceFinder(), new DocumentationIdFactory(), $documentationProcessor);
 
         $this->releaseManager->registerListener($releaseDownloader);
         $releaseDownloader->registerListener($releasePackager);

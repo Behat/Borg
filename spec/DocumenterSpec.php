@@ -18,29 +18,9 @@ use Prophecy\Argument;
 
 class DocumenterSpec extends ObjectBehavior
 {
-    function let(Builder $builder, Publisher $publisher, Repository $repository)
+    function let(Repository $repository)
     {
-        $this->beConstructedWith($builder, $publisher, $repository);
-    }
-
-    function it_processes_documentation_by_building_and_publishing_it(
-        Builder $builder,
-        Source $source,
-        BuiltDocumentation $builtDocumentation,
-        Publisher $publisher,
-        Repository $repository
-    ) {
-        $anId = new DocumentationId('behat/behat', 'v1.0');
-        $raw = new RawDocumentation(
-            $anId, new \DateTimeImmutable(), $source->getWrappedObject()
-        );
-        $published = PublishedDocumentation::publish($builtDocumentation->getWrappedObject(), '/');
-
-        $builder->build($raw)->willReturn($builtDocumentation);
-        $publisher->publish($builtDocumentation)->willReturn($published);
-        $repository->add($published)->shouldBeCalled();
-
-        $this->process($raw);
+        $this->beConstructedWith($repository);
     }
 
     function it_finds_documentation_page_if_documentation_was_saved_and_has_asked_page(
