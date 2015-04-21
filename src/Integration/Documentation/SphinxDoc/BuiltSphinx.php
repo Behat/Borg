@@ -45,7 +45,7 @@ final class BuiltSphinx implements BuiltDocumentation
     /**
      * {@inheritdoc}
      */
-    public function buildPath()
+    public function path()
     {
         return $this->buildPath;
     }
@@ -53,9 +53,9 @@ final class BuiltSphinx implements BuiltDocumentation
     /**
      * {@inheritdoc}
      */
-    public function indexPath()
+    public function index()
     {
-        return $this->buildPath() . '/index.html';
+        return $this->path() . '/index.html';
     }
 
     /**

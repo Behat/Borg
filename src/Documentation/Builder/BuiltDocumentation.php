@@ -22,7 +22,7 @@ interface BuiltDocumentation
      *
      * @return string
      */
-    public function buildPath();
+    public function path();
 
     /**
      * Returns the time documentation was built at.
