@@ -79,18 +79,6 @@ final class PublishedDocumentation
     }
 
     /**
-     * Checks if file at provided relative path exists.
-     *
-     * @param PageId $anId
-     *
-     * @return Boolean
-     */
-    public function has(PageId $anId)
-    {
-        return file_exists($this->path . '/' . $anId);
-    }
-
-    /**
      * Returns page by its ID.
      *
      * @param PageId $anId
@@ -99,11 +87,23 @@ final class PublishedDocumentation
      */
     public function page(PageId $anId)
     {
-        if (!$this->has($anId)) {
+        if (!$this->hasPage($anId)) {
             throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
         }
 
         return new Page($this, $anId);
+    }
+
+    /**
+     * Checks if file at provided relative path exists.
+     *
+     * @param PageId $anId
+     *
+     * @return Boolean
+     */
+    private function hasPage(PageId $anId)
+    {
+        return file_exists($this->path . '/' . $anId);
     }
 
     private function __construct() { }

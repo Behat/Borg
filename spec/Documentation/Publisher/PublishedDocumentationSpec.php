@@ -38,12 +38,6 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->documentedAt()->shouldReturn($docTime);
     }
 
-    function it_can_tell_if_it_contains_a_page()
-    {
-        $this->has(new PageId(basename(__FILE__)))->shouldReturn(true);
-        $this->has(new PageId('any file'))->shouldReturn(false);
-    }
-
     function it_can_get_a_page_by_its_id()
     {
         $pageId = new PageId(basename(__FILE__));
