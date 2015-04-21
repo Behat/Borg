@@ -35,7 +35,7 @@ final class Page
      */
     public function __construct(PublishedDocumentation $documentation, PageId $pageId)
     {
-        $this->path = $documentation->path($pageId);
+        $this->path = $documentation->path() . '/' . $pageId;
         $this->projectName = $documentation->documentationId()->projectName();
         $this->versionString = $documentation->documentationId()->versionString();
         $this->time = $documentation->documentedAt();

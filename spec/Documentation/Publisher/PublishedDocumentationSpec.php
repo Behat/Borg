@@ -58,11 +58,6 @@ class PublishedDocumentationSpec extends ObjectBehavior
 
     function it_can_provide_absolute_path_for_the_page_by_its_id()
     {
-        $this->path(new PageId(basename(__FILE__)))->shouldReturn(__FILE__);
-    }
-
-    function it_throws_an_exception_when_trying_to_get_path_for_inexistent_page()
-    {
-        $this->shouldThrow()->duringPath(new PageId('any file'));
+        $this->path()->shouldReturn(__DIR__);
     }
 }
