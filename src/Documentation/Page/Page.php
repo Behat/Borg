@@ -16,10 +16,6 @@ final class Page
      */
     private $documentationId;
     /**
-     * @var PageId
-     */
-    private $pageId;
-    /**
      * @var DateTimeImmutable
      */
     private $time;
@@ -37,7 +33,6 @@ final class Page
     public function __construct(PublishedDocumentation $documentation, PageId $pageId)
     {
         $this->documentationId = $documentation->documentationId();
-        $this->pageId = $pageId;
         $this->time = $documentation->documentedAt();
         $this->path = $documentation->path() . '/' . $pageId->path();
     }
