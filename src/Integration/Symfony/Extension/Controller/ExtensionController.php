@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ExtensionController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="extension_list")
      * @Template()
      */
     public function listAction()

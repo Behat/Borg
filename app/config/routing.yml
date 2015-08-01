@@ -9,6 +9,8 @@ extension:
     resource: "@ExtensionBundle/Controller/"
     type:     annotation
     prefix:   /extensions
+    defaults:
+        section: 'extension'
 
 documentation:
     resource: '@DocumentationBundle/Controller/'
