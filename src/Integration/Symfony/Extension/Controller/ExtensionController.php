@@ -11,7 +11,7 @@ class ExtensionController extends Controller
 {
     /**
      * @Route("/", name="extension_list")
-     * @Template()
+     * @Template("ExtensionBundle::list.html.twig")
      */
     public function listAction()
     {
