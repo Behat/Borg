@@ -33,7 +33,7 @@ class DirectoryPublisherTest extends PHPUnit_Framework_TestCase
         $anId = new DocumentationId('built_doc', 'v1.0');
         $builtDoc = $this->getMock(BuiltDocumentation::class);
         $builtDoc->method('documentationId')->willReturn($anId);
-        $builtDoc->method('buildPath')->willReturn($this->tempBuildPath . '/built_doc/v1.0');
+        $builtDoc->method('path')->willReturn($this->tempBuildPath . '/built_doc/v1.0');
 
         (new Filesystem())->mkdir($this->tempBuildPath . '/built_doc/v1.0');
         (new Filesystem())->touch($this->tempBuildPath . '/built_doc/v1.0/my_file');
