@@ -1,19 +1,25 @@
 {% extends '::layout.html.twig' %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/extensions.css') }}">
 {% endblock %}
+
 
 {% block page %}
     <section class="extensions">
         <h1>Extensions</h1>
+
+        <p>Behat is very extensible. Almost every bit of the framework
+            functionality could be enhanced or even replaced through the powerful
+            extension system. Here is the list of awesome extensions you might be
+            interested in:</p>
+
         {% for extension in extensions %}
-            <div class="extension">
+            <a class="extension clearfix" href="#">
                 <h2>{{ extension }}</h2>
                 <span class="by">by</span> <span class="author">{{ extension.author }}</span>
-                <p>
-                    {{ extension.description }}
-                </p>
-            </div>
+                <p>{{ extension.description }}</p>
+            </a>
         {% endfor %}
     </section>
 {% endblock %}
