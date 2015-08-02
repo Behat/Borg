@@ -32,13 +32,14 @@ section.extensions .extension h2 {
     display: block;
     position: relative;
     float: left;
-    max-width: 400px;
+    max-width: 450px;
     margin-top: 10px;
     padding: 3px 10px;
     background-color: rgb(192, 192, 192);
     font-size: 2.4rem;
     line-height: 1.38;
     color: rgb(80, 80, 80);
+    overflow: hidden;
 }
 
 section.extensions .extension .by {
@@ -58,6 +59,7 @@ section.extensions .extension .author {
     margin: 18px 0 0 7px;
     font-size: 1.8rem;
     line-height: 1.38;
+    overflow: hidden;
     color: rgb(171, 170, 170);
 }
 
