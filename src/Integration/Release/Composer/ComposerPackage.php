@@ -10,6 +10,8 @@ use Behat\Borg\Release\Package;
  */
 final class ComposerPackage implements Package
 {
+    const DEFAULT_TYPE = 'library';
+
     /**
      * @var string
      */
@@ -114,7 +116,7 @@ final class ComposerPackage implements Package
 
     private function extractType(array $data)
     {
-        return $data['type'];
+        return isset($data['type']) ? $data['type'] : self::DEFAULT_TYPE;
     }
 
     private function extractDescription(array $data)

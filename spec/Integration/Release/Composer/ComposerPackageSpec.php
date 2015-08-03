@@ -14,7 +14,6 @@ class ComposerPackageSpec extends ObjectBehavior
         $this->beConstructedWith(
             [
                 'name'        => 'behat/docs',
-                'type'        => 'library',
                 'description' => 'behat documentation',
                 'authors'     => [
                     ['name' => 'Konstantin Kudryashov', 'email' => 'ever.zet@gmail.com'],
@@ -57,9 +56,21 @@ class ComposerPackageSpec extends ObjectBehavior
         $this->name()->shouldReturn('docs');
     }
 
-    function it_has_type()
+    function its_default_type_is_library()
     {
         $this->type()->shouldReturn('library');
+    }
+
+    function it_has_a_different_type_if_provided()
+    {
+        $this->beConstructedWith(
+            [
+                'name' => 'behat/docs',
+                'type' => 'whatever'
+            ]
+        );
+
+        $this->type()->shouldReturn('whatever');
     }
 
     function it_has_a_description()
