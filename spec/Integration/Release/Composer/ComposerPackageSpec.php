@@ -2,6 +2,7 @@
 
 namespace spec\Behat\Borg\Integration\Release\Composer;
 
+use Behat\Borg\Integration\Release\Composer\Author;
 use Behat\Borg\Release\Package;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -68,17 +69,17 @@ class ComposerPackageSpec extends ObjectBehavior
 
     function it_has_authors()
     {
-        $this->authors()->shouldReturn(
+        $this->authors()->shouldBeLike(
             [
-                ['name' => 'Konstantin Kudryashov', 'email' => 'ever.zet@gmail.com'],
-                ['name' => 'Christophe Coevoet', 'email' => 'stof@notk.org']
+                new Author('Konstantin Kudryashov', 'ever.zet@gmail.com'),
+                new Author('Christophe Coevoet', 'stof@notk.org'),
             ]
         );
     }
 
     function its_primary_author_is_the_first_one()
     {
-        $this->primaryAuthor()->shouldReturn(['name' => 'Konstantin Kudryashov', 'email' => 'ever.zet@gmail.com']);
+        $this->primaryAuthor()->shouldBeLike(new Author('Konstantin Kudryashov', 'ever.zet@gmail.com'));
     }
 
     function its_primary_author_is_null_if_none_authors_found()

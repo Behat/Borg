@@ -43,9 +43,9 @@ final class ComposerPackage implements Package
         }
 
         $this->name = strtolower($name);
-        $this->type = $data['type'];
-        $this->description = isset($data['description']) ? $data['description'] : null;
-        $this->authors = isset($data['authors']) ? $data['authors'] : [];
+        $this->type = $this->extractType($data);
+        $this->description = $this->extractDescription($data);
+        $this->authors = $this->extractAuthors($data);
     }
 
     /**
@@ -87,17 +87,17 @@ final class ComposerPackage implements Package
     /**
      * Hash of the primary package author or null if no authors defined.
      *
-     * @return array|null
+     * @return Author|null
      */
     public function primaryAuthor()
     {
-        return count($this->authors) ? $this->authors[0] : null;
+        return count($this->authors) ? current($this->authors) : null;
     }
 
     /**
      * Returns package authors.
      *
-     * @return array
+     * @return Author[]
      */
     public function authors()
     {
@@ -110,5 +110,29 @@ final class ComposerPackage implements Package
     public function __toString()
     {
         return $this->name;
+    }
+
+    private function extractType(array $data)
+    {
+        return $data['type'];
+    }
+
+    private function extractDescription(array $data)
+    {
+        return isset($data['description']) ? $data['description'] : null;
+    }
+
+    private function extractAuthors(array $data)
+    {
+        if (!isset($data['authors'])) {
+            return [];
+        }
+
+        return array_map([$this, 'extractAuthor'], $data['authors']);
+    }
+
+    private function extractAuthor(array $author)
+    {
+        return Author::fromArray($author);
     }
 }

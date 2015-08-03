@@ -35,11 +35,15 @@ class ComposerExtractorSpec extends ObjectBehavior
     {
         $package = new ComposerPackage([
             'name' => 'behat/symfony2-extension',
-            'type' => 'behat-extension'
+            'type' => 'behat-extension',
+            'authors' => [
+                ['name' => 'everzet']
+            ]
         ]);
 
         $extension = $this->extract($package);
         $extension->shouldHaveType(Extension::class);
         $extension->name()->shouldReturn('symfony2-extension');
+        $extension->author()->shouldReturn('everzet');
     }
 }

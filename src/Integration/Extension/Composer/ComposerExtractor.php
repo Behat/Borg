@@ -41,6 +41,6 @@ final class ComposerExtractor implements Extractor
             return 'Anonymous';
         }
 
-        return $package->primaryAuthor()['name'];
+        return $package->primaryAuthor()->name();
     }
 }
