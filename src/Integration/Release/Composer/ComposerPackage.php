@@ -89,7 +89,7 @@ final class ComposerPackage implements Package
     /**
      * Hash of the primary package author or null if no authors defined.
      *
-     * @return Author|null
+     * @return ComposerAuthor|null
      */
     public function primaryAuthor()
     {
@@ -99,7 +99,7 @@ final class ComposerPackage implements Package
     /**
      * Returns package authors.
      *
-     * @return Author[]
+     * @return ComposerAuthor[]
      */
     public function authors()
     {
@@ -133,8 +133,8 @@ final class ComposerPackage implements Package
         return array_map([$this, 'extractAuthor'], $data['authors']);
     }
 
-    private function extractAuthor(array $author)
+    private function extractAuthor(array $meta)
     {
-        return Author::fromArray($author);
+        return new ComposerAuthor($meta);
     }
 }

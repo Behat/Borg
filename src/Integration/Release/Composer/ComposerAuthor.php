@@ -7,7 +7,7 @@ use Behat\Borg\Integration\Release\Composer\Exception\AuthorNameIsNotDefined;
 /**
  * Represents individual package author from composer.json
  */
-final class Author
+final class ComposerAuthor
 {
     /**
      * @var string
@@ -19,38 +19,22 @@ final class Author
     private $email;
 
     /**
-     * Initializes author from the composer array.
+     * Initializes author from the composer authors meta.
      *
-     * @param array $unserializedComposerAuthor
+     * @param array $meta
      *
-     * @return Author
+     * @return ComposerAuthor
      *
      * @throws AuthorNameIsNotDefined
      */
-    public static function fromArray(array $unserializedComposerAuthor)
+    public function __construct(array $meta)
     {
-        if (!isset($unserializedComposerAuthor['name'])) {
+        if (!isset($meta['name'])) {
             throw new AuthorNameIsNotDefined('Composer authors should have a name.');
         }
 
-        $author = new Author(
-            $unserializedComposerAuthor['name'],
-            isset($unserializedComposerAuthor['email']) ? $unserializedComposerAuthor['email'] : null
-        );
-
-        return $author;
-    }
-
-    /**
-     * Initializes author.
-     *
-     * @param string $name
-     * @param string $email
-     */
-    public function __construct($name, $email = null)
-    {
-        $this->name = $name;
-        $this->email = $email;
+        $this->name = $meta['name'];
+        $this->email = isset($meta['email']) ? $meta['email'] : null;
     }
 
     /**
