@@ -1,6 +1,6 @@
 {% extends '::layout.html.twig' %}
 
-{% block title %}{{ extension.name }} &mdash; Behat Extensions{% endblock %}
+{% block title %}{{ extension }} &mdash; Behat Extensions{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('/css/extensions.css') }}">
@@ -8,7 +8,11 @@
 
 
 {% block page %}
-    <section class="extensions">
-        <h1>{{ extension.organisationName }}/{{ extension.name }}</h1>
+    <section class="extension">
+        <header class="clearfix">
+            <h1>{{ extension }}</h1>
+            <span class="by">by</span> <span class="author">{{ extension.author }}</span>
+            <p>{{ extension.description }}</p>
+        </header>
     </section>
 {% endblock %}

@@ -1,3 +1,71 @@
+section.extension {
+    margin: 0px 20px;
+}
+
+section.extension header {
+    display: block;
+    width: 780px;
+    margin-bottom: 20px;
+    border: none;
+}
+
+section.extension header h1 {
+    font-family: 'Comfortaa';
+    display: block;
+    position: relative;
+    float: left;
+    max-width: 450px;
+    margin-top: 10px;
+    padding: 3px 0px;
+    font-size: 2.4rem;
+    line-height: 1.38;
+    overflow: hidden;
+    color: #000;
+}
+
+section.extension header .by {
+    display: block;
+    position: relative;
+    float: left;
+    margin: 21px 0 0 10px;
+    font: italic 1.4rem Georgia;
+    color: rgb(161, 159, 159);
+}
+
+section.extension header .author {
+    display: block;
+    position: relative;
+    float: left;
+    max-width: 260px;
+    margin: 18px 0 0 7px;
+    font-size: 1.8rem;
+    line-height: 1.38;
+    overflow: hidden;
+    color: rgb(161, 159, 159);
+}
+
+section.extension header p {
+    display: block;
+    width: 100%;
+    margin: 60px auto 0;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.38;
+    color: rgb(80, 80, 80);
+}
+
+
+
+
+
+
+
+
+
+
+
 section.extensions {
     margin: 0px 20px;
 }
