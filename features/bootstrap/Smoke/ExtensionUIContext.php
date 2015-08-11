@@ -2,6 +2,7 @@
 
 namespace Smoke;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Github\Client;
@@ -44,6 +45,14 @@ class ExtensionUIContext extends RawMinkContext implements Context
     {
         $this->visitPath('/extensions');
         $this->assertSession()->elementsCount('css', '.extension', $count);
+    }
+
+    /**
+     * @Then :name extension should be in the catalogue
+     */
+    public function extensionShouldBeInTheCatalogue($name)
+    {
+        throw new PendingException();
     }
 
     private function repositoryExtensionIs($repository, $extension)
