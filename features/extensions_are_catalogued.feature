@@ -8,6 +8,7 @@ Feature: Extensions are catalogued
     - If repository has no extensions, releasing it doesn't change the catalogue
     - If repository has documentation, but no extensions, releasing it still doesn't change the catalogue
 
+  @critical
   Scenario: Releasing a stable extension
     Given "behat/symfony2-extension" extension package was created in "Behat/Symfony2Extension"
     When I release "Behat/Symfony2Extension" version "v2.0.0"
