@@ -15,6 +15,8 @@ use Transformation;
  */
 class DocumentationUIContext extends RawMinkContext implements Context
 {
+    use Transformation\CleanBuildCache;
+
     private $publisher;
     private $client;
 

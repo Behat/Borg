@@ -13,6 +13,8 @@ use Transformation;
  */
 class ExtensionUIContext extends RawMinkContext implements Context
 {
+    use Transformation\CleanBuildCache;
+
     private $client;
 
     /**
