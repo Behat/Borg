@@ -19,7 +19,8 @@ twig:
     exception_controller: Behat\Borg\Integration\Symfony\Debug\Controller\ExceptionController::showAction
 
 parameters:
-    package.release_downloader.path: %kernel.cache_dir%/build/repositories
-    documentation.build.path: %kernel.cache_dir%/build/docs
-    documentation.publisher.path: %kernel.cache_dir%/docs
-    extension.repo.path: %kernel.cache_dir%/extensions
+    borg.cache_dir: %kernel.cache_dir%/build
+    package.release_downloader.path: %borg.cache_dir%/releases
+    documentation.build.path: %borg.cache_dir%/built_docs
+    documentation.publisher.path: %borg.cache_dir%/published_docs
+    extension.repo.path: %borg.cache_dir%/extensions
