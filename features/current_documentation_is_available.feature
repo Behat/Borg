@@ -4,9 +4,9 @@ Feature: Current documentation is available
   I want latest most stable version of documentation to be available as current
 
   Rules:
-  - Use the latest stable release (v2.0.1) if there are some
-  - If there are no stable releases, but there are some dev releases (v2.0.x) - use the latest
-  - If there are no stable or dev releases, then use branches in this order: master, develop
+    - Use the latest stable release (v2.0.1) if there are some
+    - If there are no stable releases, but there are some dev releases (v2.0.x) - use the latest
+    - If there are no stable or dev releases, then use branches in this order: master, develop
 
   @critical
   Scenario: Having some stable versions published

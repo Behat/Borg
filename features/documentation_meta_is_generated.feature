@@ -4,9 +4,9 @@ Feature: Documentation meta is generated
   I want documentation meta to be available after publishing
 
   Meta:
-  - Documentation package name and update time
-  - Links to other published versions of documentation
-  - Link to the current documentation page editor
+    - Documentation package name and update time
+    - Links to other published versions of documentation
+    - Link to the current documentation page editor
 
   Scenario: Getting documentation package name and edit time
     Given "behat/symfony2-extension" version "v2.0.0" was documented in "Behat/Symfony2Extension" on "04.09.2014, 22:10:45"
