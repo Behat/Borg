@@ -17,7 +17,10 @@
             interested in:</p>
 
         {% for extension in extensions %}
-            <a class="extension clearfix" href="#">
+            <a class="extension clearfix" href="{{ path('extension_index', {
+                'organisation': extension.organisationName,
+                'name': extension.name
+            }) }}">
                 <h2>{{ extension }}</h2>
                 <span class="by">by</span> <span class="author">{{ extension.author }}</span>
                 <p>{{ extension.description }}</p>

@@ -1,0 +1,14 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}{{ extension.name }} &mdash; Behat Extensions{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/extensions.css') }}">
+{% endblock %}
+
+
+{% block page %}
+    <section class="extensions">
+        <h1>{{ extension.organisationName }}/{{ extension.name }}</h1>
+    </section>
+{% endblock %}

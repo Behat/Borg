@@ -19,6 +19,15 @@ class ExtensionController extends Controller
     }
 
     /**
+     * @Route("/{organisation}/{name}", name="extension_index")
+     * @Template("ExtensionBundle::extension.html.twig")
+     */
+    public function indexAction($organisation, $name)
+    {
+        return ['extension' => $this->catalogue()->extension($organisation . '/' . $name)];
+    }
+
+    /**
      * @return ExtensionCatalogue
      */
     private function catalogue()
