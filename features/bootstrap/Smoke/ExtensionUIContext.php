@@ -3,8 +3,6 @@
 namespace Smoke;
 
 use Behat\Behat\Context\Context;
-use Behat\Borg\Extension\Extension;
-use Behat\Borg\Release\Repository;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Github\Client;
 use PHPUnit_Framework_Assert as PHPUnit;
@@ -15,7 +13,7 @@ use Transformation;
  */
 class ExtensionUIContext extends RawMinkContext implements Context
 {
-    use Transformation\Extension;
+    use Transformation\CleanBuildCache;
 
     private $client;
 
@@ -30,9 +28,9 @@ class ExtensionUIContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Given :extension extension was created in :repository
+     * @Given :extension extension package was created in :repository
      */
-    public function extensionWasCreated(Repository $repository, Extension $extension)
+    public function extensionWasCreated($repository, $extension)
     {
         PHPUnit::assertTrue($this->repositoryExtensionIs($repository, $extension), 'Repository does not contain expected extension.');
     }
@@ -48,19 +46,27 @@ class ExtensionUIContext extends RawMinkContext implements Context
         $this->assertSession()->elementsCount('css', '.extension', $count);
     }
 
-    private function repositoryExtensionIs(Repository $repository, Extension $extension)
+    /**
+     * @Then :name extension should be in the catalogue
+     */
+    public function extensionShouldBeInTheCatalogue($name)
+    {
+        $this->visitPath('/extensions');
+        $this->getSession()->getPage()->clickLink($name);
+        $this->assertSession()->elementContains('css', 'h1', $name);
+    }
+
+    private function repositoryExtensionIs($repository, $extension)
     {
         $content = $this->contentInRepository($repository, 'composer.json');
 
-        return 1 === preg_match('#"name"\s*:\s*"' . preg_quote((string)$extension) . '"#', $content);
+        return 1 === preg_match('#"name"\s*:\s*"' . preg_quote($extension) . '"#', $content);
     }
 
-    private function contentInRepository(Repository $repository, $path)
+    private function contentInRepository($repository, $path)
     {
-        return file_get_contents(
-            $this->client->repo()->contents()->show(
-                (string)$repository->organisationName(), (string)$repository->name(), $path
-            )['download_url']
-        );
+        $repositoryParts = explode('/', $repository);
+
+        return file_get_contents($this->client->repo()->contents()->show($repositoryParts[0], $repositoryParts[1], $path)['download_url']);
     }
 }

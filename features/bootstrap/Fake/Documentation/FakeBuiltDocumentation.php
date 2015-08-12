@@ -22,7 +22,7 @@ final class FakeBuiltDocumentation implements BuiltDocumentation
         return $this->documentation->documentationId();
     }
 
-    public function buildPath()
+    public function path()
     {
         return '/tmp';
     }

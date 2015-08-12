@@ -10,25 +10,44 @@ use Behat\Borg\Release\Package;
  */
 final class ComposerPackage implements Package
 {
+    const DEFAULT_TYPE = 'library';
+
     /**
      * @var string
      */
-    private $string;
+    private $name;
+    /**
+     * @var string
+     */
+    private $type;
+    /**
+     * @var string
+     */
+    private $description;
+    /**
+     * @var array
+     */
+    private $authors;
 
     /**
      * Initializes package.
      *
-     * @param string $string
+     * @param array $data
      */
-    public function __construct($string)
+    public function __construct(array $data)
     {
-        if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $string)) {
+        $name = $data['name'];
+
+        if (1 !== preg_match(self::PACKAGE_NAME_REGEX, $name)) {
             throw new BadPackageNameGiven(
-                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$string}` given."
+                "Composer package name should match `" . self::PACKAGE_NAME_REGEX . "`, but `{$name}` given."
             );
         }
 
-        $this->string = strtolower($string);
+        $this->name = strtolower($name);
+        $this->type = $this->extractType($data);
+        $this->description = $this->extractDescription($data);
+        $this->authors = $this->extractAuthors($data);
     }
 
     /**
@@ -36,7 +55,7 @@ final class ComposerPackage implements Package
      */
     public function organisationName()
     {
-        return explode('/', $this->string)[0];
+        return explode('/', $this->name)[0];
     }
 
     /**
@@ -44,7 +63,47 @@ final class ComposerPackage implements Package
      */
     public function name()
     {
-        return explode('/', $this->string)[1];
+        return explode('/', $this->name)[1];
+    }
+
+    /**
+     * Returns composer package type.
+     *
+     * @return string
+     */
+    public function type()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Returns package description.
+     *
+     * @return string
+     */
+    public function description()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Hash of the primary package author or null if no authors defined.
+     *
+     * @return ComposerAuthor|null
+     */
+    public function primaryAuthor()
+    {
+        return count($this->authors) ? current($this->authors) : null;
+    }
+
+    /**
+     * Returns package authors.
+     *
+     * @return ComposerAuthor[]
+     */
+    public function authors()
+    {
+        return $this->authors;
     }
 
     /**
@@ -52,6 +111,30 @@ final class ComposerPackage implements Package
      */
     public function __toString()
     {
-        return $this->string;
+        return $this->name;
+    }
+
+    private function extractType(array $data)
+    {
+        return isset($data['type']) ? $data['type'] : self::DEFAULT_TYPE;
+    }
+
+    private function extractDescription(array $data)
+    {
+        return isset($data['description']) ? $data['description'] : null;
+    }
+
+    private function extractAuthors(array $data)
+    {
+        if (!isset($data['authors'])) {
+            return [];
+        }
+
+        return array_map([$this, 'extractAuthor'], $data['authors']);
+    }
+
+    private function extractAuthor(array $meta)
+    {
+        return new ComposerAuthor($meta);
     }
 }

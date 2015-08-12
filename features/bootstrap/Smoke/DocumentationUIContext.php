@@ -15,6 +15,8 @@ use Transformation;
  */
 class DocumentationUIContext extends RawMinkContext implements Context
 {
+    use Transformation\CleanBuildCache;
+
     private $publisher;
     private $client;
 
@@ -64,7 +66,7 @@ class DocumentationUIContext extends RawMinkContext implements Context
      */
     public function packageDocumentationShouldHaveBeenPublished($project, $versionString)
     {
-        $this->visitPath("/docs/$project/$versionString/index.html");
+        $this->visitPath($this->documentationPagePath($project, $versionString, 'index.html'));
 
         $this->assertSession()->pageTextContains($project);
         $this->assertSession()->pageTextContains($versionString);
@@ -75,7 +77,7 @@ class DocumentationUIContext extends RawMinkContext implements Context
      */
     public function packageDocumentationShouldNotBePublished($project, $versionString)
     {
-        $this->visitPath("/docs/$project/$versionString/index.html");
+        $this->visitPath($this->documentationPagePath($project, $versionString, 'index.html'));
 
         $this->assertSession()->statusCodeEquals(404);
     }
@@ -85,9 +87,14 @@ class DocumentationUIContext extends RawMinkContext implements Context
      */
     public function currentVersionOfDocumentationShouldPointToVersion($project, $versionString)
     {
-        $this->visitPath("/docs/$project/current/index.html");
+        $this->visitPath($this->documentationPagePath($project, $versionString, 'index.html'));
 
         $this->assertSession()->elementTextContains('css', '.version.current', $versionString);
+    }
+
+    private function documentationPagePath($project, $versionString, $page)
+    {
+        return "/docs/$project/$versionString/$page";
     }
 
     private function repositoryContainsDocs($repository, $version)

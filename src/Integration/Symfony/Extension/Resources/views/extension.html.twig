@@ -1,0 +1,18 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}{{ extension }} &mdash; Behat Extensions{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/extensions.css') }}">
+{% endblock %}
+
+
+{% block page %}
+    <section class="extension">
+        <header class="clearfix">
+            <h1>{{ extension }}</h1>
+            <span class="by">by</span> <span class="author">{{ extension.author }}</span>
+            <p>{{ extension.description }}</p>
+        </header>
+    </section>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace Behat\Borg\Documentation\Page;
 
+use Behat\Borg\Documentation\DocumentationId;
 use Behat\Borg\Documentation\Publisher\PublishedDocumentation;
 use DateTimeImmutable;
 
@@ -11,21 +12,17 @@ use DateTimeImmutable;
 final class Page
 {
     /**
-     * @var string
+     * @var DocumentationId
      */
-    private $path;
-    /**
-     * @var string
-     */
-    private $projectName;
-    /**
-     * @var string
-     */
-    private $versionString;
+    private $documentationId;
     /**
      * @var DateTimeImmutable
      */
     private $time;
+    /**
+     * @var string
+     */
+    private $path;
 
     /**
      * Initializes page.
@@ -35,30 +32,29 @@ final class Page
      */
     public function __construct(PublishedDocumentation $documentation, PageId $pageId)
     {
-        $this->path = $documentation->path($pageId);
-        $this->projectName = $documentation->documentationId()->projectName();
-        $this->versionString = $documentation->documentationId()->versionString();
+        $this->documentationId = $documentation->documentationId();
         $this->time = $documentation->documentedAt();
+        $this->path = $documentation->path() . '/' . $pageId->path();
     }
 
     /**
-     * Returns a documented project name.
+     * Returns documentation project name.
      *
      * @return string
      */
     public function projectName()
     {
-        return $this->projectName;
+        return $this->documentationId->projectName();
     }
 
     /**
-     * Returns a documented project version string.
+     * Returns documentation version string.
      *
      * @return string
      */
     public function versionString()
     {
-        return $this->versionString;
+        return $this->documentationId->versionString();
     }
 
     /**

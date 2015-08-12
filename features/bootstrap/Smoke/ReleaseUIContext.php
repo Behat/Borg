@@ -4,7 +4,6 @@ namespace Smoke;
 
 use Behat\Behat\Context\Context;
 use PHPUnit_Framework_Assert as PHPUnit;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use Transformation;
 
@@ -13,14 +12,7 @@ use Transformation;
  */
 class ReleaseUIContext implements Context
 {
-    /**
-     * @BeforeScenario
-     */
-    public function cleanBuildAndWebFolders()
-    {
-        $cacheDir = __DIR__ . '/../../../app/cache/test';
-        (new Filesystem())->remove(["{$cacheDir}/build", "{$cacheDir}/docs"]);
-    }
+    use Transformation\CleanBuildCache;
 
     /**
      * @When I release :repository version :version

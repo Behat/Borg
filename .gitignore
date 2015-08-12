@@ -1,15 +1,11 @@
 vendor/
 web/bundles/
-docs/*
 app/cache/*
 app/logs/*
-build/repositories/*
-build/docs/*
+build/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
-!build/repositories/.gitkeep
-!build/docs/.gitkeep
-!docs/.gitkeep
+!build/.gitkeep
 app/bootstrap.php.cache
 app/config/parameters.yml
 phpunit.xml

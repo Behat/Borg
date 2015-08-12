@@ -29,7 +29,7 @@ final class DirectoryPublisher implements Publisher
      */
     public function publish(BuiltDocumentation $builtDocumentation)
     {
-        $buildPath = $builtDocumentation->buildPath();
+        $buildPath = $builtDocumentation->path();
         $publishPath = "{$this->publishPath}/{$builtDocumentation->documentationId()}";
         $publishedDocumentation = PublishedDocumentation::publish($builtDocumentation, $publishPath);
 

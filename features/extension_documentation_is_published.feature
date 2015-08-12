@@ -4,8 +4,8 @@ Feature: Extension documentation is published
   I want extensions documentation to be published after contributors release a new versions of them
 
   Rules:
-  - Extensions documentation is published
-  - `master` and `develop` branches documentation should also be published (if documented)
+    - Extensions documentation is published
+    - `master` and `develop` branches documentation should also be published (if documented)
 
   Scenario: Publishing extension release documentation
     Given "behat/symfony2-extension" version "v2.0.0" was documented in "Behat/Symfony2Extension"

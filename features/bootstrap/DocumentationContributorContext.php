@@ -101,7 +101,7 @@ class DocumentationContributorContext implements Context
     }
 
     /**
-     * @Then package name of :pageString page for :project version :versionString should be :name
+     * @Then project name of :pageString page for :project version :versionString should be :name
      */
     public function packageNameOfPageShouldBe($pageString, $project, $versionString, $name)
     {

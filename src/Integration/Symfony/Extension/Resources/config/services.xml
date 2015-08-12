@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="extension.repo.path">%kernel.root_dir%/../build/extensions</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="extension.catalogue" class="Behat\Borg\ExtensionCatalogue">
+            <argument type="service" id="extension.repository"/>
+        </service>
+
+        <service id="extension.repository"
+                 class="Behat\Borg\Integration\Extension\Filesystem\PersistedObjectsRepository"
+                 public="false">
+            <argument>%extension.repo.path%/catalogue.meta</argument>
+        </service>
+
+        <service id="package.listener.extension.cataloguer"
+                 class="Behat\Borg\Integration\Extension\Release\ExtensionCataloguer"
+                 public="false">
+            <argument type="service">
+                <service class="Behat\Borg\Integration\Extension\Composer\ComposerExtractor" />
+            </argument>
+            <argument type="service" id="extension.repository"/>
+        </service>
+
+    </services>
+
+</container>

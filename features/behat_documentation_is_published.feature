@@ -4,8 +4,8 @@ Feature: Behat documentation is published
   I want behat documentation to be published after we release a new version of it
 
   Rules:
-  - Documentation for Behat should be published
-  - Documentation for both versions should be published
+    - Documentation for Behat should be published
+    - Documentation for both versions should be published
 
   @critical
   Scenario: Publishing behat 3.0 documentation

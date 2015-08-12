@@ -53,10 +53,10 @@ class SphinxBuilderTest extends PHPUnit_Framework_TestCase
 
         $this->assertFileExists($this->tempOutputPath . '/my/doc/v1.3/index.html');
         $this->assertEquals(
-            $this->tempOutputPath . '/my/doc/v1.3/index.html', $built->indexPath()
+            $this->tempOutputPath . '/my/doc/v1.3/index.html', $built->index()
         );
 
-        $output = file_get_contents($built->indexPath());
+        $output = file_get_contents($built->index());
 
         $this->assertContains('<h1>Docs', $output);
         $this->assertContains('my/doc', $output);
@@ -83,7 +83,7 @@ DOC;
 
         $built = $this->builder->build($documentation);
 
-        $output = file_get_contents($built->indexPath());
+        $output = file_get_contents($built->index());
 
         $this->assertContains('<h1>Trying to hack the twig-bridge theme {{', $output);
         $this->assertValidTwigSyntax($output);

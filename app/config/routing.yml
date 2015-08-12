@@ -5,6 +5,13 @@ homepage:
         template:    '::homepage.html.twig'
         section:     'homepage'
 
+extension:
+    resource: "@ExtensionBundle/Controller/"
+    type:     annotation
+    prefix:   /extensions
+    defaults:
+        section: 'extension'
+
 documentation:
     resource: '@DocumentationBundle/Controller/'
     type:     annotation

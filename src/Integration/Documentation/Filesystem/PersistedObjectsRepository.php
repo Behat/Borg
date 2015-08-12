@@ -14,6 +14,7 @@ final class PersistedObjectsRepository implements Repository, ObjectIdentifier
 {
     public function __construct($path)
     {
+        $path && @mkdir(dirname($path), 0777, true);
         $this->repo = $path ? new FileRepository($path, $this) : new InMemoryRepository($this);
     }
 

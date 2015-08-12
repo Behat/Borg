@@ -69,15 +69,13 @@ final class PublishedDocumentation
     }
 
     /**
-     * Checks if file at provided relative path exists.
+     * Returns the path documentation is stored at.
      *
-     * @param PageId $anId
-     *
-     * @return Boolean
+     * @return string
      */
-    public function has(PageId $anId)
+    public function path()
     {
-        return file_exists($this->path . '/' . $anId);
+        return $this->path;
     }
 
     /**
@@ -89,7 +87,7 @@ final class PublishedDocumentation
      */
     public function page(PageId $anId)
     {
-        if (!$this->has($anId)) {
+        if (!$this->hasPage($anId)) {
             throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
         }
 
@@ -97,19 +95,15 @@ final class PublishedDocumentation
     }
 
     /**
-     * Generates absolute file path for provided page ID.
+     * Checks if file at provided relative path exists.
      *
      * @param PageId $anId
      *
-     * @return string
+     * @return Boolean
      */
-    public function path(PageId $anId)
+    private function hasPage(PageId $anId)
     {
-        if (!$this->has($anId)) {
-            throw new PageNotFound("Documentation page `{$anId->path()}` was not found.");
-        }
-
-        return $this->path . '/' . $anId;
+        return file_exists($this->path . '/' . $anId);
     }
 
     private function __construct() { }

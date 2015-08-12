@@ -38,12 +38,6 @@ class PublishedDocumentationSpec extends ObjectBehavior
         $this->documentedAt()->shouldReturn($docTime);
     }
 
-    function it_can_tell_if_it_contains_a_page()
-    {
-        $this->has(new PageId(basename(__FILE__)))->shouldReturn(true);
-        $this->has(new PageId('any file'))->shouldReturn(false);
-    }
-
     function it_can_get_a_page_by_its_id()
     {
         $pageId = new PageId(basename(__FILE__));
@@ -58,11 +52,6 @@ class PublishedDocumentationSpec extends ObjectBehavior
 
     function it_can_provide_absolute_path_for_the_page_by_its_id()
     {
-        $this->path(new PageId(basename(__FILE__)))->shouldReturn(__FILE__);
-    }
-
-    function it_throws_an_exception_when_trying_to_get_path_for_inexistent_page()
-    {
-        $this->shouldThrow()->duringPath(new PageId('any file'));
+        $this->path()->shouldReturn(__DIR__);
     }
 }
